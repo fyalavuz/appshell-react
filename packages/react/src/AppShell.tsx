@@ -23,10 +23,17 @@ function AppShellInner({ safeArea = false, className, children }: AppShellProps)
   const otherChildren: ReactNode[] = [];
 
   Children.forEach(children, (child) => {
-    if (isValidElement(child) && child.type === Header) {
-      header = child;
-    } else {
-      otherChildren.push(child);
+    if (isValidElement(child)) {
+      // Check for Header component by type or displayName
+      const isHeader = child.type === Header || 
+                      (child.type as any).displayName === "Header" ||
+                      (child.type as any).name === "Header";
+      
+      if (isHeader) {
+        header = child;
+      } else {
+        otherChildren.push(child);
+      }
     }
   });
 

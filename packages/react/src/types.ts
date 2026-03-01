@@ -7,6 +7,7 @@ export type AnimationSpeed = "slow" | "normal" | "fast";
 export type HeaderBehavior =
   | "static"
   | "fixed"
+  | "sticky"
   | "reveal-all"
   | "reveal-nav"
   | "reveal-context"

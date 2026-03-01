@@ -2,7 +2,7 @@
 
 import { AppShell, Header, Content, HeaderNav, HeaderNavItem, MotionProvider } from "@appshell/react";
 import { framerMotionAdapter } from "@appshell/react/motion-framer";
-import { Search, Bell, User, Clock, ArrowRight, TrendingUp, Bookmark } from "lucide-react";
+import { Search, Bell, User, Clock, ArrowRight, TrendingUp, Bookmark, PanelTop } from "lucide-react";
 
 const articles = [
   {
@@ -125,117 +125,97 @@ export default function FixedHeaderPage() {
           behavior="fixed"
           theme="light"
           logo={
-            <span className="text-lg font-bold tracking-tight">AppShell</span>
+            <div className="flex items-center gap-2">
+              <div className="size-6 rounded bg-primary flex items-center justify-center">
+                <PanelTop className="size-4 text-primary-foreground" />
+              </div>
+              <span className="text-lg font-bold tracking-tight">AppShell</span>
+            </div>
           }
           nav={
             <HeaderNav>
-              <HeaderNavItem label="Articles" active />
-              <HeaderNavItem label="Tutorials" />
-              <HeaderNavItem label="Podcasts" />
-              <HeaderNavItem label="Newsletter" />
+              <HeaderNavItem label="Overview" active />
+              <HeaderNavItem label="Analytics" />
+              <HeaderNavItem label="Resources" />
+              <HeaderNavItem label="Settings" />
             </HeaderNav>
           }
           actions={
             <div className="flex items-center gap-1">
               <button
                 type="button"
-                className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors"
-                aria-label="Search"
+                className="rounded-md p-2 text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
               >
                 <Search className="size-5" />
               </button>
               <button
                 type="button"
-                className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors relative"
-                aria-label="Notifications"
+                className="rounded-md p-2 text-muted-foreground hover:bg-accent hover:text-foreground transition-colors relative"
               >
                 <Bell className="size-5" />
-                <span className="absolute top-1.5 right-1.5 size-2 rounded-full bg-red-500" />
+                <span className="absolute top-2 right-2 size-1.5 rounded-full bg-primary" />
               </button>
-              <button
-                type="button"
-                className="ml-1 flex items-center justify-center size-8 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 text-white"
-                aria-label="Profile"
-              >
-                <User className="size-4" />
-              </button>
+              <div className="size-8 rounded-full bg-accent ml-2 flex items-center justify-center">
+                <User className="size-5 text-muted-foreground" />
+              </div>
             </div>
           }
-          title="Latest Articles"
-          subtitle="Stay up to date with the latest news and insights"
-          searchContent={
-            <div className="relative">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search articles, topics, authors..."
-                className="w-full rounded-xl border border-gray-200/80 bg-gray-50/80 py-2.5 pl-10 pr-4 text-sm placeholder:text-gray-400 focus:border-violet-300 focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet-100 transition-all"
-              />
-            </div>
-          }
+          title="Overview"
+          subtitle="System performance and resource utilization"
         />
-        <Content className="pb-8">
-          <div className="mx-auto max-w-3xl px-4 sm:px-6 pt-6">
-            <div className="flex flex-col gap-5">
+        <Content className="pb-12 bg-muted/30">
+          <div className="mx-auto max-w-5xl px-4 sm:px-6 pt-8">
+            <div className="grid gap-6 md:grid-cols-3 mb-8">
+              {[
+                { label: "Active Nodes", value: "128", change: "+12%", trend: "up" },
+                { label: "Throughput", value: "1.2 GB/s", change: "+5.4%", trend: "up" },
+                { label: "Error Rate", value: "0.02%", change: "-0.01%", trend: "down" },
+              ].map((stat, i) => (
+                <div key={i} className="rounded-xl border bg-card p-6 shadow-sm">
+                  <p className="text-sm font-medium text-muted-foreground">{stat.label}</p>
+                  <div className="mt-2 flex items-baseline gap-2">
+                    <h2 className="text-3xl font-bold tracking-tight">{stat.value}</h2>
+                    <span className={`text-xs font-medium ${stat.trend === "up" ? "text-emerald-600" : "text-blue-600"}`}>
+                      {stat.change}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="grid gap-6 lg:grid-cols-2">
               {articles.map((article, i) => (
                 <article
                   key={i}
-                  className={`group flex flex-col sm:flex-row gap-4 rounded-2xl border border-gray-100 bg-white p-4 shadow-sm ${article.shadowColor} hover:shadow-lg transition-all duration-300`}
+                  className="group flex flex-col gap-4 rounded-xl border bg-card p-5 shadow-sm transition-all hover:bg-accent/50"
                 >
-                  <div
-                    className={`relative shrink-0 w-full sm:w-48 h-36 sm:h-auto rounded-xl bg-gradient-to-br ${article.gradient} overflow-hidden flex items-center justify-center`}
-                  >
-                    {/* Inner decorative elements */}
-                    <div className="absolute inset-0 opacity-20">
-                      <div className="absolute top-3 left-3 size-16 rounded-full border-2 border-white/40" />
-                      <div className="absolute bottom-4 right-4 size-10 rounded-lg border-2 border-white/30 rotate-12" />
-                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-24 rounded-full border border-white/20" />
-                    </div>
-                    <span className="relative text-white/90 text-xs font-semibold uppercase tracking-widest">
-                      {article.category}
-                    </span>
-                    {article.trending && (
-                      <span className="absolute top-2.5 right-2.5 flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-sm px-2 py-0.5 text-[10px] font-medium text-white">
-                        <TrendingUp className="size-3" />
-                        Trending
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="inline-flex items-center rounded-md bg-primary/10 px-2 py-0.5 text-[10px] font-medium text-primary">
+                        {article.category}
                       </span>
+                      <span className="text-xs text-muted-foreground">{article.date}</span>
+                    </div>
+                    {article.trending && (
+                      <TrendingUp className="size-3.5 text-emerald-500" />
                     )}
                   </div>
-
-                  <div className="flex flex-col justify-between flex-1 min-w-0 py-1">
-                    <div>
-                      <h2 className="text-lg font-semibold text-gray-900 group-hover:text-violet-600 transition-colors leading-snug">
-                        {article.title}
-                      </h2>
-                      <p className="mt-2 text-sm text-gray-500 leading-relaxed line-clamp-2">
-                        {article.excerpt}
-                      </p>
+                  <div>
+                    <h2 className="text-lg font-bold tracking-tight group-hover:text-primary transition-colors">
+                      {article.title}
+                    </h2>
+                    <p className="mt-2 text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+                      {article.excerpt}
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-between pt-2">
+                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                      <Clock className="size-3" />
+                      {article.readTime}
                     </div>
-                    <div className="mt-3 flex items-center justify-between">
-                      <div className="flex items-center gap-3 text-xs text-gray-400">
-                        <span>{article.date}</span>
-                        <span className="flex items-center gap-1">
-                          <Clock className="size-3" />
-                          {article.readTime}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <button
-                          type="button"
-                          className="p-1 text-gray-300 hover:text-violet-500 opacity-0 group-hover:opacity-100 transition-all"
-                          aria-label="Bookmark"
-                        >
-                          <Bookmark className="size-3.5" />
-                        </button>
-                        <button
-                          type="button"
-                          className="flex items-center gap-1 text-xs font-medium text-violet-600 opacity-0 group-hover:opacity-100 translate-x-1 group-hover:translate-x-0 transition-all"
-                        >
-                          Read more
-                          <ArrowRight className="size-3" />
-                        </button>
-                      </div>
-                    </div>
+                    <button className="text-xs font-medium text-primary hover:underline flex items-center gap-1">
+                      Read report <ArrowRight className="size-3" />
+                    </button>
                   </div>
                 </article>
               ))}
@@ -244,9 +224,9 @@ export default function FixedHeaderPage() {
         </Content>
 
         {/* Floating variant indicator */}
-        <div className="fixed bottom-4 left-4 z-50 flex items-center gap-1.5 rounded-full bg-black/70 backdrop-blur-sm px-3 py-1.5 text-[11px] font-mono text-white/80 shadow-lg">
-          <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          behavior=&quot;fixed&quot; theme=&quot;light&quot;
+        <div className="fixed bottom-4 left-4 z-50 flex items-center gap-2 rounded-full bg-zinc-950/90 px-4 py-2 text-[11px] font-mono text-white/90 shadow-2xl backdrop-blur-md border border-white/10">
+          <span className="size-2 rounded-full bg-emerald-400 animate-pulse" />
+          HEADER: behavior=&quot;fixed&quot;
         </div>
       </AppShell>
     </MotionProvider>

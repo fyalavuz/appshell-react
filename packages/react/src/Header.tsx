@@ -243,7 +243,9 @@ export const Header = memo(function Header({
     </HeaderProvider>
   );
 
-  if (behavior === "fixed") {
+  const isFixed = behavior === "fixed" || behavior === "sticky";
+
+  if (isFixed) {
     return (
       <header
         className={cn(
@@ -272,6 +274,7 @@ export const Header = memo(function Header({
           t.wrapper,
           className
         )}
+        style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
       >
         {renderContent()}
       </header>
@@ -304,3 +307,4 @@ export const Header = memo(function Header({
     </>
   );
 });
+Header.displayName = "Header";
