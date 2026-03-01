@@ -76,10 +76,10 @@ describe("Header", () => {
       expect(header?.className).not.toContain("sticky");
     });
 
-    it("renders fixed header with sticky", () => {
+    it("renders fixed header with fixed positioning", () => {
       const { container } = renderHeader({ behavior: "fixed" });
       const header = container.querySelector("header");
-      expect(header?.className).toContain("sticky");
+      expect(header?.className).toContain("fixed");
     });
   });
 
