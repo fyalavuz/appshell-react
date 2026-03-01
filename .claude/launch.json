@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "examples",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "@appshell/examples", "dev"],
+      "port": 3001
+    },
+    {
+      "name": "docs",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "@appshell/docs", "dev"],
+      "port": 3002
+    }
+  ]
+}

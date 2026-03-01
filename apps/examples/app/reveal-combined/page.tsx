@@ -23,18 +23,18 @@ export default function RevealCombinedPage() {
           theme="light"
           logo={
             <div className="flex items-center gap-2">
-              <div className="size-8 rounded-lg bg-black flex items-center justify-center">
-                <div className="size-4 rounded-full bg-white animate-pulse" />
+              <div className="size-8 rounded-lg bg-zinc-950 flex items-center justify-center">
+                <div className="size-4 rounded bg-white" />
               </div>
-              <span className="text-lg font-bold tracking-tight">Combined</span>
+              <span className="text-lg font-bold tracking-tight">Platform</span>
             </div>
           }
           nav={
             <HeaderNav>
-              <HeaderNavItem label="Feed" active href="#" />
-              <HeaderNavItem label="Explore" href="#" />
-              <HeaderNavItem label="Trending" href="#" />
-              <HeaderNavItem label="Projects" href="#" />
+              <HeaderNavItem label="Projects" active href="#" />
+              <HeaderNavItem label="Deployments" href="#" />
+              <HeaderNavItem label="Monitoring" href="#" />
+              <HeaderNavItem label="Logs" href="#" />
             </HeaderNav>
           }
           actions={
@@ -42,14 +42,12 @@ export default function RevealCombinedPage() {
               <button
                 type="button"
                 className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
-                aria-label="Notifications"
               >
                 <Bell className="size-5" />
               </button>
               <button
                 type="button"
                 className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
-                aria-label="Settings"
               >
                 <Settings className="size-5" />
               </button>
@@ -62,37 +60,31 @@ export default function RevealCombinedPage() {
               </button>
             </div>
           }
-          title="Dynamic Interaction"
-          subtitle="Header reveals on scroll up, Footer auto-hides on scroll down"
+          title="Active Projects"
+          subtitle="Real-time status of your global infrastructure"
           searchContent={
             <div className="flex items-center gap-2">
               <div className="relative flex-1">
-                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
                 <input
                   type="text"
-                  placeholder="Search everything..."
-                  className="w-full rounded-xl border border-input bg-muted/50 py-2.5 pl-10 pr-4 text-sm placeholder:text-muted-foreground focus:border-ring/50 focus:bg-background focus:outline-none focus:ring-2 focus:ring-ring/20 transition-all"
+                  placeholder="Search projects or clusters..."
+                  className="w-full rounded-md border border-input bg-muted/50 py-2 pl-9 pr-4 text-sm placeholder:text-muted-foreground focus:border-primary focus:bg-background focus:outline-none transition-all"
                 />
               </div>
-              <button
-                type="button"
-                className="flex items-center gap-1.5 rounded-xl border border-input bg-background px-3.5 py-2.5 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-all cursor-pointer"
-              >
-                <SlidersHorizontal className="size-4" />
-                <span className="hidden sm:inline">Filters</span>
-              </button>
             </div>
           }
         />
 
-        <Content className="pb-24">
+        <Content className="pb-24 bg-muted/20">
           <div className="mx-auto max-w-7xl px-4 py-8">
-            <div className="mb-8 p-6 rounded-2xl bg-accent/50 border border-border">
-              <h2 className="text-xl font-bold mb-2">Scroll to see the behavior</h2>
-              <p className="text-muted-foreground text-sm">
-                When you scroll down, the header stays at the top (static behavior for its primary row) but the sub-rows disappear.
-                The footer will hide completely to maximize content space.
-                Scroll up even a little bit to reveal the full header and footer again.
+            <div className="mb-8 p-6 rounded-xl bg-card border shadow-sm">
+              <h2 className="text-xl font-bold mb-2">Interface Interaction</h2>
+              <p className="text-muted-foreground text-sm leading-relaxed max-w-3xl">
+                This layout demonstrates high-density content management. The header utilizes a 
+                reveal-all behavior, maximizing vertical space during active work while 
+                ensuring navigation is immediately accessible on minimal upward scroll.
+                The tab bar footer automatically hides during downward exploration.
               </p>
             </div>
             <PhotoGallery />
@@ -104,18 +96,18 @@ export default function RevealCombinedPage() {
           <FooterItem icon={<Search className="size-5" />} label="Search" />
           <FooterItem icon={<PlusCircle className="size-5" />} label="Create" />
           <FooterItem icon={<Library className="size-5" />} label="Library" />
-          <FooterItem icon={<User className="size-5" />} label="Profile" badge={3} />
+          <FooterItem icon={<User className="size-5" />} label="Account" />
         </Footer>
       </AppShell>
 
       {/* Floating behavior indicator */}
       <div className="fixed bottom-20 left-4 z-40 hidden sm:block">
-        <div className="flex flex-col gap-1.5 rounded-2xl bg-background/80 backdrop-blur-md p-3 border border-border shadow-xl">
-          <div className="flex items-center gap-2 text-[11px] font-mono text-muted-foreground">
+        <div className="flex flex-col gap-1.5 rounded-xl bg-zinc-950/90 backdrop-blur-md p-3 border border-white/10 shadow-2xl text-white/90">
+          <div className="flex items-center gap-2 text-[11px] font-mono">
             <span className="size-2 rounded-full bg-blue-500 animate-pulse" />
             HEADER: reveal-all
           </div>
-          <div className="flex items-center gap-2 text-[11px] font-mono text-muted-foreground">
+          <div className="flex items-center gap-2 text-[11px] font-mono">
             <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
             FOOTER: auto-hide
           </div>

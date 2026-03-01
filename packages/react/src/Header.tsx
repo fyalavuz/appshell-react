@@ -73,9 +73,25 @@ export const Header = memo(function Header({
   const ghostRef = useRef<HTMLElement>(null);
   const [threshold, setThreshold] = useState(0);
 
+  // Sync header height to CSS variable for sticky siblings
   useEffect(() => {
     const el = ghostRef.current;
-    if (!el || behavior === "static" || behavior === "fixed") return;
+    if (!el) return;
+
+    const syncHeight = () => {
+      const height = el.offsetHeight;
+      document.documentElement.style.setProperty("--header-height", `${height}px`);
+    };
+
+    syncHeight();
+    const ro = new ResizeObserver(syncHeight);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const el = ghostRef.current;
+    if (!el || behavior === "static" || behavior === "fixed" || behavior === "sticky") return;
 
     const measure = () => {
       const navEl = el.querySelector("[data-header-nav]");
@@ -248,6 +264,7 @@ export const Header = memo(function Header({
   if (isFixed) {
     return (
       <header
+        ref={ghostRef}
         className={cn(
           "w-full sticky top-0 z-50 transition-colors duration-300",
           t.wrapper,
