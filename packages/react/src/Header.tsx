@@ -266,10 +266,11 @@ export const Header = memo(function Header({
       <header
         ref={ghostRef}
         className={cn(
-          "w-full fixed top-0 left-0 right-0 z-50 transition-colors duration-300",
+          "w-full sticky top-0 z-50 transition-colors duration-300",
           t.wrapper,
           className
         )}
+        style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
       >
         <HeaderProvider value={{ theme }}>
           {renderNavRow()}

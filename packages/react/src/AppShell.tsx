@@ -38,10 +38,7 @@ function AppShellInner({ safeArea = false, className, children }: AppShellProps)
   });
 
   return (
-    <div 
-      className={cn("flex min-h-dvh flex-col relative", className)}
-      style={{ paddingTop: "var(--header-height, 0px)" }}
-    >
+    <div className={cn("flex min-h-dvh flex-col relative", className)}>
       {header}
       <SafeArea edges={["bottom"]} className="flex flex-col flex-1">
         {otherChildren}
