@@ -133,7 +133,7 @@ export default function StickyTabsPage() {
         </Content>
 
         {/* Behavior indicator */}
-        <div className="fixed bottom-4 left-4 z-50 flex flex-col gap-2 rounded-2xl bg-zinc-950/90 p-3 text-white/90 shadow-2xl backdrop-blur-md border border-white/10 sm:flex-row sm:items-center sm:rounded-full sm:px-4 sm:py-2">
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2 rounded-2xl bg-zinc-950/90 p-3 text-white/90 shadow-2xl backdrop-blur-md border border-white/10 sm:flex-row sm:items-center sm:rounded-full sm:px-4 sm:py-2">
           <div className="flex items-center gap-2 text-[11px] font-mono whitespace-nowrap border-b border-white/10 pb-2 sm:border-b-0 sm:pb-0 sm:pr-3 sm:border-r sm:mr-1">
             <span className="size-2 rounded-full bg-blue-500 animate-pulse" />
             HEADER: behavior=&quot;fixed&quot;

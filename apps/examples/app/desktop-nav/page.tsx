@@ -302,7 +302,7 @@ export default function DesktopNavPage() {
         <Content className="pb-16">
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
             {/* Floating variant indicator */}
-            <div className="fixed bottom-4 left-4 z-50 flex items-center gap-1.5 rounded-full bg-black/70 backdrop-blur-sm px-3 py-1.5 text-[11px] font-mono text-white/80 shadow-lg">
+            <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1.5 rounded-full bg-black/70 backdrop-blur-sm px-3 py-1.5 text-[11px] font-mono text-white/80 shadow-lg">
               <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
               HeaderNav
             </div>
