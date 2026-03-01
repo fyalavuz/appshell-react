@@ -42,16 +42,18 @@ export default function App() {
 
 ## Features
 
-- **Header** with 5 scroll behaviors: `fixed`, `static`, `reveal-all`, `reveal-nav`, `reveal-context`, `reveal-search`
+- **Header** with 7 scroll behaviors: `fixed`, `static`, `sticky`, `reveal-all`, `reveal-nav`, `reveal-context`, `reveal-search`
+- **Animation Speed** control: `slow`, `normal`, `fast` durations for all transitions
 - **Footer** with 3 variants: `tab-bar`, `floating`, `mini`
 - **Auto-hide** footer behavior tied to scroll direction
+- **Sticky Sub-navigation** support via dynamic `--header-height` CSS variable
 - **SafeArea** for mobile notch/gesture-bar insets
-- **Dark, light, and primary** header themes
+- **Dark, light, and primary** header themes + `none` for custom styling
 - **Mobile menu** support with animated drawer
 - **Framer Motion** powered animations
-- **Tailwind CSS v4** styling with full customization
+- **Tailwind CSS v4** styling with standard shadcn/ui tokens
 - **SSR-safe** with `"use client"` directives
-- **Fully typed** with exported TypeScript types
+- **Interactive Documentation** with live Storybook previews
 
 ## Components
 
@@ -59,24 +61,28 @@ export default function App() {
 |-----------|-------------|
 | `AppShell` | Root wrapper with optional SafeArea |
 | `Header` | Scroll-aware header with nav, context, and search rows |
+| `HeaderNav` | Container for header navigation links |
+| `HeaderNavItem` | Navigation link with dropdown support |
 | `Content` | Main content area |
 | `Footer` | Tab bar, floating button, or mini bar |
 | `FooterItem` | Individual tab inside a tab-bar footer |
+| `ScrollNav` | Horizontal scrollable pill navigation |
+| `Sidebar` | Animated slide-out menu drawer |
 | `SafeArea` | Mobile safe-area inset handler |
 
 ## Documentation
 
-Visit the [documentation site](https://appshell.dev) for full API reference, guides, and interactive examples.
+Visit the [documentation site](https://fyalavuz.github.io/react-appshell) for full API reference, guides, and interactive examples.
 
 ## Examples
 
-See the `apps/examples` directory for 5 fullscreen demos:
+Explore 18+ fullscreen demos at [fyalavuz.github.io/react-appshell/examples](https://fyalavuz.github.io/react-appshell/examples):
 
-- **Social App** -- reveal-nav header + auto-hide tab bar
-- **E-commerce** -- fixed header + floating cart button
-- **Messaging** -- static header + mini input bar
-- **Dashboard** -- fixed dark header + static tab bar + mobile menu
-- **Music Player** -- reveal-all header + mini now-playing bar
+- **Sticky Tabs** -- Header behavior with hitching sub-navigation
+- **Combined Reveal** -- All-row header reveal + auto-hide footer
+- **Fixed/Static/Reveal** -- Detailed header behavior permutations
+- **Sidebar & Desktop Nav** -- Responsive menu patterns
+- **Floating & Mini Footers** -- FABs and contextual toolbar patterns
 
 ## Contributing
 

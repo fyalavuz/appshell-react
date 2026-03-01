@@ -27,8 +27,9 @@ The `Header` component renders up to three rows -- navigation, context (title/su
 | `title` | `ReactNode` | — | Primary text in the context row |
 | `subtitle` | `ReactNode` | — | Secondary text below the title |
 | `searchContent` | `ReactNode` | — | Content for the search row (input, filters) |
-| `theme` | `HeaderTheme` | `"light"` | Visual theme: `"light"`, `"primary"`, or `"dark"` |
+| `theme` | `HeaderTheme` | `"light"` | Visual theme: `"light"`, `"primary"`, `"dark"`, or `"none"` |
 | `behavior` | `HeaderBehavior` | `"fixed"` | Scroll behavior (see below) |
+| `speed` | `"slow" \| "normal" \| "fast"` | `"normal"` | Animation duration for reveal/hide |
 | `mobileMenu` | `ReactNode` | — | Collapsible menu content for small screens |
 | `onVisibilityChange` | `(visible: boolean) => void` | — | Called when header visibility changes |
 | `className` | `string` | — | Additional CSS classes |
