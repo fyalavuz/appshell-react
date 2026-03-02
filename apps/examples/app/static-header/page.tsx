@@ -52,7 +52,7 @@ export default function StaticHeaderPage() {
           }
           nav={
             <HeaderNav>
-              <HeaderNavItem label="Documentation" active href="#" />
+              <HeaderNavItem label="Documentation" href="#" />
               <HeaderNavItem label="Components" href="#" />
               <HeaderNavItem label="Themes" href="#" />
               <HeaderNavItem label="GitHub" href="#" />

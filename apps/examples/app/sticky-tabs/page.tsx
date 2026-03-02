@@ -66,7 +66,7 @@ export default function StickyTabsPage() {
           {/* Sticky Tabs Bar */}
           <div 
             className="sticky z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4 sm:px-6"
-            style={{ top: "var(--header-height, 0px)" }}
+            style={{ top: "var(--header-height)" }}
           >
             <div className="mx-auto max-w-7xl">
               <div className="flex h-12 items-center gap-6 overflow-x-auto no-scrollbar">
