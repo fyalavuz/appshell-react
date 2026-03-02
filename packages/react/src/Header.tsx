@@ -271,7 +271,7 @@ export const Header = memo(function Header({
           t.wrapper,
           className
         )}
-        style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
+        style={{ paddingTop: "var(--sa-top, env(safe-area-inset-top, 0px))" }}
       >
         <HeaderProvider value={{ theme }}>
           {renderNavRow()}
@@ -292,7 +292,7 @@ export const Header = memo(function Header({
           t.wrapper,
           className
         )}
-        style={{ paddingTop: forceSafeAreaTop ? "env(safe-area-inset-top, 0px)" : undefined }}
+        style={{ paddingTop: forceSafeAreaTop ? "var(--sa-top, env(safe-area-inset-top, 0px))" : undefined }}
       >
         {renderContent()}
       </header>
@@ -311,7 +311,7 @@ export const Header = memo(function Header({
                 "fixed top-0 left-0 right-0 z-[60] shadow-lg",
                 t.wrapper
               )}
-              style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
+              style={{ paddingTop: "var(--sa-top, env(safe-area-inset-top, 0px))" }}
             >
               <HeaderProvider value={{ theme }}>
                 {shouldShowInOverlay("nav") && renderNavRow()}

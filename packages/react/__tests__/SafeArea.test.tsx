@@ -12,18 +12,18 @@ describe("SafeArea", () => {
     const { container } = render(<SafeArea>Content</SafeArea>);
     const el = container.firstElementChild as HTMLElement;
     const styleAttr = el.getAttribute("style") || "";
-    expect(styleAttr).toContain("padding-top: env(safe-area-inset-top, 0px)");
-    expect(styleAttr).toContain("padding-bottom: env(safe-area-inset-bottom, 0px)");
-    expect(styleAttr).toContain("padding-left: env(safe-area-inset-left, 0px)");
-    expect(styleAttr).toContain("padding-right: env(safe-area-inset-right, 0px)");
+    expect(styleAttr).toContain("padding-top: var(--sa-top, env(safe-area-inset-top, 0px))");
+    expect(styleAttr).toContain("padding-bottom: var(--sa-bottom, env(safe-area-inset-bottom, 0px))");
+    expect(styleAttr).toContain("padding-left: var(--sa-left, env(safe-area-inset-left, 0px))");
+    expect(styleAttr).toContain("padding-right: var(--sa-right, env(safe-area-inset-right, 0px))");
   });
 
   it("applies padding only for specified edges", () => {
     const { container } = render(<SafeArea edges={["top", "bottom"]}>Content</SafeArea>);
     const el = container.firstElementChild as HTMLElement;
     const styleAttr = el.getAttribute("style") || "";
-    expect(styleAttr).toContain("padding-top: env(safe-area-inset-top, 0px)");
-    expect(styleAttr).toContain("padding-bottom: env(safe-area-inset-bottom, 0px)");
+    expect(styleAttr).toContain("padding-top: var(--sa-top, env(safe-area-inset-top, 0px))");
+    expect(styleAttr).toContain("padding-bottom: var(--sa-bottom, env(safe-area-inset-bottom, 0px))");
     expect(styleAttr).not.toContain("padding-left");
     expect(styleAttr).not.toContain("padding-right");
   });

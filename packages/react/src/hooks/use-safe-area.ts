@@ -21,19 +21,15 @@ export function useSafeArea(edges: SafeAreaEdge[] = ["top", "bottom", "left", "r
   useEffect(() => {
     const measure = () => {
       const style = getComputedStyle(document.documentElement);
+      const read = (prop: string, envProp: string) =>
+        parseFloat(style.getPropertyValue(prop) || "0") ||
+        parseFloat(style.getPropertyValue(envProp) || "0");
+
       setInsets({
-        top: edges.includes("top")
-          ? parseFloat(style.getPropertyValue("env(safe-area-inset-top)") || "0")
-          : 0,
-        bottom: edges.includes("bottom")
-          ? parseFloat(style.getPropertyValue("env(safe-area-inset-bottom)") || "0")
-          : 0,
-        left: edges.includes("left")
-          ? parseFloat(style.getPropertyValue("env(safe-area-inset-left)") || "0")
-          : 0,
-        right: edges.includes("right")
-          ? parseFloat(style.getPropertyValue("env(safe-area-inset-right)") || "0")
-          : 0,
+        top: edges.includes("top") ? read("--sa-top", "env(safe-area-inset-top)") : 0,
+        bottom: edges.includes("bottom") ? read("--sa-bottom", "env(safe-area-inset-bottom)") : 0,
+        left: edges.includes("left") ? read("--sa-left", "env(safe-area-inset-left)") : 0,
+        right: edges.includes("right") ? read("--sa-right", "env(safe-area-inset-right)") : 0,
       });
     };
 

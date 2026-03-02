@@ -5,10 +5,10 @@ import type { SafeAreaProps, SafeAreaEdge } from "./types";
 import { cn } from "./cn";
 
 const cssMap: Record<SafeAreaEdge, string> = {
-  top: "padding-top: env(safe-area-inset-top, 0px)",
-  bottom: "padding-bottom: env(safe-area-inset-bottom, 0px)",
-  left: "padding-left: env(safe-area-inset-left, 0px)",
-  right: "padding-right: env(safe-area-inset-right, 0px)",
+  top: "padding-top: var(--sa-top, env(safe-area-inset-top, 0px))",
+  bottom: "padding-bottom: var(--sa-bottom, env(safe-area-inset-bottom, 0px))",
+  left: "padding-left: var(--sa-left, env(safe-area-inset-left, 0px))",
+  right: "padding-right: var(--sa-right, env(safe-area-inset-right, 0px))",
 };
 
 export const SafeArea = memo(function SafeArea({
