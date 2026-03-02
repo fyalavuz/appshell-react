@@ -99,20 +99,6 @@ export default function RevealCombinedPage() {
           <FooterItem icon={<User className="size-5" />} label="Account" />
         </Footer>
       </AppShell>
-
-      {/* Floating behavior indicator */}
-      <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-40 hidden sm:block">
-        <div className="flex flex-col gap-1.5 rounded-xl bg-zinc-950/90 backdrop-blur-md p-3 border border-white/10 shadow-2xl text-white/90">
-          <div className="flex items-center gap-2 text-[11px] font-mono">
-            <span className="size-2 rounded-full bg-blue-500 animate-pulse" />
-            HEADER: reveal-all
-          </div>
-          <div className="flex items-center gap-2 text-[11px] font-mono">
-            <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
-            FOOTER: auto-hide
-          </div>
-        </div>
-      </div>
     </MotionProvider>
   );
 }

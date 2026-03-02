@@ -94,13 +94,13 @@ export const HeaderNavItem = memo(function HeaderNavItem({
   const getThemeClasses = () => {
     if (theme === "primary") {
       return isActive
-        ? "bg-white/20 text-white"
-        : "text-white/70 hover:bg-white/10 hover:text-white";
+        ? "bg-primary-foreground/20 text-primary-foreground"
+        : "text-primary-foreground/70 hover:bg-primary-foreground/10 hover:text-primary-foreground";
     }
     if (theme === "dark") {
       return isActive
-        ? "bg-white/10 text-white"
-        : "text-white/60 hover:bg-white/10 hover:text-white";
+        ? "bg-primary-foreground/10 text-primary-foreground"
+        : "text-primary-foreground/60 hover:bg-primary-foreground/10 hover:text-primary-foreground";
     }
     // light (default)
     return isActive

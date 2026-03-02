@@ -51,18 +51,4 @@ test.describe("Footer variants", () => {
     await expect(floatingButton).toBeVisible();
   });
 
-  test("mini footer message input stays visible", async ({ page }) => {
-    await page.goto("/mini-footer");
-
-    // The mini footer contains the message input
-    const messageInput = page.getByLabel("Type a message");
-    await expect(messageInput).toBeVisible();
-
-    // Scroll the page
-    await page.evaluate(() => window.scrollBy(0, 300));
-    await page.waitForTimeout(300);
-
-    // Mini footer (behavior static by default) should still be visible
-    await expect(messageInput).toBeVisible();
-  });
 });

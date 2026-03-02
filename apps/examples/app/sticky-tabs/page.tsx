@@ -66,7 +66,7 @@ export default function StickyTabsPage() {
           {/* Sticky Tabs Bar */}
           <div 
             className="sticky z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4 sm:px-6"
-            style={{ top: "var(--header-height, 112px)" }}
+            style={{ top: "var(--header-height, 0px)" }}
           >
             <div className="mx-auto max-w-7xl">
               <div className="flex h-12 items-center gap-6 overflow-x-auto no-scrollbar">
@@ -131,18 +131,6 @@ export default function StickyTabsPage() {
             </div>
           </div>
         </Content>
-
-        {/* Behavior indicator */}
-        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2 rounded-2xl bg-zinc-950/90 p-3 text-white/90 shadow-2xl backdrop-blur-md border border-white/10 sm:flex-row sm:items-center sm:rounded-full sm:px-4 sm:py-2">
-          <div className="flex items-center gap-2 text-[11px] font-mono whitespace-nowrap border-b border-white/10 pb-2 sm:border-b-0 sm:pb-0 sm:pr-3 sm:border-r sm:mr-1">
-            <span className="size-2 rounded-full bg-blue-500 animate-pulse" />
-            HEADER: behavior=&quot;fixed&quot;
-          </div>
-          <div className="flex items-center gap-2 text-[11px] font-mono whitespace-nowrap">
-            <span className="size-2 rounded-full bg-emerald-500" />
-            TABS: sticky top-[112px]
-          </div>
-        </div>
       </AppShell>
     </MotionProvider>
   );

@@ -9,7 +9,6 @@ import {
   MotionProvider,
 } from "@appshell/react";
 import { framerMotionAdapter } from "@appshell/react/motion-framer";
-import { IndicatorPill } from "../_shared/indicator-pill";
 import {
   Search,
   Bell,
@@ -569,7 +568,6 @@ export default function DesktopNavPage() {
           </div>
         </Content>
       </AppShell>
-      <IndicatorPill>HeaderNav</IndicatorPill>
     </MotionProvider>
   );
 }

@@ -34,7 +34,6 @@ import {
   Gift,
   Zap,
 } from "lucide-react";
-import { IndicatorPill } from "../_shared/indicator-pill";
 
 const products = [
   {
@@ -515,9 +514,6 @@ export default function SidebarPage() {
             </div>
           </div>
         </Content>
-
-        {/* Variant indicator pill */}
-        <IndicatorPill>variant=&quot;sidebar&quot;</IndicatorPill>
       </AppShell>
     </MotionProvider>
   );

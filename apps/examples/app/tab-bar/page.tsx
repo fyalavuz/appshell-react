@@ -334,12 +334,6 @@ export default function TabBarPage() {
           />
         </Footer>
       </AppShell>
-
-      {/* Floating variant indicator */}
-      <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1.5 rounded-full bg-black/70 backdrop-blur-sm px-3 py-1.5 text-[11px] font-mono text-white/80 shadow-lg">
-        <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
-        variant=&quot;tab-bar&quot; behavior=&quot;auto-hide&quot;
-      </div>
     </MotionProvider>
   );
 }

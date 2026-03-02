@@ -24,7 +24,6 @@ import {
   Mail,
   Sparkles,
 } from "lucide-react";
-import { IndicatorPill } from "../_shared/indicator-pill";
 
 type Category =
   | "all"
@@ -538,7 +537,6 @@ export default function ScrollNavPage() {
           </div>
         </Content>
       </AppShell>
-      <IndicatorPill>ScrollNav</IndicatorPill>
     </MotionProvider>
   );
 }

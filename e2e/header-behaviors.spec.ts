@@ -15,7 +15,7 @@ test.describe("Header behaviors", () => {
   test("reveal-nav header hides on scroll down, reveals on scroll up", async ({
     page,
   }) => {
-    await page.goto("/reveal-top");
+    await page.goto("/reveal-all");
 
     // Scroll down
     await page.evaluate(() => window.scrollBy(0, 600));

@@ -10,7 +10,6 @@ import {
 } from "@appshell/react";
 import { framerMotionAdapter } from "@appshell/react/motion-framer";
 import { SearchFilter } from "../_shared/search-filter";
-import { IndicatorPill } from "../_shared/indicator-pill";
 import { PhotoGallery } from "../_shared/photo-gallery";
 
 export default function RevealAllPage() {
@@ -48,14 +47,6 @@ export default function RevealAllPage() {
           <PhotoGallery />
         </Content>
       </AppShell>
-
-      <IndicatorPill>
-        behavior=&quot;reveal-all&quot;
-        <span className="text-background/40 mx-0.5">|</span>
-        <span className="text-background/60 font-sans font-normal">
-          theme=&quot;light&quot;
-        </span>
-      </IndicatorPill>
     </MotionProvider>
   );
 }
