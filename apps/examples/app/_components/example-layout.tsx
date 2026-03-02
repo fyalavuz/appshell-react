@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { cn } from "@appshell/react";
+import { cn } from "react-appshell";
 import { PanelTop, Github, Menu, X, ExternalLink } from "lucide-react";
 import { SidebarNav } from "./sidebar-nav";
 import { PhoneMockup } from "./phone-mockup";

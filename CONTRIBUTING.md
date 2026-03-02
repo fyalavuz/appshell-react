@@ -1,4 +1,4 @@
-# Contributing to @appshell/react
+# Contributing to react-appshell
 
 Thanks for your interest in contributing! This guide will help you get set up and familiar with the project workflow.
 
@@ -41,7 +41,7 @@ This starts the library in watch mode and the examples app on `http://localhost:
 
 ```
 appshell/
-  packages/react/    # @appshell/react library
+  packages/react/    # react-appshell library
   apps/examples/     # Next.js examples app
   apps/docs/         # Fumadocs documentation site
   e2e/               # Playwright E2E tests

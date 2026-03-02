@@ -1,4 +1,4 @@
-import { cn } from "@appshell/react";
+import { cn } from "react-appshell";
 
 export function IndicatorPill({ children, className }: { children: React.ReactNode; className?: string }) {
   return (

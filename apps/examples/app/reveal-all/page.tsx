@@ -7,8 +7,8 @@ import {
   HeaderNav,
   HeaderNavItem,
   MotionProvider,
-} from "@appshell/react";
-import { framerMotionAdapter } from "@appshell/react/motion-framer";
+} from "react-appshell";
+import { framerMotionAdapter } from "react-appshell/motion-framer";
 import { SearchFilter } from "../_shared/search-filter";
 import { PhotoGallery } from "../_shared/photo-gallery";
 

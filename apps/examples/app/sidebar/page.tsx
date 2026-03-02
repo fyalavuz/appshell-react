@@ -9,8 +9,8 @@ import {
   NavGroup,
   NavItem,
   MotionProvider,
-} from "@appshell/react";
-import { framerMotionAdapter } from "@appshell/react/motion-framer";
+} from "react-appshell";
+import { framerMotionAdapter } from "react-appshell/motion-framer";
 import {
   Menu,
   Search,

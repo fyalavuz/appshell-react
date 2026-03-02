@@ -1,17 +1,17 @@
 ---
 title: Getting Started
-description: Install and configure @appshell/react to build mobile-first app shells with scroll-aware headers, footers, and safe areas.
+description: Install and configure react-appshell to build mobile-first app shells with scroll-aware headers, footers, and safe areas.
 ---
 
 ## Installation
 
 ```bash
-pnpm add @appshell/react framer-motion
+pnpm add react-appshell framer-motion
 ```
 
 ### Peer dependencies
 
-`@appshell/react` requires the following peer dependencies:
+`react-appshell` requires the following peer dependencies:
 
 | Package | Version |
 | --- | --- |
@@ -33,7 +33,7 @@ import {
   Content,
   Footer,
   FooterItem,
-} from "@appshell/react";
+} from "react-appshell";
 import { Home, Search, User } from "lucide-react";
 
 export default function App() {
@@ -87,7 +87,7 @@ import {
   useAppShell,
   useScrollDirection,
   useSafeArea,
-} from "@appshell/react";
+} from "react-appshell";
 ```
 
 Type exports are also available:
@@ -100,5 +100,5 @@ import type {
   FooterBehavior,
   FooterPosition,
   SafeAreaEdge,
-} from "@appshell/react";
+} from "react-appshell";
 ```

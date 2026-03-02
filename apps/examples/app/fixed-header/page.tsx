@@ -1,7 +1,7 @@
 "use client";
 
-import { AppShell, Header, Content, HeaderNav, HeaderNavItem, MotionProvider } from "@appshell/react";
-import { framerMotionAdapter } from "@appshell/react/motion-framer";
+import { AppShell, Header, Content, HeaderNav, HeaderNavItem, MotionProvider } from "react-appshell";
+import { framerMotionAdapter } from "react-appshell/motion-framer";
 import { Search, Bell, User, Clock, ArrowRight, TrendingUp, Bookmark, PanelTop } from "lucide-react";
 
 const articles = [

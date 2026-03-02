@@ -7,8 +7,8 @@ import {
   MotionProvider,
   Header,
   Footer,
-} from "@appshell/react";
-import { framerMotionAdapter } from "@appshell/react/motion-framer";
+} from "react-appshell";
+import { framerMotionAdapter } from "react-appshell/motion-framer";
 import {
   ShoppingCart,
   Star,

@@ -40,7 +40,7 @@ export default function HomePage() {
         </p>
 
         <div className="mt-6 rounded-lg border bg-fd-card px-4 py-3 font-mono text-sm">
-          pnpm add @appshell/react
+          pnpm add react-appshell
         </div>
 
         <div className="mt-8 flex flex-wrap justify-center gap-4">

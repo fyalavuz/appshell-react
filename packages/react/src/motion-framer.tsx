@@ -1,12 +1,12 @@
 /**
- * Framer Motion adapter for @appshell/react.
+ * Framer Motion adapter for react-appshell.
  *
- * Import this from "@appshell/react/motion-framer" and pass it
+ * Import this from "react-appshell/motion-framer" and pass it
  * to <MotionProvider> for spring-based animations.
  *
  * @example
- * import { MotionProvider } from "@appshell/react";
- * import { framerMotionAdapter } from "@appshell/react/motion-framer";
+ * import { MotionProvider } from "react-appshell";
+ * import { framerMotionAdapter } from "react-appshell/motion-framer";
  *
  * <MotionProvider adapter={framerMotionAdapter}>
  *   <AppShell>…</AppShell>

@@ -8,7 +8,7 @@ description: React hooks for accessing app shell state, scroll direction, and sa
 Returns the shared context value from the nearest `AppShellProvider`. Must be called inside an `AppShell` or `AppShellProvider`.
 
 ```tsx
-import { useAppShell } from "@appshell/react";
+import { useAppShell } from "react-appshell";
 
 function StatusBar() {
   const {
@@ -46,7 +46,7 @@ Throws an error if called outside of an `AppShellProvider`.
 Tracks the current scroll direction using `requestAnimationFrame` for performance.
 
 ```tsx
-import { useScrollDirection } from "@appshell/react";
+import { useScrollDirection } from "react-appshell";
 
 function ScrollIndicator() {
   const direction = useScrollDirection();
@@ -71,7 +71,7 @@ This hook can be used outside of `AppShellProvider`. It attaches a passive scrol
 Returns the current safe area insets as pixel numbers. Measures `env(safe-area-inset-*)` via `getComputedStyle` and updates on window resize.
 
 ```tsx
-import { useSafeArea } from "@appshell/react";
+import { useSafeArea } from "react-appshell";
 
 function BottomSheet() {
   const insets = useSafeArea(["bottom"]);

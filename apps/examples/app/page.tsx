@@ -107,7 +107,7 @@ export default function ExamplesPage() {
               </Link>
               <div className="inline-flex items-center gap-2 rounded-lg bg-muted px-4 py-2.5 font-mono text-sm text-muted-foreground">
                 <span className="text-primary">$</span> npm install
-                @appshell/react
+                react-appshell
               </div>
             </div>
           </div>
@@ -223,7 +223,7 @@ export default function ExamplesPage() {
         <div className="container mx-auto max-w-7xl px-4 sm:px-6">
           <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
             <p className="text-sm text-muted-foreground">
-              &copy; 2026 @appshell/react. MIT Licensed.
+              &copy; 2026 react-appshell. MIT Licensed.
             </p>
             <div className="flex items-center gap-6">
               <a
@@ -235,7 +235,7 @@ export default function ExamplesPage() {
                 GitHub
               </a>
               <a
-                href="https://www.npmjs.com/package/@appshell/react"
+                href="https://www.npmjs.com/package/react-appshell"
                 target="_blank"
                 rel="noreferrer"
                 className="text-sm font-medium text-muted-foreground hover:text-foreground"

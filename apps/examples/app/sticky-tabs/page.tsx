@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { AppShell, Header, Content, HeaderNav, HeaderNavItem, MotionProvider, cn } from "@appshell/react";
-import { framerMotionAdapter } from "@appshell/react/motion-framer";
+import { AppShell, Header, Content, HeaderNav, HeaderNavItem, MotionProvider, cn } from "react-appshell";
+import { framerMotionAdapter } from "react-appshell/motion-framer";
 import { Search, Bell, User, Clock, ArrowRight, TrendingUp, Bookmark, LayoutGrid, List, Info } from "lucide-react";
 
 export default function StickyTabsPage() {

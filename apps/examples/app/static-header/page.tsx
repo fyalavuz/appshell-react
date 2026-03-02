@@ -1,7 +1,7 @@
 "use client";
 
-import { AppShell, Header, Content, HeaderNav, HeaderNavItem, MotionProvider } from "@appshell/react";
-import { framerMotionAdapter } from "@appshell/react/motion-framer";
+import { AppShell, Header, Content, HeaderNav, HeaderNavItem, MotionProvider } from "react-appshell";
+import { framerMotionAdapter } from "react-appshell/motion-framer";
 import { Github, Moon, BookOpen, Code2, Layers, Zap, Shield, Palette, Terminal, Puzzle } from "lucide-react";
 
 const sections = [
@@ -10,7 +10,7 @@ const sections = [
     title: "Getting Started",
     content:
       "Install the package using your preferred package manager. AppShell provides a composable set of layout primitives designed for modern React applications.",
-    code: "pnpm add @appshell/react",
+    code: "pnpm add react-appshell",
   },
   {
     icon: <Layers className="size-5" />,

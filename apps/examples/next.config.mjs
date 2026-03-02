@@ -2,7 +2,7 @@
 const config = {
   output: "export",
   basePath: process.env.NEXT_PUBLIC_BASE_PATH || "",
-  transpilePackages: ["@appshell/react"],
+  transpilePackages: ["react-appshell"],
 };
 
 export default config;

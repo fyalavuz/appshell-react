@@ -1,8 +1,15 @@
 {
-  "name": "@appshell/react",
+  "name": "react-appshell",
   "version": "0.2.0",
   "description": "Mobile-first app shell components for React — Header, Footer, Sidebar, TabBar, SafeArea",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fyalavuz/react-appshell.git",
+    "directory": "packages/react"
+  },
+  "homepage": "https://fyalavuz.github.io/react-appshell",
+  "keywords": ["react", "appshell", "mobile", "header", "footer", "tab-bar", "sidebar", "safe-area", "scroll-aware", "tailwindcss"],
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

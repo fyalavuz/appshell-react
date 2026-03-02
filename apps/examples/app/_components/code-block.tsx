@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { cn } from "@appshell/react";
+import { cn } from "react-appshell";
 import { Check, Copy, ChevronDown, ChevronUp } from "lucide-react";
 
 interface CodeBlockProps {

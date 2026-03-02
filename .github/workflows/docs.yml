@@ -29,7 +29,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - name: Build library
-        run: pnpm turbo build --filter=@appshell/react
+        run: pnpm turbo build --filter=react-appshell
 
       - name: Build docs
         run: pnpm turbo build --filter=@appshell/docs

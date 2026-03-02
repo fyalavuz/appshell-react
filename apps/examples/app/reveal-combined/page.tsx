@@ -9,8 +9,8 @@ import {
   HeaderNav,
   HeaderNavItem,
   MotionProvider,
-} from "@appshell/react";
-import { framerMotionAdapter } from "@appshell/react/motion-framer";
+} from "react-appshell";
+import { framerMotionAdapter } from "react-appshell/motion-framer";
 import { Home, Search, Library, PlusCircle, User, SlidersHorizontal, Github, Bell, Settings } from "lucide-react";
 import { PhotoGallery } from "../_shared/photo-gallery";
 
