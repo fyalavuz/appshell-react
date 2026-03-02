@@ -101,14 +101,7 @@ export const categories: ExampleCategory[] = [
         icon: PanelLeft,
         code: `<Sidebar open={open} onClose={() => setOpen(false)}>\n  <NavGroup label="Navigation">\n    <NavItem label="Home" icon={<Home />} />\n  </NavGroup>\n</Sidebar>`,
       },
-      {
-        slug: "nested-scroll",
-        title: "Nested Scroll",
-        description:
-          "Netflix-style layout with horizontal carousels nested inside vertical scrolling content.",
-        icon: GalleryHorizontal,
-        code: `<Content>\n  {sections.map(section => (\n    <div className="overflow-x-auto snap-x snap-mandatory">\n      {section.items.map(item => <Card />)}\n    </div>\n  ))}\n</Content>`,
-      },
+
       {
         slug: "scroll-nav",
         title: "Scroll Navigation",
