@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, Children, isValidElement, type ReactNode } from "react";
+import { memo, Children, isValidElement, cloneElement, type ReactNode } from "react";
 import { cn } from "./cn";
 import { AppShellProvider } from "./context";
 import { SafeArea } from "./SafeArea";
@@ -55,7 +55,7 @@ function AppShellInner({ safeArea = false, className, children }: AppShellProps)
   return (
     <div className={cn("flex min-h-dvh flex-col relative", className)}>
       {header && isValidElement(header) 
-        ? Object.assign({}, header, { props: { ...header.props, forceSafeAreaTop: true } }) 
+        ? cloneElement(header as any, { forceSafeAreaTop: true }) 
         : header}
       <SafeArea edges={["bottom"]} className="flex flex-col flex-1">
         {otherChildren}
