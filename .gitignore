@@ -33,9 +33,11 @@ storybook-static
 # Codex local configuration
 .codex/
 
-# Claude Flow runtime data
-.claude-flow/data/
-.claude-flow/logs/
+# Claude / Agent configs
+.agents/
+.claude-flow/
+.claude/
+.mcp.json
 
 # Environment variables
 .env
