@@ -1,14 +1,14 @@
-# react-appshell
+# appshell-react
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
-[![npm](https://img.shields.io/npm/v/react-appshell)](https://www.npmjs.com/package/react-appshell)
+[![npm](https://img.shields.io/npm/v/appshell-react)](https://www.npmjs.com/package/appshell-react)
 
 Mobile-first app shell components for React. Build native-feeling headers, footers, tab bars, and safe-area layouts with scroll-aware behaviors and smooth animations.
 
 ## Install
 
 ```bash
-pnpm add react-appshell
+pnpm add appshell-react
 ```
 
 Peer dependencies: `react`, `react-dom`, `framer-motion`, `tailwindcss` (v4+).
@@ -16,7 +16,7 @@ Peer dependencies: `react`, `react-dom`, `framer-motion`, `tailwindcss` (v4+).
 ## Quick Start
 
 ```tsx
-import { AppShell, Header, Content, Footer, FooterItem } from "react-appshell";
+import { AppShell, Header, Content, Footer, FooterItem } from "appshell-react";
 import { Home, Search, User } from "lucide-react";
 
 export default function App() {
@@ -72,11 +72,11 @@ export default function App() {
 
 ## Documentation
 
-Visit the [documentation site](https://fyalavuz.github.io/react-appshell) for full API reference, guides, and interactive examples.
+Visit the [documentation site](https://fyalavuz.github.io/appshell-react) for full API reference, guides, and interactive examples.
 
 ## Examples
 
-Explore 18+ fullscreen demos at [fyalavuz.github.io/react-appshell/examples](https://fyalavuz.github.io/react-appshell/examples):
+Explore 18+ fullscreen demos at [fyalavuz.github.io/appshell-react/examples](https://fyalavuz.github.io/appshell-react/examples):
 
 - **Sticky Tabs** -- Header behavior with hitching sub-navigation
 - **Combined Reveal** -- All-row header reveal + auto-hide footer

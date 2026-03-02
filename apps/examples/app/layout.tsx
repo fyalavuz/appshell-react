@@ -9,7 +9,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "AppShell Examples",
-  description: "Fullscreen examples of react-appshell components",
+  description: "Fullscreen examples of appshell-react components",
 };
 
 export default function RootLayout({

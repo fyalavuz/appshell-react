@@ -16,7 +16,7 @@ description: The root wrapper component that provides shared context and layout 
 ## Usage
 
 ```tsx
-import { AppShell, Header, Content, Footer } from "react-appshell";
+import { AppShell, Header, Content, Footer } from "appshell-react";
 
 export default function App() {
   return (
@@ -44,7 +44,7 @@ export default function App() {
 If you need the context without the layout wrapper, use `AppShellProvider` on its own:
 
 ```tsx
-import { AppShellProvider, useAppShell } from "react-appshell";
+import { AppShellProvider, useAppShell } from "appshell-react";
 
 function MyApp() {
   return (

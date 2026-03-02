@@ -1,17 +1,17 @@
-# react-appshell
+# appshell-react
 
 Mobile-first app shell components for React. Scroll-aware headers, auto-hiding footers, sidebars, tab bars, and safe-area support — built with shadcn-compatible tokens and zero runtime dependencies.
 
 ## Install
 
 ```bash
-npm install react-appshell
+npm install appshell-react
 ```
 
 ## Quick Start
 
 ```tsx
-import { AppShell, Header, Content, Footer, FooterItem } from "react-appshell";
+import { AppShell, Header, Content, Footer, FooterItem } from "appshell-react";
 
 export default function App() {
   return (
@@ -32,8 +32,8 @@ export default function App() {
 ## Optional Framer Motion
 
 ```tsx
-import { MotionProvider } from "react-appshell";
-import { framerMotionAdapter } from "react-appshell/motion-framer";
+import { MotionProvider } from "appshell-react";
+import { framerMotionAdapter } from "appshell-react/motion-framer";
 
 <MotionProvider adapter={framerMotionAdapter}>
   <AppShell>...</AppShell>
@@ -52,7 +52,7 @@ import { framerMotionAdapter } from "react-appshell/motion-framer";
 
 ## Documentation
 
-[https://fyalavuz.github.io/react-appshell](https://fyalavuz.github.io/react-appshell)
+[https://fyalavuz.github.io/appshell-react](https://fyalavuz.github.io/appshell-react)
 
 ## License
 

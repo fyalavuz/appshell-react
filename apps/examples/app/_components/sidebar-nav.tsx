@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cn } from "react-appshell";
+import { cn } from "appshell-react";
 import { categories } from "./example-data";
 
 export function SidebarNav() {

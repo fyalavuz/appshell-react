@@ -47,7 +47,17 @@
       "Bash(pnpm --filter @appshell/react add:*)",
       "Bash(pnpm --filter @appshell/react exec eslint:*)",
       "Bash(pnpm:*)",
-      "Bash(npx next:*)"
+      "Bash(npx next:*)",
+      "Bash(npm run:*)",
+      "Bash(npx turbo:*)",
+      "Bash(npm test:*)",
+      "Bash(gh issue:*)",
+      "Bash(xargs cat:*)",
+      "Bash(npx skills find \"shadcn documentation component design\")",
+      "Bash(npx skills find \"nextjs app router storybook\")",
+      "Bash(npx skills find \"react component library design system\")",
+      "Bash(npx skills add yonatangross/orchestkit@shadcn-patterns -g -y)",
+      "Bash(npm profile get)"
     ]
   }
 }

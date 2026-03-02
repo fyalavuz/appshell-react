@@ -94,8 +94,8 @@ describe("Header", () => {
         ),
       });
       const navItem = screen.getByRole("button", { name: "Home" });
-      // Primary theme active item should have bg-white/20
-      expect(navItem.className).toContain("bg-white/20");
+      // Primary theme active item should have bg-primary-foreground/20
+      expect(navItem.className).toContain("bg-primary-foreground/20");
     });
 
     it("passes dark theme to HeaderNavItem", () => {
@@ -108,8 +108,8 @@ describe("Header", () => {
         ),
       });
       const navItem = screen.getByRole("button", { name: "Home" });
-      // Dark theme active item should have bg-white/10
-      expect(navItem.className).toContain("bg-white/10");
+      // Dark theme active item should have bg-primary-foreground/10
+      expect(navItem.className).toContain("bg-primary-foreground/10");
     });
   });
 });

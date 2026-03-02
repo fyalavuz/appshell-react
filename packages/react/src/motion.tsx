@@ -30,7 +30,7 @@ const MotionContext = createContext<MotionAdapter | null>(null);
  * Without this provider, all components use CSS transitions (zero JS animation deps).
  *
  * @example
- * import { framerMotionAdapter } from "react-appshell/motion-framer";
+ * import { framerMotionAdapter } from "appshell-react/motion-framer";
  * <MotionProvider adapter={framerMotionAdapter}>
  *   <AppShell>…</AppShell>
  * </MotionProvider>

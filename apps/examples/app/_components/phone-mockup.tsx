@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "react-appshell";
+import { cn } from "appshell-react";
 
 interface PhoneMockupProps {
   src: string;

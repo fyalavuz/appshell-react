@@ -7,8 +7,8 @@ import {
   HeaderNav,
   HeaderNavItem,
   MotionProvider,
-} from "react-appshell";
-import { framerMotionAdapter } from "react-appshell/motion-framer";
+} from "appshell-react";
+import { framerMotionAdapter } from "appshell-react/motion-framer";
 import {
   Search,
   Bell,

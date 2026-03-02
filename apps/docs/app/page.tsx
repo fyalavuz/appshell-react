@@ -40,7 +40,7 @@ export default function HomePage() {
         </p>
 
         <div className="mt-6 rounded-lg border bg-fd-card px-4 py-3 font-mono text-sm">
-          pnpm add react-appshell
+          pnpm add appshell-react
         </div>
 
         <div className="mt-8 flex flex-wrap justify-center gap-4">
@@ -57,7 +57,7 @@ export default function HomePage() {
             Live Examples
           </Link>
           <a
-            href="https://github.com/fyalavuz/react-appshell"
+            href="https://github.com/fyalavuz/appshell-react"
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-lg border bg-fd-card px-6 py-2.5 text-sm font-medium transition-colors hover:bg-fd-accent"
