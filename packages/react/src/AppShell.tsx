@@ -1,11 +1,18 @@
 "use client";
 
-import { memo, Children, isValidElement, cloneElement, type ReactNode } from "react";
+import {
+  memo,
+  Children,
+  isValidElement,
+  cloneElement,
+  type ReactNode,
+  type ReactElement,
+} from "react";
 import { cn } from "./cn";
 import { AppShellProvider } from "./context";
 import { SafeArea } from "./SafeArea";
 import { Header } from "./Header";
-import type { AppShellProps } from "./types";
+import type { AppShellProps, HeaderProps } from "./types";
 
 function AppShellInner({ safeArea = false, className, children }: AppShellProps) {
   if (!safeArea) {
@@ -22,13 +29,14 @@ function AppShellInner({ safeArea = false, className, children }: AppShellProps)
 
   Children.forEach(children, (child) => {
     if (isValidElement(child)) {
+      const childType = child.type as { displayName?: string; name?: string };
       const isHeader = child.type === Header || 
-                      (child.type as any).displayName === "Header" ||
-                      (child.type as any).name === "Header";
+                      childType.displayName === "Header" ||
+                      childType.name === "Header";
       
       if (isHeader) {
         header = child;
-        headerBehavior = (child.props as any).behavior || "fixed";
+        headerBehavior = (child.props as HeaderProps).behavior || "fixed";
       } else {
         otherChildren.push(child);
       }
@@ -55,7 +63,7 @@ function AppShellInner({ safeArea = false, className, children }: AppShellProps)
   return (
     <div className={cn("flex min-h-dvh flex-col relative", className)}>
       {header && isValidElement(header) 
-        ? cloneElement(header as any, { forceSafeAreaTop: true }) 
+        ? cloneElement(header as ReactElement<HeaderProps>, { forceSafeAreaTop: true }) 
         : header}
       <SafeArea edges={["bottom"]} className="flex flex-col flex-1">
         {otherChildren}

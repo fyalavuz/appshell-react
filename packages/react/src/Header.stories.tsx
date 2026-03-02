@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Header } from './Header';
 import { AppShellProvider } from './context';
 import { HeaderNav, HeaderNavItem } from './HeaderNav';

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Footer, FooterItem } from './Footer';
 import { AppShellProvider } from './context';
 import { Home, Search, PlusCircle, Bell, User } from 'lucide-react';
