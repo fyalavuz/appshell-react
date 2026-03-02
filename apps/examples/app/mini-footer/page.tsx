@@ -4,6 +4,7 @@ import { useState } from "react";
 import { AppShell, Content, MotionProvider, Header, Footer } from "@appshell/react";
 import { framerMotionAdapter } from "@appshell/react/motion-framer";
 import { Phone, Video, MoreVertical, ChevronLeft, Check, CheckCheck, Send, Paperclip, Smile } from "lucide-react";
+import { IndicatorPill } from "../_shared/indicator-pill";
 
 interface Message {
   id: number;
@@ -45,13 +46,13 @@ function MessageBubble({ message }: { message: Message }) {
         className={`relative max-w-[80%] rounded-2xl px-4 py-2.5 shadow-sm ${
           isMe
             ? "bg-gradient-to-br from-emerald-500 to-teal-600 text-white rounded-br-sm"
-            : "bg-white/90 backdrop-blur-sm text-gray-900 rounded-bl-sm ring-1 ring-black/[0.04]"
+            : "bg-card/90 backdrop-blur-sm text-foreground rounded-bl-sm ring-1 ring-black/[0.04]"
         }`}
       >
         <p className="text-sm leading-relaxed">{message.text}</p>
         <div
           className={`mt-1.5 flex items-center justify-end gap-1 ${
-            isMe ? "text-white/60" : "text-gray-400"
+            isMe ? "text-white/60" : "text-muted-foreground/70"
           }`}
         >
           <span className="text-[10px]">{message.time}</span>
@@ -77,12 +78,12 @@ export default function MiniFooterPage() {
         <Header
           behavior="fixed"
           theme="light"
-          className="bg-white/80 backdrop-blur-xl border-b border-gray-100"
+          className="bg-card/80 backdrop-blur-xl border-b border-border"
           logo={
             <div className="flex items-center gap-3">
               <button
                 type="button"
-                className="rounded-full p-1 hover:bg-gray-100 transition-colors -ml-1"
+                className="rounded-full p-1 hover:bg-accent transition-colors -ml-1"
               >
                 <ChevronLeft className="size-5" />
               </button>
@@ -94,7 +95,7 @@ export default function MiniFooterPage() {
                   <span className="absolute -bottom-0.5 -right-0.5 size-3 rounded-full bg-emerald-400 ring-2 ring-white" />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold leading-tight text-gray-900">
+                  <p className="text-sm font-semibold leading-tight text-foreground">
                     Alex Kim
                   </p>
                   <p className="text-[11px] text-emerald-600 font-medium">online</p>
@@ -106,21 +107,21 @@ export default function MiniFooterPage() {
             <div className="flex items-center gap-0.5">
               <button
                 type="button"
-                className="rounded-full p-2 hover:bg-gray-100 transition-colors"
+                className="rounded-full p-2 hover:bg-accent transition-colors"
               >
-                <Phone className="size-[18px] text-gray-500" />
+                <Phone className="size-[18px] text-muted-foreground" />
               </button>
               <button
                 type="button"
-                className="rounded-full p-2 hover:bg-gray-100 transition-colors"
+                className="rounded-full p-2 hover:bg-accent transition-colors"
               >
-                <Video className="size-[18px] text-gray-500" />
+                <Video className="size-[18px] text-muted-foreground" />
               </button>
               <button
                 type="button"
-                className="rounded-full p-2 hover:bg-gray-100 transition-colors"
+                className="rounded-full p-2 hover:bg-accent transition-colors"
               >
-                <MoreVertical className="size-[18px] text-gray-500" />
+                <MoreVertical className="size-[18px] text-muted-foreground" />
               </button>
             </div>
           }
@@ -139,7 +140,7 @@ export default function MiniFooterPage() {
           {/* Date separator */}
           <div className="flex items-center justify-center py-5">
             <div className="flex items-center gap-2 rounded-lg bg-white/80 backdrop-blur-sm px-4 py-1.5 shadow-sm ring-1 ring-black/[0.04]">
-              <span className="text-[11px] font-semibold text-gray-500 tracking-wide uppercase">
+              <span className="text-[11px] font-semibold text-muted-foreground tracking-wide uppercase">
                 Today
               </span>
             </div>
@@ -153,17 +154,17 @@ export default function MiniFooterPage() {
           </div>
         </Content>
 
-        <Footer variant="mini" className="border-t-0 bg-white/90 backdrop-blur-xl shadow-[0_-1px_3px_rgba(0,0,0,0.05)]">
+        <Footer variant="mini" className="border-t-0 bg-card/90 backdrop-blur-xl shadow-[0_-1px_3px_rgba(0,0,0,0.05)]">
           <div className="flex flex-1 items-center gap-1.5">
             <button
               type="button"
-              className="shrink-0 rounded-full p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+              className="shrink-0 rounded-full p-1.5 text-muted-foreground/70 hover:text-foreground hover:bg-accent transition-colors"
             >
               <Smile className="size-5" />
             </button>
             <button
               type="button"
-              className="shrink-0 rounded-full p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+              className="shrink-0 rounded-full p-1.5 text-muted-foreground/70 hover:text-foreground hover:bg-accent transition-colors"
             >
               <Paperclip className="size-5" />
             </button>
@@ -173,7 +174,7 @@ export default function MiniFooterPage() {
               aria-label="Type a message"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              className="flex-1 rounded-full border border-gray-200 bg-gray-50/80 px-4 py-1.5 text-sm outline-none placeholder:text-gray-400 focus:border-emerald-300 focus:bg-white focus:ring-2 focus:ring-emerald-500/10 transition-all"
+              className="flex-1 rounded-full border border-border bg-muted/50 px-4 py-1.5 text-sm outline-none placeholder:text-muted-foreground focus:border-emerald-300 focus:bg-background focus:ring-2 focus:ring-emerald-500/10 transition-all"
             />
             <button
               type="button"
@@ -184,12 +185,9 @@ export default function MiniFooterPage() {
           </div>
         </Footer>
 
-        {/* Variant indicator pill */}
-        <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1.5 rounded-full bg-black/70 backdrop-blur-sm px-3 py-1.5 text-[11px] font-mono text-white/80 shadow-lg">
-          <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          variant=&quot;mini&quot;
-        </div>
       </AppShell>
+
+      <IndicatorPill>variant=&quot;mini&quot;</IndicatorPill>
     </MotionProvider>
   );
 }

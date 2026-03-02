@@ -15,6 +15,7 @@ import {
   MotionProvider,
 } from "@appshell/react";
 import { framerMotionAdapter } from "@appshell/react/motion-framer";
+import { IndicatorPill } from "../_shared/indicator-pill";
 import {
   Menu,
   User,
@@ -151,7 +152,7 @@ export default function ResponsivePage() {
             <div className="flex items-center gap-1">
               <button
                 type="button"
-                className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors relative"
+                className="rounded-lg p-2 text-muted-foreground hover:bg-accent hover:text-foreground transition-colors relative"
                 aria-label="Notifications"
               >
                 <Bell className="size-5" />
@@ -169,7 +170,7 @@ export default function ResponsivePage() {
         />
 
         <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)}>
-          <div className="p-4 border-b border-gray-100">
+          <div className="p-4 border-b border-border">
             <span className="text-lg font-bold tracking-tight">Dashboard</span>
           </div>
           <div className="p-2">
@@ -201,12 +202,6 @@ export default function ResponsivePage() {
 
         <Content className="pb-20 md:pb-8">
           <div className="mx-auto max-w-6xl px-4 sm:px-6 pt-6">
-            {/* Floating variant indicator */}
-            <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1.5 rounded-full bg-black/70 backdrop-blur-sm px-3 py-1.5 text-[11px] font-mono text-white/80 shadow-lg">
-              <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              Responsive
-            </div>
-
             {/* Welcome message */}
             <div className="relative mb-8 rounded-2xl overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900" />
@@ -222,19 +217,19 @@ export default function ResponsivePage() {
                 <div>
                   <div className="flex items-center gap-2 mb-2">
                     <Sparkles className="size-4 text-amber-400" />
-                    <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">
+                    <span className="text-xs font-medium text-muted-foreground/70 uppercase tracking-wider">
                       Overview
                     </span>
                   </div>
                   <h1 className="text-2xl sm:text-3xl font-bold text-white">
                     Welcome back, Alex
                   </h1>
-                  <p className="mt-2 text-sm text-gray-400 max-w-md">
+                  <p className="mt-2 text-sm text-muted-foreground/70 max-w-md">
                     Here is what is happening with your projects today. Your
                     revenue is up 20% compared to last month.
                   </p>
                 </div>
-                <div className="hidden sm:flex items-center gap-2 text-xs text-gray-500">
+                <div className="hidden sm:flex items-center gap-2 text-xs text-muted-foreground">
                   <CalendarDays className="size-4" />
                   <span>Feb 23, 2026</span>
                 </div>
@@ -246,7 +241,7 @@ export default function ResponsivePage() {
               {metrics.map((metric) => (
                 <div
                   key={metric.title}
-                  className="group relative rounded-2xl border border-gray-100 bg-white p-5 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden"
+                  className="group relative rounded-2xl border border-border bg-card p-5 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden"
                 >
                   {/* Subtle corner accent */}
                   <div className={`absolute -top-6 -right-6 size-16 rounded-full bg-gradient-to-br ${metric.gradient} opacity-[0.08] group-hover:opacity-[0.15] transition-opacity duration-300`} />
@@ -272,10 +267,10 @@ export default function ResponsivePage() {
                         {metric.change}
                       </span>
                     </div>
-                    <p className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
+                    <p className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight">
                       {metric.value}
                     </p>
-                    <p className="text-xs text-gray-500 mt-1">{metric.title}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{metric.title}</p>
                   </div>
                 </div>
               ))}
@@ -283,19 +278,19 @@ export default function ResponsivePage() {
 
             <div className="grid lg:grid-cols-3 gap-6">
               {/* Chart Placeholder */}
-              <div className="lg:col-span-2 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+              <div className="lg:col-span-2 rounded-2xl border border-border bg-card p-6 shadow-sm">
                 <div className="flex items-center justify-between mb-6">
                   <div>
-                    <h2 className="font-semibold text-gray-900">
+                    <h2 className="font-semibold text-foreground">
                       Revenue Overview
                     </h2>
-                    <p className="text-sm text-gray-500 mt-0.5">
+                    <p className="text-sm text-muted-foreground mt-0.5">
                       Monthly revenue for the current year
                     </p>
                   </div>
                   <button
                     type="button"
-                    className="flex items-center gap-1.5 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 transition-colors"
+                    className="flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground hover:bg-accent/50 transition-colors"
                   >
                     View Report
                     <ArrowUpRight className="size-3" />
@@ -312,7 +307,7 @@ export default function ResponsivePage() {
                           {/* Shine effect */}
                           <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-transparent via-white/10 to-transparent" />
                         </div>
-                        <span className="text-[10px] font-medium text-gray-400">
+                        <span className="text-[10px] font-medium text-muted-foreground/70">
                           {
                             ["J","F","M","A","M","J","J","A","S","O","N","D"][i]
                           }
@@ -324,31 +319,31 @@ export default function ResponsivePage() {
               </div>
 
               {/* Recent Activity */}
-              <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+              <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
                 <div className="flex items-center justify-between mb-5">
-                  <h2 className="font-semibold text-gray-900">
+                  <h2 className="font-semibold text-foreground">
                     Recent Activity
                   </h2>
-                  <div className="flex items-center justify-center size-8 rounded-lg bg-gray-50">
-                    <Activity className="size-4 text-gray-400" />
+                  <div className="flex items-center justify-center size-8 rounded-lg bg-muted/50">
+                    <Activity className="size-4 text-muted-foreground/70" />
                   </div>
                 </div>
                 <div className="flex flex-col gap-4">
                   {recentActivity.map((item, i) => (
                     <div key={i} className="flex items-start gap-3 group">
                       <div className="relative mt-0.5 shrink-0">
-                        <div className="flex items-center justify-center size-9 rounded-full bg-gray-100 text-gray-600">
+                        <div className="flex items-center justify-center size-9 rounded-full bg-muted text-muted-foreground">
                           <User className="size-4" />
                         </div>
                         {/* Color status indicator */}
-                        <span className={`absolute -bottom-0.5 -right-0.5 size-3 rounded-full ${item.color} ring-2 ring-white`} />
+                        <span className={`absolute -bottom-0.5 -right-0.5 size-3 rounded-full ${item.color} ring-2 ring-background`} />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="text-sm text-gray-900 leading-snug">
+                        <p className="text-sm text-foreground leading-snug">
                           <span className="font-medium">{item.user}</span>{" "}
-                          <span className="text-gray-500">{item.action}</span>
+                          <span className="text-muted-foreground">{item.action}</span>
                         </p>
-                        <p className="flex items-center gap-1 text-xs text-gray-400 mt-1">
+                        <p className="flex items-center gap-1 text-xs text-muted-foreground/70 mt-1">
                           <Clock className="size-3" />
                           {item.time}
                         </p>
@@ -391,6 +386,7 @@ export default function ResponsivePage() {
           </Footer>
         </div>
       </AppShell>
+      <IndicatorPill>Responsive</IndicatorPill>
     </MotionProvider>
   );
 }

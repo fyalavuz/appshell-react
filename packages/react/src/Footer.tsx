@@ -77,11 +77,11 @@ export const Footer = memo(function Footer({
       <div
         data-footer-floating
         className={cn(
-          "fixed bottom-0 left-0 right-0 z-50 flex pb-6 pointer-events-none",
+          "fixed bottom-0 left-0 right-0 z-50 flex pointer-events-none",
           positionClass,
           className
         )}
-        style={{ paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 1.5rem)" }}
+        style={{ paddingBottom: "max(calc(env(safe-area-inset-bottom, 0px) + 1.5rem), 1.8rem)" }}
       >
         <AnimatePresence>
           {!shouldHide && (
@@ -110,12 +110,12 @@ export const Footer = memo(function Footer({
             exit={{ y: 48 }}
             transition={{ duration: duration, ease: [0.16, 1, 0.3, 1] }}
             className={cn(
-              "fixed bottom-0 left-0 right-0 z-50 h-12 border-t bg-background/95 backdrop-blur-xl",
+              "fixed bottom-0 left-0 right-0 z-50 min-h-12 border-t bg-background/95 backdrop-blur-xl",
               className
             )}
-            style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+            style={{ paddingBottom: "max(env(safe-area-inset-bottom, 0px), 1.8rem)" }}
           >
-            <div className="mx-auto flex h-full max-w-7xl items-center px-4">
+            <div className="mx-auto flex h-12 max-w-7xl items-center px-4">
               {children}
             </div>
           </motion.footer>
@@ -137,7 +137,7 @@ export const Footer = memo(function Footer({
             "fixed bottom-0 left-0 right-0 z-50 border-t bg-background/95 backdrop-blur-xl",
             className
           )}
-          style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+          style={{ paddingBottom: "max(env(safe-area-inset-bottom, 0px), 1.8rem)" }}
         >
           <div className="mx-auto flex max-w-lg items-stretch">
             {children}

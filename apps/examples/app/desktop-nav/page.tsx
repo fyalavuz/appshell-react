@@ -9,6 +9,7 @@ import {
   MotionProvider,
 } from "@appshell/react";
 import { framerMotionAdapter } from "@appshell/react/motion-framer";
+import { IndicatorPill } from "../_shared/indicator-pill";
 import {
   Search,
   Bell,
@@ -252,21 +253,21 @@ export default function DesktopNavPage() {
                     href="#"
                     className="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm hover:bg-accent transition-colors"
                   >
-                    <Code2 className="size-4 text-gray-500" />
+                    <Code2 className="size-4 text-muted-foreground" />
                     <span className="font-medium">Documentation</span>
                   </a>
                   <a
                     href="#"
                     className="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm hover:bg-accent transition-colors"
                   >
-                    <Workflow className="size-4 text-gray-500" />
+                    <Workflow className="size-4 text-muted-foreground" />
                     <span className="font-medium">API Reference</span>
                   </a>
                   <a
                     href="#"
                     className="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm hover:bg-accent transition-colors"
                   >
-                    <Cloud className="size-4 text-gray-500" />
+                    <Cloud className="size-4 text-muted-foreground" />
                     <span className="font-medium">Status Page</span>
                   </a>
                 </div>
@@ -278,20 +279,20 @@ export default function DesktopNavPage() {
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                className="hidden sm:inline-flex rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors"
+                className="hidden sm:inline-flex rounded-lg p-2 text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
                 aria-label="Search"
               >
                 <Search className="size-5" />
               </button>
               <button
                 type="button"
-                className="hidden sm:inline-flex rounded-md border border-gray-200 px-3.5 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                className="hidden sm:inline-flex rounded-md border border-border px-3.5 py-1.5 text-sm font-medium text-foreground hover:bg-accent/50 transition-colors"
               >
                 Sign In
               </button>
               <button
                 type="button"
-                className="rounded-md bg-black px-3.5 py-1.5 text-sm font-medium text-white hover:bg-gray-800 transition-colors"
+                className="rounded-md bg-primary px-3.5 py-1.5 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
               >
                 Get Started
               </button>
@@ -301,12 +302,6 @@ export default function DesktopNavPage() {
 
         <Content className="pb-16">
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
-            {/* Floating variant indicator */}
-            <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1.5 rounded-full bg-black/70 backdrop-blur-sm px-3 py-1.5 text-[11px] font-mono text-white/80 shadow-lg">
-              <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              HeaderNav
-            </div>
-
             {/* Hero Section */}
             <section className="relative text-center py-16 sm:py-24 overflow-hidden">
               {/* Dot grid pattern */}
@@ -325,37 +320,37 @@ export default function DesktopNavPage() {
                   <Zap className="size-3.5" />
                   Now with Edge Functions v2
                 </div>
-                <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 leading-[1.08]">
+                <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-foreground leading-[1.08]">
                   Ship faster.
                   <br />
                   <span className="bg-gradient-to-r from-indigo-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
                     Scale infinitely.
                   </span>
                 </h1>
-                <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-500 leading-relaxed">
+                <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground leading-relaxed">
                   The modern infrastructure platform for teams who build at scale.
                   Analytics, monitoring, security, and deployment in one unified
                   experience.
                 </p>
                 <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
-                  <button className="w-full sm:w-auto rounded-xl bg-gray-900 px-7 py-3.5 text-sm font-semibold text-white hover:bg-gray-800 transition-all shadow-lg shadow-gray-900/20 hover:shadow-xl hover:shadow-gray-900/25 flex items-center justify-center gap-2">
+                  <button className="w-full sm:w-auto rounded-xl bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/25 flex items-center justify-center gap-2">
                     Start Building
                     <ArrowRight className="size-4" />
                   </button>
-                  <button className="w-full sm:w-auto rounded-xl border border-gray-200 px-7 py-3.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors">
+                  <button className="w-full sm:w-auto rounded-xl border border-border px-7 py-3.5 text-sm font-semibold text-foreground hover:bg-accent/50 transition-colors">
                     View Documentation
                   </button>
                 </div>
-                <div className="mt-16 flex items-center justify-center gap-8 text-sm text-gray-400">
+                <div className="mt-16 flex items-center justify-center gap-8 text-sm text-muted-foreground/70">
                   <span>Trusted by teams at</span>
                 </div>
                 <div className="mt-5 flex flex-wrap items-center justify-center gap-6 sm:gap-8">
                   {logos.map((logo) => (
                     <div
                       key={logo}
-                      className="flex items-center justify-center rounded-lg border border-gray-100 bg-white/60 px-5 py-2.5 shadow-sm backdrop-blur-sm"
+                      className="flex items-center justify-center rounded-lg border border-border bg-card/60 px-5 py-2.5 shadow-sm backdrop-blur-sm"
                     >
-                      <span className="text-sm font-semibold text-gray-400 tracking-tight">
+                      <span className="text-sm font-semibold text-muted-foreground/70 tracking-tight">
                         {logo}
                       </span>
                     </div>
@@ -367,10 +362,10 @@ export default function DesktopNavPage() {
             {/* Features Grid */}
             <section className="py-12 sm:py-20">
               <div className="text-center mb-14">
-                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+                <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
                   Everything you need to ship
                 </h2>
-                <p className="mt-4 text-gray-500 max-w-xl mx-auto">
+                <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
                   A complete platform with the tools your team needs, from
                   development to production.
                 </p>
@@ -379,7 +374,7 @@ export default function DesktopNavPage() {
                 {features.map((feature, i) => (
                   <div
                     key={i}
-                    className="group relative rounded-2xl border border-gray-100 bg-white p-6 shadow-sm hover:shadow-lg hover:border-gray-200/80 transition-all duration-300 overflow-hidden"
+                    className="group relative rounded-2xl border border-border bg-card p-6 shadow-sm hover:shadow-lg hover:border-border/80 transition-all duration-300 overflow-hidden"
                   >
                     {/* Background glow on hover */}
                     <div className={`absolute -top-12 -right-12 size-32 rounded-full ${feature.bgGlow} opacity-0 group-hover:opacity-100 blur-2xl transition-opacity duration-500`} />
@@ -389,10 +384,10 @@ export default function DesktopNavPage() {
                           {feature.icon}
                         </div>
                       </div>
-                      <h3 className="text-base font-semibold text-gray-900">
+                      <h3 className="text-base font-semibold text-foreground">
                         {feature.title}
                       </h3>
-                      <p className="mt-2.5 text-sm text-gray-500 leading-relaxed">
+                      <p className="mt-2.5 text-sm text-muted-foreground leading-relaxed">
                         {feature.desc}
                       </p>
                       <button className="mt-5 flex items-center gap-1.5 text-sm font-medium text-indigo-600 opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
@@ -443,10 +438,10 @@ export default function DesktopNavPage() {
             {/* Integrations */}
             <section className="py-12 sm:py-20">
               <div className="text-center mb-12">
-                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+                <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
                   Built for your stack
                 </h2>
-                <p className="mt-4 text-gray-500 max-w-xl mx-auto">
+                <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
                   First-class integrations with the tools and frameworks you
                   already use.
                 </p>
@@ -462,12 +457,12 @@ export default function DesktopNavPage() {
                 ].map((tech) => (
                   <div
                     key={tech.name}
-                    className="group flex flex-col items-center gap-3 rounded-2xl border border-gray-100 bg-white p-5 hover:border-gray-200 hover:shadow-md transition-all duration-300"
+                    className="group flex flex-col items-center gap-3 rounded-2xl border border-border bg-card p-5 hover:border-border hover:shadow-md transition-all duration-300"
                   >
                     <div className={`${tech.color} transition-transform duration-300 group-hover:scale-110`}>
                       {tech.icon}
                     </div>
-                    <span className="text-xs font-semibold text-gray-600">
+                    <span className="text-xs font-semibold text-muted-foreground">
                       {tech.name}
                     </span>
                   </div>
@@ -478,10 +473,10 @@ export default function DesktopNavPage() {
             {/* Pricing */}
             <section id="pricing" className="py-12 sm:py-20">
               <div className="text-center mb-14">
-                <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+                <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
                   Simple, transparent pricing
                 </h2>
-                <p className="mt-4 text-gray-500 max-w-xl mx-auto">
+                <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
                   Start free and scale as you grow. No hidden fees, no surprise
                   charges.
                 </p>
@@ -493,7 +488,7 @@ export default function DesktopNavPage() {
                     className={`relative rounded-2xl border p-6 transition-all duration-300 ${
                       plan.popular
                         ? "border-indigo-300 bg-gradient-to-b from-indigo-50/80 to-white ring-2 ring-indigo-200 shadow-xl shadow-indigo-500/10 scale-[1.03] z-10"
-                        : "border-gray-100 bg-white shadow-sm hover:shadow-md"
+                        : "border-border bg-card shadow-sm hover:shadow-md"
                     }`}
                   >
                     {plan.popular && (
@@ -502,23 +497,23 @@ export default function DesktopNavPage() {
                         Most Popular
                       </span>
                     )}
-                    <h3 className="text-lg font-semibold text-gray-900">
+                    <h3 className="text-lg font-semibold text-foreground">
                       {plan.name}
                     </h3>
                     <div className="mt-4 flex items-baseline gap-1">
-                      <span className={`text-4xl font-bold ${plan.popular ? "text-indigo-600" : "text-gray-900"}`}>
+                      <span className={`text-4xl font-bold ${plan.popular ? "text-indigo-600" : "text-foreground"}`}>
                         {plan.price}
                       </span>
-                      <span className="text-sm text-gray-500">
+                      <span className="text-sm text-muted-foreground">
                         /{plan.period}
                       </span>
                     </div>
-                    <p className="mt-3 text-sm text-gray-500">{plan.desc}</p>
+                    <p className="mt-3 text-sm text-muted-foreground">{plan.desc}</p>
                     <ul className="mt-6 space-y-3">
                       {plan.features.map((feat) => (
                         <li
                           key={feat}
-                          className="flex items-center gap-2.5 text-sm text-gray-600"
+                          className="flex items-center gap-2.5 text-sm text-muted-foreground"
                         >
                           <span className={`flex items-center justify-center size-5 rounded-full ${plan.popular ? "bg-indigo-100 text-indigo-600" : "bg-emerald-50 text-emerald-500"}`}>
                             <Check className="size-3 shrink-0" />
@@ -531,7 +526,7 @@ export default function DesktopNavPage() {
                       className={`mt-8 w-full rounded-xl py-3 text-sm font-semibold transition-all ${
                         plan.popular
                           ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 shadow-lg shadow-indigo-500/25 hover:shadow-xl hover:shadow-indigo-500/30"
-                          : "border border-gray-200 text-gray-700 hover:bg-gray-50"
+                          : "border border-border text-foreground hover:bg-accent/50"
                       }`}
                     >
                       {plan.cta}
@@ -574,6 +569,7 @@ export default function DesktopNavPage() {
           </div>
         </Content>
       </AppShell>
+      <IndicatorPill>HeaderNav</IndicatorPill>
     </MotionProvider>
   );
 }

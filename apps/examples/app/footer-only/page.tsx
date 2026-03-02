@@ -10,6 +10,7 @@ import {
 } from "@appshell/react";
 import { framerMotionAdapter } from "@appshell/react/motion-framer";
 import { Image, Compass, Camera, User, Heart, MapPin, Play, Sparkles } from "lucide-react";
+import { IndicatorPill } from "../_shared/indicator-pill";
 
 const galleryItems = [
   {
@@ -171,7 +172,7 @@ export default function FooterOnlyPage() {
                   <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out scale-90 group-hover:scale-100">
                     <button
                       type="button"
-                      className="flex items-center gap-1 rounded-xl bg-white/90 backdrop-blur-sm px-2.5 py-1.5 text-gray-700 hover:text-red-500 text-xs font-medium transition-colors shadow-sm"
+                      className="flex items-center gap-1 rounded-xl bg-card/90 backdrop-blur-sm px-2.5 py-1.5 text-foreground hover:text-red-500 text-xs font-medium transition-colors shadow-sm"
                     >
                       <Heart className="size-3.5" />
                       {item.likes.toLocaleString()}
@@ -210,12 +211,9 @@ export default function FooterOnlyPage() {
           />
         </Footer>
 
-        {/* Floating variant indicator */}
-        <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1.5 rounded-full bg-black/70 backdrop-blur-sm px-3 py-1.5 text-[11px] font-mono text-white/80 shadow-lg">
-          <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          footer-only &middot; no header
-        </div>
       </AppShell>
+
+      <IndicatorPill>footer-only &middot; no header</IndicatorPill>
     </MotionProvider>
   );
 }

@@ -34,6 +34,7 @@ import {
   Gift,
   Zap,
 } from "lucide-react";
+import { IndicatorPill } from "../_shared/indicator-pill";
 
 const products = [
   {
@@ -133,7 +134,7 @@ const tagColors: Record<string, string> = {
   New: "bg-emerald-500 text-white",
   Eco: "bg-green-600 text-white",
   Premium: "bg-amber-600 text-white",
-  "Best Seller": "bg-gray-900 text-white",
+  "Best Seller": "bg-primary text-primary-foreground",
   Popular: "bg-indigo-600 text-white",
 };
 
@@ -146,17 +147,17 @@ export default function SidebarPage() {
         <Header
           behavior="fixed"
           theme="light"
-          className="bg-white/80 backdrop-blur-xl border-b border-gray-100"
+          className="bg-card/80 backdrop-blur-xl border-b border-border"
           logo={
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors"
+                className="p-1.5 rounded-lg hover:bg-accent transition-colors"
                 aria-label="Open menu"
               >
                 <Menu className="size-5" />
               </button>
-              <span className="text-lg font-bold tracking-tight bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+              <span className="text-lg font-bold tracking-tight bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">
                 Thread &amp; Co
               </span>
             </div>
@@ -165,25 +166,25 @@ export default function SidebarPage() {
             <div className="flex items-center gap-0.5">
               <button
                 type="button"
-                className="rounded-lg p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors"
+                className="rounded-lg p-2 text-muted-foreground/70 hover:bg-accent hover:text-foreground transition-colors"
                 aria-label="Search"
               >
                 <Search className="size-5" />
               </button>
               <button
                 type="button"
-                className="rounded-lg p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors"
+                className="rounded-lg p-2 text-muted-foreground/70 hover:bg-accent hover:text-foreground transition-colors"
                 aria-label="Wishlist"
               >
                 <Heart className="size-5" />
               </button>
               <button
                 type="button"
-                className="rounded-lg p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors relative"
+                className="rounded-lg p-2 text-muted-foreground/70 hover:bg-accent hover:text-foreground transition-colors relative"
                 aria-label="Cart"
               >
                 <ShoppingCart className="size-5" />
-                <span className="absolute top-1 right-1 flex items-center justify-center size-4 rounded-full bg-gray-900 text-[10px] font-bold text-white ring-2 ring-white">
+                <span className="absolute top-1 right-1 flex items-center justify-center size-4 rounded-full bg-primary text-[10px] font-bold text-primary-foreground ring-2 ring-background">
                   3
                 </span>
               </button>
@@ -197,16 +198,16 @@ export default function SidebarPage() {
           side="left"
         >
           {/* Sidebar header */}
-          <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+          <div className="flex items-center justify-between px-5 py-4 border-b border-border">
             <div className="flex items-center gap-2.5">
-              <div className="flex size-8 items-center justify-center rounded-lg bg-gray-900 text-xs font-bold text-white">
+              <div className="flex size-8 items-center justify-center rounded-lg bg-primary text-xs font-bold text-primary-foreground">
                 T
               </div>
-              <span className="text-base font-bold text-gray-900">Navigation</span>
+              <span className="text-base font-bold text-foreground">Navigation</span>
             </div>
             <button
               onClick={() => setSidebarOpen(false)}
-              className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors text-gray-400 hover:text-gray-600"
+              className="p-1.5 rounded-lg hover:bg-accent transition-colors text-muted-foreground/70 hover:text-foreground"
               aria-label="Close menu"
             >
               <X className="size-4" />
@@ -300,7 +301,7 @@ export default function SidebarPage() {
           </div>
 
           {/* Sidebar promo card */}
-          <div className="mt-auto border-t border-gray-100 p-4">
+          <div className="mt-auto border-t border-border p-4">
             <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-violet-600 via-purple-600 to-indigo-700 p-5 text-white">
               {/* Decorative circles */}
               <div className="absolute -top-6 -right-6 size-24 rounded-full bg-white/10" />
@@ -325,7 +326,7 @@ export default function SidebarPage() {
           </div>
         </Sidebar>
 
-        <Content className="pb-12 bg-gray-50/50">
+        <Content className="pb-12 bg-muted/30">
           <div className="mx-auto max-w-6xl px-4 sm:px-6 pt-6">
 
             {/* Hero Banner */}
@@ -382,8 +383,8 @@ export default function SidebarPage() {
                   key={cat}
                   className={`shrink-0 rounded-full px-5 py-2 text-sm font-medium transition-all ${
                     i === 0
-                      ? "bg-gray-900 text-white shadow-sm shadow-gray-900/20"
-                      : "bg-white text-gray-600 ring-1 ring-gray-200 hover:ring-gray-300 hover:bg-gray-50 hover:text-gray-900"
+                      ? "bg-primary text-primary-foreground shadow-sm shadow-primary/20"
+                      : "bg-card text-muted-foreground ring-1 ring-border hover:ring-ring hover:bg-accent/50 hover:text-foreground"
                   }`}
                 >
                   {cat}
@@ -396,7 +397,7 @@ export default function SidebarPage() {
               {products.map((product, i) => (
                 <div
                   key={i}
-                  className="group rounded-2xl bg-white overflow-hidden shadow-sm ring-1 ring-gray-100 hover:shadow-lg hover:ring-gray-200 hover:-translate-y-0.5 transition-all duration-300"
+                  className="group rounded-2xl bg-card overflow-hidden shadow-sm ring-1 ring-border hover:shadow-lg hover:ring-border hover:-translate-y-0.5 transition-all duration-300"
                 >
                   <div className="relative">
                     <div
@@ -417,40 +418,40 @@ export default function SidebarPage() {
                     {product.tag && (
                       <span
                         className={`absolute top-2.5 left-2.5 rounded-lg px-2 py-0.5 text-[11px] font-bold tracking-wide shadow-sm ${
-                          tagColors[product.tag] ?? "bg-gray-900 text-white"
+                          tagColors[product.tag] ?? "bg-primary text-primary-foreground"
                         }`}
                       >
                         {product.tag}
                       </span>
                     )}
                     <button
-                      className="absolute top-2.5 right-2.5 flex items-center justify-center size-8 rounded-full bg-white/90 opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm hover:bg-white hover:scale-110 shadow-sm"
+                      className="absolute top-2.5 right-2.5 flex items-center justify-center size-8 rounded-full bg-card/90 opacity-0 group-hover:opacity-100 transition-all backdrop-blur-sm hover:bg-card hover:scale-110 shadow-sm"
                       aria-label={`Add ${product.name} to wishlist`}
                     >
-                      <Heart className="size-4 text-gray-500" />
+                      <Heart className="size-4 text-muted-foreground" />
                     </button>
                   </div>
                   <div className="p-3.5">
-                    <h3 className="text-sm font-semibold text-gray-900 leading-snug line-clamp-1">
+                    <h3 className="text-sm font-semibold text-foreground leading-snug line-clamp-1">
                       {product.name}
                     </h3>
                     <div className="mt-1.5 flex items-center gap-1">
                       <div className="flex items-center">
                         <Star className="size-3 fill-amber-400 text-amber-400" />
                       </div>
-                      <span className="text-xs font-medium text-gray-500">
+                      <span className="text-xs font-medium text-muted-foreground">
                         {product.rating}
                       </span>
-                      <span className="text-xs text-gray-300">
+                      <span className="text-xs text-muted-foreground/50">
                         ({product.reviews})
                       </span>
                     </div>
                     <div className="mt-2 flex items-center gap-2">
-                      <span className="text-sm font-bold text-gray-900">
+                      <span className="text-sm font-bold text-foreground">
                         {product.price}
                       </span>
                       {product.originalPrice && (
-                        <span className="text-xs text-gray-400 line-through">
+                        <span className="text-xs text-muted-foreground/70 line-through">
                           {product.originalPrice}
                         </span>
                       )}
@@ -468,10 +469,10 @@ export default function SidebarPage() {
                   <div className="flex items-center justify-center size-12 rounded-xl bg-amber-100 mb-4">
                     <Truck className="size-6 text-amber-600" />
                   </div>
-                  <h3 className="text-lg font-bold text-gray-900">
+                  <h3 className="text-lg font-bold text-foreground">
                     Free Shipping
                   </h3>
-                  <p className="mt-1.5 text-sm text-gray-500 leading-relaxed">
+                  <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">
                     On all orders over $75. Fast delivery within 2-4 business
                     days.
                   </p>
@@ -483,10 +484,10 @@ export default function SidebarPage() {
                   <div className="flex items-center justify-center size-12 rounded-xl bg-emerald-100 mb-4">
                     <Gift className="size-6 text-emerald-600" />
                   </div>
-                  <h3 className="text-lg font-bold text-gray-900">
+                  <h3 className="text-lg font-bold text-foreground">
                     Easy Returns
                   </h3>
-                  <p className="mt-1.5 text-sm text-gray-500 leading-relaxed">
+                  <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">
                     30-day return policy with free return shipping. No questions
                     asked.
                   </p>
@@ -495,7 +496,7 @@ export default function SidebarPage() {
             </div>
 
             {/* Newsletter */}
-            <div className="mt-10 mb-6 relative overflow-hidden rounded-2xl bg-gray-900 p-6 sm:p-8 text-white">
+            <div className="mt-10 mb-6 relative overflow-hidden rounded-2xl bg-primary p-6 sm:p-8 text-primary-foreground">
               <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-bl from-violet-500/20 to-transparent rounded-bl-full" />
               <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-emerald-500/10 to-transparent rounded-tr-full" />
               <div className="relative flex flex-col sm:flex-row sm:items-center gap-4">
@@ -507,7 +508,7 @@ export default function SidebarPage() {
                   <h3 className="text-lg font-bold">Get early access to drops</h3>
                   <p className="mt-1 text-sm text-white/50">Join 50k+ subscribers. No spam, ever.</p>
                 </div>
-                <button className="shrink-0 rounded-xl bg-white px-6 py-3 text-sm font-bold text-gray-900 hover:bg-white/90 active:scale-[0.98] transition-all">
+                <button className="shrink-0 rounded-xl bg-card px-6 py-3 text-sm font-bold text-foreground hover:bg-card/90 active:scale-[0.98] transition-all">
                   Subscribe
                 </button>
               </div>
@@ -516,10 +517,7 @@ export default function SidebarPage() {
         </Content>
 
         {/* Variant indicator pill */}
-        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1.5 rounded-full bg-black/70 backdrop-blur-sm px-3 py-1.5 text-[11px] font-mono text-white/80 shadow-lg">
-          <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          variant=&quot;sidebar&quot;
-        </div>
+        <IndicatorPill>variant=&quot;sidebar&quot;</IndicatorPill>
       </AppShell>
     </MotionProvider>
   );

@@ -174,6 +174,9 @@ export default function ExamplesPage() {
             Explore various mobile-first app shell patterns built with shadcn-compatible components.
             Every example is fully responsive and interactive.
           </p>
+          <div className="mt-6 inline-flex items-center gap-2 rounded-lg bg-muted px-4 py-2.5 font-mono text-sm text-muted-foreground">
+            <span className="text-primary">$</span> npm install @appshell/react
+          </div>
         </div>
 
         <div className="space-y-20">
@@ -188,7 +191,7 @@ export default function ExamplesPage() {
                   <Link
                     key={example.slug}
                     href={`/${example.slug}`}
-                    className="group relative overflow-hidden rounded-xl border bg-card p-6 transition-all hover:bg-accent/50 hover:shadow-md"
+                    className="group relative overflow-hidden rounded-xl border bg-card p-6 transition-all hover:bg-accent/50 hover:shadow-md cursor-pointer"
                   >
                     <div className="flex items-start justify-between">
                       <div className="rounded-lg bg-primary/10 p-2.5 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
@@ -222,9 +225,8 @@ export default function ExamplesPage() {
               &copy; 2026 @appshell/react. MIT Licensed.
             </p>
             <div className="flex items-center gap-6">
-              <Link href="/docs" className="text-sm font-medium text-muted-foreground hover:text-primary">Docs</Link>
-              <a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary">GitHub</a>
-              <a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary">NPM</a>
+              <a href="https://github.com/fyalavuz/react-appshell" target="_blank" rel="noreferrer" className="text-sm font-medium text-muted-foreground hover:text-primary">GitHub</a>
+              <a href="https://www.npmjs.com/package/@appshell/react" target="_blank" rel="noreferrer" className="text-sm font-medium text-muted-foreground hover:text-primary">NPM</a>
             </div>
           </div>
         </div>

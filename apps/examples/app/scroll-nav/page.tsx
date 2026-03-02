@@ -24,6 +24,7 @@ import {
   Mail,
   Sparkles,
 } from "lucide-react";
+import { IndicatorPill } from "../_shared/indicator-pill";
 
 type Category =
   | "all"
@@ -290,14 +291,14 @@ export default function ScrollNavPage() {
             <div className="flex items-center gap-1">
               <button
                 type="button"
-                className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors"
+                className="rounded-lg p-2 text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
                 aria-label="Search"
               >
                 <Search className="size-5" />
               </button>
               <button
                 type="button"
-                className="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors relative"
+                className="rounded-lg p-2 text-muted-foreground hover:bg-accent hover:text-foreground transition-colors relative"
                 aria-label="Notifications"
               >
                 <Bell className="size-5" />
@@ -328,12 +329,6 @@ export default function ScrollNavPage() {
 
         <Content className="pb-12">
           <div className="mx-auto max-w-3xl px-4 sm:px-6 pt-6">
-            {/* Floating variant indicator */}
-            <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1.5 rounded-full bg-black/70 backdrop-blur-sm px-3 py-1.5 text-[11px] font-mono text-white/80 shadow-lg">
-              <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              ScrollNav
-            </div>
-
             {/* Trending Banner */}
             {activeTab === "all" && (
               <div className="relative rounded-2xl overflow-hidden mb-8">
@@ -385,10 +380,10 @@ export default function ScrollNavPage() {
             {/* Category Header */}
             {activeTab !== "all" && (
               <div className="mb-6">
-                <h2 className="text-2xl font-bold text-gray-900 capitalize">
+                <h2 className="text-2xl font-bold text-foreground capitalize">
                   {tabs.find((t) => t.id === activeTab)?.label}
                 </h2>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-muted-foreground">
                   {filtered.length} article{filtered.length !== 1 ? "s" : ""}
                 </p>
               </div>
@@ -399,7 +394,7 @@ export default function ScrollNavPage() {
               {filtered.map((article, i) => (
                 <article
                   key={`${article.title}-${i}`}
-                  className="group rounded-2xl border border-gray-100 bg-white overflow-hidden shadow-sm hover:shadow-lg hover:border-gray-200/80 transition-all duration-300"
+                  className="group rounded-2xl border border-border bg-card overflow-hidden shadow-sm hover:shadow-lg hover:border-input transition-all duration-300"
                 >
                   <div className="flex flex-col sm:flex-row">
                     {/* Thumbnail */}
@@ -427,27 +422,27 @@ export default function ScrollNavPage() {
                     <div className="flex flex-col justify-between flex-1 min-w-0 p-5">
                       <div>
                         <div className="flex items-center gap-2 mb-2">
-                          <span className="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-600 capitalize">
+                          <span className="rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground capitalize">
                             {tabs.find((t) => t.id === article.category)?.label}
                           </span>
-                          <span className="flex items-center gap-1 text-xs text-gray-400">
+                          <span className="flex items-center gap-1 text-xs text-muted-foreground/70">
                             <Clock className="size-3" />
                             {article.readTime}
                           </span>
                         </div>
-                        <h3 className="text-base font-semibold text-gray-900 leading-snug group-hover:text-orange-600 transition-colors duration-200 line-clamp-2">
+                        <h3 className="text-base font-semibold text-foreground leading-snug group-hover:text-orange-600 transition-colors duration-200 line-clamp-2">
                           {article.title}
                         </h3>
-                        <p className="mt-2 text-sm text-gray-500 leading-relaxed line-clamp-2">
+                        <p className="mt-2 text-sm text-muted-foreground leading-relaxed line-clamp-2">
                           {article.excerpt}
                         </p>
                       </div>
 
                       <div className="mt-4 flex items-center justify-between">
                         <div className="flex items-center gap-2.5">
-                          <div className="size-7 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 ring-2 ring-white" />
-                          <div className="flex items-center gap-1.5 text-xs text-gray-500">
-                            <span className="font-medium text-gray-700">
+                          <div className="size-7 rounded-full bg-gradient-to-br from-gray-300 to-gray-400 ring-2 ring-background" />
+                          <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                            <span className="font-medium text-foreground">
                               {article.author}
                             </span>
                             <span>&middot;</span>
@@ -455,18 +450,18 @@ export default function ScrollNavPage() {
                           </div>
                         </div>
                         <div className="flex items-center gap-3">
-                          <button className="flex items-center gap-1 text-xs text-gray-400 hover:text-red-500 transition-colors">
+                          <button className="flex items-center gap-1 text-xs text-muted-foreground/70 hover:text-red-500 transition-colors">
                             <Heart className="size-3.5" />
                             {formatNumber(article.likes)}
                           </button>
-                          <button className="flex items-center gap-1 text-xs text-gray-400 hover:text-blue-500 transition-colors">
+                          <button className="flex items-center gap-1 text-xs text-muted-foreground/70 hover:text-blue-500 transition-colors">
                             <MessageCircle className="size-3.5" />
                             {formatNumber(article.comments)}
                           </button>
-                          <button className="text-gray-400 hover:text-gray-600 transition-colors">
+                          <button className="text-muted-foreground/70 hover:text-foreground transition-colors">
                             <Bookmark className="size-3.5" />
                           </button>
-                          <button className="text-gray-400 hover:text-gray-600 transition-colors">
+                          <button className="text-muted-foreground/70 hover:text-foreground transition-colors">
                             <Share2 className="size-3.5" />
                           </button>
                         </div>
@@ -480,13 +475,13 @@ export default function ScrollNavPage() {
             {/* Empty State */}
             {filtered.length === 0 && (
               <div className="text-center py-16">
-                <div className="inline-flex items-center justify-center size-16 rounded-full bg-gray-100 mb-4">
-                  <Search className="size-7 text-gray-400" />
+                <div className="inline-flex items-center justify-center size-16 rounded-full bg-muted mb-4">
+                  <Search className="size-7 text-muted-foreground/70" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900">
+                <h3 className="text-lg font-semibold text-foreground">
                   No articles found
                 </h3>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-muted-foreground">
                   There are no articles in this category yet. Check back soon.
                 </p>
               </div>
@@ -495,7 +490,7 @@ export default function ScrollNavPage() {
             {/* Load More */}
             {filtered.length > 0 && (
               <div className="mt-10 text-center">
-                <button className="rounded-xl border border-gray-200 px-8 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:shadow-sm transition-all">
+                <button className="rounded-xl border border-border px-8 py-3 text-sm font-medium text-foreground hover:bg-accent/50 hover:shadow-sm transition-all">
                   Load More Articles
                 </button>
               </div>
@@ -543,6 +538,7 @@ export default function ScrollNavPage() {
           </div>
         </Content>
       </AppShell>
+      <IndicatorPill>ScrollNav</IndicatorPill>
     </MotionProvider>
   );
 }
