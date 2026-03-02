@@ -6,11 +6,11 @@ import {
   Navigation,
   MousePointer2,
   PanelLeft,
-  GalleryHorizontal,
   Box,
   Columns,
   Layout,
   Moon,
+  TableOfContents,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -109,6 +109,14 @@ export const categories: ExampleCategory[] = [
           "Horizontal pill-style scrollable tabs for category filtering and section navigation.",
         icon: Box,
         code: `<Header searchContent={\n  <ScrollNav>\n    <ScrollNavItem label="All" active />\n    <ScrollNavItem label="Tech" />\n  </ScrollNav>\n} />`,
+      },
+      {
+        slug: "in-page-nav",
+        title: "In-Page Navigation",
+        description:
+          "Anchor-based section navigation with scroll-spy highlighting and reveal-nav header behavior.",
+        icon: TableOfContents,
+        code: `<Header behavior="reveal-nav" />\n{/* Sticky pill nav synced to scroll position */}\n<div style={{ top: "var(--header-height)" }} className="sticky">\n  <nav>{sections.map(s => <button />)}</nav>\n</div>`,
       },
       {
         slug: "desktop-nav",

@@ -11,7 +11,7 @@
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
   "ignore": [
-    "@appshell/examples",
-    "@appshell/docs"
+    "@appshell-react/examples",
+    "@appshell-react/docs"
   ]
 }

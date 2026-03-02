@@ -16,7 +16,7 @@ export default defineConfig({
     { name: "mobile-chrome", use: { ...devices["Pixel 5"] } },
   ],
   webServer: {
-    command: "pnpm --filter @appshell/examples dev",
+    command: "pnpm --filter @appshell-react/examples dev",
     port: 3001,
     reuseExistingServer: !process.env.CI,
     cwd: "..",

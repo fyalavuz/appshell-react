@@ -44,6 +44,14 @@ export function ExampleLayout({ slug, title, description, code }: ExampleLayoutP
           </Link>
           <div className="ml-auto flex items-center gap-4">
             <a
+              href="https://fyalavuz.github.io/appshell-react"
+              target="_blank"
+              rel="noreferrer"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Docs
+            </a>
+            <a
               href="https://github.com/fyalavuz/appshell-react"
               target="_blank"
               rel="noreferrer"

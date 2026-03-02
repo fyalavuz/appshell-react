@@ -32,12 +32,12 @@ jobs:
         run: pnpm turbo build --filter=appshell-react
 
       - name: Build docs
-        run: pnpm turbo build --filter=@appshell/docs
+        run: pnpm turbo build --filter=@appshell-react/docs
         env:
           NEXT_PUBLIC_BASE_PATH: /${{ env.REPO_NAME }}
 
       - name: Build examples
-        run: pnpm turbo build --filter=@appshell/examples
+        run: pnpm turbo build --filter=@appshell-react/examples
         env:
           NEXT_PUBLIC_BASE_PATH: /${{ env.REPO_NAME }}/examples
 
