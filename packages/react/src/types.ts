@@ -46,6 +46,7 @@ export interface HeaderProps {
   speed?: AnimationSpeed;
   mobileMenu?: ReactNode;
   onVisibilityChange?: (visible: boolean) => void;
+  forceSafeAreaTop?: boolean;
   className?: string;
 }
 

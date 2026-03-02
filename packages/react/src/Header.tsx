@@ -62,6 +62,7 @@ export const Header = memo(function Header({
   speed = "normal",
   mobileMenu,
   onVisibilityChange,
+  forceSafeAreaTop = false,
   className,
 }: HeaderProps) {
   const { motion, AnimatePresence } = useMotion();
@@ -119,7 +120,7 @@ export const Header = memo(function Header({
   const [isPastThreshold, setIsPastThreshold] = useState(false);
 
   useEffect(() => {
-    if (behavior === "static" || behavior === "fixed") return;
+    if (behavior === "static" || behavior === "fixed" || behavior === "sticky") return;
 
     const onScroll = () => {
       setIsPastThreshold(window.scrollY > threshold + 10);
@@ -134,7 +135,7 @@ export const Header = memo(function Header({
     hasRevealEffect && scrollDirection === "up" && isPastThreshold;
 
   useEffect(() => {
-    onVisibilityChange?.(behavior === "fixed" || !hasRevealEffect || isOverlayVisible);
+    onVisibilityChange?.(behavior === "fixed" || behavior === "sticky" || !hasRevealEffect || isOverlayVisible);
   }, [isOverlayVisible, behavior, hasRevealEffect, onVisibilityChange]);
 
   const shouldShowInOverlay = useCallback(
@@ -252,7 +253,7 @@ export const Header = memo(function Header({
 
   const renderContent = () => (
     <HeaderProvider value={{ theme }}>
-      {renderNavRow(behavior !== "static" && behavior !== "fixed")}
+      {renderNavRow(behavior !== "static" && behavior !== "fixed" && behavior !== "sticky")}
       {renderContextRow()}
       {renderSearchRow()}
       {renderMobileMenuPanel()}
@@ -291,7 +292,7 @@ export const Header = memo(function Header({
           t.wrapper,
           className
         )}
-        style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
+        style={{ paddingTop: forceSafeAreaTop ? "env(safe-area-inset-top, 0px)" : undefined }}
       >
         {renderContent()}
       </header>
