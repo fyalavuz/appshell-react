@@ -19,8 +19,33 @@ export interface MotionAdapter {
     footer: ForwardRefExoticComponent<any>;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     nav: ForwardRefExoticComponent<any>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    header: ForwardRefExoticComponent<any>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    section: ForwardRefExoticComponent<any>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    main: ForwardRefExoticComponent<any>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    span: ForwardRefExoticComponent<any>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    button: ForwardRefExoticComponent<any>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    h1: ForwardRefExoticComponent<any>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    p: ForwardRefExoticComponent<any>;
   };
 }
+
+/** 
+ * Standard "Premium" spring transition for appshell-react.
+ * Optimized for layout and entrance animations.
+ */
+export const premiumSpring = {
+  type: "spring",
+  stiffness: 400,
+  damping: 30,
+  mass: 1,
+} as const;
 
 const MotionContext = createContext<MotionAdapter | null>(null);
 

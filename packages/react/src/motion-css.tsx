@@ -40,5 +40,12 @@ export const cssMotionAdapter: MotionAdapter = {
     div: createCSSMotionComponent("div"),
     footer: createCSSMotionComponent("footer"),
     nav: createCSSMotionComponent("nav"),
+    header: createCSSMotionComponent("header"),
+    section: createCSSMotionComponent("section"),
+    main: createCSSMotionComponent("main"),
+    span: createCSSMotionComponent("span"),
+    button: createCSSMotionComponent("button"),
+    h1: createCSSMotionComponent("h1"),
+    p: createCSSMotionComponent("p"),
   },
 };

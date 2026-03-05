@@ -21,5 +21,12 @@ export const framerMotionAdapter: MotionAdapter = {
     div: motion.div,
     footer: motion.footer,
     nav: motion.nav,
+    header: motion.header,
+    section: motion.section,
+    main: motion.main,
+    span: motion.span,
+    button: motion.button,
+    h1: motion.h1,
+    p: motion.p,
   },
 };

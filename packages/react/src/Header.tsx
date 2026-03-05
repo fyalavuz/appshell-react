@@ -8,7 +8,7 @@ import {
   useCallback,
 } from "react";
 import { cn } from "./cn";
-import { useMotion } from "./motion";
+import { useMotion, premiumSpring } from "./motion";
 import { useScrollDirection } from "./hooks/use-scroll-direction";
 import type { HeaderProps, AnimationSpeed } from "./types";
 import { HeaderProvider } from "./HeaderContext";
@@ -167,13 +167,15 @@ export const Header = memo(function Header({
   );
 
   const renderNavRow = (isSticky = false) => (
-    <nav
+    <motion.nav
+      layout
       data-header-nav
       className={cn(
         "w-full border-b backdrop-blur-xl transition-colors",
         t.nav,
         isSticky && "sticky top-0 z-40"
       )}
+      transition={premiumSpring}
     >
       <div className="mx-auto flex h-14 w-full max-w-7xl items-center px-4 sm:px-6">
         <div className="flex items-center gap-4 flex-1">
@@ -194,42 +196,56 @@ export const Header = memo(function Header({
         </div>
         <div className="flex items-center gap-2">{actions}</div>
       </div>
-    </nav>
+    </motion.nav>
   );
 
   const renderContextRow = () =>
     title || subtitle ? (
-      <div
+      <motion.div
+        layout
         data-header-context
         className={cn(
           "w-full border-b backdrop-blur-xl transition-colors relative z-30",
           t.context
         )}
+        transition={premiumSpring}
       >
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 flex flex-col justify-center py-4">
           {title && (
-            <h1 className="text-base md:text-2xl font-bold leading-tight text-balance">
+            <motion.h1 
+              layout="position"
+              className="text-base md:text-2xl font-bold leading-tight text-balance"
+            >
               {title}
-            </h1>
+            </motion.h1>
           )}
-          {subtitle && <p className="mt-1 text-sm opacity-80">{subtitle}</p>}
+          {subtitle && (
+            <motion.p 
+              layout="position"
+              className="mt-1 text-sm opacity-80"
+            >
+              {subtitle}
+            </motion.p>
+          )}
         </div>
-      </div>
+      </motion.div>
     ) : null;
 
   const renderSearchRow = () =>
     searchContent ? (
-      <div
+      <motion.div
+        layout
         data-header-search
         className={cn(
           "w-full border-b backdrop-blur-sm transition-colors relative z-20",
           t.search
         )}
+        transition={premiumSpring}
       >
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 py-2">
           {searchContent}
         </div>
-      </div>
+      </motion.div>
     ) : null;
 
   const renderMobileMenuPanel = () => (
@@ -264,7 +280,8 @@ export const Header = memo(function Header({
 
   if (isFixed) {
     return (
-      <header
+      <motion.header
+        layout
         ref={ghostRef}
         className={cn(
           "w-full sticky top-0 z-50 transition-colors duration-300",
@@ -272,6 +289,7 @@ export const Header = memo(function Header({
           className
         )}
         style={{ paddingTop: "var(--sa-top, env(safe-area-inset-top, 0px))" }}
+        transition={premiumSpring}
       >
         <HeaderProvider value={{ theme }}>
           {renderNavRow()}
@@ -279,13 +297,14 @@ export const Header = memo(function Header({
           {renderSearchRow()}
           {renderMobileMenuPanel()}
         </HeaderProvider>
-      </header>
+      </motion.header>
     );
   }
 
   return (
     <>
-      <header
+      <motion.header
+        layout
         ref={ghostRef}
         className={cn(
           "w-full relative z-50 transition-colors duration-300",
@@ -293,9 +312,10 @@ export const Header = memo(function Header({
           className
         )}
         style={{ paddingTop: forceSafeAreaTop ? "var(--sa-top, env(safe-area-inset-top, 0px))" : undefined }}
+        transition={premiumSpring}
       >
         {renderContent()}
-      </header>
+      </motion.header>
 
       {hasRevealEffect && (
         <AnimatePresence>

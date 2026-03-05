@@ -11,6 +11,7 @@ import {
   Layout,
   Moon,
   TableOfContents,
+  Zap,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -29,6 +30,20 @@ export interface ExampleCategory {
 }
 
 export const categories: ExampleCategory[] = [
+  {
+    id: "showcase",
+    title: "Showcase",
+    examples: [
+      {
+        slug: "kitchen-sink",
+        title: "Pro Showcase",
+        description:
+          "The ultimate app shell experience: reveal headers, auto-hide footers, sidebars, and premium motion.",
+        icon: Zap,
+        code: `<AppShell safeArea>\n  <Header behavior="reveal-nav-context" />\n  <Sidebar open={...} />\n  <Footer behavior="auto-hide" />\n</AppShell>`,
+      },
+    ],
+  },
   {
     id: "headers",
     title: "Headers",
