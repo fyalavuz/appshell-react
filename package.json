@@ -2,18 +2,17 @@
   "name": "appshell",
   "private": true,
   "scripts": {
-    "build": "turbo run build",
+    "build": "pnpm --filter @appshell-react/docs build",
     "dev": "pnpm --filter @appshell-react/docs dev",
-    "dev:turbo": "turbo run dev --filter=@appshell-react/docs",
-    "dev:all": "turbo run dev",
-    "lint": "turbo run lint",
-    "test": "turbo run test",
-    "test:e2e": "turbo run test:e2e",
-    "typecheck": "turbo run typecheck",
-    "clean": "turbo run clean && rm -rf node_modules",
+    "dev:all": "npx turbo run dev",
+    "lint": "npx turbo run lint",
+    "test": "npx turbo run test",
+    "test:e2e": "npx turbo run test:e2e",
+    "typecheck": "npx turbo run typecheck",
+    "clean": "npx turbo run clean && rm -rf node_modules",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "turbo run build && changeset publish"
+    "release": "pnpm --filter appshell-react build && changeset publish"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.2",
