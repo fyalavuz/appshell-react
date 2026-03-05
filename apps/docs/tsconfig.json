@@ -29,8 +29,8 @@
       "appshell-react": [
         "../../packages/react/src"
       ],
-      "fumadocs-mdx:collections/server": [
-        "./.source/server.ts"
+      "appshell-react/*": [
+        "../../packages/react/src/*"
       ]
     }
   },
