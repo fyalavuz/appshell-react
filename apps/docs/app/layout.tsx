@@ -15,23 +15,17 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s - AppShell",
-    default: "AppShell - Mobile-first app shell components for React",
+    default: "AppShell React - Mobile-First Layout Components",
+    template: "%s | AppShell",
   },
-  description:
-    "Build beautiful mobile-first applications with React. A complete set of responsive layout components with safe areas, headers, footers, sidebars, and smooth animations.",
-  keywords: [
-    "React",
-    "components",
-    "mobile",
-    "app shell",
-    "layout",
-    "header",
-    "footer",
-    "sidebar",
-    "safe area",
-    "PWA",
-  ],
+  description: "A composable layout system for building mobile-first React applications with scroll-aware headers, tab bars, sidebars, and safe area handling.",
+  keywords: ["react", "mobile", "layout", "components", "tailwind", "typescript", "app shell"],
+  authors: [{ name: "Furkan Yalavuz" }],
+  openGraph: {
+    title: "AppShell React",
+    description: "Mobile-first layout components for React",
+    type: "website",
+  },
 };
 
 export const viewport: Viewport = {

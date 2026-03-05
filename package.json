@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev",
+    "dev": "turbo run dev --filter=@appshell-react/docs",
+    "dev:all": "turbo run dev",
     "lint": "turbo run lint",
     "test": "turbo run test",
     "test:e2e": "turbo run test:e2e",
