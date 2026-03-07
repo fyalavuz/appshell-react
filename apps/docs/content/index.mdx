@@ -1,0 +1,71 @@
+---
+title: Getting Started
+description: Mobile-first app shell components for React
+---
+
+# AppShell React
+
+A composable layout system for building mobile-first React applications with scroll-aware headers, tab bars, sidebars, and safe area handling.
+
+## Features
+
+- **Mobile-First** — Built for touch interfaces with safe area support and responsive layouts
+- **Composable** — Mix and match components to create any layout pattern
+- **Zero Config** — Works out of the box with sensible defaults
+- **TypeScript** — Full type safety with comprehensive definitions
+- **Themeable** — Uses CSS custom properties, compatible with shadcn/ui themes
+- **Animated** — Optional Framer Motion adapter for smooth, spring-based animations
+
+## Quick Start
+
+```bash npm2yarn
+npm install appshell-react
+```
+
+```tsx filename="app.tsx"
+import { AppShell, Header, Content, Footer, FooterItem } from "appshell-react";
+
+export default function App() {
+  return (
+    <AppShell safeArea>
+      <Header behavior="fixed" title="My App" />
+      <Content className="p-4">
+        <h1>Hello World</h1>
+      </Content>
+      <Footer variant="tab-bar">
+        <FooterItem icon={<HomeIcon />} label="Home" active />
+        <FooterItem icon={<SearchIcon />} label="Search" />
+      </Footer>
+    </AppShell>
+  );
+}
+```
+
+## Optional Animations
+
+Add smooth spring-based animations with Framer Motion:
+
+```bash npm2yarn
+npm install framer-motion
+```
+
+```tsx filename="app.tsx"
+import { MotionProvider } from "appshell-react";
+import { framerMotionAdapter } from "appshell-react/motion-framer";
+
+export default function App() {
+  return (
+    <MotionProvider adapter={framerMotionAdapter}>
+      <AppShell safeArea>
+        {/* Your layout */}
+      </AppShell>
+    </MotionProvider>
+  );
+}
+```
+
+## Design Tokens
+
+AppShell uses CSS custom properties compatible with the [shadcn/ui](https://ui.shadcn.com) token system. This means if you already use shadcn/ui, AppShell components will automatically match your theme.
+
+See [Theming](/docs/theming) for customization details.

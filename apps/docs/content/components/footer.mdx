@@ -1,0 +1,87 @@
+---
+title: Footer
+description: Tab bars, floating actions, and mini bar footer variants
+---
+
+# Footer
+
+A versatile footer component with three variants for different mobile navigation patterns.
+
+## Variants
+
+| Variant | Description |
+|---------|-------------|
+| `tab-bar` | Standard mobile bottom navigation with labeled icons |
+| `floating` | Elevated floating action button for primary actions |
+| `mini` | Compact bar for secondary information or actions |
+
+## Tab Bar
+
+The most common mobile footer pattern — a bottom navigation with icons and labels:
+
+```tsx
+import { Footer, FooterItem } from "appshell-react";
+import { Home, Search, Bell, User } from "lucide-react";
+
+<Footer variant="tab-bar" behavior="auto-hide">
+  <FooterItem icon={<Home />} label="Home" active />
+  <FooterItem icon={<Search />} label="Search" />
+  <FooterItem icon={<Bell />} label="Alerts" badge={3} />
+  <FooterItem icon={<User />} label="Profile" />
+</Footer>
+```
+
+## Floating Action
+
+A floating button for primary actions like cart, compose, or create:
+
+```tsx
+<Footer variant="floating" position="center">
+  <button className="rounded-full bg-primary px-7 py-3.5 text-primary-foreground font-medium shadow-lg">
+    Add to Cart — $29.99
+  </button>
+</Footer>
+```
+
+## Mini Bar
+
+A compact bar for supplementary info:
+
+```tsx
+<Footer variant="mini">
+  <div className="flex items-center justify-between px-4">
+    <span className="text-sm text-muted-foreground">Now Playing</span>
+    <button className="text-primary text-sm font-medium">Open</button>
+  </div>
+</Footer>
+```
+
+## Auto-Hide Behavior
+
+Hide the footer on scroll down and show it on scroll up:
+
+```tsx
+<Footer variant="tab-bar" behavior="auto-hide">
+  {/* Footer items */}
+</Footer>
+```
+
+## Footer Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `"tab-bar" \| "floating" \| "mini"` | `"tab-bar"` | Footer style variant |
+| `behavior` | `"fixed" \| "auto-hide"` | `"fixed"` | Scroll behavior |
+| `position` | `"left" \| "center" \| "right"` | `"center"` | Floating variant position |
+| `className` | `string` | — | Additional CSS classes |
+| `children` | `ReactNode` | — | Footer content or `FooterItem` components |
+
+## FooterItem Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `icon` | `ReactNode` | — | Icon element |
+| `label` | `string` | — | Text label |
+| `active` | `boolean` | `false` | Active/selected state |
+| `badge` | `number` | — | Badge count |
+| `onClick` | `() => void` | — | Click handler |

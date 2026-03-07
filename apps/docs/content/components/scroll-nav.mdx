@@ -1,0 +1,58 @@
+---
+title: ScrollNav
+description: Horizontal scrollable pill navigation for category filtering
+---
+
+# ScrollNav
+
+A horizontal scrollable pill-style navigation component for category filtering and section navigation.
+
+## Usage
+
+```tsx
+import { ScrollNav, ScrollNavItem } from "appshell-react";
+
+<ScrollNav>
+  <ScrollNavItem label="All" active />
+  <ScrollNavItem label="Technology" />
+  <ScrollNavItem label="Design" />
+  <ScrollNavItem label="Business" />
+  <ScrollNavItem label="Science" />
+</ScrollNav>
+```
+
+## In Header
+
+Use ScrollNav as the header's search content row:
+
+```tsx
+import { Header, ScrollNav, ScrollNavItem } from "appshell-react";
+
+<Header
+  behavior="fixed"
+  title="Discover"
+  searchContent={
+    <ScrollNav>
+      <ScrollNavItem label="All" active />
+      <ScrollNavItem label="Tech" />
+      <ScrollNavItem label="Design" />
+      <ScrollNavItem label="Business" />
+    </ScrollNav>
+  }
+/>
+```
+
+## ScrollNav Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `className` | `string` | — | Additional CSS classes |
+| `children` | `ReactNode` | — | `ScrollNavItem` components |
+
+## ScrollNavItem Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `label` | `string` | — | Display text |
+| `active` | `boolean` | `false` | Active/selected state |
+| `onClick` | `() => void` | — | Click handler |

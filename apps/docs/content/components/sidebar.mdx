@@ -1,0 +1,80 @@
+---
+title: Sidebar
+description: Animated slide-out drawer with navigation groups
+---
+
+# Sidebar
+
+An animated slide-out menu drawer with backdrop overlay, keyboard dismiss, and navigation groups.
+
+## Usage
+
+```tsx
+import { useState } from "react";
+import { Sidebar, NavGroup, NavItem } from "appshell-react";
+import { Home, Settings, User } from "lucide-react";
+
+function App() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <button onClick={() => setOpen(true)}>Open Menu</button>
+      <Sidebar open={open} onClose={() => setOpen(false)}>
+        <NavGroup title="Navigation" icon={<Home />} defaultOpen>
+          <NavItem label="Home" icon={<Home />} active />
+          <NavItem label="Profile" icon={<User />} />
+          <NavItem label="Settings" icon={<Settings />} />
+        </NavGroup>
+      </Sidebar>
+    </>
+  );
+}
+```
+
+## Right Side
+
+Open the sidebar from the right edge:
+
+```tsx
+<Sidebar open={open} onClose={() => setOpen(false)} side="right">
+  {/* Nav content */}
+</Sidebar>
+```
+
+## Sidebar Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `open` | `boolean` | `false` | Whether the sidebar is visible |
+| `onClose` | `() => void` | — | Called when backdrop or close is triggered |
+| `side` | `"left" \| "right"` | `"left"` | Which side the sidebar slides from |
+| `className` | `string` | — | Additional CSS classes |
+| `children` | `ReactNode` | — | NavGroup and NavItem components |
+
+## NavGroup Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `string` | — | Group title text |
+| `icon` | `ReactNode` | — | Group icon |
+| `defaultOpen` | `boolean` | `false` | Whether the group starts expanded |
+
+## NavItem Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `label` | `string` | — | Item label |
+| `icon` | `ReactNode` | — | Item icon |
+| `active` | `boolean` | `false` | Active/selected state |
+| `badge` | `ReactNode` | — | Badge element |
+| `href` | `string` | — | Link URL |
+| `onClick` | `() => void` | — | Click handler |
+
+## Keyboard Support
+
+The sidebar supports keyboard navigation:
+
+- **Escape** — Close the sidebar
+- **Tab** — Navigate through focusable items
+- Focus is trapped inside the sidebar when open

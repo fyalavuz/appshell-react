@@ -1,0 +1,102 @@
+---
+title: Header
+description: Scroll-aware header with multiple behavior modes
+---
+
+# Header
+
+A scroll-aware header component with 6 behavior modes for different scroll interaction patterns.
+
+## Usage
+
+```tsx
+import { AppShell, Header, Content } from "appshell-react";
+
+export default function App() {
+  return (
+    <AppShell>
+      <Header
+        behavior="fixed"
+        logo={<span className="font-bold">MyApp</span>}
+        title="Dashboard"
+      />
+      <Content className="p-4">{/* Content */}</Content>
+    </AppShell>
+  );
+}
+```
+
+## Behaviors
+
+The `behavior` prop controls how the header responds to scrolling:
+
+| Behavior | Description |
+|----------|-------------|
+| `fixed` | Stays pinned at the top, never moves |
+| `static` | Scrolls away with the content |
+| `reveal-all` | Hides on scroll down, reveals all rows on scroll up |
+| `reveal-top` | Only the top row reveals on scroll up |
+| `reveal-nav` | Only the navigation row reveals on scroll up |
+| `sticky` | Sticks after scrolling past it |
+
+## Reveal Header
+
+The most common mobile pattern — the header hides when scrolling down and reveals when scrolling back up:
+
+```tsx
+<Header
+  behavior="reveal-all"
+  logo={<Logo />}
+  title="Feed"
+  subtitle="Latest updates"
+/>
+```
+
+## With Navigation
+
+Add horizontal navigation tabs to the header:
+
+```tsx
+import { Header, HeaderNav, HeaderNavItem } from "appshell-react";
+
+<Header
+  behavior="fixed"
+  logo={<Logo />}
+  nav={
+    <HeaderNav>
+      <HeaderNavItem label="Overview" active />
+      <HeaderNavItem label="Analytics" />
+      <HeaderNavItem label="Settings" />
+    </HeaderNav>
+  }
+  actions={
+    <button className="p-2">
+      <SearchIcon />
+    </button>
+  }
+/>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `behavior` | `HeaderBehavior` | `"fixed"` | Scroll behavior mode |
+| `theme` | `"light" \| "dark" \| "auto"` | `"auto"` | Header color theme |
+| `logo` | `ReactNode` | — | Logo element |
+| `title` | `string` | — | Title text |
+| `subtitle` | `string` | — | Subtitle text |
+| `nav` | `ReactNode` | — | Navigation content (e.g., `HeaderNav`) |
+| `actions` | `ReactNode` | — | Action buttons (search, notifications, etc.) |
+| `searchContent` | `ReactNode` | — | Search bar or additional content row |
+| `className` | `string` | — | Additional CSS classes |
+
+## CSS Variables
+
+The Header component exposes a `--header-height` CSS variable that other components can use for positioning:
+
+```css
+.sticky-element {
+  top: var(--header-height);
+}
+```

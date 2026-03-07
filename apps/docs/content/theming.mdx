@@ -1,0 +1,102 @@
+---
+title: Theming
+description: Customize AppShell appearance with CSS custom properties
+---
+
+# Theming
+
+AppShell uses CSS custom properties for theming, fully compatible with the [shadcn/ui](https://ui.shadcn.com) token system.
+
+## CSS Variables
+
+Define your design tokens as CSS variables on `:root`:
+
+```css filename="globals.css"
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --border: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --radius: 0.625rem;
+}
+```
+
+## Dark Mode
+
+Add dark mode tokens using the `.dark` class:
+
+```css filename="globals.css"
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --border: oklch(0.269 0 0);
+  --ring: oklch(0.439 0 0);
+}
+```
+
+## Toggling Theme
+
+Toggle dark mode by adding/removing the `.dark` class on `<html>`:
+
+```tsx
+function ThemeToggle() {
+  const toggleTheme = () => {
+    document.documentElement.classList.toggle("dark");
+  };
+
+  return <button onClick={toggleTheme}>Toggle Theme</button>;
+}
+```
+
+For a more robust solution, use [next-themes](https://github.com/pacocoursey/next-themes) or a similar library.
+
+## Custom Theme Example
+
+Create a branded theme by overriding the CSS variables:
+
+```css filename="brand-theme.css"
+:root {
+  --primary: oklch(0.6 0.2 250);        /* Custom blue */
+  --primary-foreground: oklch(1 0 0);    /* White */
+  --accent: oklch(0.85 0.1 250);         /* Light blue */
+  --accent-foreground: oklch(0.2 0.05 250);
+  --radius: 0.75rem;                     /* Rounder corners */
+}
+```
+
+## Safe Area Variables
+
+AppShell exposes safe area inset values as CSS variables:
+
+```css
+:root {
+  --safe-area-top: env(safe-area-inset-top);
+  --safe-area-bottom: env(safe-area-inset-bottom);
+  --safe-area-left: env(safe-area-inset-left);
+  --safe-area-right: env(safe-area-inset-right);
+}
+```
+
+These are automatically used by the `SafeArea` component and when `safeArea` is enabled on `AppShell`.
+
+> **shadcn/ui Compatibility**: If you're already using shadcn/ui, AppShell components will automatically inherit your theme. No additional configuration needed.

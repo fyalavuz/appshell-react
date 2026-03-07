@@ -1,0 +1,36 @@
+---
+title: useScrollDirection
+description: Hook to detect scroll direction with configurable threshold
+---
+
+# useScrollDirection
+
+Detect scroll direction with a configurable threshold for triggering direction changes.
+
+## Usage
+
+```tsx
+import { useScrollDirection } from "appshell-react";
+
+function ScrollIndicator() {
+  const direction = useScrollDirection({ threshold: 10 });
+
+  return (
+    <div className={direction === "up" ? "visible" : "hidden"}>
+      Scrolling up!
+    </div>
+  );
+}
+```
+
+## Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `threshold` | `number` | `0` | Minimum scroll distance before direction change is reported |
+
+## Return Value
+
+Returns `"up"`, `"down"`, or `null` (initial state before any scrolling).
+
+> **Note**: This hook is used internally by the Header and Footer components. You typically don't need to use it directly unless building custom scroll-aware components.

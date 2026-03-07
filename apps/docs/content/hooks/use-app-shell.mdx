@@ -1,0 +1,36 @@
+---
+title: useAppShell
+description: Hook to access AppShell context for scroll direction and layout state
+---
+
+# useAppShell
+
+Access the AppShell context to read scroll direction, header height, and other layout state.
+
+## Usage
+
+```tsx
+import { useAppShell } from "appshell-react";
+
+function MyComponent() {
+  const { scrollDirection, headerHeight } = useAppShell();
+
+  return (
+    <div>
+      <p>Scroll direction: {scrollDirection}</p>
+      <p>Header height: {headerHeight}px</p>
+    </div>
+  );
+}
+```
+
+## Return Value
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `scrollDirection` | `"up" \| "down" \| null` | Current scroll direction |
+| `headerHeight` | `number` | Current header height in pixels |
+| `sidebarOpen` | `boolean` | Whether the sidebar is currently open |
+| `setSidebarOpen` | `(open: boolean) => void` | Toggle sidebar visibility |
+
+> **Note**: This hook must be used within an `AppShell` component. It will throw an error if used outside of the AppShell context.

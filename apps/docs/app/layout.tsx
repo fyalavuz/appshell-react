@@ -1,14 +1,23 @@
 import "./globals.css";
+import "nextra-theme-docs/style.css";
 import type { Metadata, Viewport } from "next";
-import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
   title: {
     default: "AppShell React - Mobile-First Layout Components",
-    template: "%s | AppShell",
+    template: "%s | AppShell React",
   },
-  description: "A composable layout system for building mobile-first React applications with scroll-aware headers, tab bars, sidebars, and safe area handling.",
-  keywords: ["react", "mobile", "layout", "components", "tailwind", "typescript", "app shell"],
+  description:
+    "A composable layout system for building mobile-first React applications with scroll-aware headers, tab bars, sidebars, and safe area handling.",
+  keywords: [
+    "react",
+    "mobile",
+    "layout",
+    "components",
+    "tailwind",
+    "typescript",
+    "app shell",
+  ],
   authors: [{ name: "Furkan Yalavuz" }],
   openGraph: {
     title: "AppShell React",
@@ -30,19 +39,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className="font-sans min-h-screen"
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
-      </body>
+    <html lang="en" dir="ltr" suppressHydrationWarning>
+      <body className="font-sans min-h-screen">{children}</body>
     </html>
   );
 }

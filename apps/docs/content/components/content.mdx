@@ -1,0 +1,57 @@
+---
+title: Content
+description: Main scrollable content area that coordinates with header and footer
+---
+
+# Content
+
+The main scrollable content area that automatically coordinates padding with the Header and Footer.
+
+## Usage
+
+```tsx
+import { AppShell, Header, Content } from "appshell-react";
+
+<AppShell>
+  <Header behavior="fixed" title="My App" />
+  <Content className="p-4">
+    <h1>Hello World</h1>
+    <p>Your main content goes here.</p>
+  </Content>
+</AppShell>
+```
+
+## With Footer
+
+When a Footer is present, Content automatically adds bottom padding to prevent content from being hidden behind it:
+
+```tsx
+import { AppShell, Header, Content, Footer, FooterItem } from "appshell-react";
+
+<AppShell>
+  <Header behavior="fixed" title="Dashboard" />
+  <Content className="p-4">
+    {/* Content is automatically padded above the footer */}
+    <div className="space-y-4">
+      {items.map(item => (
+        <Card key={item.id} {...item} />
+      ))}
+    </div>
+  </Content>
+  <Footer variant="tab-bar">
+    <FooterItem icon={<HomeIcon />} label="Home" active />
+  </Footer>
+</AppShell>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `className` | `string` | — | Additional CSS classes |
+| `style` | `CSSProperties` | — | Inline styles |
+| `children` | `ReactNode` | — | Page content |
+
+## Scroll Events
+
+The Content component works with the `useScrollDirection` hook to detect scroll direction, which Header and Footer use for their reveal/hide behaviors.

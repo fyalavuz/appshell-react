@@ -1,0 +1,88 @@
+---
+title: Installation
+description: How to install and set up AppShell React in your project
+---
+
+# Installation
+
+## Install the Package
+
+```bash npm2yarn
+npm install appshell-react
+```
+
+## Basic Setup
+
+Wrap your app with the `AppShell` component and add a `Header`, `Content`, and optionally a `Footer`:
+
+```tsx filename="app.tsx"
+import { AppShell, Header, Content, Footer, FooterItem } from "appshell-react";
+import { Home, Search, Bell, User } from "lucide-react";
+
+export default function App() {
+  return (
+    <AppShell safeArea>
+      <Header
+        behavior="fixed"
+        logo={<span className="font-bold">MyApp</span>}
+        title="Dashboard"
+      />
+      <Content className="p-4">
+        <h1>Welcome</h1>
+        <p>Your content goes here.</p>
+      </Content>
+      <Footer variant="tab-bar">
+        <FooterItem icon={<Home />} label="Home" active />
+        <FooterItem icon={<Search />} label="Search" />
+        <FooterItem icon={<Bell />} label="Alerts" badge={3} />
+        <FooterItem icon={<User />} label="Profile" />
+      </Footer>
+    </AppShell>
+  );
+}
+```
+
+## Add Animations (Optional)
+
+AppShell ships with a CSS-based animation fallback by default. For smoother, spring-based animations, install Framer Motion:
+
+```bash npm2yarn
+npm install framer-motion
+```
+
+Then wrap your app with the `MotionProvider`:
+
+```tsx filename="app.tsx" {2,3,7,11}
+import { AppShell, Header, Content, MotionProvider } from "appshell-react";
+import { framerMotionAdapter } from "appshell-react/motion-framer";
+
+export default function App() {
+  return (
+    <MotionProvider adapter={framerMotionAdapter}>
+      <AppShell safeArea>
+        <Header behavior="reveal-all" title="My App" />
+        <Content className="p-4">{/* Your content */}</Content>
+      </AppShell>
+    </MotionProvider>
+  );
+}
+```
+
+## Tailwind CSS Setup
+
+AppShell uses Tailwind CSS v4 utility classes. Make sure you have Tailwind CSS set up in your project:
+
+```css filename="globals.css"
+@import "tailwindcss";
+```
+
+## Requirements
+
+| Dependency | Version |
+|------------|---------|
+| React | `>=18` |
+| React DOM | `>=18` |
+| Tailwind CSS | `>=4` |
+| Framer Motion | `>=12` (optional) |
+
+> **TypeScript Support**: AppShell is written in TypeScript and ships with full type definitions. No `@types` package needed.

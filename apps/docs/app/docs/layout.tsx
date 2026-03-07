@@ -1,24 +1,62 @@
-import { SiteHeader } from "@/components/site-header";
-import { SidebarNav } from "@/components/docs/sidebar-nav";
+import { Footer, Layout, Navbar } from "nextra-theme-docs";
+import { Head } from "nextra/components";
+import { getPageMap } from "nextra/page-map";
 
-export default function DocsLayout({
+export default async function DocsLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <div className="flex min-h-screen flex-col">
-      <SiteHeader />
-      <div className="container flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10">
-        <aside className="fixed top-14 z-30 -ml-2 hidden h-[calc(100vh-3.5rem)] w-full shrink-0 overflow-y-auto border-r md:sticky md:block">
-          <div className="h-full py-6 pr-6 lg:py-8">
-            <SidebarNav />
+  const navbar = (
+    <Navbar
+      logo={
+        <div className="flex items-center gap-2">
+          <div className="flex size-7 items-center justify-center rounded-lg bg-black dark:bg-white">
+            <svg
+              className="size-4 text-white dark:text-black"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"
+              />
+            </svg>
           </div>
-        </aside>
-        <main className="relative py-6 lg:gap-10 lg:py-8">
-          <div className="mx-auto w-full min-w-0 max-w-3xl">{children}</div>
-        </main>
-      </div>
-    </div>
+          <span className="text-lg font-bold tracking-tight">AppShell</span>
+        </div>
+      }
+      projectLink="https://github.com/fyalavuz/appshell-react"
+    />
+  );
+
+  const footer = (
+    <Footer className="text-sm">
+      MIT {new Date().getFullYear()} &copy; AppShell React — Built by{" "}
+      <a
+        href="https://github.com/fyalavuz"
+        className="underline underline-offset-4"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Furkan Yalavuz
+      </a>
+    </Footer>
+  );
+
+  return (
+    <Layout
+      navbar={navbar}
+      footer={footer}
+      docsRepositoryBase="https://github.com/fyalavuz/appshell-react/tree/main/apps/docs/content"
+      pageMap={await getPageMap("/docs")}
+      sidebar={{ defaultMenuCollapseLevel: 1 }}
+    >
+      <Head />
+      {children}
+    </Layout>
   );
 }

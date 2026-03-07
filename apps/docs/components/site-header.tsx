@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { PanelTop, Github, Menu, X, Moon, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
 
 const mainNav = [
   { title: "Docs", href: "/docs" },
@@ -15,12 +14,13 @@ const mainNav = [
 
 export function SiteHeader() {
   const pathname = usePathname();
-  const { theme, setTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const [isDark, setIsDark] = React.useState(false);
   const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {
     setMounted(true);
+    setIsDark(document.documentElement.classList.contains("dark"));
   }, []);
 
   return (
@@ -64,10 +64,13 @@ export function SiteHeader() {
             </a>
             {mounted && (
               <button
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                onClick={() => {
+                  document.documentElement.classList.toggle("dark");
+                  setIsDark(!isDark);
+                }}
                 className="inline-flex h-9 w-9 items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
               >
-                {theme === "dark" ? (
+                {isDark ? (
                   <Sun className="size-5" />
                 ) : (
                   <Moon className="size-5" />

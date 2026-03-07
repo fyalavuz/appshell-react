@@ -1,0 +1,66 @@
+---
+title: AppShell
+description: The root layout wrapper component that coordinates header, content, footer, and safe areas
+---
+
+# AppShell
+
+The root wrapper component that coordinates all layout pieces — header, content, footer, and safe areas.
+
+## Usage
+
+```tsx
+import { AppShell, Header, Content, Footer, FooterItem } from "appshell-react";
+
+export default function App() {
+  return (
+    <AppShell safeArea>
+      <Header behavior="fixed" title="My App" />
+      <Content className="p-4">
+        <p>Your content here</p>
+      </Content>
+      <Footer variant="tab-bar">
+        <FooterItem icon={<HomeIcon />} label="Home" active />
+      </Footer>
+    </AppShell>
+  );
+}
+```
+
+## With Animations
+
+Wrap `AppShell` in a `MotionProvider` for spring-based animations:
+
+```tsx
+import { AppShell, Header, Content, MotionProvider } from "appshell-react";
+import { framerMotionAdapter } from "appshell-react/motion-framer";
+
+export default function App() {
+  return (
+    <MotionProvider adapter={framerMotionAdapter}>
+      <AppShell safeArea>
+        <Header behavior="reveal-all" title="Dashboard" />
+        <Content className="p-4">{/* Content */}</Content>
+      </AppShell>
+    </MotionProvider>
+  );
+}
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `safeArea` | `boolean` | `false` | Enable safe area insets (notch, home indicator) |
+| `className` | `string` | — | Additional CSS classes |
+| `children` | `ReactNode` | — | Header, Content, Footer, and Sidebar components |
+
+## Safe Areas
+
+When `safeArea` is enabled, AppShell automatically handles device notches and home indicators using `env(safe-area-inset-*)` CSS values. This is essential for PWAs and apps displayed in fullscreen on iOS devices.
+
+```tsx
+<AppShell safeArea>
+  {/* Content is automatically padded for notches and home indicators */}
+</AppShell>
+```
