@@ -28,15 +28,25 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
 
-      - name: Build docs
+      - name: Build library
+        run: pnpm turbo build --filter=appshell-react
+
+      - name: Build docs site
         run: pnpm turbo build --filter=@appshell-react/docs
         env:
           NEXT_PUBLIC_BASE_PATH: /${{ env.REPO_NAME }}
+
+      - name: Build examples site
+        run: pnpm turbo build --filter=@appshell-react/examples
+        env:
+          NEXT_PUBLIC_BASE_PATH: /${{ env.REPO_NAME }}/examples-app
 
       - name: Merge outputs
         run: |
           mkdir -p _site
           cp -r apps/docs/out/* _site/
+          mkdir -p _site/examples-app
+          cp -r apps/examples/out/* _site/examples-app/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

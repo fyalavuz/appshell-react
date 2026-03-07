@@ -1,17 +1,35 @@
-# appshell-react
+<p align="center">
+  <strong>appshell-react</strong>
+</p>
 
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
-[![npm](https://img.shields.io/npm/v/appshell-react)](https://www.npmjs.com/package/appshell-react)
+<p align="center">
+  Mobile-first app shell components for React.<br/>
+  Scroll-aware headers, auto-hiding footers, sidebars, tab bars, and safe-area handling.
+</p>
 
-Mobile-first app shell components for React. Build native-feeling headers, footers, tab bars, and safe-area layouts with scroll-aware behaviors and smooth animations.
+<p align="center">
+  <a href="https://www.npmjs.com/package/appshell-react"><img src="https://img.shields.io/npm/v/appshell-react?style=flat-square&color=blue" alt="npm version" /></a>
+  <a href="https://www.npmjs.com/package/appshell-react"><img src="https://img.shields.io/npm/dm/appshell-react?style=flat-square" alt="npm downloads" /></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="MIT License" /></a>
+  <a href="https://github.com/fyalavuz/appshell-react/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/fyalavuz/appshell-react/ci.yml?style=flat-square&label=CI" alt="CI Status" /></a>
+  <a href="https://bundlephobia.com/package/appshell-react"><img src="https://img.shields.io/bundlephobia/minzip/appshell-react?style=flat-square&label=bundle" alt="Bundle Size" /></a>
+</p>
+
+<p align="center">
+  <a href="https://fyalavuz.github.io/appshell-react">Documentation</a> · <a href="https://fyalavuz.github.io/appshell-react/examples">Examples</a> · <a href="https://github.com/fyalavuz/appshell-react/issues">Issues</a>
+</p>
+
+---
 
 ## Install
 
 ```bash
+npm install appshell-react
+# or
 pnpm add appshell-react
 ```
 
-Peer dependencies: `react`, `react-dom`, `framer-motion`, `tailwindcss` (v4+).
+**Peer dependencies:** `react >=18`, `react-dom >=18`, `tailwindcss >=4`. Framer Motion is optional.
 
 ## Quick Start
 
@@ -24,7 +42,6 @@ export default function App() {
     <AppShell safeArea>
       <Header
         behavior="reveal-nav"
-        theme="light"
         logo={<span className="font-bold">MyApp</span>}
       />
       <Content>
@@ -40,20 +57,36 @@ export default function App() {
 }
 ```
 
+## Optional Animations
+
+AppShell works without any animation library. For smooth spring-based animations, add Framer Motion:
+
+```bash
+npm install framer-motion
+```
+
+```tsx
+import { MotionProvider } from "appshell-react";
+import { framerMotionAdapter } from "appshell-react/motion-framer";
+
+<MotionProvider adapter={framerMotionAdapter}>
+  <AppShell safeArea>{/* Your app */}</AppShell>
+</MotionProvider>
+```
+
 ## Features
 
 - **Header** with 7 scroll behaviors: `fixed`, `static`, `sticky`, `reveal-all`, `reveal-nav`, `reveal-context`, `reveal-search`
-- **Animation Speed** control: `slow`, `normal`, `fast` durations for all transitions
-- **Footer** with 3 variants: `tab-bar`, `floating`, `mini`
-- **Auto-hide** footer behavior tied to scroll direction
-- **Sticky Sub-navigation** support via dynamic `--header-height` CSS variable
+- **Footer** with 3 variants: `tab-bar`, `floating`, `mini` and auto-hide on scroll
+- **Sidebar** slide-out drawer with backdrop and keyboard dismiss
 - **SafeArea** for mobile notch/gesture-bar insets
-- **Dark, light, and primary** header themes + `none` for custom styling
-- **Mobile menu** support with animated drawer
-- **Framer Motion** powered animations
-- **Tailwind CSS v4** styling with standard shadcn/ui tokens
+- **ScrollNav** horizontal pill navigation with scroll-spy
+- **Dark mode** via CSS custom properties and shadcn/ui tokens
+- **Animation speed** control: `slow`, `normal`, `fast`
+- **Zero dependencies** — pure React, optional Framer Motion adapter
+- **Tailwind CSS v4** styled with standard shadcn/ui design tokens
+- **TypeScript** first with full type definitions
 - **SSR-safe** with `"use client"` directives
-- **Interactive Documentation** with live Storybook previews
 
 ## Components
 
@@ -70,23 +103,52 @@ export default function App() {
 | `Sidebar` | Animated slide-out menu drawer |
 | `SafeArea` | Mobile safe-area inset handler |
 
-## Documentation
+## Hooks
 
-Visit the [documentation site](https://fyalavuz.github.io/appshell-react) for full API reference, guides, and interactive examples.
+| Hook | Description |
+|------|-------------|
+| `useAppShell` | Access header/footer visibility and scroll direction |
+| `useScrollDirection` | Detect scroll direction with configurable threshold |
+| `useSafeArea` | Read safe area inset values programmatically |
 
 ## Examples
 
-Explore 18+ fullscreen demos at [fyalavuz.github.io/appshell-react/examples](https://fyalavuz.github.io/appshell-react/examples):
+Browse interactive demos at [fyalavuz.github.io/appshell-react/examples](https://fyalavuz.github.io/appshell-react/examples):
 
-- **Sticky Tabs** -- Header behavior with hitching sub-navigation
-- **Combined Reveal** -- All-row header reveal + auto-hide footer
-- **Fixed/Static/Reveal** -- Detailed header behavior permutations
-- **Sidebar & Desktop Nav** -- Responsive menu patterns
-- **Floating & Mini Footers** -- FABs and contextual toolbar patterns
+| Example | Description |
+|---------|-------------|
+| Fixed Header | Always-visible fixed header |
+| Reveal Header | Hides on scroll down, reveals on scroll up |
+| Sticky Tabs | Header with sticky sub-navigation tabs |
+| Tab Bar | Standard mobile bottom navigation with badges |
+| Floating Footer | FAB-style floating action button |
+| Sidebar Menu | Slide-out drawer with backdrop |
+| Combined Reveal | Header reveal + auto-hide footer |
+| Dark Mode | Live theme switching with shadcn tokens |
+| Scroll Nav | Horizontal pill-style category filter |
+| Desktop Nav | Responsive hamburger to horizontal nav |
+
+## Documentation
+
+Visit the full documentation site for API reference, guides, and live previews:
+
+**[fyalavuz.github.io/appshell-react](https://fyalavuz.github.io/appshell-react)**
 
 ## Contributing
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup and guidelines.
+
+```bash
+# Development
+pnpm install
+pnpm dev          # Start docs site
+pnpm dev:all      # Start all apps
+
+# Testing
+pnpm test         # Run unit tests
+pnpm lint         # Lint codebase
+pnpm build        # Build everything
+```
 
 ## License
 

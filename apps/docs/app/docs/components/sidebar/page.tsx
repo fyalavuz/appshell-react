@@ -218,10 +218,10 @@ export default function SidebarPage() {
           Content
         </Link>
         <Link
-          href="/examples"
+          href="/docs/components/safe-area"
           className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90 transition-colors"
         >
-          View Examples
+          Next: SafeArea
           <ArrowRight className="ml-2 size-4" />
         </Link>
       </div>

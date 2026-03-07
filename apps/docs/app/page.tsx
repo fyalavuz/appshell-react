@@ -211,7 +211,7 @@ export default function HomePage() {
             <div className="grid gap-12 lg:grid-cols-2 lg:gap-8 items-center">
               <div className="space-y-8">
                 <div className="inline-flex items-center rounded-full border bg-muted/50 px-3 py-1 text-sm">
-                  <span className="text-muted-foreground">v1.0 Now Available</span>
+                  <span className="text-muted-foreground">v0.4.0 — Now Available</span>
                   <ChevronRight className="ml-1 size-4 text-muted-foreground" />
                 </div>
                 <div className="space-y-4">

@@ -6,7 +6,11 @@ Mobile-first app shell components for React. Scroll-aware headers, auto-hiding f
 
 ```bash
 npm install appshell-react
+# or
+pnpm add appshell-react
 ```
+
+**Peer dependencies:** `react >=18`, `react-dom >=18`, `tailwindcss >=4`. Framer Motion is optional.
 
 ## Quick Start
 
@@ -42,13 +46,15 @@ import { framerMotionAdapter } from "appshell-react/motion-framer";
 
 ## Features
 
-- **Scroll-aware headers** — fixed, sticky, reveal-on-scroll-up
-- **Auto-hiding footers** — tab bar and floating variants
-- **Sidebar** — responsive with overlay on mobile
+- **Scroll-aware headers** — fixed, sticky, reveal-on-scroll-up (7 behaviors)
+- **Auto-hiding footers** — tab bar, floating, and mini variants
+- **Sidebar** — slide-out drawer with backdrop and keyboard dismiss
 - **Safe area** — proper inset handling for notched devices
+- **ScrollNav** — horizontal scrollable pill navigation
 - **Zero dependencies** — pure React, optional Framer Motion adapter
 - **shadcn compatible** — uses standard CSS variable tokens
 - **Dark mode** — full OKLCh color space support
+- **TypeScript** — full type definitions included
 
 ## Documentation
 
