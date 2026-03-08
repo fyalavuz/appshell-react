@@ -3,6 +3,7 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { getExampleBySlug, getAllExamples, categories } from "@/lib/registry";
+import { basePath } from "@/lib/utils";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 interface ExamplePageProps {
@@ -409,7 +410,7 @@ export default async function ExamplePage({ params }: ExamplePageProps) {
             <ComponentPreview
               name={example.title}
               code={code}
-              previewUrl={`/examples/preview/${slug}`}
+              previewUrl={`${basePath}/examples/preview/${slug}`}
               isMobile={true}
             />
 
