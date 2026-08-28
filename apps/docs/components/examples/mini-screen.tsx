@@ -236,6 +236,34 @@ function renderMotif(slug: string) {
         </>
       );
 
+    case "floating-dock":
+      return (
+        <>
+          <HeaderBlock rows={1} />
+          <div className="absolute inset-x-0 top-8 grid grid-cols-2 gap-1.5 px-2.5">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <span key={i} className="h-9 rounded-md bg-foreground/8" />
+            ))}
+          </div>
+          <Anim
+            name="ms-bob"
+            className="absolute inset-x-0 bottom-1.5 z-10 flex justify-center"
+          >
+            <span className="flex h-5 w-24 items-center justify-center gap-1.5 rounded-full border border-brand/40 bg-brand/15 backdrop-blur-sm">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <span
+                  key={i}
+                  className={cn(
+                    "size-1.5 rounded-full",
+                    i === 0 ? "bg-brand" : "bg-foreground/30"
+                  )}
+                />
+              ))}
+            </span>
+          </Anim>
+        </>
+      );
+
     case "floating-footer":
       return (
         <>

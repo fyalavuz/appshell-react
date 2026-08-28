@@ -46,7 +46,7 @@ export default function App() {
 const stats = [
   { value: "10", label: "header behaviors" },
   { value: "3", label: "footer variants" },
-  { value: "18", label: "live demos" },
+  { value: "19", label: "live demos" },
   { value: "0", label: "required deps" },
 ];
 
@@ -241,7 +241,7 @@ export default async function HomePage() {
               <div>
                 <p className="eyebrow text-brand">Examples</p>
                 <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-                  18 small apps, every variant
+                  19 small apps, every variant
                 </h2>
               </div>
               <Link

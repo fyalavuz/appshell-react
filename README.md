@@ -76,10 +76,10 @@ Visit the [documentation site](https://fyalavuz.github.io/appshell-react) for fu
 
 ## Examples
 
-Explore 18 fullscreen demos at [fyalavuz.github.io/appshell-react/examples](https://fyalavuz.github.io/appshell-react/examples):
+Explore 19 fullscreen demos at [fyalavuz.github.io/appshell-react/examples](https://fyalavuz.github.io/appshell-react/examples):
 
 - **Headers** -- fixed, static, sticky, and every per-row reveal behavior
-- **Footers** -- tab bar with badges, floating action pill, mini now-playing bar
+- **Footers** -- tab bar with badges, floating action pill, liquid-glass dock, mini now-playing bar
 - **Layout & Navigation** -- sidebar drawer, scroll pills, scroll-spy anchors, desktop dropdowns, safe areas
 - **Patterns & Theming** -- combined reveal choreography, header themes, dark mode
 

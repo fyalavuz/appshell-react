@@ -1,4 +1,5 @@
 import {
+  Dock,
   PanelTop,
   Minus,
   Layers,
@@ -161,7 +162,7 @@ export const categories: ExampleCategory[] = [
     id: "footers",
     title: "Footers",
     description:
-      "All three footer variants: the tab bar, the floating action, and the mini bar.",
+      "Every footer variant: the tab bar, the floating action, the glass dock, and the mini bar.",
     examples: [
       {
         slug: "tab-bar",
@@ -191,6 +192,21 @@ export const categories: ExampleCategory[] = [
         tryHints: [
           "Add records — the cart pill updates live",
           "Move the pill left, center, or right",
+        ],
+      },
+      {
+        slug: "floating-dock",
+        title: "Liquid Glass Dock",
+        description:
+          "A translucent floating dock that condenses to a pill on scroll and magnifies under the pointer.",
+        icon: Dock,
+        category: "footers",
+        tags: ["footer", "floating", "glass", "dock"],
+        appName: "Aura — wallpapers",
+        props: 'variant="floating" + glass',
+        tryHints: [
+          "Scroll down — the dock condenses into a pill",
+          "Sweep the pointer across it — icons magnify",
         ],
       },
       {

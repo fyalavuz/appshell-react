@@ -7,6 +7,7 @@ import { snippet as revealSearch } from "@/app/examples/preview/reveal-search/sn
 import { snippet as stickyTabs } from "@/app/examples/preview/sticky-tabs/snippet";
 import { snippet as tabBar } from "@/app/examples/preview/tab-bar/snippet";
 import { snippet as floatingFooter } from "@/app/examples/preview/floating-footer/snippet";
+import { snippet as floatingDock } from "@/app/examples/preview/floating-dock/snippet";
 import { snippet as miniFooter } from "@/app/examples/preview/mini-footer/snippet";
 import { snippet as sidebar } from "@/app/examples/preview/sidebar/snippet";
 import { snippet as scrollNav } from "@/app/examples/preview/scroll-nav/snippet";
@@ -28,6 +29,7 @@ export const demoCode: Record<string, string> = {
   "sticky-tabs": stickyTabs,
   "tab-bar": tabBar,
   "floating-footer": floatingFooter,
+  "floating-dock": floatingDock,
   "mini-footer": miniFooter,
   sidebar,
   "scroll-nav": scrollNav,
