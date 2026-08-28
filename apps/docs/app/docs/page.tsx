@@ -69,7 +69,7 @@ export default function DocsPage() {
         </h2>
         <ul className="my-6 ml-6 list-disc [&>li]:mt-2">
           <li>
-            <strong>Header</strong> - 6 scroll behaviors including fixed,
+            <strong>Header</strong> - 10 scroll behaviors including fixed,
             reveal, and sticky variants
           </li>
           <li>

@@ -42,7 +42,7 @@ export default function App() {
 
 ## Features
 
-- **Header** with 7 scroll behaviors: `fixed`, `static`, `sticky`, `reveal-all`, `reveal-nav`, `reveal-context`, `reveal-search`
+- **Header** with 10 scroll behaviors: `fixed`, `static`, `sticky`, `reveal-all`, `reveal-nav`, `reveal-context`, `reveal-search`, plus combined `reveal-nav-context`, `reveal-nav-search`, and `reveal-context-search`
 - **Animation Speed** control: `slow`, `normal`, `fast` durations for all transitions
 - **Footer** with 3 variants: `tab-bar`, `floating`, `mini`
 - **Auto-hide** footer behavior tied to scroll direction
@@ -76,13 +76,14 @@ Visit the [documentation site](https://fyalavuz.github.io/appshell-react) for fu
 
 ## Examples
 
-Explore 18+ fullscreen demos at [fyalavuz.github.io/appshell-react/examples](https://fyalavuz.github.io/appshell-react/examples):
+Explore 18 fullscreen demos at [fyalavuz.github.io/appshell-react/examples](https://fyalavuz.github.io/appshell-react/examples):
 
-- **Sticky Tabs** -- Header behavior with hitching sub-navigation
-- **Combined Reveal** -- All-row header reveal + auto-hide footer
-- **Fixed/Static/Reveal** -- Detailed header behavior permutations
-- **Sidebar & Desktop Nav** -- Responsive menu patterns
-- **Floating & Mini Footers** -- FABs and contextual toolbar patterns
+- **Headers** -- fixed, static, sticky, and every per-row reveal behavior
+- **Footers** -- tab bar with badges, floating action pill, mini now-playing bar
+- **Layout & Navigation** -- sidebar drawer, scroll pills, scroll-spy anchors, desktop dropdowns, safe areas
+- **Patterns & Theming** -- combined reveal choreography, header themes, dark mode
+
+Or mix every behavior, theme, speed, and footer variant live in the [Playground](https://fyalavuz.github.io/appshell-react/playground).
 
 ## Contributing
 

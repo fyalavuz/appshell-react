@@ -17,9 +17,11 @@ const FRAME_H = Math.round(DEVICE_H * SCALE);
 interface PhoneMockupProps {
   src: string;
   className?: string;
+  /** Called once the inner iframe has loaded — for postMessage coordination. */
+  onIframeLoad?: (iframe: HTMLIFrameElement) => void;
 }
 
-export function PhoneMockup({ src, className }: PhoneMockupProps) {
+export function PhoneMockup({ src, className, onIframeLoad }: PhoneMockupProps) {
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
   const [loaded, setLoaded] = React.useState(false);
 
@@ -27,14 +29,32 @@ export function PhoneMockup({ src, className }: PhoneMockupProps) {
     setLoaded(true);
     try {
       const doc = iframeRef.current?.contentDocument;
-      if (!doc) return;
-      const style = doc.createElement("style");
-      style.textContent = `:root{--sa-top:${SA_TOP}px;--sa-bottom:${SA_BOTTOM}px;--sa-left:0px;--sa-right:0px}`;
-      doc.head.appendChild(style);
+      if (doc) {
+        const style = doc.createElement("style");
+        style.textContent = `:root{--sa-top:${SA_TOP}px;--sa-bottom:${SA_BOTTOM}px;--sa-left:0px;--sa-right:0px}`;
+        doc.head.appendChild(style);
+      }
     } catch {
       // cross-origin - ignored in production
     }
-  }, []);
+    if (iframeRef.current) {
+      onIframeLoad?.(iframeRef.current);
+    }
+  }, [onIframeLoad]);
+
+  // With static export the iframe can finish loading before hydration,
+  // in which case React's onLoad never fires — detect that case on mount.
+  React.useEffect(() => {
+    if (loaded) return;
+    try {
+      const doc = iframeRef.current?.contentDocument;
+      if (doc && doc.readyState === "complete" && doc.URL !== "about:blank") {
+        handleLoad();
+      }
+    } catch {
+      // cross-origin — the load event is the only signal we get
+    }
+  }, [loaded, handleLoad]);
 
   return (
     <div
@@ -79,7 +99,7 @@ export function PhoneMockup({ src, className }: PhoneMockupProps) {
 
           {/* Status bar overlay */}
           <div
-            className="pointer-events-none absolute inset-x-0 top-0 z-20 flex items-end justify-between px-6 pb-0.5 text-white"
+            className="pointer-events-none absolute inset-x-0 top-0 z-20 flex items-end justify-between px-6 pb-0.5 text-white mix-blend-difference"
             style={{ height: Math.round(SA_TOP * SCALE) }}
           >
             <span className="text-[11px] font-semibold leading-none">9:41</span>

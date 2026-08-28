@@ -4,160 +4,40 @@ import { useState } from "react";
 import {
   AppShell,
   Content,
-  MotionProvider,
-  Header,
   Footer,
+  Header,
+  MotionProvider,
+  type FooterPosition,
 } from "appshell-react";
 import { framerMotionAdapter } from "appshell-react/motion-framer";
-import {
-  ShoppingBag,
-  Search,
-  Heart,
-  Star,
-  Plus,
-  Check,
-  Filter,
-} from "lucide-react";
+import { Disc3, Plus, Check, ShoppingBag } from "lucide-react";
+import { DemoHint } from "@/components/demos/demo-ui";
 
-const products = [
-  {
-    name: "Classic White Tee",
-    price: 45,
-    rating: 4.8,
-    reviews: 128,
-    color: "from-gray-100 to-gray-50",
-    sizes: ["XS", "S", "M", "L", "XL"],
-  },
-  {
-    name: "Organic Cotton Hoodie",
-    price: 89,
-    rating: 4.9,
-    reviews: 342,
-    color: "from-slate-200 to-slate-100",
-    sizes: ["S", "M", "L", "XL"],
-  },
-  {
-    name: "Merino Wool Sweater",
-    price: 125,
-    rating: 4.7,
-    reviews: 86,
-    color: "from-amber-100 to-amber-50",
-    sizes: ["XS", "S", "M", "L"],
-  },
-  {
-    name: "Denim Jacket",
-    price: 145,
-    rating: 4.8,
-    reviews: 256,
-    color: "from-blue-100 to-blue-50",
-    sizes: ["S", "M", "L", "XL"],
-  },
-  {
-    name: "Linen Shorts",
-    price: 65,
-    rating: 4.6,
-    reviews: 94,
-    color: "from-stone-100 to-stone-50",
-    sizes: ["XS", "S", "M", "L", "XL"],
-  },
-  {
-    name: "Cashmere Scarf",
-    price: 195,
-    rating: 4.9,
-    reviews: 178,
-    color: "from-rose-100 to-rose-50",
-    sizes: ["One Size"],
-  },
+const records = [
+  { title: "Night Drives", artist: "Velvet Era", price: 24, hue: "bg-teal-100 text-teal-500 dark:bg-teal-950/40 dark:text-teal-600" },
+  { title: "Glasshouse", artist: "Mono Coast", price: 28, hue: "bg-amber-100 text-amber-500 dark:bg-amber-950/40 dark:text-amber-600" },
+  { title: "Low Tide", artist: "Harbor Lights", price: 22, hue: "bg-sky-100 text-sky-500 dark:bg-sky-950/40 dark:text-sky-600" },
+  { title: "Paper Moons", artist: "The Cartographers", price: 26, hue: "bg-rose-100 text-rose-500 dark:bg-rose-950/40 dark:text-rose-600" },
+  { title: "Static Bloom", artist: "Fern & Wire", price: 30, hue: "bg-violet-100 text-violet-500 dark:bg-violet-950/40 dark:text-violet-600" },
+  { title: "Meridian", artist: "South of June", price: 24, hue: "bg-emerald-100 text-emerald-500 dark:bg-emerald-950/40 dark:text-emerald-600" },
+  { title: "Afterglow", artist: "Casa Verde", price: 27, hue: "bg-orange-100 text-orange-500 dark:bg-orange-950/40 dark:text-orange-600" },
+  { title: "Northern Room", artist: "Iva & The Pines", price: 25, hue: "bg-indigo-100 text-indigo-500 dark:bg-indigo-950/40 dark:text-indigo-600" },
 ];
 
-function ProductCard({
-  product,
-  inCart,
-  onToggle,
-}: {
-  product: (typeof products)[0];
-  inCart: boolean;
-  onToggle: () => void;
-}) {
-  const [liked, setLiked] = useState(false);
-
-  return (
-    <div className="group relative rounded-2xl border bg-card shadow-sm overflow-hidden">
-      <div className={`relative h-48 bg-gradient-to-br ${product.color}`}>
-        <button
-          type="button"
-          onClick={() => setLiked(!liked)}
-          className={`absolute top-3 right-3 size-8 rounded-full flex items-center justify-center transition-all ${
-            liked
-              ? "bg-rose-500 text-white"
-              : "bg-white/80 text-muted-foreground hover:text-rose-500"
-          }`}
-        >
-          <Heart className={`size-4 ${liked ? "fill-current" : ""}`} />
-        </button>
-        <div className="absolute inset-0 flex items-center justify-center opacity-20">
-          <ShoppingBag className="size-20" />
-        </div>
-      </div>
-      <div className="p-4">
-        <div className="flex items-center gap-1 mb-2">
-          <Star className="size-3.5 fill-amber-400 text-amber-400" />
-          <span className="text-xs font-medium">{product.rating}</span>
-          <span className="text-xs text-muted-foreground">({product.reviews})</span>
-        </div>
-        <h3 className="font-semibold text-sm">{product.name}</h3>
-        <div className="flex items-center gap-1 mt-1.5 mb-3">
-          {product.sizes.slice(0, 4).map((size) => (
-            <span
-              key={size}
-              className="text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground"
-            >
-              {size}
-            </span>
-          ))}
-          {product.sizes.length > 4 && (
-            <span className="text-[10px] text-muted-foreground">+{product.sizes.length - 4}</span>
-          )}
-        </div>
-        <div className="flex items-center justify-between">
-          <span className="text-lg font-bold">${product.price}</span>
-          <button
-            type="button"
-            onClick={onToggle}
-            className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all ${
-              inCart
-                ? "bg-primary text-primary-foreground"
-                : "bg-accent text-foreground hover:bg-accent/80"
-            }`}
-          >
-            {inCart ? (
-              <>
-                <Check className="size-3.5" />
-                Added
-              </>
-            ) : (
-              <>
-                <Plus className="size-3.5" />
-                Add
-              </>
-            )}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
+const positions: FooterPosition[] = ["left", "center", "right"];
 
 export default function FloatingFooterPage() {
-  const [cart, setCart] = useState<number[]>([]);
+  const [cart, setCart] = useState<string[]>([]);
+  const [position, setPosition] = useState<FooterPosition>("center");
 
-  const toggleCart = (idx: number) => {
-    setCart((prev) =>
-      prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
+  const toggle = (title: string) =>
+    setCart((c) =>
+      c.includes(title) ? c.filter((t) => t !== title) : [...c, title]
     );
-  };
 
-  const totalPrice = cart.reduce((sum, idx) => sum + products[idx].price, 0);
+  const total = records
+    .filter((r) => cart.includes(r.title))
+    .reduce((sum, r) => sum + r.price, 0);
 
   return (
     <MotionProvider adapter={framerMotionAdapter}>
@@ -166,54 +46,97 @@ export default function FloatingFooterPage() {
           behavior="fixed"
           theme="light"
           logo={
-            <div className="flex items-center gap-2">
-              <ShoppingBag className="size-5" />
-              <span className="text-lg font-bold tracking-tight">Shop</span>
-            </div>
+            <span className="flex items-center gap-2 font-bold tracking-tight">
+              <Disc3 className="size-5 text-teal-600 dark:text-teal-400" />
+              Crate
+            </span>
           }
           actions={
-            <div className="flex items-center gap-1">
-              <button
-                type="button"
-                className="rounded-lg p-2 hover:bg-accent transition-colors"
-              >
-                <Search className="size-5 text-muted-foreground" />
-              </button>
-              <button
-                type="button"
-                className="rounded-lg p-2 hover:bg-accent transition-colors"
-              >
-                <Filter className="size-5 text-muted-foreground" />
-              </button>
+            <div className="flex items-center rounded-lg bg-muted p-0.5 text-xs font-medium">
+              {positions.map((p) => (
+                <button
+                  key={p}
+                  type="button"
+                  onClick={() => setPosition(p)}
+                  className={`rounded-md px-2.5 py-1 capitalize transition-colors ${
+                    position === p
+                      ? "bg-background shadow-sm"
+                      : "text-muted-foreground"
+                  }`}
+                >
+                  {p}
+                </button>
+              ))}
             </div>
           }
-          title="New Arrivals"
-          subtitle="Spring 2026 Collection"
         />
 
-        <Content className="pb-28 bg-muted/30">
-          <div className="grid grid-cols-2 gap-3 p-4">
-            {products.map((product, i) => (
-              <ProductCard
-                key={i}
-                product={product}
-                inCart={cart.includes(i)}
-                onToggle={() => toggleCart(i)}
-              />
-            ))}
+        <Content className="pb-28">
+          <DemoHint>
+            Add records to your bag — the floating pill tracks the total. Use
+            the switch above to dock it left, center, or right.
+          </DemoHint>
+
+          <div className="grid grid-cols-2 gap-4 px-4">
+            {records.map((r) => {
+              const inCart = cart.includes(r.title);
+              return (
+                <div key={r.title} className="group">
+                  <div
+                    className={`relative flex aspect-square items-center justify-center rounded-xl ${r.hue}`}
+                  >
+                    <Disc3 className="size-12 opacity-80" strokeWidth={1.25} />
+                    <button
+                      type="button"
+                      aria-label={inCart ? `Remove ${r.title}` : `Add ${r.title}`}
+                      onClick={() => toggle(r.title)}
+                      className={`absolute bottom-2 right-2 flex size-8 items-center justify-center rounded-full shadow-sm transition-colors ${
+                        inCart
+                          ? "bg-teal-600 text-white"
+                          : "bg-background text-foreground hover:bg-muted"
+                      }`}
+                    >
+                      {inCart ? (
+                        <Check className="size-4" />
+                      ) : (
+                        <Plus className="size-4" />
+                      )}
+                    </button>
+                  </div>
+                  <p className="mt-2 truncate text-sm font-medium">{r.title}</p>
+                  <p className="truncate text-xs text-muted-foreground">
+                    {r.artist} · ${r.price}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="px-4 py-8">
+            <p className="text-center text-xs text-muted-foreground">
+              Pressed on 180g vinyl · Ships worldwide
+            </p>
           </div>
         </Content>
 
-        <Footer variant="floating" position="center">
+        <Footer variant="floating" position={position}>
           <button
             type="button"
-            disabled={cart.length === 0}
-            className="rounded-full bg-primary px-7 py-3.5 text-sm font-medium text-primary-foreground shadow-lg hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:pointer-events-none flex items-center gap-2"
+            className={`flex items-center gap-2.5 rounded-full py-3.5 pl-5 pr-6 text-sm font-semibold shadow-lg transition-all ${
+              cart.length > 0
+                ? "bg-teal-600 text-white"
+                : "bg-primary text-primary-foreground"
+            }`}
           >
             <ShoppingBag className="size-4" />
-            {cart.length > 0
-              ? `View Cart (${cart.length} items) • $${totalPrice}`
-              : "Your cart is empty"}
+            {cart.length > 0 ? (
+              <>
+                {cart.length} {cart.length === 1 ? "record" : "records"} · $
+                {total}
+              </>
+            ) : (
+              "Browse the crate"
+            )}
           </button>
         </Footer>
       </AppShell>

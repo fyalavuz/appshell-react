@@ -6,11 +6,18 @@ import {
   Navigation,
   MousePointer2,
   PanelLeft,
-  Box,
-  Columns,
-  Layout,
+  PanelBottom,
   Moon,
+  Palette,
   TableOfContents,
+  Search,
+  MessageSquare,
+  ListMusic,
+  GalleryHorizontal,
+  Columns3,
+  Frame,
+  Rows3,
+  SlidersHorizontal,
   type LucideIcon,
 } from "lucide-react";
 
@@ -21,6 +28,12 @@ export interface Example {
   icon: LucideIcon;
   category: string;
   tags: string[];
+  /** The fictional app rendered in the fullscreen preview. */
+  appName: string;
+  /** Headline prop combination the demo exercises. */
+  props: string;
+  /** Short interaction hints shown next to the live preview. */
+  tryHints: string[];
 }
 
 export interface ExampleCategory {
@@ -34,140 +47,315 @@ export const categories: ExampleCategory[] = [
   {
     id: "headers",
     title: "Headers",
-    description: "Header components with various behaviors like fixed, reveal, and sticky.",
+    description:
+      "Every scroll behavior the Header supports, from pinned to multi-row reveal.",
     examples: [
       {
         slug: "fixed-header",
         title: "Fixed Header",
         description:
-          "A header that stays pinned to the top of the viewport as the user scrolls through content.",
+          "The header stays pinned to the top of the viewport while content scrolls beneath it.",
         icon: PanelTop,
         category: "headers",
-        tags: ["header", "fixed", "sticky", "navigation"],
+        tags: ["header", "fixed", "navigation"],
+        appName: "Atlas — travel planner",
+        props: 'behavior="fixed"',
+        tryHints: [
+          "Scroll down — the header never moves",
+          "Content slides under the pinned bar",
+        ],
       },
       {
         slug: "static-header",
         title: "Static Header",
         description:
-          "A header that scrolls naturally with the page content, disappearing as the user scrolls down.",
+          "The header scrolls away naturally with the page, giving content the full viewport.",
         icon: Minus,
         category: "headers",
         tags: ["header", "static", "scroll"],
+        appName: "Journal — reading app",
+        props: 'behavior="static"',
+        tryHints: [
+          "Scroll down — the header leaves with the page",
+          "Scroll back to the top to bring it back",
+        ],
+      },
+      {
+        slug: "sticky-header",
+        title: "Sticky Header",
+        description:
+          "A single sticky bar that stays pinned — the lightest always-visible header.",
+        icon: StickyNote,
+        category: "headers",
+        tags: ["header", "sticky", "messages"],
+        appName: "Chirp — messages",
+        props: 'behavior="sticky"',
+        tryHints: [
+          "Scroll the thread — the bar stays put",
+          "Compare with fixed: same pin, simpler layout",
+        ],
       },
       {
         slug: "reveal-all",
-        title: "Reveal Header",
+        title: "Reveal All Rows",
         description:
-          "The header hides on scroll down and reveals all rows when the user scrolls back up.",
+          "Title and search rows tuck away on scroll down — the full header glides back the moment you scroll up.",
         icon: Layers,
         category: "headers",
-        tags: ["header", "reveal", "animation", "scroll"],
+        tags: ["header", "reveal", "animation"],
+        appName: "Pulse — social feed",
+        props: 'behavior="reveal-all"',
+        tryHints: [
+          "Scroll down — title and search tuck away",
+          "Nudge upward — the full header returns",
+        ],
+      },
+      {
+        slug: "reveal-nav",
+        title: "Reveal Nav Row",
+        description:
+          "The slim nav bar stays pinned while the heavier rows scroll away — scroll up and it floats back with a shadow.",
+        icon: Rows3,
+        category: "headers",
+        tags: ["header", "reveal", "nav"],
+        appName: "Wire — news reader",
+        props: 'behavior="reveal-nav"',
+        tryHints: [
+          "Scroll down past the headlines",
+          "Scroll up — just the nav bar floats back",
+        ],
+      },
+      {
+        slug: "reveal-search",
+        title: "Reveal Search Row",
+        description:
+          "Scrolling up brings back the search row, keeping discovery one gesture away.",
+        icon: Search,
+        category: "headers",
+        tags: ["header", "reveal", "search"],
+        appName: "Market — storefront",
+        props: 'behavior="reveal-search"',
+        tryHints: [
+          "Scroll deep into the product grid",
+          "Scroll up — the search row comes right back",
+        ],
       },
       {
         slug: "sticky-tabs",
-        title: "Sticky Tabs",
+        title: "Sticky Sub-navigation",
         description:
-          "A fixed header with a secondary tab bar that sticks below it using CSS variable syncing.",
-        icon: StickyNote,
+          "A tab row that docks below the header using the --header-height CSS variable.",
+        icon: TableOfContents,
         category: "headers",
-        tags: ["header", "tabs", "sticky", "navigation"],
+        tags: ["header", "tabs", "css-variable"],
+        appName: "Orbit — profile",
+        props: 'top: "var(--header-height)"',
+        tryHints: [
+          "Scroll down — tabs hitch below the header",
+          "Switch tabs while everything stays docked",
+        ],
       },
     ],
   },
   {
     id: "footers",
     title: "Footers",
-    description: "Footer components including tab bars and floating action buttons.",
+    description:
+      "All three footer variants: the tab bar, the floating action, and the mini bar.",
     examples: [
       {
         slug: "tab-bar",
         title: "Tab Bar",
         description:
-          "A standard mobile bottom navigation with 5 items, badges, and auto-hide on scroll.",
+          "Five-item bottom navigation with badges that hides on scroll down and returns on scroll up.",
         icon: Navigation,
         category: "footers",
-        tags: ["footer", "tab-bar", "navigation", "mobile"],
+        tags: ["footer", "tab-bar", "auto-hide"],
+        appName: "Feedflow — timeline",
+        props: 'variant="tab-bar" behavior="auto-hide"',
+        tryHints: [
+          "Scroll down — the tab bar slips away",
+          "Scroll up to summon it back, badges intact",
+        ],
       },
       {
         slug: "floating-footer",
         title: "Floating Action",
         description:
-          "An elevated floating action button for primary actions like cart, compose, or create.",
+          "An elevated pill for the primary action, with left, center, and right positioning.",
         icon: MousePointer2,
         category: "footers",
-        tags: ["footer", "floating", "fab", "action"],
+        tags: ["footer", "floating", "fab", "position"],
+        appName: "Crate — record shop",
+        props: 'variant="floating" position="center"',
+        tryHints: [
+          "Add records — the cart pill updates live",
+          "Move the pill left, center, or right",
+        ],
+      },
+      {
+        slug: "mini-footer",
+        title: "Mini Bar",
+        description:
+          "A slim contextual strip above the safe area — perfect for a now-playing bar.",
+        icon: ListMusic,
+        category: "footers",
+        tags: ["footer", "mini", "player"],
+        appName: "Tempo — music player",
+        props: 'variant="mini"',
+        tryHints: [
+          "Tap a track — the mini player appears",
+          "Play and skip without leaving the list",
+        ],
       },
     ],
   },
   {
     id: "layout",
-    title: "Layout",
-    description: "Layout components including sidebars, navigation, and responsive patterns.",
+    title: "Layout & Navigation",
+    description:
+      "Drawers, pill navigation, scroll-spy anchors, desktop dropdowns, and safe areas.",
     examples: [
       {
         slug: "sidebar",
-        title: "Sidebar Menu",
+        title: "Sidebar Drawer",
         description:
-          "A slide-out drawer with backdrop overlay, keyboard dismiss, and smooth animations.",
+          "A slide-out drawer with backdrop, collapsible groups, and left or right placement.",
         icon: PanelLeft,
         category: "layout",
-        tags: ["sidebar", "drawer", "menu", "navigation"],
+        tags: ["sidebar", "drawer", "menu"],
+        appName: "Console — admin",
+        props: 'side="left" | side="right"',
+        tryHints: [
+          "Open the drawer from either edge",
+          "Dismiss with the backdrop or Escape",
+        ],
       },
       {
         slug: "scroll-nav",
         title: "Scroll Navigation",
         description:
-          "Horizontal pill-style scrollable tabs for category filtering and section navigation.",
-        icon: Box,
+          "Horizontally scrollable pill tabs inside the header's search row for filtering.",
+        icon: GalleryHorizontal,
         category: "layout",
-        tags: ["navigation", "scroll", "tabs", "filter"],
+        tags: ["scroll-nav", "pills", "filter"],
+        appName: "Lens — photo gallery",
+        props: "<ScrollNav> in searchContent",
+        tryHints: [
+          "Swipe the pills sideways",
+          "Pick a category — the grid filters instantly",
+        ],
       },
       {
         slug: "in-page-nav",
         title: "In-Page Navigation",
         description:
-          "Anchor-based section navigation with scroll-spy highlighting and reveal-nav header behavior.",
+          "Anchor navigation with scroll-spy highlighting, docked below a reveal-nav header.",
         icon: TableOfContents,
         category: "layout",
-        tags: ["navigation", "anchor", "scroll-spy", "toc"],
+        tags: ["anchors", "scroll-spy", "toc"],
+        appName: "Handbook — field guide",
+        props: 'behavior="reveal-nav" + anchors',
+        tryHints: [
+          "Scroll — the active section follows you",
+          "Jump between sections from the pill row",
+        ],
       },
       {
         slug: "desktop-nav",
-        title: "Desktop Nav",
+        title: "Desktop Navigation",
         description:
-          "Horizontal navigation with dropdown menus that adapts from mobile hamburger to desktop layout.",
-        icon: Columns,
+          "HeaderNav with dropdown panels that collapses into a mobile drawer menu.",
+        icon: Columns3,
         category: "layout",
-        tags: ["navigation", "desktop", "responsive", "dropdown"],
+        tags: ["desktop", "dropdown", "responsive"],
+        appName: "Nimbus — product site",
+        props: "<HeaderNav> + mobileMenu",
+        tryHints: [
+          "Open the Products dropdown (desktop view)",
+          "Shrink the window — nav folds into a menu",
+        ],
+      },
+      {
+        slug: "safe-area",
+        title: "Safe Area",
+        description:
+          "Visualize how AppShell pads content around notches, islands, and home indicators.",
+        icon: Frame,
+        category: "layout",
+        tags: ["safe-area", "notch", "insets"],
+        appName: "Inset — visualizer",
+        props: "safeArea + <SafeArea edges>",
+        tryHints: [
+          "Toggle the highlighted inset overlays",
+          "See header and footer respect each edge",
+        ],
       },
     ],
   },
   {
     id: "patterns",
-    title: "Patterns",
-    description: "Common UI patterns combining multiple components together.",
+    title: "Patterns & Theming",
+    description:
+      "Component combinations and the theming system: reveal pairs, header themes, dark mode.",
     examples: [
       {
         slug: "reveal-combined",
         title: "Combined Reveal",
         description:
-          "The most complex pattern: header reveals on scroll up while footer auto-hides on scroll down.",
-        icon: Layout,
+          "The full choreography: header reveals on scroll up while the tab bar auto-hides.",
+        icon: PanelBottom,
         category: "patterns",
-        tags: ["pattern", "reveal", "header", "footer"],
+        tags: ["pattern", "reveal", "auto-hide"],
+        appName: "Pulse — social feed",
+        props: '"reveal-all" + "auto-hide"',
+        tryHints: [
+          "Scroll down — both bars clear the screen",
+          "Scroll up — they return in sync",
+        ],
+      },
+      {
+        slug: "header-themes",
+        title: "Header Themes",
+        description:
+          "Cycle the header through its light, primary, dark, and unstyled themes live.",
+        icon: Palette,
+        category: "patterns",
+        tags: ["theme", "header", "variants"],
+        appName: "Chroma — theme lab",
+        props: 'theme="light | primary | dark | none"',
+        tryHints: [
+          "Cycle through all four header themes",
+          "Watch text and borders adapt per theme",
+        ],
       },
       {
         slug: "dark-mode",
         title: "Dark Mode",
         description:
-          "Live theme switching using CSS custom properties and the shadcn token system.",
+          "Live theme switching with CSS custom properties across every shell component.",
         icon: Moon,
         category: "patterns",
-        tags: ["theme", "dark-mode", "customization"],
+        tags: ["dark-mode", "tokens", "css"],
+        appName: "Nocturne — notes",
+        props: ".dark class + tokens",
+        tryHints: [
+          "Flip the toggle in the header",
+          "Every component re-themes instantly",
+        ],
       },
     ],
   },
 ];
+
+/** Standalone playground covering every prop combination. */
+export const playground = {
+  slug: "playground",
+  title: "Playground",
+  description:
+    "Mix every header behavior, theme, speed, and footer variant live — and copy the code.",
+  icon: SlidersHorizontal,
+};
 
 export function getAllExamples(): Example[] {
   return categories.flatMap((c) => c.examples);
@@ -219,6 +407,7 @@ export const docsNavigation = [
     title: "Examples",
     items: [
       { title: "All Examples", href: "/examples" },
+      { title: "Playground", href: "/playground" },
       ...categories.flatMap((cat) =>
         cat.examples.slice(0, 2).map((ex) => ({
           title: ex.title,

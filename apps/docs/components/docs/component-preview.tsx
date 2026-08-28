@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CodeBlock } from "./code-block";
 import { PhoneMockup } from "./phone-mockup";
+import { withBasePath } from "@/lib/base-path";
 import { ExternalLink, Smartphone, Monitor } from "lucide-react";
 
 interface ComponentPreviewProps {
@@ -29,6 +30,7 @@ export function ComponentPreview({
   isMobile = true,
 }: ComponentPreviewProps) {
   const [view, setView] = React.useState<"mobile" | "desktop">("mobile");
+  const resolvedUrl = previewUrl ? withBasePath(previewUrl) : undefined;
 
   return (
     <div className={cn("group relative my-4", className)}>
@@ -72,7 +74,7 @@ export function ComponentPreview({
                 </div>
               )}
               <a
-                href={previewUrl}
+                href={resolvedUrl}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
@@ -98,7 +100,7 @@ export function ComponentPreview({
           >
             {previewUrl ? (
               view === "mobile" && isMobile ? (
-                <PhoneMockup src={previewUrl} />
+                <PhoneMockup src={resolvedUrl ?? ""} />
               ) : (
                 <div className="w-full max-w-4xl rounded-lg border bg-background shadow-lg overflow-hidden">
                   <div className="flex items-center gap-1.5 border-b px-3 py-2 bg-muted/30">
@@ -110,7 +112,7 @@ export function ComponentPreview({
                     </span>
                   </div>
                   <iframe
-                    src={previewUrl}
+                    src={resolvedUrl}
                     title={`${name} preview`}
                     className="h-[500px] w-full border-0"
                   />

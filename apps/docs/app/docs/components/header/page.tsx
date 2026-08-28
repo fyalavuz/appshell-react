@@ -49,17 +49,21 @@ const withNavCode = `import { Header, HeaderNav, HeaderNavItem } from "appshell-
 />`;
 
 const behaviors = [
-  { name: "fixed", description: "Header stays fixed at the top, always visible" },
-  { name: "static", description: "Header scrolls with content" },
-  { name: "reveal-all", description: "Header hides on scroll down, reveals all rows on scroll up" },
-  { name: "reveal-nav", description: "Header hides on scroll down, reveals only navigation row on scroll up" },
-  { name: "reveal-title", description: "Header hides on scroll down, reveals only title row on scroll up" },
-  { name: "sticky", description: "Header sticks after scrolling past a threshold" },
+  { name: "fixed", description: "Whole header pinned to the top, always visible" },
+  { name: "sticky", description: "Same pin as fixed — the lightest always-visible header" },
+  { name: "static", description: "Header scrolls away naturally with the content" },
+  { name: "reveal-all", description: "Nav bar stays pinned; on scroll up every row returns as an overlay" },
+  { name: "reveal-nav", description: "On scroll up, only the nav row floats back" },
+  { name: "reveal-context", description: "On scroll up, the title/subtitle row returns" },
+  { name: "reveal-search", description: "On scroll up, the search row returns" },
+  { name: "reveal-nav-context", description: "Nav and title rows return together on scroll up" },
+  { name: "reveal-nav-search", description: "Nav and search rows return together on scroll up" },
+  { name: "reveal-context-search", description: "Title and search rows return together on scroll up" },
 ];
 
 const propsTable = [
   { name: "behavior", type: "HeaderBehavior", default: '"fixed"', description: "Scroll behavior mode" },
-  { name: "theme", type: '"light" | "dark" | "auto"', default: '"auto"', description: "Visual theme" },
+  { name: "theme", type: '"light" | "primary" | "dark" | "none"', default: '"light"', description: "Visual theme" },
   { name: "logo", type: "ReactNode", default: "-", description: "Logo/brand element (left side)" },
   { name: "title", type: "string", default: "-", description: "Main title text" },
   { name: "subtitle", type: "string", default: "-", description: "Secondary subtitle text" },
@@ -101,7 +105,7 @@ export default function HeaderPage() {
           Behaviors
         </h2>
         <p className="text-muted-foreground">
-          The Header supports 6 different scroll behaviors:
+          The Header supports 10 different scroll behaviors:
         </p>
         <div className="grid gap-3">
           {behaviors.map((b) => (

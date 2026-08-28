@@ -15,7 +15,7 @@ const components = [
   },
   {
     name: "Header",
-    description: "Scroll-aware header with 6 behavior modes",
+    description: "Scroll-aware header with 10 behavior modes",
     href: "/docs/components/header",
     icon: PanelTop,
   },

@@ -1,140 +1,22 @@
 import Link from "next/link";
 import {
   ArrowRight,
-  Smartphone,
+  ArrowUpRight,
+  Feather,
   Layers,
-  Zap,
-  Code2,
+  MoveVertical,
   Palette,
-  Sparkles,
-  ChevronRight,
-  Menu,
-  Home,
-  Search,
-  Bell,
-  User,
+  Smartphone,
+  SlidersHorizontal,
+  Type,
 } from "lucide-react";
-import { GithubIcon } from "@/components/github-icon";
-
-function PhoneMockup({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="relative mx-auto w-[280px] md:w-[320px]">
-      {/* Phone frame */}
-      <div className="relative overflow-hidden rounded-[2.5rem] bg-foreground p-2 shadow-2xl ring-1 ring-border/50">
-        {/* Dynamic Island */}
-        <div className="absolute left-1/2 top-4 z-20 h-6 w-20 -translate-x-1/2 rounded-full bg-foreground" />
-        {/* Screen */}
-        <div className="relative h-[540px] overflow-hidden rounded-[2rem] bg-background">
-          {children}
-        </div>
-        {/* Home indicator */}
-        <div className="absolute bottom-3 left-1/2 h-1 w-32 -translate-x-1/2 rounded-full bg-muted-foreground/30" />
-      </div>
-    </div>
-  );
-}
-
-function DemoScreen() {
-  return (
-    <div className="relative flex h-full flex-col bg-background">
-      {/* Header */}
-      <header className="flex items-center justify-between border-b px-4 py-3">
-        <div className="flex items-center gap-2">
-          <div className="size-8 rounded-lg bg-primary" />
-          <span className="font-semibold text-sm">MyApp</span>
-        </div>
-        <button className="p-2">
-          <Menu className="size-5 text-muted-foreground" />
-        </button>
-      </header>
-
-      {/* Content */}
-      <div className="flex-1 overflow-auto p-4 pb-24">
-        <div className="space-y-4">
-          <div className="h-32 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 p-4">
-            <p className="text-xs text-muted-foreground">Welcome back</p>
-            <p className="text-lg font-semibold">Dashboard</p>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="h-24 rounded-lg border bg-card p-3">
-              <div className="size-6 rounded-md bg-primary/10" />
-              <p className="mt-2 text-xs font-medium">Projects</p>
-            </div>
-            <div className="h-24 rounded-lg border bg-card p-3">
-              <div className="size-6 rounded-md bg-primary/10" />
-              <p className="mt-2 text-xs font-medium">Tasks</p>
-            </div>
-          </div>
-          <div className="space-y-2">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="flex items-center gap-3 rounded-lg border p-3">
-                <div className="size-10 rounded-full bg-muted" />
-                <div className="flex-1">
-                  <div className="h-3 w-24 rounded bg-muted" />
-                  <div className="mt-1.5 h-2 w-16 rounded bg-muted/60" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Tab Bar */}
-      <nav className="absolute bottom-0 inset-x-0 flex items-center justify-around border-t bg-background/95 backdrop-blur px-2 pb-6 pt-2">
-        <button className="flex flex-col items-center gap-1 text-primary">
-          <Home className="size-5" />
-          <span className="text-[10px] font-medium">Home</span>
-        </button>
-        <button className="flex flex-col items-center gap-1 text-muted-foreground">
-          <Search className="size-5" />
-          <span className="text-[10px]">Search</span>
-        </button>
-        <button className="relative flex flex-col items-center gap-1 text-muted-foreground">
-          <Bell className="size-5" />
-          <span className="absolute -right-1 -top-1 flex size-4 items-center justify-center rounded-full bg-destructive text-[9px] font-bold text-destructive-foreground">3</span>
-          <span className="text-[10px]">Alerts</span>
-        </button>
-        <button className="flex flex-col items-center gap-1 text-muted-foreground">
-          <User className="size-5" />
-          <span className="text-[10px]">Profile</span>
-        </button>
-      </nav>
-    </div>
-  );
-}
-
-const features = [
-  {
-    icon: Smartphone,
-    title: "Mobile-First",
-    description: "Built for touch interfaces with safe area support and responsive layouts.",
-  },
-  {
-    icon: Layers,
-    title: "Composable",
-    description: "Mix and match components to create any layout pattern you need.",
-  },
-  {
-    icon: Zap,
-    title: "Zero Config",
-    description: "Works out of the box with sensible defaults and optional animations.",
-  },
-  {
-    icon: Code2,
-    title: "TypeScript",
-    description: "Full type safety with comprehensive TypeScript definitions.",
-  },
-  {
-    icon: Palette,
-    title: "Themeable",
-    description: "Uses CSS custom properties, compatible with shadcn/ui themes.",
-  },
-  {
-    icon: Sparkles,
-    title: "Animated",
-    description: "Optional Framer Motion adapter for smooth, spring-based animations.",
-  },
-];
+import { SiteHeader } from "@/components/site-header";
+import { PhoneMockup } from "@/components/docs/phone-mockup";
+import { CodePanel } from "@/components/docs/code-panel";
+import { MiniScreen } from "@/components/examples/mini-screen";
+import { getExampleBySlug } from "@/lib/registry";
+import { highlight } from "@/lib/highlight";
+import { withBasePath } from "@/lib/base-path";
 
 const codeExample = `import { AppShell, Header, Content, Footer, FooterItem } from "appshell-react";
 import { Home, Search, Bell, User } from "lucide-react";
@@ -142,15 +24,16 @@ import { Home, Search, Bell, User } from "lucide-react";
 export default function App() {
   return (
     <AppShell safeArea>
-      <Header 
-        behavior="reveal-all" 
+      <Header
+        behavior="reveal-all"
         logo={<Logo />}
-        title="Dashboard"
+        title="Home"
+        subtitle="Catch up on today"
       />
-      <Content className="p-4">
+      <Content className="pb-24">
         {/* Your content */}
       </Content>
-      <Footer variant="tab-bar">
+      <Footer variant="tab-bar" behavior="auto-hide">
         <FooterItem icon={<Home />} label="Home" active />
         <FooterItem icon={<Search />} label="Search" />
         <FooterItem icon={<Bell />} label="Alerts" badge={3} />
@@ -160,104 +43,123 @@ export default function App() {
   );
 }`;
 
-export default function HomePage() {
+const stats = [
+  { value: "10", label: "header behaviors" },
+  { value: "3", label: "footer variants" },
+  { value: "18", label: "live demos" },
+  { value: "0", label: "required deps" },
+];
+
+const features = [
+  {
+    icon: MoveVertical,
+    title: "Scroll-aware",
+    description:
+      "Headers and footers that hide, reveal, and dock in response to scroll direction — per row, not all-or-nothing.",
+  },
+  {
+    icon: Smartphone,
+    title: "Safe areas, handled",
+    description:
+      "Notches, Dynamic Islands, and home indicators are padded automatically, with CSS-variable overrides for testing.",
+  },
+  {
+    icon: Layers,
+    title: "Composable rows",
+    description:
+      "Logo, nav, title, and search are independent header rows. Use one or stack all four.",
+  },
+  {
+    icon: Feather,
+    title: "Zero-dependency core",
+    description:
+      "CSS transitions out of the box. Add the optional Framer Motion adapter when you want springs.",
+  },
+  {
+    icon: Palette,
+    title: "Token-driven theming",
+    description:
+      "Styled with standard shadcn/ui custom properties — your existing theme just works, dark mode included.",
+  },
+  {
+    icon: Type,
+    title: "Typed end to end",
+    description:
+      "Every variant is a string union: your editor autocompletes behaviors, themes, speeds, and positions.",
+  },
+];
+
+const featuredSlugs = ["reveal-all", "floating-footer", "sidebar"];
+
+export default async function HomePage() {
+  const highlighted = await highlight(codeExample);
+  const featured = featuredSlugs
+    .map((slug) => getExampleBySlug(slug))
+    .filter((e) => e !== undefined);
+
   return (
     <div className="flex min-h-screen flex-col">
-      {/* Header */}
-      <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="flex size-8 items-center justify-center rounded-lg bg-foreground">
-              <Layers className="size-4 text-background" />
-            </div>
-            <span className="font-bold">AppShell</span>
-          </Link>
-          <nav className="hidden items-center gap-6 md:flex">
-            <Link href="/docs" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Docs
-            </Link>
-            <Link href="/examples" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Examples
-            </Link>
-            <Link
-              href="https://github.com/fyalavuz/appshell-react"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              GitHub
-            </Link>
-          </nav>
-          <div className="flex items-center gap-2">
-            <Link
-              href="https://github.com/fyalavuz/appshell-react"
-              className="inline-flex size-9 items-center justify-center rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
-            >
-              <GithubIcon className="size-5" />
-            </Link>
-            <Link
-              href="/docs"
-              className="hidden sm:inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90 transition-colors"
-            >
-              Get Started
-            </Link>
-          </div>
-        </div>
-      </header>
+      <SiteHeader />
 
       <main className="flex-1">
         {/* Hero */}
         <section className="relative overflow-hidden border-b">
-          <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,hsl(var(--border)/0.3)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border)/0.3)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
-          <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-28">
-            <div className="grid gap-12 lg:grid-cols-2 lg:gap-8 items-center">
+          <div
+            aria-hidden
+            className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-40 [mask-image:radial-gradient(ellipse_60%_60%_at_50%_0%,#000_60%,transparent_100%)]"
+          />
+          <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:py-24">
+            <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-8">
               <div className="space-y-8">
-                <div className="inline-flex items-center rounded-full border bg-muted/50 px-3 py-1 text-sm">
-                  <span className="text-muted-foreground">v1.0 Now Available</span>
-                  <ChevronRight className="ml-1 size-4 text-muted-foreground" />
-                </div>
-                <div className="space-y-4">
-                  <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl text-balance">
-                    Build Mobile-First{" "}
-                    <span className="text-primary">React Apps</span>
+                <p className="eyebrow text-brand">
+                  React 19 · Tailwind v4 · MIT
+                </p>
+                <div className="space-y-5">
+                  <h1 className="text-4xl font-bold tracking-tight text-balance sm:text-5xl md:text-6xl">
+                    The app shell your mobile web app deserves
                   </h1>
-                  <p className="text-lg text-muted-foreground max-w-lg text-balance">
-                    A composable layout system with scroll-aware headers, tab bars, sidebars,
-                    and safe area handling. Built for React, styled with Tailwind.
+                  <p className="max-w-lg text-lg leading-relaxed text-muted-foreground text-balance">
+                    Scroll-aware headers, tab bars, drawers, and safe areas —
+                    composable React components that make a web app feel
+                    native, without you writing a single scroll listener.
                   </p>
                 </div>
-                <div className="flex flex-col gap-4 sm:flex-row">
+                <div className="flex flex-col gap-3 sm:flex-row">
                   <Link
                     href="/docs"
-                    className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90 transition-colors"
+                    className="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
                   >
-                    Get Started
+                    Get started
                     <ArrowRight className="ml-2 size-4" />
                   </Link>
                   <Link
-                    href="/examples"
-                    className="inline-flex items-center justify-center rounded-md border bg-background px-6 py-3 text-sm font-medium shadow-sm hover:bg-accent hover:text-accent-foreground transition-colors"
+                    href="/playground"
+                    className="inline-flex items-center justify-center rounded-lg border bg-background px-6 py-3 text-sm font-medium transition-colors hover:border-brand/40 hover:text-brand"
                   >
-                    View Examples
+                    <SlidersHorizontal className="mr-2 size-4" />
+                    Open the playground
                   </Link>
                 </div>
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-1">
-                    <div className="size-2 rounded-full bg-green-500" />
-                    <span>MIT Licensed</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <div className="size-2 rounded-full bg-blue-500" />
-                    <span>TypeScript</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <div className="size-2 rounded-full bg-amber-500" />
-                    <span>Tailwind CSS</span>
-                  </div>
+                <div className="flex flex-wrap gap-x-8 gap-y-4 border-t pt-6">
+                  {stats.map((stat) => (
+                    <div key={stat.label}>
+                      <p className="text-2xl font-bold tracking-tight">
+                        {stat.value}
+                      </p>
+                      <p className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+                        {stat.label}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
               <div className="flex justify-center lg:justify-end">
-                <PhoneMockup>
-                  <DemoScreen />
-                </PhoneMockup>
+                <div className="relative">
+                  <p className="eyebrow absolute -top-7 left-1/2 -translate-x-1/2 whitespace-nowrap text-muted-foreground/60">
+                    live demo — scroll it
+                  </p>
+                  <PhoneMockup src={withBasePath("/examples/preview/reveal-combined/")} />
+                </div>
               </div>
             </div>
           </div>
@@ -266,87 +168,106 @@ export default function HomePage() {
         {/* Features */}
         <section className="border-b py-20 md:py-28">
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
-            <div className="text-center space-y-4 mb-16">
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-                Everything you need for mobile layouts
+            <div className="max-w-2xl">
+              <p className="eyebrow text-brand">Why AppShell</p>
+              <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
+                The tricky 10% of mobile UI, solved once
               </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-balance">
-                AppShell handles the tricky parts of mobile UI: scroll behavior, safe areas,
-                and component coordination, so you can focus on building features.
+              <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+                Scroll choreography, safe-area math, and header coordination
+                are the parts every mobile web app rewrites. AppShell ships
+                them as composable primitives.
               </p>
             </div>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-14 grid gap-px overflow-hidden rounded-xl border bg-border sm:grid-cols-2 lg:grid-cols-3">
               {features.map((feature) => (
-                <div
-                  key={feature.title}
-                  className="group relative rounded-xl border bg-card p-6 transition-colors hover:bg-accent/50"
-                >
-                  <div className="mb-4 inline-flex size-10 items-center justify-center rounded-lg bg-primary/10">
-                    <feature.icon className="size-5 text-primary" />
-                  </div>
-                  <h3 className="mb-2 font-semibold">{feature.title}</h3>
-                  <p className="text-sm text-muted-foreground">{feature.description}</p>
+                <div key={feature.title} className="bg-background p-6 md:p-8">
+                  <feature.icon className="size-5 text-brand" />
+                  <h3 className="mt-4 font-semibold tracking-tight">
+                    {feature.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {feature.description}
+                  </p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Code Example */}
-        <section className="border-b py-20 md:py-28 bg-muted/30">
+        {/* Code */}
+        <section className="border-b bg-muted/30 py-20 md:py-28">
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
-            <div className="grid gap-12 lg:grid-cols-2 lg:gap-8 items-center">
+            <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
               <div className="space-y-6">
+                <p className="eyebrow text-brand">Declarative API</p>
                 <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-                  Simple, declarative API
+                  One component tree, all the choreography
                 </h2>
-                <p className="text-lg text-muted-foreground text-balance">
-                  Build complex mobile layouts with just a few components. AppShell handles
-                  the coordination between header, content, and footer automatically.
+                <p className="text-lg leading-relaxed text-muted-foreground">
+                  Declare what each bar should do — the shell coordinates
+                  visibility, heights, and safe areas between them.
                 </p>
                 <ul className="space-y-3">
                   {[
-                    "Scroll-aware headers with 6 behavior modes",
-                    "Tab bars, floating buttons, and mini bars",
-                    "Slide-out sidebars with backdrop",
-                    "Automatic safe area handling",
+                    "10 header behaviors, from fixed to per-row reveal",
+                    "Tab bars, floating pills, and mini bars that auto-hide",
+                    "Sticky sub-navigation via the --header-height variable",
+                    "Slide-out drawers with backdrop and keyboard dismiss",
                   ].map((item) => (
-                    <li key={item} className="flex items-center gap-3">
-                      <div className="flex size-5 items-center justify-center rounded-full bg-primary">
-                        <ChevronRight className="size-3 text-primary-foreground" />
-                      </div>
+                    <li key={item} className="flex items-start gap-3 text-sm">
+                      <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brand" />
                       <span className="text-muted-foreground">{item}</span>
                     </li>
                   ))}
                 </ul>
                 <Link
                   href="/docs/components/app-shell"
-                  className="inline-flex items-center text-sm font-medium text-primary hover:underline"
+                  className="inline-flex items-center text-sm font-medium text-brand hover:underline"
                 >
-                  View all components
+                  Component reference
                   <ArrowRight className="ml-1 size-4" />
                 </Link>
               </div>
-              <div className="relative">
-                <div className="overflow-hidden rounded-xl border bg-zinc-950 shadow-2xl">
-                  <div className="flex items-center gap-2 border-b border-zinc-800 px-4 py-3">
-                    <div className="size-3 rounded-full bg-zinc-700" />
-                    <div className="size-3 rounded-full bg-zinc-700" />
-                    <div className="size-3 rounded-full bg-zinc-700" />
-                    <span className="ml-2 text-xs text-zinc-500">app.tsx</span>
-                  </div>
-                  <pre className="overflow-x-auto p-4 text-sm leading-relaxed">
-                    <code className="text-zinc-300">
-                      {codeExample.split("\n").map((line, i) => (
-                        <div key={i} className="whitespace-pre">
-                          <span className="mr-4 inline-block w-6 text-right text-zinc-600">{i + 1}</span>
-                          {highlightSyntax(line)}
-                        </div>
-                      ))}
-                    </code>
-                  </pre>
-                </div>
+              <CodePanel html={highlighted} code={codeExample} />
+            </div>
+          </div>
+        </section>
+
+        {/* Featured examples */}
+        <section className="border-b py-20 md:py-28">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p className="eyebrow text-brand">Examples</p>
+                <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
+                  18 small apps, every variant
+                </h2>
               </div>
+              <Link
+                href="/examples"
+                className="group inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Browse all examples
+                <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </Link>
+            </div>
+            <div className="mt-10 grid gap-5 sm:grid-cols-3">
+              {featured.map((example) => (
+                <Link
+                  key={example.slug}
+                  href={`/examples/${example.slug}`}
+                  className="group flex flex-col rounded-xl border bg-card p-4 transition-all hover:border-brand/40 hover:shadow-md hover:shadow-brand/5"
+                >
+                  <MiniScreen slug={example.slug} />
+                  <h3 className="mt-4 font-semibold tracking-tight">
+                    {example.title}
+                  </h3>
+                  <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+                    {example.description}
+                  </p>
+                </Link>
+              ))}
             </div>
           </div>
         </section>
@@ -354,29 +275,38 @@ export default function HomePage() {
         {/* CTA */}
         <section className="py-20 md:py-28">
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
-            <div className="rounded-2xl border bg-card p-8 text-center md:p-12">
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-                Ready to build?
-              </h2>
-              <p className="mt-4 text-lg text-muted-foreground max-w-xl mx-auto text-balance">
-                Get started with AppShell in minutes. Install the package, copy the examples,
-                and start building beautiful mobile-first React applications.
-              </p>
-              <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:justify-center">
-                <Link
-                  href="/docs/installation"
-                  className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90 transition-colors"
-                >
-                  Read the docs
-                  <ArrowRight className="ml-2 size-4" />
-                </Link>
-                <Link
-                  href="https://github.com/fyalavuz/appshell-react"
-                  className="inline-flex items-center justify-center rounded-md border bg-background px-6 py-3 text-sm font-medium shadow-sm hover:bg-accent hover:text-accent-foreground transition-colors"
-                >
-                  <GithubIcon className="mr-2 size-4" />
-                  Star on GitHub
-                </Link>
+            <div className="relative overflow-hidden rounded-2xl border bg-card p-8 text-center md:p-14">
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-[linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] bg-[size:3rem_3rem] opacity-40 [mask-image:radial-gradient(ellipse_70%_90%_at_50%_100%,#000_40%,transparent_100%)]"
+              />
+              <div className="relative">
+                <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+                  Ship a native-feeling shell today
+                </h2>
+                <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground">
+                  Install the package, pick a pattern from the examples, and
+                  your layout is done before lunch.
+                </p>
+                <div className="mx-auto mt-8 inline-flex items-center gap-3 rounded-lg border bg-background px-4 py-2.5 font-mono text-sm">
+                  <span className="select-none text-muted-foreground">$</span>
+                  pnpm add appshell-react
+                </div>
+                <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+                  <Link
+                    href="/docs/installation"
+                    className="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                  >
+                    Read the docs
+                    <ArrowRight className="ml-2 size-4" />
+                  </Link>
+                  <a
+                    href="https://github.com/fyalavuz/appshell-react"
+                    className="inline-flex items-center justify-center rounded-lg border bg-background px-6 py-3 text-sm font-medium transition-colors hover:border-brand/40 hover:text-brand"
+                  >
+                    Star on GitHub
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -388,14 +318,17 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <div className="flex items-center gap-2">
-              <div className="flex size-6 items-center justify-center rounded bg-foreground">
-                <Layers className="size-3 text-background" />
-              </div>
-              <span className="text-sm font-medium">AppShell</span>
+              <span className="flex size-6 items-center justify-center rounded-md bg-brand">
+                <Layers className="size-3 text-brand-foreground" />
+              </span>
+              <span className="text-sm font-semibold">AppShell</span>
             </div>
             <p className="text-sm text-muted-foreground">
               Built by{" "}
-              <a href="https://github.com/fyalavuz" className="underline underline-offset-4 hover:text-foreground">
+              <a
+                href="https://github.com/fyalavuz"
+                className="underline underline-offset-4 transition-colors hover:text-foreground"
+              >
                 Furkan Yalavuz
               </a>
               . Open source under MIT license.
@@ -405,22 +338,4 @@ export default function HomePage() {
       </footer>
     </div>
   );
-}
-
-function highlightSyntax(line: string): React.ReactNode {
-  // Simple syntax highlighting
-  return line
-    .replace(/(import|from|export|default|function|return|const)/g, '<kw>$1</kw>')
-    .replace(/(".*?"|'.*?'|`.*?`)/g, '<str>$1</str>')
-    .replace(/(\{|\}|\(|\)|<|>|\/)/g, '<punc>$1</punc>')
-    .replace(/<kw>(.*?)<\/kw>/g, (_, m) => `<span class="text-pink-400">${m}</span>`)
-    .replace(/<str>(.*?)<\/str>/g, (_, m) => `<span class="text-green-400">${m}</span>`)
-    .replace(/<punc>(.*?)<\/punc>/g, (_, m) => `<span class="text-zinc-500">${m}</span>`)
-    .split(/(<span.*?<\/span>)/)
-    .map((part, i) => {
-      if (part.startsWith("<span")) {
-        return <span key={i} dangerouslySetInnerHTML={{ __html: part }} />;
-      }
-      return part;
-    });
 }

@@ -4,7 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { PanelTop, Menu, X, Moon, Sun } from "lucide-react";
+import { Layers, Menu, X, Moon, Sun } from "lucide-react";
 import { GithubIcon } from "@/components/github-icon";
 import { useTheme } from "next-themes";
 
@@ -12,6 +12,7 @@ const mainNav = [
   { title: "Docs", href: "/docs" },
   { title: "Components", href: "/docs/components/app-shell" },
   { title: "Examples", href: "/examples" },
+  { title: "Playground", href: "/playground" },
 ];
 
 export function SiteHeader() {
@@ -24,26 +25,31 @@ export function SiteHeader() {
     setMounted(true);
   }, []);
 
+  const isActive = (href: string) => {
+    if (href === "/docs") {
+      return pathname?.startsWith("/docs") && !pathname?.startsWith("/docs/components");
+    }
+    return pathname?.startsWith(href);
+  };
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 items-center px-4 md:px-6">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/90 backdrop-blur supports-[backdrop-filter]:bg-background/75">
+      <div className="mx-auto flex h-14 max-w-6xl items-center px-4 sm:px-6">
         <div className="mr-4 flex">
-          <Link href="/" className="mr-6 flex items-center space-x-2">
-            <div className="flex size-7 items-center justify-center rounded-md bg-primary">
-              <PanelTop className="size-4 text-primary-foreground" />
-            </div>
-            <span className="font-bold">AppShell</span>
+          <Link href="/" className="mr-6 flex items-center gap-2">
+            <span className="flex size-7 items-center justify-center rounded-md bg-brand">
+              <Layers className="size-4 text-brand-foreground" />
+            </span>
+            <span className="font-bold tracking-tight">AppShell</span>
           </Link>
-          <nav className="hidden items-center space-x-6 text-sm font-medium md:flex">
+          <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
             {mainNav.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "transition-colors hover:text-foreground/80",
-                  pathname?.startsWith(item.href)
-                    ? "text-foreground"
-                    : "text-foreground/60"
+                  "transition-colors hover:text-foreground",
+                  isActive(item.href) ? "text-foreground" : "text-muted-foreground"
                 )}
               >
                 {item.title}
@@ -52,42 +58,38 @@ export function SiteHeader() {
           </nav>
         </div>
 
-        <div className="flex flex-1 items-center justify-end space-x-2">
-          <nav className="flex items-center space-x-1">
-            <a
-              href="https://github.com/fyalavuz/appshell-react"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-            >
-              <GithubIcon className="size-5" />
-              <span className="sr-only">GitHub</span>
-            </a>
-            {mounted && (
-              <button
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="inline-flex h-9 w-9 items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-              >
-                {theme === "dark" ? (
-                  <Sun className="size-5" />
-                ) : (
-                  <Moon className="size-5" />
-                )}
-                <span className="sr-only">Toggle theme</span>
-              </button>
-            )}
+        <div className="flex flex-1 items-center justify-end gap-1">
+          <a
+            href="https://github.com/fyalavuz/appshell-react"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="GitHub repository"
+            className="inline-flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+          >
+            <GithubIcon className="size-5" />
+          </a>
+          {mounted && (
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring md:hidden"
+              type="button"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              aria-label="Toggle theme"
+              className="inline-flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
             >
-              {mobileMenuOpen ? (
-                <X className="size-5" />
+              {theme === "dark" ? (
+                <Sun className="size-5" />
               ) : (
-                <Menu className="size-5" />
+                <Moon className="size-5" />
               )}
-              <span className="sr-only">Toggle menu</span>
             </button>
-          </nav>
+          )}
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+            className="inline-flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground md:hidden"
+          >
+            {mobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+          </button>
         </div>
       </div>
 
@@ -102,7 +104,7 @@ export function SiteHeader() {
                 onClick={() => setMobileMenuOpen(false)}
                 className={cn(
                   "flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent",
-                  pathname?.startsWith(item.href)
+                  isActive(item.href)
                     ? "bg-accent text-accent-foreground"
                     : "text-muted-foreground"
                 )}
