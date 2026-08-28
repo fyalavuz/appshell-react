@@ -4,7 +4,8 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { PanelTop, Github, Menu, X, Moon, Sun } from "lucide-react";
+import { PanelTop, Menu, X, Moon, Sun } from "lucide-react";
+import { GithubIcon } from "@/components/github-icon";
 import { useTheme } from "next-themes";
 
 const mainNav = [
@@ -59,7 +60,7 @@ export function SiteHeader() {
               rel="noreferrer"
               className="inline-flex h-9 w-9 items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
             >
-              <Github className="size-5" />
+              <GithubIcon className="size-5" />
               <span className="sr-only">GitHub</span>
             </a>
             {mounted && (

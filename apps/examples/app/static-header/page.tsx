@@ -2,7 +2,8 @@
 
 import { AppShell, Header, Content, HeaderNav, HeaderNavItem, MotionProvider } from "appshell-react";
 import { framerMotionAdapter } from "appshell-react/motion-framer";
-import { Github, Moon, BookOpen, Code2, Layers, Zap, Shield, Palette, Terminal, Puzzle } from "lucide-react";
+import { Moon, BookOpen, Code2, Layers, Zap, Shield, Palette, Terminal, Puzzle } from "lucide-react";
+import { GithubIcon } from "../_components/github-icon";
 
 const sections = [
   {
@@ -64,7 +65,7 @@ export default function StaticHeaderPage() {
                 type="button"
                 className="rounded-md p-2 text-primary-foreground/80 hover:bg-white/10 hover:text-primary-foreground transition-colors"
               >
-                <Github className="size-5" />
+                <GithubIcon className="size-5" />
               </button>
               <button
                 type="button"

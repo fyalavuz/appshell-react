@@ -8,7 +8,7 @@ import { MotionProvider } from './motion';
 import { framerMotionAdapter } from './motion-framer';
 import { Home, BarChart3, Users, Settings, HelpCircle, MessageCircle } from 'lucide-react';
 
-const meta = {
+const meta: Meta<typeof Sidebar> = {
   title: 'Components/Sidebar',
   component: Sidebar,
   parameters: {
@@ -24,7 +24,7 @@ const meta = {
     ),
   ],
   tags: ['autodocs'],
-} satisfies Meta<typeof Sidebar>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

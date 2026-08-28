@@ -7,7 +7,6 @@ import {
   Code2,
   Palette,
   Sparkles,
-  Github,
   ChevronRight,
   Menu,
   Home,
@@ -15,6 +14,7 @@ import {
   Bell,
   User,
 } from "lucide-react";
+import { GithubIcon } from "@/components/github-icon";
 
 function PhoneMockup({ children }: { children: React.ReactNode }) {
   return (
@@ -191,7 +191,7 @@ export default function HomePage() {
               href="https://github.com/fyalavuz/appshell-react"
               className="inline-flex size-9 items-center justify-center rounded-md text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
             >
-              <Github className="size-5" />
+              <GithubIcon className="size-5" />
             </Link>
             <Link
               href="/docs"
@@ -374,7 +374,7 @@ export default function HomePage() {
                   href="https://github.com/fyalavuz/appshell-react"
                   className="inline-flex items-center justify-center rounded-md border bg-background px-6 py-3 text-sm font-medium shadow-sm hover:bg-accent hover:text-accent-foreground transition-colors"
                 >
-                  <Github className="mr-2 size-4" />
+                  <GithubIcon className="mr-2 size-4" />
                   Star on GitHub
                 </Link>
               </div>

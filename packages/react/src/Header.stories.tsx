@@ -7,7 +7,7 @@ import { ScrollNav, ScrollNavItem } from './ScrollNav';
 import { MotionProvider } from './motion';
 import { framerMotionAdapter } from './motion-framer';
 
-const meta = {
+const meta: Meta<typeof Header> = {
   title: 'Components/Header',
   component: Header,
   parameters: {
@@ -26,7 +26,7 @@ const meta = {
     ),
   ],
   tags: ['autodocs'],
-} satisfies Meta<typeof Header>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

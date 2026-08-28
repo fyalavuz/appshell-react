@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ScrollNav, ScrollNavItem } from './ScrollNav';
 import { AppShellProvider } from './context';
 
-const meta = {
+const meta: Meta<typeof ScrollNav> = {
   title: 'Components/ScrollNav',
   component: ScrollNav,
   parameters: {
@@ -17,7 +17,7 @@ const meta = {
     ),
   ],
   tags: ['autodocs'],
-} satisfies Meta<typeof ScrollNav>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

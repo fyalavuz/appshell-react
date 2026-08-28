@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { cn } from "appshell-react";
-import { PanelTop, Github, Menu, X, ExternalLink } from "lucide-react";
+import { PanelTop, Menu, X, ExternalLink } from "lucide-react";
+import { GithubIcon } from "./github-icon";
 import { SidebarNav } from "./sidebar-nav";
 import { PhoneMockup } from "./phone-mockup";
 import { CodeBlock } from "./code-block";
@@ -57,7 +58,7 @@ export function ExampleLayout({ slug, title, description, code }: ExampleLayoutP
               rel="noreferrer"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              <Github className="size-5" />
+              <GithubIcon className="size-5" />
             </a>
           </div>
         </div>

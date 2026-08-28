@@ -15,10 +15,10 @@
     "release": "pnpm --filter appshell-react build && changeset publish"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "^0.5.2",
-    "@changesets/cli": "^2.29.8",
-    "turbo": "^2.5.0",
-    "typescript": "^5.7.3"
+    "@changesets/changelog-github": "^1.0.0",
+    "@changesets/cli": "^3.0.1",
+    "turbo": "^2.10.12",
+    "typescript": "^6.0.3"
   },
   "packageManager": "pnpm@9.15.0"
 }

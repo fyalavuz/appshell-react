@@ -6,7 +6,7 @@ import { MotionProvider } from './motion';
 import { framerMotionAdapter } from './motion-framer';
 import { Home, Search, PlusCircle, Bell, User } from 'lucide-react';
 
-const meta = {
+const meta: Meta<typeof Footer> = {
   title: 'Components/Footer',
   component: Footer,
   parameters: {
@@ -27,7 +27,7 @@ const meta = {
     ),
   ],
   tags: ['autodocs'],
-} satisfies Meta<typeof Footer>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

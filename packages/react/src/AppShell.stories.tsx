@@ -9,7 +9,7 @@ import { MotionProvider } from './motion';
 import { framerMotionAdapter } from './motion-framer';
 import { Home, Search, Bell, User, PlusCircle } from 'lucide-react';
 
-const meta = {
+const meta: Meta<typeof AppShell> = {
   title: 'Components/AppShell',
   component: AppShell,
   parameters: {
@@ -23,7 +23,7 @@ const meta = {
     ),
   ],
   tags: ['autodocs'],
-} satisfies Meta<typeof AppShell>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

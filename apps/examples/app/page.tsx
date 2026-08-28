@@ -8,8 +8,8 @@ import {
   Shield,
   Accessibility,
   Sparkles,
-  Github,
-} from "lucide-react";
+  } from "lucide-react";
+import { GithubIcon } from "./_components/github-icon";
 import { categories } from "./_components/example-data";
 
 const features = [
@@ -77,7 +77,7 @@ export default function ExamplesPage() {
               rel="noreferrer"
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
-              <Github className="size-5" />
+              <GithubIcon className="size-5" />
             </a>
           </div>
         </div>
