@@ -2,8 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    # NOTE: the claude/* branch entry is temporary, to deploy the demo redesign
-    # for review — drop it when merging to main.
+    # TEMP: drop the claude/* entry when merging to main.
     branches: [main, claude/demo-pages-redesign-cvxq4d]
   workflow_dispatch:
 
