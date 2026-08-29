@@ -306,16 +306,17 @@ export default async function ThemingPage() {
 
       <DocSection title="CSS variables: read vs. written">
         <DocProse>
-          The library <em>reads</em> four safe-area variables —{" "}
-          <InlineCode>--sa-top</InlineCode>,{" "}
-          <InlineCode>--sa-bottom</InlineCode>,{" "}
-          <InlineCode>--sa-left</InlineCode>,{" "}
-          <InlineCode>--sa-right</InlineCode> — each with an{" "}
-          <InlineCode>env(safe-area-inset-*)</InlineCode> fallback. It never
-          sets them: on a real device the <InlineCode>env()</InlineCode>{" "}
-          fallback supplies the insets, and defining{" "}
-          <InlineCode>--sa-*</InlineCode> yourself is an override hook for
-          phone mockups, Storybook, and tests.
+          Safe-area insets come straight from the platform standard{" "}
+          <InlineCode>env(safe-area-inset-top/bottom/left/right)</InlineCode>{" "}
+          — the values iOS and Android populate once your viewport meta tag
+          carries <InlineCode>viewport-fit=cover</InlineCode>. The library
+          reads them everywhere it pads an edge and never sets them. For
+          environments where real insets are zero (mockups, Storybook,
+          tests), defining{" "}
+          <InlineCode>--appshell-safe-area-inset-top</InlineCode>{" "}
+          (/-bottom/-left/-right) overrides the corresponding{" "}
+          <InlineCode>env()</InlineCode> value — a simulation hook, nothing
+          more.
         </DocProse>
         <DocProse>
           It <em>writes</em> exactly one variable:{" "}

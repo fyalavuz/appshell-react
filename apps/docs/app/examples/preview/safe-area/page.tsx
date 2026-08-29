@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type ElementType, type ReactNode } from "react";
+import { useState, type ElementType, type ReactNode } from "react";
 import {
   AppShell,
   Content,
@@ -9,6 +9,7 @@ import {
   Header,
   MotionProvider,
   SafeArea,
+  useSafeArea,
 } from "appshell-react";
 import { framerMotionAdapter } from "appshell-react/motion-framer";
 import {
@@ -54,13 +55,9 @@ function ConceptCard({
 
 export default function SafeAreaPage() {
   const [showInsets, setShowInsets] = useState(false);
-  const [insets, setInsets] = useState({ top: "0px", bottom: "0px" });
-
-  useEffect(() => {
-    const styles = getComputedStyle(document.documentElement);
-    const read = (name: string) => styles.getPropertyValue(name).trim() || "0px";
-    setInsets({ top: read("--sa-top"), bottom: read("--sa-bottom") });
-  }, []);
+  // Dogfooding: the library's own hook resolves env(safe-area-inset-*),
+  // including any simulated override this mockup injects.
+  const insets = useSafeArea();
 
   return (
     <MotionProvider adapter={framerMotionAdapter}>
@@ -161,8 +158,9 @@ export default function SafeAreaPage() {
                 className="rounded-lg border border-dashed border-orange-400 bg-orange-50/60 dark:border-orange-800 dark:bg-orange-950/20"
               >
                 <div className="rounded-md bg-background px-3 py-4 text-center text-xs text-muted-foreground">
-                  This box is padded by <span className="font-mono">--sa-left</span>{" "}
-                  and <span className="font-mono">--sa-right</span>
+                  This box is padded by{" "}
+                  <span className="font-mono">env(safe-area-inset-left)</span>{" "}
+                  and <span className="font-mono">env(safe-area-inset-right)</span>
                 </div>
               </SafeArea>
               <p className="text-xs">
@@ -175,29 +173,33 @@ export default function SafeAreaPage() {
             <ConceptCard
               icon={Ruler}
               title="Where the numbers come from"
-              code={"var(--sa-top, env(safe-area-inset-top, 0px))"}
+              code={"env(safe-area-inset-top) /* viewport-fit=cover */"}
             >
               <p>
-                This docs mockup injects{" "}
-                <code className="rounded bg-muted px-1 py-0.5 font-mono text-xs">--sa-top: 59px</code>{" "}
-                and{" "}
-                <code className="rounded bg-muted px-1 py-0.5 font-mono text-xs">--sa-bottom: 34px</code>{" "}
-                into the preview frame to simulate an iPhone. On a real device
-                the same variables fall back to the platform&rsquo;s{" "}
+                The platform standard, on iOS and Android alike: the browser
+                exposes the notch and home-indicator geometry through{" "}
                 <code className="rounded bg-muted px-1 py-0.5 font-mono text-xs">env(safe-area-inset-*)</code>{" "}
-                values.
+                once the page opts in with{" "}
+                <code className="rounded bg-muted px-1 py-0.5 font-mono text-xs">viewport-fit=cover</code>
+                . The shell reads those values directly — this docs mockup
+                merely simulates an iPhone&rsquo;s numbers inside the frame,
+                since a desktop browser reports 0.
               </p>
               <div className="divide-y rounded-lg border font-mono text-xs">
                 <div className="flex items-center justify-between px-3 py-2">
-                  <span className="text-muted-foreground">--sa-top</span>
+                  <span className="text-muted-foreground">
+                    env(safe-area-inset-top)
+                  </span>
                   <span className="font-semibold text-orange-600 dark:text-orange-400">
-                    {insets.top}
+                    {insets.top}px
                   </span>
                 </div>
                 <div className="flex items-center justify-between px-3 py-2">
-                  <span className="text-muted-foreground">--sa-bottom</span>
+                  <span className="text-muted-foreground">
+                    env(safe-area-inset-bottom)
+                  </span>
                   <span className="font-semibold text-orange-600 dark:text-orange-400">
-                    {insets.bottom}
+                    {insets.bottom}px
                   </span>
                 </div>
               </div>
@@ -215,20 +217,20 @@ export default function SafeAreaPage() {
           <>
             <div
               aria-hidden
-              style={{ height: "var(--sa-top, 0px)" }}
+              style={{ height: insets.top }}
               className="pointer-events-none fixed inset-x-0 top-0 z-[80] flex items-center justify-center border-b border-dashed border-orange-500/70 bg-orange-500/25"
             >
               <code className="rounded bg-orange-600 px-1.5 py-0.5 font-mono text-[10px] font-medium text-white">
-                --sa-top
+                safe-area-inset-top
               </code>
             </div>
             <div
               aria-hidden
-              style={{ height: "var(--sa-bottom, 0px)" }}
+              style={{ height: insets.bottom }}
               className="pointer-events-none fixed inset-x-0 bottom-0 z-[80] flex items-center justify-center border-t border-dashed border-orange-500/70 bg-orange-500/25"
             >
               <code className="rounded bg-orange-600 px-1.5 py-0.5 font-mono text-[10px] font-medium text-white">
-                --sa-bottom
+                safe-area-inset-bottom
               </code>
             </div>
           </>

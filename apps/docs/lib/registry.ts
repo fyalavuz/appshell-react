@@ -1,4 +1,5 @@
 import {
+  Command,
   Dock,
   PanelLeftClose,
   PanelTop,
@@ -264,6 +265,22 @@ export const categories: ExampleCategory[] = [
         ],
       },
       {
+        slug: "search-command",
+        title: "Search Modal & User Menu",
+        description:
+          "Tapping search opens a full search overlay seeded with what you typed; the avatar opens the account menu.",
+        icon: Command,
+        category: "layout",
+        tags: ["search", "modal", "user-menu", "avatar"],
+        appName: "Nimbus — knowledge base",
+        props: "<SearchModal defaultQuery> + <UserMenu>",
+        tryHints: [
+          "Tap the search field — the modal opens with your text",
+          "Type to filter articles live",
+          "Open the avatar menu in the top corner",
+        ],
+      },
+      {
         slug: "scroll-nav",
         title: "Scroll Navigation",
         description:
@@ -430,6 +447,8 @@ export const docsNavigation = [
       { title: "SafeArea", href: "/docs/components/safe-area" },
       { title: "ScrollNav", href: "/docs/components/scroll-nav" },
       { title: "SearchField", href: "/docs/components/search-field" },
+      { title: "SearchModal", href: "/docs/components/search-modal" },
+      { title: "UserMenu", href: "/docs/components/user-menu" },
     ],
   },
   {

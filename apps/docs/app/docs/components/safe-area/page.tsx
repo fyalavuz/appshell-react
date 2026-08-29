@@ -60,33 +60,43 @@ export default async function SafeAreaPage() {
         </DocProse>
       </DocSection>
 
-      <DocSection title="How insets resolve">
+      <DocSection title="The platform standard, nothing invented">
         <DocProse>
-          Every inset in the library resolves as{" "}
-          <InlineCode>var(--sa-top, env(safe-area-inset-top, 0px))</InlineCode>{" "}
-          (and likewise for <InlineCode>bottom</InlineCode>,{" "}
-          <InlineCode>left</InlineCode>, <InlineCode>right</InlineCode>): a{" "}
-          <InlineCode>--sa-*</InlineCode> CSS variable is read first, falling
-          back to the platform&rsquo;s{" "}
-          <InlineCode>env(safe-area-inset-*)</InlineCode> value, falling back
-          to zero. The library never sets those variables itself — on a real
-          device the <InlineCode>env()</InlineCode> values do the work, while
-          the phone mockup on this site injects{" "}
-          <InlineCode>--sa-top: 59px</InlineCode> and{" "}
-          <InlineCode>--sa-bottom: 34px</InlineCode> to simulate an iPhone.
-          Your tests and Storybook stories can do the same.
+          Safe-area geometry is the operating system&rsquo;s to report, and
+          both platforms report it the same way: once your page opts into
+          edge-to-edge rendering with{" "}
+          <InlineCode>viewport-fit=cover</InlineCode>, iOS Safari/WebKit and
+          Android Chrome/WebView expose the notch, Dynamic Island, display
+          cutout and gesture-bar geometry through the CSS{" "}
+          <InlineCode>env(safe-area-inset-*)</InlineCode> variables. That
+          standard is the library&rsquo;s single source of truth — every
+          padded edge resolves straight to{" "}
+          <InlineCode>env(safe-area-inset-top)</InlineCode> and friends, and
+          the library never invents inset values of its own.
         </DocProse>
         <DocNote>
-          For <InlineCode>env()</InlineCode> to report anything on a real
-          device, your page must opt in with{" "}
+          Required setup:{" "}
           <InlineCode>
             &lt;meta name=&quot;viewport&quot;
-            content=&quot;viewport-fit=cover, width=device-width,
-            initial-scale=1&quot; /&gt;
+            content=&quot;width=device-width, initial-scale=1,
+            viewport-fit=cover&quot; /&gt;
           </InlineCode>
           . Without <InlineCode>viewport-fit=cover</InlineCode> the browser
-          letterboxes the page and every inset is 0.
+          letterboxes the page and every inset is 0. On Android 15+ the system
+          renders apps edge-to-edge by default, so handling these insets is no
+          longer optional there.
         </DocNote>
+        <DocProse>
+          One escape hatch exists for environments where real insets are
+          zero — a desktop browser, an iframe, a test runner: defining{" "}
+          <InlineCode>--appshell-safe-area-inset-top</InlineCode> (and{" "}
+          <InlineCode>-bottom</InlineCode>/<InlineCode>-left</InlineCode>/
+          <InlineCode>-right</InlineCode>) overrides the corresponding{" "}
+          <InlineCode>env()</InlineCode> value. The device frames on this site
+          inject <InlineCode>59px</InlineCode>/<InlineCode>34px</InlineCode>{" "}
+          that way to simulate an iPhone; your Storybook stories and tests can
+          do the same. It is a simulation hook, not a parallel system.
+        </DocProse>
       </DocSection>
 
       <DocSection title="Shell-wide vs. per-region">
@@ -112,11 +122,10 @@ export default async function SafeAreaPage() {
       <DocSection title="Props">
         <PropsTable api={safeAreaApi} />
         <DocNote>
-          SafeArea writes its padding into the element&rsquo;s{" "}
-          <InlineCode>style</InlineCode> attribute imperatively and owns that
-          attribute — there is no <InlineCode>style</InlineCode> prop, and any
-          inline styles applied to the element by other means get overwritten.
-          Use <InlineCode>className</InlineCode> for everything else.
+          SafeArea renders its padding as inline styles on the wrapper — it
+          works under server rendering with no hydration flash. There is no{" "}
+          <InlineCode>style</InlineCode> prop; use{" "}
+          <InlineCode>className</InlineCode> for everything else.
         </DocNote>
       </DocSection>
 

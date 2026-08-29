@@ -46,15 +46,25 @@ export function useSafeArea(edges: SafeAreaEdge[] = ["top", "bottom", "left", "r
     const measure = () => {
       const rootStyle = getComputedStyle(document.documentElement);
       const env = measureEnvInsets();
-      // --sa-* overrides (injected by mockups/tests) win over env() values.
+      // env(safe-area-inset-*) is the source of truth; the
+      // --appshell-safe-area-inset-* overrides exist only so mockups and
+      // tests can simulate insets, and win when present.
       const read = (prop: string, envValue: number) =>
         parseFloat(rootStyle.getPropertyValue(prop) || "") || envValue;
 
       setInsets({
-        top: edges.includes("top") ? read("--sa-top", env.top) : 0,
-        bottom: edges.includes("bottom") ? read("--sa-bottom", env.bottom) : 0,
-        left: edges.includes("left") ? read("--sa-left", env.left) : 0,
-        right: edges.includes("right") ? read("--sa-right", env.right) : 0,
+        top: edges.includes("top")
+          ? read("--appshell-safe-area-inset-top", env.top)
+          : 0,
+        bottom: edges.includes("bottom")
+          ? read("--appshell-safe-area-inset-bottom", env.bottom)
+          : 0,
+        left: edges.includes("left")
+          ? read("--appshell-safe-area-inset-left", env.left)
+          : 0,
+        right: edges.includes("right")
+          ? read("--appshell-safe-area-inset-right", env.right)
+          : 0,
       });
     };
 

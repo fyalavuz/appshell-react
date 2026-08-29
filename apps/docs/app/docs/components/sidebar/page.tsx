@@ -142,6 +142,24 @@ export default async function SidebarPage() {
         </DocNote>
       </DocSection>
 
+      <DocSection title="Bottom section">
+        <DocProse>
+          Both variants take a <InlineCode>bottomContent</InlineCode> prop:
+          a slot pinned below the scrolling nav, for the infrastructural
+          actions that don&rsquo;t navigate — settings, about, a theme
+          toggle, or a{" "}
+          <Link
+            href="/docs/components/user-menu"
+            className="text-brand hover:underline"
+          >
+            UserMenu
+          </Link>
+          . In the drawer it also pads itself past the home indicator. The
+          pattern comes straight from industrial design systems: navigation
+          scrolls, infrastructure stays put.
+        </DocProse>
+      </DocSection>
+
       <DocSection title="NavGroup">
         <PropsTable api={navGroupApi} />
       </DocSection>

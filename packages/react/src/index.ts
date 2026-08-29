@@ -14,6 +14,9 @@ export { NavItem } from "./NavItem";
 export { HeaderNav, HeaderNavItem } from "./HeaderNav";
 export { ScrollNav, ScrollNavItem } from "./ScrollNav";
 export { SearchField } from "./SearchField";
+export { SearchModal } from "./SearchModal";
+export { Avatar } from "./Avatar";
+export { UserMenu, UserMenuItem } from "./UserMenu";
 export { cn } from "./cn";
 
 export type {
@@ -46,6 +49,10 @@ export type {
   ScrollNavItemProps,
   SearchFieldVariant,
   SearchFieldProps,
+  SearchModalProps,
+  AvatarProps,
+  UserMenuProps,
+  UserMenuItemProps,
 } from "./types";
 
 export type { MotionAdapter } from "./motion";

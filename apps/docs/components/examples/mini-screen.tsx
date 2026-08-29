@@ -318,6 +318,30 @@ function renderMotif(slug: string) {
         </>
       );
 
+    case "search-command":
+      return (
+        <>
+          <HeaderBlock rows={1} />
+          <div className="absolute inset-x-0 top-8 opacity-40">
+            <Lines />
+          </div>
+          <Anim
+            name="ms-modal"
+            className="absolute inset-x-3 top-9 z-20 rounded-md border border-brand/30 bg-background p-2 shadow-lg"
+          >
+            <div className="flex items-center gap-1 rounded-sm bg-brand/15 px-1.5 py-1">
+              <span className="size-1.5 rounded-full bg-brand" />
+              <span className="h-1 w-10 rounded-full bg-brand/60" />
+            </div>
+            <div className="mt-1.5 space-y-1">
+              <span className="block h-1.5 w-full rounded-full bg-foreground/15" />
+              <span className="block h-1.5 w-5/6 rounded-full bg-foreground/15" />
+              <span className="block h-1.5 w-2/3 rounded-full bg-foreground/15" />
+            </div>
+          </Anim>
+        </>
+      );
+
     case "sidebar":
       return (
         <>

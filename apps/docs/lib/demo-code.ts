@@ -18,6 +18,7 @@ import { snippet as safeArea } from "@/app/examples/preview/safe-area/snippet";
 import { snippet as revealCombined } from "@/app/examples/preview/reveal-combined/snippet";
 import { snippet as headerThemes } from "@/app/examples/preview/header-themes/snippet";
 import { snippet as darkMode } from "@/app/examples/preview/dark-mode/snippet";
+import { snippet as searchCommand } from "@/app/examples/preview/search-command/snippet";
 
 /** Curated code snippets shown on each example's detail page. */
 export const demoCode: Record<string, string> = {
@@ -34,6 +35,7 @@ export const demoCode: Record<string, string> = {
   "mini-footer": miniFooter,
   sidebar,
   "docked-sidebar": dockedSidebar,
+  "search-command": searchCommand,
   "scroll-nav": scrollNav,
   "in-page-nav": inPageNav,
   "desktop-nav": desktopNav,

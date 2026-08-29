@@ -184,6 +184,12 @@
   100% { opacity: 0; }
 }
 
+@keyframes ms-modal {
+  0%, 14% { transform: scale(0.92) translateY(5%); opacity: 0; }
+  36%, 72% { transform: scale(1) translateY(0); opacity: 1; }
+  92%, 100% { transform: scale(0.92) translateY(5%); opacity: 0; }
+}
+
 /* Shiki code blocks always render on their own dark panel */
 .code-panel .shiki {
   background-color: transparent !important;

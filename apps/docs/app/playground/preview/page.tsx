@@ -13,7 +13,10 @@ import {
   NavGroup,
   NavItem,
   SearchField,
+  SearchModal,
   Sidebar,
+  UserMenu,
+  UserMenuItem,
 } from "appshell-react";
 import { framerMotionAdapter } from "appshell-react/motion-framer";
 import {
@@ -23,8 +26,10 @@ import {
   Compass,
   Home,
   Leaf,
+  LogOut,
   Menu,
   Plus,
+  Settings,
   User,
   Users,
 } from "lucide-react";
@@ -110,6 +115,8 @@ export default function PlaygroundPreviewPage() {
   const [config, setConfig] = useState<PlaygroundConfig>(defaultConfig);
   const [activeTab, setActiveTab] = useState("home");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
     const onMessage = (event: MessageEvent) => {
@@ -176,13 +183,34 @@ export default function PlaygroundPreviewPage() {
             </span>
           }
           actions={
-            <button
-              type="button"
-              aria-label="Notifications"
-              className="rounded-full p-2 opacity-70 transition-opacity hover:opacity-100"
-            >
-              <Bell className="size-5" />
-            </button>
+            config.userMenu ? (
+              <UserMenu
+                username="Mara Kealoha"
+                detail="mara@fieldnotes.app"
+                initials="MK"
+              >
+                <UserMenuItem icon={<User />} label="Profile" onClick={() => {}} />
+                <UserMenuItem
+                  icon={<Settings />}
+                  label="Settings"
+                  onClick={() => {}}
+                />
+                <UserMenuItem
+                  icon={<LogOut />}
+                  label="Log out"
+                  destructive
+                  onClick={() => {}}
+                />
+              </UserMenu>
+            ) : (
+              <button
+                type="button"
+                aria-label="Notifications"
+                className="rounded-full p-2 opacity-70 transition-opacity hover:opacity-100"
+              >
+                <Bell className="size-5" />
+              </button>
+            )
           }
           nav={
             config.showNav ? (
@@ -199,10 +227,20 @@ export default function PlaygroundPreviewPage() {
           }
           searchContent={
             config.showSearch ? (
-              <SearchField
-                variant={config.searchVariant}
-                placeholder="Search notes"
-              />
+              config.searchModal ? (
+                <SearchField
+                  variant={config.searchVariant}
+                  placeholder="Search notes"
+                  value={query}
+                  onChange={setQuery}
+                  onClick={() => setSearchOpen(true)}
+                />
+              ) : (
+                <SearchField
+                  variant={config.searchVariant}
+                  placeholder="Search notes"
+                />
+              )
             ) : undefined
           }
         />
@@ -259,6 +297,52 @@ export default function PlaygroundPreviewPage() {
             End of today&rsquo;s notes
           </p>
         </Content>
+
+        {config.showSearch && config.searchModal && (
+          <SearchModal
+            open={searchOpen}
+            onClose={() => setSearchOpen(false)}
+            defaultQuery={query}
+            placeholder="Search notes"
+          >
+            {(q) => {
+              const matches = notes.filter((n) =>
+                `${n.title} ${n.text} ${n.author}`
+                  .toLowerCase()
+                  .includes(q.toLowerCase())
+              );
+              if (q && matches.length === 0) {
+                return (
+                  <p className="px-4 py-10 text-center text-sm text-muted-foreground">
+                    Nothing for &ldquo;{q}&rdquo;
+                  </p>
+                );
+              }
+              return (
+                <div className="py-1">
+                  {matches.map((n) => (
+                    <button
+                      key={n.title}
+                      type="button"
+                      onClick={() => setSearchOpen(false)}
+                      className="flex w-full items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-muted/60"
+                    >
+                      <Avatar initials={n.initials} />
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-sm font-medium">
+                          {n.title}
+                        </span>
+                        <span className="block truncate text-xs text-muted-foreground">
+                          {n.author} · {n.time}
+                        </span>
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              );
+            }}
+          </SearchModal>
+        )}
 
         {config.footer === "tab-bar" && (
           <Footer variant="tab-bar" behavior={config.footerBehavior}>

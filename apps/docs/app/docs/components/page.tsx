@@ -69,6 +69,24 @@ const navigation: ComponentCard[] = [
   },
 ];
 
+const searchAndIdentity: ComponentCard[] = [
+  {
+    title: "SearchField",
+    href: "/docs/components/search-field",
+    text: "The search input, solved once: a rounded pill or an edge-to-edge bar, theme-aware inside any Header.",
+  },
+  {
+    title: "SearchModal",
+    href: "/docs/components/search-modal",
+    text: "A full search overlay — sheet on phones, command palette on desktop — triggered from any SearchField, with optional query hand-off.",
+  },
+  {
+    title: "UserMenu & Avatar",
+    href: "/docs/components/user-menu",
+    text: "The signed-in user's corner: an avatar trigger opening an account dropdown, with a standalone Avatar underneath.",
+  },
+];
+
 function CardGrid({ cards }: { cards: ComponentCard[] }) {
   return (
     <div className="grid gap-3 sm:grid-cols-2">
@@ -115,6 +133,16 @@ export default function ComponentsPage() {
           and auto-hide behaviors stay in sync.
         </DocProse>
         <CardGrid cards={navigation} />
+      </DocSection>
+
+      <DocSection title="Search & identity">
+        <DocProse>
+          The two things almost every app puts in its chrome: a way to search
+          and the signed-in user. All three components work standalone —
+          outside a Header, outside the shell — and every layer can be
+          customized or replaced.
+        </DocProse>
+        <CardGrid cards={searchAndIdentity} />
       </DocSection>
 
       <DocSection title="Beyond components">

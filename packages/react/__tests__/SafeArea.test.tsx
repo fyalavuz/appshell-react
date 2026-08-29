@@ -2,30 +2,41 @@ import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import { SafeArea } from "../src/SafeArea";
 
+const pad = (edge: string) =>
+  `padding-${edge}: var(--appshell-safe-area-inset-${edge}, env(safe-area-inset-${edge}, 0px))`;
+
 describe("SafeArea", () => {
   it("renders children", () => {
     render(<SafeArea>Hello</SafeArea>);
     expect(screen.getByText("Hello")).toBeInTheDocument();
   });
 
-  it("applies padding for all edges by default", () => {
+  it("applies env(safe-area-inset-*) padding for all edges by default", () => {
     const { container } = render(<SafeArea>Content</SafeArea>);
     const el = container.firstElementChild as HTMLElement;
     const styleAttr = el.getAttribute("style") || "";
-    expect(styleAttr).toContain("padding-top: var(--sa-top, env(safe-area-inset-top, 0px))");
-    expect(styleAttr).toContain("padding-bottom: var(--sa-bottom, env(safe-area-inset-bottom, 0px))");
-    expect(styleAttr).toContain("padding-left: var(--sa-left, env(safe-area-inset-left, 0px))");
-    expect(styleAttr).toContain("padding-right: var(--sa-right, env(safe-area-inset-right, 0px))");
+    expect(styleAttr).toContain(pad("top"));
+    expect(styleAttr).toContain(pad("bottom"));
+    expect(styleAttr).toContain(pad("left"));
+    expect(styleAttr).toContain(pad("right"));
   });
 
   it("applies padding only for specified edges", () => {
     const { container } = render(<SafeArea edges={["top", "bottom"]}>Content</SafeArea>);
     const el = container.firstElementChild as HTMLElement;
     const styleAttr = el.getAttribute("style") || "";
-    expect(styleAttr).toContain("padding-top: var(--sa-top, env(safe-area-inset-top, 0px))");
-    expect(styleAttr).toContain("padding-bottom: var(--sa-bottom, env(safe-area-inset-bottom, 0px))");
+    expect(styleAttr).toContain(pad("top"));
+    expect(styleAttr).toContain(pad("bottom"));
     expect(styleAttr).not.toContain("padding-left");
     expect(styleAttr).not.toContain("padding-right");
+  });
+
+  it("renders the padding synchronously (SSR-safe, no effect pass needed)", () => {
+    // The style must come from the style prop, not a client effect —
+    // renderToString output carries it too (see SSR.test.tsx).
+    const { container } = render(<SafeArea edges={["top"]}>Content</SafeArea>);
+    const el = container.firstElementChild as HTMLElement;
+    expect(el.style.paddingTop).toContain("env(safe-area-inset-top");
   });
 
   it("applies custom className", () => {

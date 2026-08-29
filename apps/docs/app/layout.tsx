@@ -29,6 +29,11 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  // Opt into edge-to-edge so env(safe-area-inset-*) reports real values
+  // on notched devices — the platform-standard safe-area mechanism.
+  viewportFit: "cover",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "white" },
     { media: "(prefers-color-scheme: dark)", color: "black" },

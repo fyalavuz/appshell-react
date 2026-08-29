@@ -38,7 +38,7 @@ const CollapseChevrons = ({ className }: { className?: string }) => (
 
 export const Sidebar = memo(function Sidebar(props: SidebarProps) {
   const { motion, AnimatePresence } = useMotion();
-  const { side = "left", className, children } = props;
+  const { side = "left", bottomContent, className, children } = props;
 
   const isDocked = props.variant === "docked";
   const open = props.open ?? false;
@@ -111,13 +111,25 @@ export const Sidebar = memo(function Sidebar(props: SidebarProps) {
             exit={{ x: isLeft ? "-100%" : "100%" }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
             className={cn(
-              "fixed top-0 z-[71] h-full w-80 max-w-[85vw] overflow-y-auto bg-background shadow-2xl",
+              "fixed top-0 z-[71] flex h-full w-80 max-w-[85vw] flex-col bg-background shadow-2xl",
               isLeft ? "left-0" : "right-0",
               gate,
               className
             )}
           >
-            {children}
+            <div className="min-h-0 flex-1 overflow-y-auto">{children}</div>
+            {bottomContent && (
+              <div
+                data-sidebar-bottom
+                className="shrink-0 border-t border-border"
+                style={{
+                  paddingBottom:
+                    "var(--appshell-safe-area-inset-bottom, env(safe-area-inset-bottom, 0px))",
+                }}
+              >
+                {bottomContent}
+              </div>
+            )}
           </motion.div>
         </>
       )}
@@ -142,10 +154,10 @@ export const Sidebar = memo(function Sidebar(props: SidebarProps) {
     top: "var(--appshell-sidebar-top, var(--header-height, 0px))",
     height:
       "calc(100dvh - var(--appshell-sidebar-top, var(--header-height, 0px)))",
-    paddingBottom: "var(--sa-bottom, env(safe-area-inset-bottom, 0px))",
+    paddingBottom: "var(--appshell-safe-area-inset-bottom, env(safe-area-inset-bottom, 0px))",
     ...(isLeft
-      ? { paddingLeft: "var(--sa-left, env(safe-area-inset-left, 0px))" }
-      : { paddingRight: "var(--sa-right, env(safe-area-inset-right, 0px))" }),
+      ? { paddingLeft: "var(--appshell-safe-area-inset-left, env(safe-area-inset-left, 0px))" }
+      : { paddingRight: "var(--appshell-safe-area-inset-right, env(safe-area-inset-right, 0px))" }),
   };
 
   return (
@@ -168,6 +180,14 @@ export const Sidebar = memo(function Sidebar(props: SidebarProps) {
         >
           {children}
         </div>
+        {bottomContent && (
+          <div
+            data-sidebar-bottom
+            className="shrink-0 border-t border-border"
+          >
+            {bottomContent}
+          </div>
+        )}
         {props.collapsible && (
           <button
             type="button"

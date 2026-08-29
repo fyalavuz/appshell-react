@@ -119,14 +119,13 @@ export default async function AppShellPage() {
           untouched.
         </DocProse>
         <DocNote>
-          AppShell does <em>not</em> set the <InlineCode>--sa-*</InlineCode>{" "}
-          variables. Components <em>read</em>{" "}
-          <InlineCode>--sa-top</InlineCode>/<InlineCode>--sa-bottom</InlineCode>
-          /<InlineCode>--sa-left</InlineCode>/<InlineCode>--sa-right</InlineCode>{" "}
-          with <InlineCode>env(safe-area-inset-*)</InlineCode> fallbacks — on
-          a real device the <InlineCode>env()</InlineCode> values apply, and
-          defining <InlineCode>--sa-*</InlineCode> yourself is how mockups and
-          tests inject fake insets. Details in{" "}
+          Inset values come from the platform standard{" "}
+          <InlineCode>env(safe-area-inset-*)</InlineCode> (requires{" "}
+          <InlineCode>viewport-fit=cover</InlineCode> in your viewport meta
+          tag) — AppShell never invents them. Mockups and tests can simulate
+          insets by defining{" "}
+          <InlineCode>--appshell-safe-area-inset-*</InlineCode> overrides.
+          Details in{" "}
           <Link href="/docs/theming" className="text-brand hover:underline">
             Theming
           </Link>

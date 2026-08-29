@@ -19,6 +19,7 @@ import {
   Menu,
   Mountain,
   Rocket,
+  Settings,
   Users,
   Globe,
   ClipboardList,
@@ -144,6 +145,15 @@ export default function DockedSidebarPage() {
           collapsible
           open={open}
           onClose={() => setOpen(false)}
+          bottomContent={
+            <div className="p-2">
+              <NavItem
+                icon={<Settings className="size-4" />}
+                label="Workspace settings"
+                onClick={() => setOpen(false)}
+              />
+            </div>
+          }
         >
           <TerraNav onNavigate={() => setOpen(false)} />
         </Sidebar>

@@ -93,6 +93,12 @@ export type SidebarBreakpoint = "sm" | "md" | "lg" | "none";
 
 interface SidebarBaseProps {
   side?: SidebarSide;
+  /**
+   * Pinned at the bottom of the panel, below the scrolling nav — the spot
+   * for infrastructural actions that don't navigate: settings, about,
+   * a theme toggle, a UserMenu.
+   */
+  bottomContent?: ReactNode;
   className?: string;
   children: ReactNode;
 }
@@ -175,9 +181,86 @@ export interface SearchFieldProps {
   onChange?: (value: string) => void;
   /** Called with the current value when Enter is pressed. */
   onSubmit?: (value: string) => void;
+  /** Focus/click passthroughs — wire these to open a SearchModal. */
+  onFocus?: () => void;
+  onClick?: () => void;
   className?: string;
   inputClassName?: string;
   "aria-label"?: string;
+}
+
+export interface SearchModalProps {
+  open: boolean;
+  onClose: () => void;
+  /** Controlled query. Omit for uncontrolled. */
+  query?: string;
+  /**
+   * Seeds the modal's input every time it opens — pass the text already
+   * typed into a triggering SearchField to continue the search seamlessly.
+   */
+  defaultQuery?: string;
+  onQueryChange?: (value: string) => void;
+  /** Called with the current query when Enter is pressed. */
+  onSubmit?: (value: string) => void;
+  placeholder?: string;
+  /**
+   * Results area. Pass a render function to build results from the live
+   * query, or plain nodes for static content (recents, suggestions).
+   */
+  children?: ReactNode | ((query: string) => ReactNode);
+  /** Label of the dismiss button. Default "Cancel". */
+  closeLabel?: string;
+  /** Extra classes for the modal panel. */
+  className?: string;
+  /** Extra classes for the backdrop. */
+  overlayClassName?: string;
+  "aria-label"?: string;
+}
+
+export interface AvatarProps {
+  /** Image URL. Falls back to initials while missing or on load error. */
+  src?: string;
+  alt?: string;
+  /** Shown when no image renders — keep it to 1–2 characters. */
+  initials?: string;
+  /** Diameter as a CSS length. Default "2rem". */
+  size?: string;
+  className?: string;
+}
+
+export interface UserMenuProps {
+  /** Display name, shown in the menu's info header. */
+  username: string;
+  /** Secondary line under the name — an email, role, or tenant. */
+  detail?: string;
+  /** Avatar image URL for the default trigger and the info header. */
+  src?: string;
+  /** Avatar initials fallback. */
+  initials?: string;
+  /** Replace the default avatar button entirely. */
+  trigger?: ReactNode;
+  /** Controlled open state. Omit for uncontrolled. */
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  /** Horizontal alignment of the panel relative to the trigger. Default "end". */
+  align?: "start" | "end";
+  /** Menu content — UserMenuItem elements, separators, anything. */
+  children?: ReactNode;
+  /** Extra classes for the dropdown panel. */
+  className?: string;
+  /** Extra classes for the default trigger button. */
+  triggerClassName?: string;
+  "aria-label"?: string;
+}
+
+export interface UserMenuItemProps {
+  icon?: ReactNode;
+  label: string;
+  href?: string;
+  onClick?: () => void;
+  /** Style as a destructive action — log out, delete account. */
+  destructive?: boolean;
+  className?: string;
 }
 
 export interface ScrollNavProps {

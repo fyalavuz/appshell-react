@@ -79,6 +79,19 @@ const cssSetup = `@import "tailwindcss";
   }
 }`;
 
+const viewportSetup = `<!-- index.html / your document head -->
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, viewport-fit=cover"
+/>
+
+<!-- Next.js App Router: app/layout.tsx -->
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};`;
+
 const motionSetup = `import { MotionProvider } from "appshell-react";
 import { framerMotionAdapter } from "appshell-react/motion-framer";
 
@@ -91,9 +104,10 @@ export default function App({ children }) {
 }`;
 
 export default async function InstallationPage() {
-  const [installHtml, cssHtml, motionHtml] = await Promise.all([
+  const [installHtml, cssHtml, viewportHtml, motionHtml] = await Promise.all([
     highlight(installCmd, "bash"),
     highlight(cssSetup, "css"),
+    highlight(viewportSetup, "html"),
     highlight(motionSetup),
   ]);
 
@@ -141,6 +155,28 @@ export default async function InstallationPage() {
           shell renders unstyled. If you use HeaderNav dropdowns, also install{" "}
           <InlineCode>tw-animate-css</InlineCode> (and import it) for the{" "}
           <InlineCode>animate-in</InlineCode> entrance utilities.
+        </DocNote>
+      </DocSection>
+
+      <DocSection title="Mobile safe areas">
+        <DocProse>
+          Safe-area padding (notches, the Dynamic Island, gesture bars) is
+          driven entirely by the platform standard{" "}
+          <InlineCode>env(safe-area-inset-*)</InlineCode>. For iOS and Android
+          to report those values, your page must opt into edge-to-edge
+          rendering with <InlineCode>viewport-fit=cover</InlineCode>:
+        </DocProse>
+        <CodePanel html={viewportHtml} code={viewportSetup} filename="viewport" />
+        <DocNote>
+          Skip this and every inset resolves to 0 — the shell still works,
+          but pinned bars will sit under the status bar on real devices. See{" "}
+          <Link
+            href="/docs/components/safe-area"
+            className="text-brand hover:underline"
+          >
+            SafeArea
+          </Link>{" "}
+          for the details.
         </DocNote>
       </DocSection>
 

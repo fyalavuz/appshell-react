@@ -36,6 +36,8 @@ export const SearchField = memo(function SearchField({
   defaultValue,
   onChange,
   onSubmit,
+  onFocus,
+  onClick,
   className,
   inputClassName,
   "aria-label": ariaLabel,
@@ -55,6 +57,8 @@ export const SearchField = memo(function SearchField({
       value={value}
       defaultValue={defaultValue}
       onChange={handleChange}
+      onFocus={onFocus}
+      onClick={onClick}
       onKeyDown={(e) => {
         if (e.key === "Enter") onSubmit?.(e.currentTarget.value);
       }}

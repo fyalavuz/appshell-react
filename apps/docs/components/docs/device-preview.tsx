@@ -67,7 +67,7 @@ function ScaledFrame({
       const doc = iframeRef.current?.contentDocument;
       if (doc) {
         const style = doc.createElement("style");
-        style.textContent = `:root{--sa-top:${saTop}px;--sa-bottom:${saBottom}px;--sa-left:0px;--sa-right:0px}`;
+        style.textContent = `:root{--appshell-safe-area-inset-top:${saTop}px;--appshell-safe-area-inset-bottom:${saBottom}px;--appshell-safe-area-inset-left:0px;--appshell-safe-area-inset-right:0px}`;
         doc.head.appendChild(style);
       }
     } catch {

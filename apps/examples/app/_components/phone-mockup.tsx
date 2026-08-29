@@ -33,7 +33,7 @@ export function PhoneMockup({ src, className }: PhoneMockupProps) {
       const doc = iframeRef.current?.contentDocument;
       if (!doc) return;
       const style = doc.createElement("style");
-      style.textContent = `:root{--sa-top:${SA_TOP}px;--sa-bottom:${SA_BOTTOM}px;--sa-left:0px;--sa-right:0px}`;
+      style.textContent = `:root{--appshell-safe-area-inset-top:${SA_TOP}px;--appshell-safe-area-inset-bottom:${SA_BOTTOM}px;--appshell-safe-area-inset-left:0px;--appshell-safe-area-inset-right:0px}`;
       doc.head.appendChild(style);
     } catch {
       // cross-origin — ignored in production

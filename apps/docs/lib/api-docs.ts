@@ -254,6 +254,12 @@ export const sidebarOverlayApi: ApiDef = {
       default: '"left"',
       description: "Which edge the drawer slides from.",
     },
+    {
+      name: "bottomContent",
+      type: "ReactNode",
+      description:
+        "Pinned below the scrolling nav — settings, about, a theme toggle, a UserMenu.",
+    },
     { name: "className", type: "string", description: "Extra classes for the panel." },
     {
       name: "children",
@@ -333,6 +339,12 @@ export const sidebarDockedApi: ApiDef = {
       default: '"left"',
       description: "Which side of the content the panel docks to.",
     },
+    {
+      name: "bottomContent",
+      type: "ReactNode",
+      description:
+        "Pinned below the scrolling nav in both the docked panel and the drawer fallback — settings, about, a theme toggle, a UserMenu.",
+    },
     { name: "className", type: "string", description: "Extra classes for the panel." },
   ],
 };
@@ -383,7 +395,7 @@ export const navItemApi: ApiDef = {
 export const safeAreaApi: ApiDef = {
   component: "SafeArea",
   description:
-    "Pads its children by the device safe-area insets. Reads --sa-top/--sa-bottom/--sa-left/--sa-right with env(safe-area-inset-*) fallbacks, so mockups and tests can inject insets.",
+    "Pads its children by the device safe-area insets, read from the platform standard env(safe-area-inset-*) (viewport-fit=cover required). Mockups and tests can simulate insets via --appshell-safe-area-inset-* overrides.",
   props: [
     {
       name: "edges",
@@ -436,6 +448,17 @@ export const searchFieldApi: ApiDef = {
       description: "Fires with the current value when Enter is pressed.",
     },
     {
+      name: "onClick",
+      type: "() => void",
+      description:
+        "Click/tap passthrough — the natural place to open a SearchModal (a click, unlike focus, can't retrigger when the modal restores focus on close).",
+    },
+    {
+      name: "onFocus",
+      type: "() => void",
+      description: "Focus passthrough on the input.",
+    },
+    {
       name: "className",
       type: "string",
       description: "Extra classes for the field surface.",
@@ -450,6 +473,186 @@ export const searchFieldApi: ApiDef = {
       type: "string",
       description: "Accessible name override (defaults to the placeholder).",
     },
+  ],
+};
+
+export const searchModalApi: ApiDef = {
+  component: "SearchModal",
+  description:
+    "A full search experience in an overlay: sheet-style on phones, centered palette on larger screens. Owns its input; the results area is yours.",
+  props: [
+    {
+      name: "open",
+      type: "boolean",
+      required: true,
+      description: "Whether the modal is visible.",
+    },
+    {
+      name: "onClose",
+      type: "() => void",
+      required: true,
+      description: "Called on Escape, backdrop click, or the cancel button.",
+    },
+    {
+      name: "query",
+      type: "string",
+      description: "Controlled query. Omit for uncontrolled.",
+    },
+    {
+      name: "defaultQuery",
+      type: "string",
+      default: '""',
+      description:
+        "Seeds the input every time the modal opens — pass the text typed into a triggering SearchField to continue the search seamlessly.",
+    },
+    {
+      name: "onQueryChange",
+      type: "(value: string) => void",
+      description: "Fires on every keystroke.",
+    },
+    {
+      name: "onSubmit",
+      type: "(value: string) => void",
+      description: "Fires with the current query when Enter is pressed.",
+    },
+    {
+      name: "placeholder",
+      type: "string",
+      default: '"Search"',
+      description: "Input placeholder and default accessible name.",
+    },
+    {
+      name: "children",
+      type: "ReactNode | (query: string) => ReactNode",
+      description:
+        "Results area. A render function receives the live query; plain nodes work for static content (recents, suggestions).",
+    },
+    {
+      name: "closeLabel",
+      type: "string",
+      default: '"Cancel"',
+      description: "Label of the dismiss button.",
+    },
+    {
+      name: "className",
+      type: "string",
+      description: "Extra classes for the modal panel.",
+    },
+    {
+      name: "overlayClassName",
+      type: "string",
+      description: "Extra classes for the backdrop.",
+    },
+  ],
+};
+
+export const avatarApi: ApiDef = {
+  component: "Avatar",
+  description:
+    "A round identity mark: an image when one loads, initials otherwise.",
+  props: [
+    {
+      name: "src",
+      type: "string",
+      description: "Image URL. Falls back to initials while missing or on load error.",
+    },
+    { name: "alt", type: "string", description: "Image alt text." },
+    {
+      name: "initials",
+      type: "string",
+      description: "Shown when no image renders — keep it to 1–2 characters.",
+    },
+    {
+      name: "size",
+      type: "string",
+      default: '"2rem"',
+      description: "Diameter as a CSS length.",
+    },
+    { name: "className", type: "string", description: "Extra classes." },
+  ],
+};
+
+export const userMenuApi: ApiDef = {
+  component: "UserMenu",
+  description:
+    "Avatar trigger + dropdown with the signed-in user's identity and account actions. Standalone; adapts to the Header theme when placed in one.",
+  props: [
+    {
+      name: "username",
+      type: "string",
+      required: true,
+      description: "Display name shown in the menu's info header.",
+    },
+    {
+      name: "detail",
+      type: "string",
+      description: "Secondary line under the name — an email, role, or tenant.",
+    },
+    {
+      name: "src",
+      type: "string",
+      description: "Avatar image URL for the trigger and info header.",
+    },
+    { name: "initials", type: "string", description: "Avatar initials fallback." },
+    {
+      name: "trigger",
+      type: "ReactNode",
+      description: "Replace the default avatar button entirely.",
+    },
+    {
+      name: "open",
+      type: "boolean",
+      description: "Controlled open state. Omit for uncontrolled.",
+    },
+    {
+      name: "onOpenChange",
+      type: "(open: boolean) => void",
+      description: "Open-state change requests.",
+    },
+    {
+      name: "align",
+      type: '"start" | "end"',
+      default: '"end"',
+      description: "Horizontal alignment of the panel relative to the trigger.",
+    },
+    {
+      name: "children",
+      type: "ReactNode",
+      description:
+        "Menu content — UserMenuItem elements or anything else. Clicks on role=\"menuitem\" elements close the menu.",
+    },
+    {
+      name: "className",
+      type: "string",
+      description: "Extra classes for the dropdown panel.",
+    },
+    {
+      name: "triggerClassName",
+      type: "string",
+      description: "Extra classes for the default trigger button.",
+    },
+  ],
+};
+
+export const userMenuItemApi: ApiDef = {
+  component: "UserMenuItem",
+  description: "One action row inside a UserMenu.",
+  props: [
+    { name: "label", type: "string", required: true, description: "Row text." },
+    { name: "icon", type: "ReactNode", description: "Leading 16px icon." },
+    {
+      name: "href",
+      type: "string",
+      description: "Renders the row as a link instead of a button.",
+    },
+    { name: "onClick", type: "() => void", description: "Action handler." },
+    {
+      name: "destructive",
+      type: "boolean",
+      default: "false",
+      description: "Style as a destructive action — log out, delete account.",
+    },
+    { name: "className", type: "string", description: "Extra classes." },
   ],
 };
 
@@ -491,7 +694,7 @@ export const hooksApi: {
     name: "useSafeArea",
     signature: "useSafeArea(edges?): { top, bottom, left, right }",
     description:
-      "Current safe-area inset values in pixels, resolved from the --sa-* variables or env().",
+      "Current safe-area inset values in pixels, resolved from env(safe-area-inset-*) (or a simulated --appshell-safe-area-inset-* override).",
   },
   {
     name: "useHeaderTheme",

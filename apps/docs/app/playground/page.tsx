@@ -258,21 +258,41 @@ export default function PlaygroundPage() {
                     checked={config.safeArea}
                     onChange={(v) => set("safeArea", v)}
                   />
+                  <Toggle
+                    label="User menu"
+                    checked={config.userMenu}
+                    onChange={(v) => set("userMenu", v)}
+                  />
                 </div>
               </div>
 
               {config.showSearch && (
-                <ControlGroup label="Search · style">
-                  {(["pill", "full"] as const).map((v) => (
-                    <Chip
-                      key={v}
-                      active={config.searchVariant === v}
-                      onClick={() => set("searchVariant", v)}
-                    >
-                      {v === "pill" ? "pill (rounded)" : "full-width"}
-                    </Chip>
-                  ))}
-                </ControlGroup>
+                <div>
+                  <ControlGroup label="Search · style">
+                    {(["pill", "full"] as const).map((v) => (
+                      <Chip
+                        key={v}
+                        active={config.searchVariant === v}
+                        onClick={() => set("searchVariant", v)}
+                      >
+                        {v === "pill" ? "pill (rounded)" : "full-width"}
+                      </Chip>
+                    ))}
+                  </ControlGroup>
+                  <div className="mt-3">
+                    <Toggle
+                      label="Opens the search modal"
+                      checked={config.searchModal}
+                      onChange={(v) => set("searchModal", v)}
+                    />
+                  </div>
+                  {config.searchModal && (
+                    <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                      Tap the search field in the preview — the modal opens
+                      seeded with whatever you typed.
+                    </p>
+                  )}
+                </div>
               )}
 
               <div>

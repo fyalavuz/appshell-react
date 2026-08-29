@@ -15,6 +15,8 @@ export interface PlaygroundConfig {
   showContext: boolean;
   showSearch: boolean;
   searchVariant: "pill" | "full";
+  searchModal: boolean;
+  userMenu: boolean;
   sidebar: "none" | "overlay" | "docked";
   sidebarCollapsible: boolean;
   sidebarBreakpoint: SidebarBreakpoint;
@@ -32,6 +34,8 @@ export const defaultConfig: PlaygroundConfig = {
   showContext: true,
   showSearch: true,
   searchVariant: "pill",
+  searchModal: false,
+  userMenu: false,
   sidebar: "none",
   sidebarCollapsible: true,
   sidebarBreakpoint: "md",
@@ -64,6 +68,8 @@ export const animationSpeeds: AnimationSpeed[] = ["slow", "normal", "fast"];
 export function generateCode(config: PlaygroundConfig): string {
   const imports = ["AppShell", "Header", "Content"];
   if (config.showSearch) imports.push("SearchField");
+  if (config.showSearch && config.searchModal) imports.push("SearchModal");
+  if (config.userMenu) imports.push("UserMenu", "UserMenuItem");
   if (config.sidebar !== "none") imports.push("Sidebar", "NavGroup", "NavItem");
   if (config.footer === "tab-bar") imports.push("Footer", "FooterItem");
   else if (config.footer !== "none") imports.push("Footer");
@@ -85,9 +91,17 @@ export function generateCode(config: PlaygroundConfig): string {
     ``,
     `export default function App() {`
   );
-  if (hasSidebar) {
-    lines.push(`  const [open, setOpen] = useState(false);`, ``);
+  const hasSearchModal = config.showSearch && config.searchModal;
+
+  const stateLines: string[] = [];
+  if (hasSidebar) stateLines.push(`  const [open, setOpen] = useState(false);`);
+  if (hasSearchModal) {
+    stateLines.push(
+      `  const [query, setQuery] = useState("");`,
+      `  const [searchOpen, setSearchOpen] = useState(false);`
+    );
   }
+  if (stateLines.length) lines.push(...stateLines, ``);
   lines.push(
     `  return (`,
     `    <MotionProvider adapter={framerMotionAdapter}>`,
@@ -98,6 +112,18 @@ export function generateCode(config: PlaygroundConfig): string {
       ? `          logo={<MenuButton onOpen={() => setOpen(true)} />}`
       : `          logo={<span className="font-bold">Fieldnotes</span>}`
   );
+
+  if (config.userMenu) {
+    lines.push(
+      `          actions={`,
+      `            <UserMenu username="Mara Kealoha" detail="mara@fieldnotes.app" initials="MK">`,
+      `              <UserMenuItem label="Profile" />`,
+      `              <UserMenuItem label="Settings" />`,
+      `              <UserMenuItem label="Log out" destructive />`,
+      `            </UserMenu>`,
+      `          }`
+    );
+  }
 
   if (config.showNav) {
     lines.push(
@@ -117,11 +143,24 @@ export function generateCode(config: PlaygroundConfig): string {
     );
   }
   if (config.showSearch) {
-    lines.push(
-      config.searchVariant === "full"
-        ? `          searchContent={<SearchField variant="full" placeholder="Search notes" />}`
-        : `          searchContent={<SearchField placeholder="Search notes" />}`
-    );
+    const variantAttr =
+      config.searchVariant === "full" ? ` variant="full"` : "";
+    if (hasSearchModal) {
+      lines.push(
+        `          searchContent={`,
+        `            <SearchField${variantAttr}`,
+        `              placeholder="Search notes"`,
+        `              value={query}`,
+        `              onChange={setQuery}`,
+        `              onClick={() => setSearchOpen(true)}`,
+        `            />`,
+        `          }`
+      );
+    } else {
+      lines.push(
+        `          searchContent={<SearchField${variantAttr} placeholder="Search notes" />}`
+      );
+    }
   }
   lines.push(`        />`);
 
@@ -157,6 +196,19 @@ export function generateCode(config: PlaygroundConfig): string {
   }
 
   lines.push(``, `        <Content>{/* … */}</Content>`);
+
+  if (hasSearchModal) {
+    lines.push(
+      ``,
+      `        <SearchModal`,
+      `          open={searchOpen}`,
+      `          onClose={() => setSearchOpen(false)}`,
+      `          defaultQuery={query}  // continues what was typed in the field`,
+      `        >`,
+      `          {(q) => <Results query={q} />}`,
+      `        </SearchModal>`
+    );
+  }
 
   if (config.footer === "tab-bar") {
     lines.push(
