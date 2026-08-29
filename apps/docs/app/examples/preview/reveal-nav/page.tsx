@@ -111,7 +111,7 @@ export default function RevealNavPage() {
           subtitle="Thursday, Aug 28"
         />
 
-        <Content className="pb-12">
+        <Content className="mx-auto w-full max-w-2xl pb-12">
           <DemoHint>
             Scroll down past the headlines, then scroll up — only the nav row
             comes back. The title stays tucked away.

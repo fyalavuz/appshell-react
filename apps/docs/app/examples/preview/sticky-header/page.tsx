@@ -69,7 +69,7 @@ export default function StickyHeaderPage() {
           subtitle="3 unread"
         />
 
-        <Content className="pb-12">
+        <Content className="mx-auto w-full max-w-2xl pb-12 sm:border-x">
           <DemoHint>
             Scroll the thread list — the bar stays put. Same pin as fixed,
             simpler layout.

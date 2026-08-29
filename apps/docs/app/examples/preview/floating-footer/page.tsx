@@ -71,13 +71,13 @@ export default function FloatingFooterPage() {
           }
         />
 
-        <Content className="pb-28">
+        <Content className="mx-auto w-full max-w-5xl pb-28">
           <DemoHint>
             Add records to your bag — the floating pill tracks the total. Use
             the switch above to dock it left, center, or right.
           </DemoHint>
 
-          <div className="grid grid-cols-2 gap-4 px-4">
+          <div className="grid grid-cols-2 gap-4 px-4 sm:grid-cols-3 lg:grid-cols-4">
             {records.map((r) => {
               const inCart = cart.includes(r.title);
               return (

@@ -172,7 +172,7 @@ export default function DesktopNavPage() {
           }
         />
 
-        <Content className="pb-16">
+        <Content className="mx-auto w-full max-w-5xl pb-16">
           <DemoHint>
             On a desktop-width window, hover Product for the dropdown. On a
             phone the whole nav folds into the hamburger menu — tap it.

@@ -205,7 +205,7 @@ export default function RevealAllPage() {
           searchContent={<SearchField placeholder="Search Pulse" />}
         />
 
-        <Content className="pb-16">
+        <Content className="mx-auto w-full max-w-2xl pb-16 sm:border-x">
           <DemoHint>
             Scroll down — the title and search rows tuck away. Scroll up to
             bring the full header gliding back.

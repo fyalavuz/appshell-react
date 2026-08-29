@@ -91,7 +91,9 @@ export const SearchField = memo(function SearchField({
   }
 
   return (
-    <div className="w-full px-4 pb-3">
+    // Centered with a sane max width on large screens — a phone-width pill
+    // stretched across a desktop header reads as a bug, not a search bar.
+    <div className="w-full px-4 pb-3 sm:mx-auto sm:max-w-xl">
       <label
         data-search-field="pill"
         className={cn(

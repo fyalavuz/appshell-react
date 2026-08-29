@@ -59,7 +59,7 @@ export default function StaticHeaderPage() {
           subtitle="Elif Aksoy · 14 min read"
         />
 
-        <Content className="pb-10">
+        <Content className="mx-auto w-full max-w-2xl pb-10">
           <DemoHint>
             Scroll down — the header leaves with the page, giving the essay the
             full screen. Scroll back to the top to bring it back.

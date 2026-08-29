@@ -69,7 +69,7 @@ export default function HeaderThemesPage() {
           subtitle={themes.find((t) => t.id === theme)?.blurb}
         />
 
-        <Content className="pb-16">
+        <Content className="mx-auto w-full max-w-2xl pb-16">
           <DemoHint>
             Pick a theme below — the header re-styles itself live. The
             &ldquo;none&rdquo; theme is styled from scratch with className.

@@ -190,7 +190,7 @@ export default function FixedHeaderPage() {
           subtitle="Apr 14 – 19 · 2 travelers"
         />
 
-        <Content className="pb-4">
+        <Content className="mx-auto w-full max-w-3xl pb-4">
           <DemoHint>
             Scroll down — the header never moves. The itinerary slides under
             the pinned bar.

@@ -208,7 +208,7 @@ export default function TabBarPage() {
           }
         />
 
-        <Content className="pb-24">
+        <Content className="mx-auto w-full max-w-2xl pb-24 sm:border-x">
           <DemoHint>
             Scroll down — the tab bar slips away. Scroll up to summon it back,
             badges intact.

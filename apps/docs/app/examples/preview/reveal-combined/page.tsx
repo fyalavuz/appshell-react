@@ -247,7 +247,7 @@ export default function RevealCombinedPage() {
           }
         />
 
-        <Content className="pb-24">
+        <Content className="mx-auto w-full max-w-2xl pb-24 sm:border-x">
           <DemoHint>
             Scroll down — the header and the tab bar clear the screen together.
             Scroll up and both glide back in sync.

@@ -174,7 +174,7 @@ export default function SidebarPage() {
           </div>
         </Sidebar>
 
-        <Content className="pb-16">
+        <Content className="mx-auto w-full max-w-3xl pb-16">
           <DemoHint>
             Open the drawer from either edge — flip the switch above, then
             dismiss with the backdrop or Escape.
@@ -186,7 +186,7 @@ export default function SidebarPage() {
               Last 24 hours · all regions
             </p>
 
-            <div className="mt-4 grid grid-cols-2 gap-3">
+            <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
               {stats.map((s) => (
                 <div key={s.label} className="rounded-xl border p-3.5">
                   <p className="text-xs text-muted-foreground">{s.label}</p>

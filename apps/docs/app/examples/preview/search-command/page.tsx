@@ -115,7 +115,7 @@ export default function SearchCommandPage() {
           }
         />
 
-        <Content className="pb-16">
+        <Content className="mx-auto w-full max-w-2xl pb-16 sm:border-x">
           <DemoHint>
             Tap the search field — the full search modal opens with whatever
             you typed. And that avatar in the corner? It&rsquo;s a menu.

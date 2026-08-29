@@ -143,13 +143,13 @@ export default function FloatingDockPage() {
           subtitle="Curated for depth effect"
         />
 
-        <Content className="pb-32">
+        <Content className="mx-auto w-full max-w-5xl pb-32">
           <DemoHint>
             Scroll down — the glass dock condenses into a pill. On a desktop
             window, sweep the pointer across it to magnify the icons.
           </DemoHint>
 
-          <div className="columns-2 gap-3 px-4 [column-fill:balance]">
+          <div className="columns-2 gap-3 px-4 [column-fill:balance] sm:columns-3 lg:columns-4">
             {walls.map((w) => (
               <figure key={w.name} className="mb-3 break-inside-avoid">
                 <div

@@ -241,7 +241,7 @@ export default function StickyTabsPage() {
           style={{ top: "var(--header-height)" }}
           className="sticky z-40 border-b bg-background/95 backdrop-blur"
         >
-          <div className="flex">
+          <div className="mx-auto flex w-full max-w-2xl">
             {tabs.map((t) => (
               <button
                 key={t.id}
@@ -262,7 +262,7 @@ export default function StickyTabsPage() {
           </div>
         </div>
 
-        <Content className="pb-20">
+        <Content className="mx-auto w-full max-w-2xl pb-20 sm:border-x">
           <DemoHint>
             Scroll down — the tab row hitches below the fixed header. Switch
             tabs while everything stays docked.

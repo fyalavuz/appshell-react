@@ -195,7 +195,13 @@ export function generateCode(config: PlaygroundConfig): string {
     );
   }
 
-  lines.push(``, `        <Content>{/* … */}</Content>`);
+  lines.push(
+    ``,
+    `        {/* Center the app column so desktop doesn't stretch like a phone */}`,
+    `        <Content className="mx-auto w-full max-w-2xl sm:border-x">`,
+    `          {/* … */}`,
+    `        </Content>`
+  );
 
   if (hasSearchModal) {
     lines.push(

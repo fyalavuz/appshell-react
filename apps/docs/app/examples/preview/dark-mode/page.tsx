@@ -203,7 +203,7 @@ export default function DarkModePage() {
           subtitle="16 notes · synced just now"
         />
 
-        <Content className="pb-16">
+        <Content className="mx-auto w-full max-w-2xl pb-16">
           <DemoHint>
             Flip the sun–moon toggle in the header — every surface re-themes
             instantly through the shared tokens.

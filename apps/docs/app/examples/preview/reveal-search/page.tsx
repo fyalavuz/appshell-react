@@ -102,7 +102,7 @@ export default function RevealSearchPage() {
           searchContent={<SearchField placeholder="Search 2,400 products" />}
         />
 
-        <Content className="pb-12">
+        <Content className="mx-auto w-full max-w-5xl pb-12">
           <DemoHint>
             Scroll deep into the grid, then scroll up — the search row comes
             right back, one gesture away.
@@ -123,7 +123,7 @@ export default function RevealSearchPage() {
             ))}
           </div>
 
-          <div className="grid grid-cols-2 gap-x-4 gap-y-6 px-4">
+          <div className="grid grid-cols-2 gap-x-4 gap-y-6 px-4 sm:grid-cols-3 lg:grid-cols-4">
             {products.map((p) => {
               const added = basket.includes(p.name);
               return (

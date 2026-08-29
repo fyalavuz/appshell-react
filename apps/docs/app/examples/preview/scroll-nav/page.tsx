@@ -132,7 +132,7 @@ export default function ScrollNavPage() {
           }
         />
 
-        <Content className="pb-16">
+        <Content className="mx-auto w-full max-w-5xl pb-16">
           <DemoHint>
             Swipe the pills sideways, then pick a category — the grid filters
             instantly.
@@ -143,7 +143,7 @@ export default function ScrollNavPage() {
             {filter !== "All" && <> · {filter}</>}
           </p>
 
-          <div className="columns-2 gap-3 px-4">
+          <div className="columns-2 gap-3 px-4 sm:columns-3 lg:columns-4">
             {visible.map((photo) => {
               const Icon = categoryIcons[photo.cat];
               return (

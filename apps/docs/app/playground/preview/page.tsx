@@ -263,7 +263,9 @@ export default function PlaygroundPreviewPage() {
           </Sidebar>
         )}
 
-        <Content className={contentPadding}>
+        <Content
+          className={`mx-auto w-full max-w-2xl sm:border-x ${contentPadding}`}
+        >
           {notes.map((note) => (
             <article key={note.title} className="border-b px-4 py-4">
               <div className="flex gap-3">

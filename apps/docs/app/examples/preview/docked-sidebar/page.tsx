@@ -158,7 +158,7 @@ export default function DockedSidebarPage() {
           <TerraNav onNavigate={() => setOpen(false)} />
         </Sidebar>
 
-        <Content className="pb-16">
+        <Content className="mx-auto w-full max-w-3xl pb-16">
           <DemoHint>
             On a desktop window the panel is docked — collapse it to a rail
             with the toggle at its foot. On a phone, open the same nav as a

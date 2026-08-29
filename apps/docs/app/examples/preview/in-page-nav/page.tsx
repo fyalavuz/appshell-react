@@ -121,7 +121,7 @@ export default function InPageNavPage() {
         >
           <nav
             aria-label="Sections"
-            className="flex gap-2 overflow-x-auto px-4 py-2.5 scrollbar-hide"
+            className="mx-auto flex w-full max-w-2xl gap-2 overflow-x-auto px-4 py-2.5 scrollbar-hide"
           >
             {sections.map((section) => {
               const isActive = active === section.id;
@@ -147,7 +147,7 @@ export default function InPageNavPage() {
           </nav>
         </div>
 
-        <Content className="pb-16">
+        <Content className="mx-auto w-full max-w-2xl pb-16">
           <DemoHint>
             Scroll — the active pill follows the section under the header. Tap
             a pill to jump straight to its chapter.
