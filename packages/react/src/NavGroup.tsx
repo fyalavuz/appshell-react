@@ -35,7 +35,7 @@ export const NavGroup = memo(function NavGroup({
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
+        className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground transition-colors group-data-[collapsed=true]/sidebar:hidden"
       >
         {icon && <span className="shrink-0">{icon}</span>}
         <span className="flex-1 text-left">{title}</span>
@@ -52,10 +52,11 @@ export const NavGroup = memo(function NavGroup({
       <div
         className={cn(
           "transition-[max-height] duration-200 ease-out overflow-hidden",
+          "group-data-[collapsed=true]/sidebar:max-h-none group-data-[collapsed=true]/sidebar:overflow-visible",
           open ? "max-h-[500px]" : "max-h-0"
         )}
       >
-        <div className="pl-4 py-1">{children}</div>
+        <div className="pl-4 py-1 group-data-[collapsed=true]/sidebar:pl-0">{children}</div>
       </div>
     </div>
   );

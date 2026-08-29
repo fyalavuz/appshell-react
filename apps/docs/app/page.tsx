@@ -46,7 +46,7 @@ export default function App() {
 const stats = [
   { value: "10", label: "header behaviors" },
   { value: "3", label: "footer variants" },
-  { value: "19", label: "live demos" },
+  { value: "20", label: "live demos" },
   { value: "0", label: "required deps" },
 ];
 
@@ -213,7 +213,7 @@ export default async function HomePage() {
                     "10 header behaviors, from fixed to per-row reveal",
                     "Tab bars, floating pills, and mini bars that auto-hide",
                     "Sticky sub-navigation via the --header-height variable",
-                    "Slide-out drawers with backdrop and keyboard dismiss",
+                    "Sidebars: modal drawers, and docked panels with icon rails",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-3 text-sm">
                       <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brand" />
@@ -241,7 +241,7 @@ export default async function HomePage() {
               <div>
                 <p className="eyebrow text-brand">Examples</p>
                 <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-                  19 small apps, every variant
+                  20 small apps, every variant
                 </h2>
               </div>
               <Link

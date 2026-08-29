@@ -297,6 +297,27 @@ function renderMotif(slug: string) {
         </>
       );
 
+    case "docked-sidebar":
+      return (
+        <>
+          <HeaderBlock rows={1} />
+          <Anim
+            name="ms-rail"
+            className="absolute bottom-0 left-0 top-6 z-10 w-2/5 border-r border-brand/30 bg-brand/5"
+          >
+            <div className="space-y-1.5 overflow-hidden p-2">
+              <span className="block h-1.5 w-3/4 rounded-full bg-brand" />
+              <span className="block h-1.5 w-full rounded-full bg-foreground/15" />
+              <span className="block h-1.5 w-5/6 rounded-full bg-foreground/15" />
+              <span className="block h-1.5 w-2/3 rounded-full bg-foreground/15" />
+            </div>
+          </Anim>
+          <div className="absolute bottom-0 right-0 top-6 w-3/5 px-1.5 pt-1.5">
+            <Lines className="px-1" />
+          </div>
+        </>
+      );
+
     case "sidebar":
       return (
         <>

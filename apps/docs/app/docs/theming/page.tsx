@@ -1,204 +1,348 @@
 import Link from "next/link";
-import { CodeBlock } from "@/components/docs/code-block";
+import {
+  DocHeader,
+  DocSection,
+  DocProse,
+  DocNote,
+  InlineCode,
+} from "@/components/docs/doc-page";
+import { CodePanel } from "@/components/docs/code-panel";
 import { ComponentPreview } from "@/components/docs/component-preview";
-import { ArrowRight, ArrowLeft } from "lucide-react";
+import { highlight } from "@/lib/highlight";
 
 export const metadata = {
   title: "Theming",
-  description: "Customize AppShell components with CSS custom properties.",
+  description:
+    "The shadcn/ui-style token system, dark mode, header themes, and the CSS variables the library reads and writes.",
 };
 
-const cssVariables = `:root {
-  /* Background colors */
-  --background: 0 0% 100%;
-  --foreground: 0 0% 3.9%;
-  
-  /* Card colors */
-  --card: 0 0% 100%;
-  --card-foreground: 0 0% 3.9%;
-  
-  /* Primary colors */
-  --primary: 0 0% 9%;
-  --primary-foreground: 0 0% 98%;
-  
-  /* Muted colors */
-  --muted: 0 0% 96.1%;
-  --muted-foreground: 0 0% 45.1%;
-  
-  /* Accent colors */
-  --accent: 0 0% 96.1%;
-  --accent-foreground: 0 0% 9%;
-  
-  /* Border and input */
-  --border: 0 0% 89.8%;
-  --input: 0 0% 89.8%;
-  --ring: 0 0% 3.9%;
-  
-  /* Radius */
-  --radius: 0.5rem;
-}`;
-
-const darkMode = `.dark {
-  --background: 0 0% 3.9%;
-  --foreground: 0 0% 98%;
-  
-  --card: 0 0% 3.9%;
-  --card-foreground: 0 0% 98%;
-  
-  --primary: 0 0% 98%;
-  --primary-foreground: 0 0% 9%;
-  
-  --muted: 0 0% 14.9%;
-  --muted-foreground: 0 0% 63.9%;
-  
-  --accent: 0 0% 14.9%;
-  --accent-foreground: 0 0% 98%;
-  
-  --border: 0 0% 14.9%;
-  --input: 0 0% 14.9%;
-  --ring: 0 0% 83.1%;
-}`;
-
-const toggleCode = `// Toggle dark mode
-document.documentElement.classList.toggle("dark");
-
-// Or with next-themes
-import { useTheme } from "next-themes";
-
-function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
-  
-  return (
-    <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
-      Toggle Theme
-    </button>
-  );
-}`;
-
-const customTheme = `/* Custom brand theme */
+const brandCss = `/* Re-brand by changing token values — the components pick
+   them up through the @theme inline mapping (see Installation). */
 :root {
-  --primary: 221 83% 53%;        /* Blue */
-  --primary-foreground: 0 0% 100%;
-  
-  --accent: 142 76% 36%;          /* Green */
-  --accent-foreground: 0 0% 100%;
+  --primary: oklch(0.55 0.2 260);
+  --primary-foreground: oklch(0.98 0.01 260);
+  --ring: oklch(0.55 0.2 260);
 }
 
 .dark {
-  --primary: 217 91% 60%;         /* Lighter blue for dark mode */
-  --primary-foreground: 0 0% 100%;
+  --background: oklch(0.16 0.02 260);
+  --foreground: oklch(0.97 0.01 260);
+  --primary: oklch(0.7 0.16 260);
+  --primary-foreground: oklch(0.16 0.02 260);
 }`;
 
-export default function ThemingPage() {
+const darkModeCode = `import { AppShell, Header, Content } from "appshell-react";
+import { useState } from "react";
+import { Moon, Sun } from "lucide-react";
+
+export default function App() {
+  const [dark, setDark] = useState(false);
+
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="scroll-m-20 text-4xl font-bold tracking-tight">
-          Theming
-        </h1>
-        <p className="text-lg text-muted-foreground mt-4 text-balance">
-          AppShell uses CSS custom properties for theming, making it fully compatible
-          with shadcn/ui and easy to customize.
-        </p>
-      </div>
+    <div className={dark ? "dark" : undefined}>
+      <AppShell safeArea>
+        <Header
+          behavior="fixed"
+          logo={<span className="font-bold">Nocturne</span>}
+          actions={
+            <button
+              aria-label="Toggle dark mode"
+              onClick={() => setDark((d) => !d)}
+            >
+              {dark ? <Sun className="size-5" /> : <Moon className="size-5" />}
+            </button>
+          }
+        />
+        <Content className="p-4">{/* re-themes instantly via tokens */}</Content>
+      </AppShell>
+    </div>
+  );
+}`;
 
-      <ComponentPreview
-        name="Dark Mode"
-        code={toggleCode}
-        previewUrl="/examples/preview/dark-mode"
-        isMobile={true}
+const headerThemeCode = `import { AppShell, Header, Content, type HeaderTheme } from "appshell-react";
+import { useState } from "react";
+
+const themes: HeaderTheme[] = ["light", "primary", "dark", "none"];
+
+export default function App() {
+  const [index, setIndex] = useState(0);
+
+  return (
+    <AppShell safeArea>
+      <Header
+        behavior="fixed"
+        theme={themes[index]}
+        logo={<span className="font-bold">Chroma</span>}
+        actions={
+          <button
+            className="rounded-md border px-2 py-1 text-sm"
+            onClick={() => setIndex((i) => (i + 1) % themes.length)}
+          >
+            {themes[index]}
+          </button>
+        }
       />
+      <Content className="p-4">{/* content */}</Content>
+    </AppShell>
+  );
+}`;
 
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          CSS Variables
-        </h2>
-        <p className="text-muted-foreground">
-          AppShell components use these CSS custom properties. Values use HSL format
-          without the <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-sm">hsl()</code> wrapper:
-        </p>
-        <CodeBlock code={cssVariables} language="css" filename="globals.css" />
-      </div>
+const headerThemeHookCode = `import { Header, useHeaderTheme } from "appshell-react";
 
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Dark Mode
-        </h2>
-        <p className="text-muted-foreground">
-          Add a <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-sm">.dark</code> class
-          to your root element to enable dark mode:
-        </p>
-        <CodeBlock code={darkMode} language="css" filename="globals.css" />
-      </div>
+/** Custom row content that adapts to the active header theme. */
+function PlanBadge() {
+  const theme = useHeaderTheme(); // "light" | "primary" | "dark" | "none"
+  const onColor = theme === "primary" || theme === "dark";
 
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Toggling Theme
-        </h2>
-        <p className="text-muted-foreground">
-          Toggle the dark class on the root element, or use a library like next-themes:
-        </p>
-        <CodeBlock code={toggleCode} language="tsx" />
-      </div>
-
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Custom Themes
-        </h2>
-        <p className="text-muted-foreground">
-          Override the default variables to create your own brand theme:
-        </p>
-        <CodeBlock code={customTheme} language="css" filename="globals.css" />
-      </div>
-
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Safe Area Variables
-        </h2>
-        <p className="text-muted-foreground">
-          AppShell also sets safe area variables for notched devices:
-        </p>
-        <CodeBlock
-          code={`/* Set automatically by AppShell when safeArea is enabled */
-:root {
-  --sa-top: env(safe-area-inset-top);
-  --sa-bottom: env(safe-area-inset-bottom);
-  --sa-left: env(safe-area-inset-left);
-  --sa-right: env(safe-area-inset-right);
+  return (
+    <span
+      className={
+        onColor
+          ? "text-primary-foreground/80 text-xs font-medium"
+          : "text-muted-foreground text-xs font-medium"
+      }
+    >
+      Pro plan
+    </span>
+  );
 }
 
-/* Header height for sticky positioning */
-:root {
-  --header-height: 3.5rem;
-}`}
-          language="css"
+export default function App() {
+  return (
+    <Header
+      theme="primary"
+      logo={<span className="font-bold">MyApp</span>}
+      actions={<PlanBadge />}
+    />
+  );
+}`;
+
+const stickySubNavCode = `/* --header-height is written by <Header> (in px, via a
+   ResizeObserver). Read it — never author it yourself. */
+.sub-nav {
+  position: sticky;
+  top: var(--header-height, 0px);
+}`;
+
+const tokens: { name: string; usage: string }[] = [
+  {
+    name: "background / foreground",
+    usage:
+      "Base surface and text: light-theme header rows, sidebar panels, footer bars. ScrollNav inverts them for the active pill.",
+  },
+  {
+    name: "primary / primary-foreground",
+    usage:
+      'theme="primary" header rows, the active tab tint and indicator in the footer, and HeaderNav item states on colored headers.',
+  },
+  {
+    name: "muted / muted-foreground",
+    usage: "Inactive labels, subdued text, and idle ScrollNav pills.",
+  },
+  {
+    name: "accent / accent-foreground",
+    usage: "Hover and active states on nav items, groups, and menu buttons.",
+  },
+  {
+    name: "popover",
+    usage:
+      "The HeaderNav dropdown panel background. The panel sets no text color of its own, so also define popover-foreground for content you render inside.",
+  },
+  {
+    name: "destructive",
+    usage:
+      "The FooterItem badge bubble. (Badge text is fixed white; destructive-foreground is part of the standard set but not read by the shell today.)",
+  },
+  {
+    name: "border",
+    usage: "Every row divider, panel edge, and drawer border.",
+  },
+  {
+    name: "ring",
+    usage: "Focus-visible rings on nav items, pills, and toggles.",
+  },
+];
+
+export default async function ThemingPage() {
+  const [brandHtml, darkModeHtml, headerThemeHookHtml, stickySubNavHtml] =
+    await Promise.all([
+      highlight(brandCss, "css"),
+      highlight(darkModeCode),
+      highlight(headerThemeHookCode),
+      highlight(stickySubNavCode, "css"),
+    ]);
+
+  return (
+    <article>
+      <DocHeader
+        eyebrow="Getting started"
+        title="Theming"
+        description="The shell has no colors of its own — every surface resolves through shadcn/ui-style design tokens, so one palette themes your app and the shell together, and dark mode is a class flip."
+      />
+
+      <DocSection title="How the tokens work">
+        <DocProse>
+          Components style themselves with Tailwind utilities like{" "}
+          <InlineCode>bg-background</InlineCode> and{" "}
+          <InlineCode>border-border</InlineCode>. Those utilities exist because
+          your stylesheet defines CSS custom properties (
+          <InlineCode>--background</InlineCode>,{" "}
+          <InlineCode>--border</InlineCode>, …) and maps them to Tailwind v4
+          colors with an <InlineCode>@theme inline</InlineCode> block — the
+          same convention shadcn/ui uses, so an existing shadcn palette works
+          unchanged. The full setup lives in{" "}
+          <Link
+            href="/docs/installation"
+            className="text-brand hover:underline"
+          >
+            Installation
+          </Link>
+          .
+        </DocProse>
+        <DocNote>
+          Token values must be complete CSS colors —{" "}
+          <InlineCode>oklch(1 0 0)</InlineCode>,{" "}
+          <InlineCode>hsl(220 15% 97%)</InlineCode>, hex, anything the browser
+          can paint. Bare HSL triples like <InlineCode>0 0% 100%</InlineCode>{" "}
+          (the Tailwind v3 / early-shadcn convention) are <em>not</em> valid
+          colors under the v4 <InlineCode>@theme inline</InlineCode> mapping
+          and render as no color at all.
+        </DocNote>
+      </DocSection>
+
+      <DocSection title="Token reference">
+        <DocProse>
+          These are the tokens the library&rsquo;s components actually consume.
+          Define the whole set (plus{" "}
+          <InlineCode>popover-foreground</InlineCode> and{" "}
+          <InlineCode>destructive-foreground</InlineCode>, which your own
+          content inside dropdowns and badges will want) and map each one in{" "}
+          <InlineCode>@theme inline</InlineCode>:
+        </DocProse>
+        <div className="overflow-x-auto rounded-xl border">
+          <table className="w-full border-collapse text-sm">
+            <thead>
+              <tr className="border-b bg-muted/40 text-left">
+                <th className="px-4 py-2.5 font-semibold">Token</th>
+                <th className="px-4 py-2.5 font-semibold">
+                  Where the shell uses it
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {tokens.map((token) => (
+                <tr key={token.name} className="border-b last:border-0 align-top">
+                  <td className="whitespace-nowrap px-4 py-2.5 font-mono text-xs">
+                    {token.name}
+                  </td>
+                  <td className="min-w-56 px-4 py-2.5 leading-relaxed text-muted-foreground">
+                    {token.usage}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <DocProse>
+          Re-branding is just changing values — no component props involved:
+        </DocProse>
+        <CodePanel html={brandHtml} code={brandCss} filename="globals.css" />
+      </DocSection>
+
+      <DocSection title="Dark mode">
+        <DocProse>
+          The library ships zero <InlineCode>dark:</InlineCode> utilities — it
+          re-themes entirely through the tokens. Redefine them under a{" "}
+          <InlineCode>.dark</InlineCode> class and everything (headers,
+          drawers, tab bars, pills) flips at once. For your own{" "}
+          <InlineCode>dark:</InlineCode> utilities to follow that same class
+          instead of the OS setting, your stylesheet must declare{" "}
+          <InlineCode>@custom-variant dark (&amp;:is(.dark *))</InlineCode> —
+          it is part of the{" "}
+          <Link
+            href="/docs/installation"
+            className="text-brand hover:underline"
+          >
+            Installation
+          </Link>{" "}
+          setup.
+        </DocProse>
+        <ComponentPreview
+          name="Dark mode"
+          code={darkModeCode}
+          previewUrl="/examples/preview/dark-mode/"
         />
-      </div>
+        <CodePanel html={darkModeHtml} code={darkModeCode} filename="app.tsx" />
+      </DocSection>
 
-      <div className="rounded-lg border bg-muted/50 p-4">
-        <h3 className="font-semibold">shadcn/ui Compatibility</h3>
-        <p className="text-sm text-muted-foreground mt-1">
-          AppShell uses the same CSS variable naming convention as shadcn/ui.
-          If you're already using shadcn/ui, AppShell will automatically use your existing theme.
-        </p>
-      </div>
+      <DocSection title="Header themes">
+        <DocProse>
+          Independently of your palette, the Header takes a{" "}
+          <InlineCode>theme</InlineCode> prop for all of its rows:{" "}
+          <InlineCode>&quot;light&quot;</InlineCode> follows your
+          background/foreground tokens, <InlineCode>&quot;primary&quot;</InlineCode>{" "}
+          paints the rows with your primary tokens,{" "}
+          <InlineCode>&quot;dark&quot;</InlineCode> is a fixed near-black
+          (zinc) palette that stays dark regardless of tokens, and{" "}
+          <InlineCode>&quot;none&quot;</InlineCode> ships zero styles so you
+          can bring your own via <InlineCode>className</InlineCode>.
+        </DocProse>
+        <ComponentPreview
+          name="Header themes"
+          code={headerThemeCode}
+          previewUrl="/examples/preview/header-themes/"
+        />
+        <DocProse>
+          Custom content rendered inside header rows can read the active theme
+          with <InlineCode>useHeaderTheme()</InlineCode> and adapt its colors
+          — the same mechanism HeaderNav items use:
+        </DocProse>
+        <CodePanel
+          html={headerThemeHookHtml}
+          code={headerThemeHookCode}
+          filename="app.tsx"
+        />
+      </DocSection>
 
-      <div className="flex items-center justify-between pt-4">
-        <Link
-          href="/docs/installation"
-          className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
-        >
-          <ArrowLeft className="mr-2 size-4" />
-          Installation
-        </Link>
-        <Link
-          href="/docs/components/app-shell"
-          className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90 transition-colors"
-        >
-          Components
-          <ArrowRight className="ml-2 size-4" />
-        </Link>
-      </div>
-    </div>
+      <DocSection title="CSS variables: read vs. written">
+        <DocProse>
+          The library <em>reads</em> four safe-area variables —{" "}
+          <InlineCode>--sa-top</InlineCode>,{" "}
+          <InlineCode>--sa-bottom</InlineCode>,{" "}
+          <InlineCode>--sa-left</InlineCode>,{" "}
+          <InlineCode>--sa-right</InlineCode> — each with an{" "}
+          <InlineCode>env(safe-area-inset-*)</InlineCode> fallback. It never
+          sets them: on a real device the <InlineCode>env()</InlineCode>{" "}
+          fallback supplies the insets, and defining{" "}
+          <InlineCode>--sa-*</InlineCode> yourself is an override hook for
+          phone mockups, Storybook, and tests.
+        </DocProse>
+        <DocProse>
+          It <em>writes</em> exactly one variable:{" "}
+          <InlineCode>--header-height</InlineCode>, set in pixels on the root
+          element by the Header via a ResizeObserver whenever the header
+          resizes. Use it to dock sticky sub-navigation or a docked sidebar
+          below the header:
+        </DocProse>
+        <CodePanel
+          html={stickySubNavHtml}
+          code={stickySubNavCode}
+          filename="styles.css"
+        />
+        <DocNote>
+          Do not author <InlineCode>--header-height</InlineCode> statically in
+          your stylesheet — the Header overwrites it with the measured pixel
+          value as soon as it mounts, and keeps it in sync as rows appear,
+          wrap, or animate. See the{" "}
+          <Link
+            href="/examples/sticky-tabs"
+            className="text-brand hover:underline"
+          >
+            sticky sub-navigation example
+          </Link>{" "}
+          for it in action.
+        </DocNote>
+      </DocSection>
+    </article>
   );
 }

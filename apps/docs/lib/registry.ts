@@ -1,5 +1,6 @@
 import {
   Dock,
+  PanelLeftClose,
   PanelTop,
   Minus,
   Layers,
@@ -248,6 +249,21 @@ export const categories: ExampleCategory[] = [
         ],
       },
       {
+        slug: "docked-sidebar",
+        title: "Docked Sidebar",
+        description:
+          "A persistent sidebar that collapses to an icon rail on desktop and becomes the drawer on phones.",
+        icon: PanelLeftClose,
+        category: "layout",
+        tags: ["sidebar", "docked", "rail", "responsive"],
+        appName: "Terra — project tracker",
+        props: 'variant="docked" collapsible',
+        tryHints: [
+          "Desktop: collapse the panel to an icon rail",
+          "Phone: the same nav opens as a drawer",
+        ],
+      },
+      {
         slug: "scroll-nav",
         title: "Scroll Navigation",
         description:
@@ -390,7 +406,8 @@ export function getExamplesByCategory(categoryId: string): Example[] {
   return category?.examples ?? [];
 }
 
-// Navigation structure for docs sidebar
+// Navigation structure for docs sidebar.
+// Every href here MUST have a matching page under apps/docs/app.
 export const docsNavigation = [
   {
     title: "Getting Started",
@@ -403,8 +420,10 @@ export const docsNavigation = [
   {
     title: "Components",
     items: [
+      { title: "Overview", href: "/docs/components" },
       { title: "AppShell", href: "/docs/components/app-shell" },
       { title: "Header", href: "/docs/components/header" },
+      { title: "HeaderNav", href: "/docs/components/header-nav" },
       { title: "Footer", href: "/docs/components/footer" },
       { title: "Content", href: "/docs/components/content" },
       { title: "Sidebar", href: "/docs/components/sidebar" },
@@ -413,23 +432,17 @@ export const docsNavigation = [
     ],
   },
   {
-    title: "Hooks",
+    title: "Advanced",
     items: [
-      { title: "useAppShell", href: "/docs/hooks/use-app-shell" },
-      { title: "useScrollDirection", href: "/docs/hooks/use-scroll-direction" },
+      { title: "Hooks", href: "/docs/hooks" },
+      { title: "Motion", href: "/docs/motion" },
     ],
   },
   {
-    title: "Examples",
+    title: "Explore",
     items: [
       { title: "All Examples", href: "/examples" },
       { title: "Playground", href: "/playground" },
-      ...categories.flatMap((cat) =>
-        cat.examples.slice(0, 2).map((ex) => ({
-          title: ex.title,
-          href: `/examples/${ex.slug}`,
-        }))
-      ),
     ],
   },
 ];

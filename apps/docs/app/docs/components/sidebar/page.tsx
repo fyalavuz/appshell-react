@@ -1,16 +1,31 @@
 import Link from "next/link";
-import { CodeBlock } from "@/components/docs/code-block";
+import {
+  DocHeader,
+  DocSection,
+  DocProse,
+  DocNote,
+  InlineCode,
+} from "@/components/docs/doc-page";
+import { CodePanel } from "@/components/docs/code-panel";
 import { ComponentPreview } from "@/components/docs/component-preview";
-import { ArrowRight, ArrowLeft } from "lucide-react";
+import { PropsTable } from "@/components/docs/props-table";
+import {
+  sidebarOverlayApi,
+  sidebarDockedApi,
+  navGroupApi,
+  navItemApi,
+} from "@/lib/api-docs";
+import { highlight } from "@/lib/highlight";
 
 export const metadata = {
   title: "Sidebar",
-  description: "A slide-out drawer component with backdrop and keyboard dismiss.",
+  description:
+    "Modal drawer on phones, persistent docked panel on desktop — one component, two variants.",
 };
 
-const basicCode = `import { useState } from "react";
-import { AppShell, Header, Content, Sidebar, NavGroup, NavItem } from "appshell-react";
-import { Menu, Home, Settings, User, X } from "lucide-react";
+const overlayCode = `import { AppShell, Header, Content, Sidebar, NavGroup, NavItem } from "appshell-react";
+import { useState } from "react";
+import { Menu, Home, Package, Settings } from "lucide-react";
 
 export default function App() {
   const [open, setOpen] = useState(false);
@@ -20,211 +35,156 @@ export default function App() {
       <Header
         behavior="fixed"
         logo={
-          <button onClick={() => setOpen(true)}>
-            <Menu className="size-5" />
+          <button aria-label="Open menu" onClick={() => setOpen(true)}>
+            <Menu />
           </button>
         }
       />
-      
       <Sidebar open={open} onClose={() => setOpen(false)} side="left">
-        <div className="flex items-center justify-between p-4 border-b">
-          <span className="font-bold">Menu</span>
-          <button onClick={() => setOpen(false)}>
-            <X className="size-4" />
-          </button>
-        </div>
-        
         <NavGroup title="Navigation" defaultOpen>
           <NavItem label="Home" icon={<Home />} active />
-          <NavItem label="Profile" icon={<User />} />
+          <NavItem label="Products" icon={<Package />} />
           <NavItem label="Settings" icon={<Settings />} />
         </NavGroup>
       </Sidebar>
-      
-      <Content className="p-4">
-        {/* Your content */}
-      </Content>
+      <Content>{/* main content */}</Content>
     </AppShell>
   );
 }`;
 
-const rightSideCode = `<Sidebar open={open} onClose={() => setOpen(false)} side="right">
-  {/* Sidebar content */}
-</Sidebar>`;
+const dockedCode = `import { AppShell, Header, Content, Sidebar, NavGroup, NavItem } from "appshell-react";
+import { useState } from "react";
 
-const sidebarProps = [
-  { name: "open", type: "boolean", default: "false", description: "Whether the sidebar is open" },
-  { name: "onClose", type: "() => void", default: "-", description: "Callback when sidebar should close" },
-  { name: "side", type: '"left" | "right"', default: '"left"', description: "Which side to slide from" },
-  { name: "className", type: "string", default: "-", description: "Additional CSS classes" },
-  { name: "children", type: "ReactNode", default: "-", description: "Sidebar content" },
-];
+export default function App() {
+  const [open, setOpen] = useState(false); // mobile drawer fallback
 
-const navGroupProps = [
-  { name: "title", type: "string", default: "-", description: "Group title" },
-  { name: "defaultOpen", type: "boolean", default: "true", description: "Whether group is expanded by default" },
-  { name: "children", type: "ReactNode", default: "-", description: "NavItem components" },
-];
-
-const navItemProps = [
-  { name: "label", type: "string", default: "-", description: "Item label" },
-  { name: "icon", type: "ReactNode", default: "-", description: "Icon element" },
-  { name: "active", type: "boolean", default: "false", description: "Whether this item is active" },
-  { name: "badge", type: "number | string", default: "-", description: "Badge count or text" },
-  { name: "onClick", type: "() => void", default: "-", description: "Click handler" },
-  { name: "href", type: "string", default: "-", description: "Link destination" },
-];
-
-export default function SidebarPage() {
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="scroll-m-20 text-4xl font-bold tracking-tight">
-          Sidebar
-        </h1>
-        <p className="text-lg text-muted-foreground mt-4 text-balance">
-          A slide-out drawer with backdrop overlay, smooth animations, and keyboard dismiss support.
-        </p>
-      </div>
+    <AppShell>
+      <Header behavior="fixed" logo={<span className="font-bold">Console</span>} />
 
-      <ComponentPreview
-        name="Sidebar Menu"
-        code={basicCode}
-        previewUrl="/examples/preview/sidebar"
-        isMobile={true}
+      {/* Docked on md+, drawer below md. AppShell builds the two-column
+          layout automatically for direct docked-Sidebar children. */}
+      <Sidebar
+        variant="docked"
+        breakpoint="md"
+        collapsible
+        open={open}
+        onClose={() => setOpen(false)}
+      >
+        <NavGroup title="Workspace" defaultOpen>
+          <NavItem label="Dashboard" active />
+          <NavItem label="Reports" />
+          <NavItem label="Members" badge={2} />
+        </NavGroup>
+      </Sidebar>
+
+      <Content className="p-6">{/* main content */}</Content>
+    </AppShell>
+  );
+}`;
+
+export default async function SidebarPage() {
+  const [overlayHtml, dockedHtml] = await Promise.all([
+    highlight(overlayCode),
+    highlight(dockedCode),
+  ]);
+
+  return (
+    <article>
+      <DocHeader
+        eyebrow="Components"
+        title="Sidebar"
+        description="One component, two presentations: a modal overlay drawer (the default), and a persistent docked panel that collapses to an icon rail and degrades to the drawer on small screens."
       />
 
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Usage
-        </h2>
-        <CodeBlock code={basicCode} language="tsx" filename="app.tsx" />
-      </div>
+      <DocSection title="Overlay drawer">
+        <DocProse>
+          The default variant slides in over the page with a blurred backdrop.
+          It closes on backdrop click or Escape and locks body scroll while
+          open.
+        </DocProse>
+        <ComponentPreview
+          name="Sidebar"
+          code={overlayCode}
+          previewUrl="/examples/preview/sidebar/"
+        />
+        <CodePanel html={overlayHtml} code={overlayCode} filename="app.tsx" />
+        <PropsTable api={sidebarOverlayApi} />
+      </DocSection>
 
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Right Side
-        </h2>
-        <p className="text-muted-foreground">
-          The sidebar can slide from either side:
-        </p>
-        <CodeBlock code={rightSideCode} language="tsx" />
-      </div>
+      <DocSection title="Docked panel">
+        <DocProse>
+          <InlineCode>variant=&quot;docked&quot;</InlineCode> turns the
+          sidebar into a layout column: it sticks below the Header (via the{" "}
+          <InlineCode>--header-height</InlineCode> variable), scrolls
+          independently, and — with{" "}
+          <InlineCode>collapsible</InlineCode> — collapses to an icon rail
+          where NavItem labels hide and become tooltips. Below the{" "}
+          <InlineCode>breakpoint</InlineCode> the panel disappears and the
+          same children open as the overlay drawer through{" "}
+          <InlineCode>open</InlineCode>/<InlineCode>onClose</InlineCode>.
+        </DocProse>
+        <ComponentPreview
+          name="Docked sidebar"
+          code={dockedCode}
+          previewUrl="/examples/preview/docked-sidebar/"
+        />
+        <CodePanel html={dockedHtml} code={dockedCode} filename="app.tsx" />
+        <PropsTable api={sidebarDockedApi} />
+        <DocNote>
+          This documentation site&rsquo;s own navigation is a{" "}
+          <InlineCode>variant=&quot;docked&quot;</InlineCode> Sidebar — resize
+          the window to watch it fold into the drawer. Two v1 limitations to
+          know: fixed Footers and the Header&rsquo;s reveal overlay span the
+          full viewport width (they do not stop at the rail), and docked
+          children render in both the panel and the drawer, so avoid
+          hard-coded element ids inside.
+        </DocNote>
+      </DocSection>
 
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Sidebar Props
-        </h2>
-        <div className="rounded-lg border overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b bg-muted/50">
-                <th className="px-4 py-3 text-left font-medium">Prop</th>
-                <th className="px-4 py-3 text-left font-medium">Type</th>
-                <th className="px-4 py-3 text-left font-medium">Default</th>
-                <th className="px-4 py-3 text-left font-medium">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sidebarProps.map((prop, i) => (
-                <tr key={prop.name} className={i < sidebarProps.length - 1 ? "border-b" : ""}>
-                  <td className="px-4 py-3 font-mono text-xs text-primary whitespace-nowrap">{prop.name}</td>
-                  <td className="px-4 py-3 font-mono text-xs text-muted-foreground whitespace-nowrap">{prop.type}</td>
-                  <td className="px-4 py-3 font-mono text-xs">{prop.default}</td>
-                  <td className="px-4 py-3 text-muted-foreground">{prop.description}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <DocSection title="NavGroup">
+        <PropsTable api={navGroupApi} />
+      </DocSection>
 
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          NavGroup Props
-        </h2>
-        <div className="rounded-lg border overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b bg-muted/50">
-                <th className="px-4 py-3 text-left font-medium">Prop</th>
-                <th className="px-4 py-3 text-left font-medium">Type</th>
-                <th className="px-4 py-3 text-left font-medium">Default</th>
-                <th className="px-4 py-3 text-left font-medium">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              {navGroupProps.map((prop, i) => (
-                <tr key={prop.name} className={i < navGroupProps.length - 1 ? "border-b" : ""}>
-                  <td className="px-4 py-3 font-mono text-xs text-primary whitespace-nowrap">{prop.name}</td>
-                  <td className="px-4 py-3 font-mono text-xs text-muted-foreground whitespace-nowrap">{prop.type}</td>
-                  <td className="px-4 py-3 font-mono text-xs">{prop.default}</td>
-                  <td className="px-4 py-3 text-muted-foreground">{prop.description}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <DocSection title="NavItem">
+        <PropsTable api={navItemApi} />
+      </DocSection>
 
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          NavItem Props
-        </h2>
-        <div className="rounded-lg border overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b bg-muted/50">
-                <th className="px-4 py-3 text-left font-medium">Prop</th>
-                <th className="px-4 py-3 text-left font-medium">Type</th>
-                <th className="px-4 py-3 text-left font-medium">Default</th>
-                <th className="px-4 py-3 text-left font-medium">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              {navItemProps.map((prop, i) => (
-                <tr key={prop.name} className={i < navItemProps.length - 1 ? "border-b" : ""}>
-                  <td className="px-4 py-3 font-mono text-xs text-primary whitespace-nowrap">{prop.name}</td>
-                  <td className="px-4 py-3 font-mono text-xs text-muted-foreground whitespace-nowrap">{prop.type}</td>
-                  <td className="px-4 py-3 font-mono text-xs">{prop.default}</td>
-                  <td className="px-4 py-3 text-muted-foreground">{prop.description}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Keyboard Support
-        </h2>
-        <p className="text-muted-foreground">
-          The Sidebar automatically handles keyboard interactions:
-        </p>
-        <ul className="my-4 ml-6 list-disc [&>li]:mt-2 text-muted-foreground">
-          <li><kbd className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">Escape</kbd> closes the sidebar</li>
-          <li>Focus is trapped inside the sidebar when open</li>
-          <li>Focus returns to the trigger element when closed</li>
+      <DocSection title="Keyboard support">
+        <ul className="space-y-2 text-[15px] leading-relaxed text-muted-foreground">
+          <li>
+            • <InlineCode>Escape</InlineCode> closes the drawer presentation
+            (overlay variant, or the docked variant&rsquo;s mobile fallback)
+          </li>
+          <li>
+            • The collapse toggle is a native button:{" "}
+            <InlineCode>Enter</InlineCode>/<InlineCode>Space</InlineCode>{" "}
+            activate it, with <InlineCode>aria-expanded</InlineCode> and a
+            visible focus ring
+          </li>
         </ul>
-      </div>
+        <DocNote>
+          The drawer does not trap focus yet — if your menu contains many
+          focusable elements, consider a focus-trap utility until that lands.
+        </DocNote>
+      </DocSection>
 
-      <div className="flex items-center justify-between pt-4">
-        <Link
-          href="/docs/components/content"
-          className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
-        >
-          <ArrowLeft className="mr-2 size-4" />
-          Content
-        </Link>
-        <Link
-          href="/examples"
-          className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90 transition-colors"
-        >
-          View Examples
-          <ArrowRight className="ml-2 size-4" />
-        </Link>
-      </div>
-    </div>
+      <DocSection title="Related">
+        <DocProse>
+          See the{" "}
+          <Link
+            href="/examples/docked-sidebar"
+            className="text-brand hover:underline"
+          >
+            docked sidebar example
+          </Link>{" "}
+          for a full workspace app, and{" "}
+          <Link href="/examples/sidebar" className="text-brand hover:underline">
+            the drawer example
+          </Link>{" "}
+          for the modal pattern.
+        </DocProse>
+      </DocSection>
+    </article>
   );
 }

@@ -1,164 +1,180 @@
 import Link from "next/link";
-import { CodeBlock } from "@/components/docs/code-block";
-import { ArrowRight } from "lucide-react";
+import {
+  DocHeader,
+  DocSection,
+  DocProse,
+  DocNote,
+  InlineCode,
+} from "@/components/docs/doc-page";
+import { CodePanel } from "@/components/docs/code-panel";
+import { highlight } from "@/lib/highlight";
 
 export const metadata = {
   title: "Installation",
-  description: "How to install and set up AppShell in your project.",
+  description: "Install appshell-react and wire up Tailwind CSS v4.",
 };
 
-const npmInstall = `npm install appshell-react`;
-const pnpmInstall = `pnpm add appshell-react`;
-const yarnInstall = `yarn add appshell-react`;
+const installCmd = `pnpm add appshell-react
+# optional, for spring animations:
+pnpm add framer-motion`;
 
-const basicSetup = `import { AppShell, Header, Content, Footer, FooterItem } from "appshell-react";
-import { Home, Search, User } from "lucide-react";
+const cssSetup = `@import "tailwindcss";
 
-export default function App() {
-  return (
-    <AppShell safeArea>
-      <Header 
-        behavior="fixed" 
-        logo={<span className="font-bold">My App</span>}
-      />
-      <Content className="p-4">
-        <h1>Hello World</h1>
-      </Content>
-      <Footer variant="tab-bar">
-        <FooterItem icon={<Home />} label="Home" active />
-        <FooterItem icon={<Search />} label="Search" />
-        <FooterItem icon={<User />} label="Profile" />
-      </Footer>
-    </AppShell>
-  );
+/* 1. Let Tailwind see the library's classes.
+      Without this line the shell renders completely unstyled. */
+@source "../node_modules/appshell-react/dist";
+
+/* 2. Dark mode as a class (the library follows your tokens) */
+@custom-variant dark (&:is(.dark *));
+
+/* 3. Design tokens — shadcn/ui-style custom properties */
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --radius: 0.625rem;
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  /* …dark values for the same tokens */
+}
+
+/* 4. Map tokens to Tailwind utilities (bg-background, text-foreground, …) */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+}
+
+/* 5. Small utilities some components rely on */
+@utility scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }`;
 
-const framerSetup = `npm install framer-motion`;
-
-const motionSetup = `import { AppShell, MotionProvider } from "appshell-react";
+const motionSetup = `import { MotionProvider } from "appshell-react";
 import { framerMotionAdapter } from "appshell-react/motion-framer";
 
-export default function App() {
+export default function App({ children }) {
   return (
     <MotionProvider adapter={framerMotionAdapter}>
-      <AppShell safeArea>
-        {/* Your app with smooth animations */}
-      </AppShell>
+      {children}
     </MotionProvider>
   );
 }`;
 
-const tailwindConfig = `// tailwind.config.js (v3) or globals.css (v4)
-// AppShell uses these CSS variables for theming:
+export default async function InstallationPage() {
+  const [installHtml, cssHtml, motionHtml] = await Promise.all([
+    highlight(installCmd, "bash"),
+    highlight(cssSetup, "css"),
+    highlight(motionSetup),
+  ]);
 
-:root {
-  --background: 0 0% 100%;
-  --foreground: 0 0% 3.9%;
-  --primary: 0 0% 9%;
-  --primary-foreground: 0 0% 98%;
-  --muted: 0 0% 96.1%;
-  --muted-foreground: 0 0% 45.1%;
-  --accent: 0 0% 96.1%;
-  --accent-foreground: 0 0% 9%;
-  --border: 0 0% 89.8%;
-}
-
-.dark {
-  --background: 0 0% 3.9%;
-  --foreground: 0 0% 98%;
-  /* ... dark mode values */
-}`;
-
-export default function InstallationPage() {
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="scroll-m-20 text-4xl font-bold tracking-tight">
-          Installation
-        </h1>
-        <p className="text-lg text-muted-foreground mt-4 text-balance">
-          Get started with AppShell in your React project.
-        </p>
-      </div>
+    <article>
+      <DocHeader
+        eyebrow="Getting started"
+        title="Installation"
+        description="Two steps: install the package, then wire Tailwind CSS v4 up to the library's classes and tokens."
+      />
 
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Install the package
-        </h2>
-        <p className="text-muted-foreground">
-          Install AppShell using your preferred package manager:
-        </p>
-        <div className="space-y-3">
-          <CodeBlock code={npmInstall} language="bash" filename="npm" />
-          <CodeBlock code={pnpmInstall} language="bash" filename="pnpm" />
-          <CodeBlock code={yarnInstall} language="bash" filename="yarn" />
-        </div>
-      </div>
-
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Basic Setup
-        </h2>
-        <p className="text-muted-foreground">
-          Import and use the components in your app:
-        </p>
-        <CodeBlock code={basicSetup} language="tsx" filename="app.tsx" />
-      </div>
-
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Add Animations (Optional)
-        </h2>
-        <p className="text-muted-foreground">
-          AppShell works without any animation library. For smooth, spring-based animations,
-          optionally add Framer Motion:
-        </p>
-        <CodeBlock code={framerSetup} language="bash" />
-        <p className="text-muted-foreground mt-4">
-          Then wrap your app with MotionProvider:
-        </p>
-        <CodeBlock code={motionSetup} language="tsx" filename="app.tsx" />
-      </div>
-
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Tailwind CSS Setup
-        </h2>
-        <p className="text-muted-foreground">
-          AppShell uses CSS custom properties for theming, compatible with shadcn/ui tokens.
-          Make sure your CSS includes these variables:
-        </p>
-        <CodeBlock code={tailwindConfig} language="css" filename="globals.css" />
-      </div>
-
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Requirements
-        </h2>
-        <ul className="my-4 ml-6 list-disc [&>li]:mt-2 text-muted-foreground">
-          <li>React 18 or higher</li>
-          <li>Tailwind CSS 4.x (or 3.x with proper config)</li>
-          <li>Framer Motion 10+ (optional, for animations)</li>
+      <DocSection title="Requirements">
+        <ul className="space-y-2 text-[15px] leading-relaxed text-muted-foreground">
+          <li>• React 18 or 19</li>
+          <li>
+            • <span className="font-medium text-foreground">Tailwind CSS 4</span>{" "}
+            — the library uses v4-only syntax and utilities; v3 is not
+            supported
+          </li>
+          <li>
+            • Framer Motion 11+ — optional, only for the spring animation
+            adapter
+          </li>
         </ul>
-      </div>
+      </DocSection>
 
-      <div className="rounded-lg border bg-muted/50 p-4">
-        <h3 className="font-semibold">TypeScript Support</h3>
-        <p className="text-sm text-muted-foreground mt-1">
-          AppShell is written in TypeScript and includes full type definitions.
-          No additional @types packages are needed.
-        </p>
-      </div>
+      <DocSection title="Install">
+        <CodePanel html={installHtml} code={installCmd} filename="terminal" />
+      </DocSection>
 
-      <div className="flex items-center gap-4 pt-4">
-        <Link
-          href="/docs/theming"
-          className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90 transition-colors"
-        >
-          Next: Theming
-          <ArrowRight className="ml-2 size-4" />
-        </Link>
-      </div>
-    </div>
+      <DocSection title="Tailwind v4 setup">
+        <DocProse>
+          appshell-react ships unstyled-by-convention: its components use
+          Tailwind utility classes driven by shadcn/ui-style tokens, and your
+          build generates the CSS. Your global stylesheet needs four things —
+          the <InlineCode>@source</InlineCode> line, the dark-mode custom
+          variant, the tokens, and the{" "}
+          <InlineCode>@theme inline</InlineCode> mapping:
+        </DocProse>
+        <CodePanel html={cssHtml} code={cssSetup} filename="globals.css" />
+        <DocNote>
+          The <InlineCode>@source</InlineCode> line is the step everyone
+          misses: Tailwind v4 only scans your own source by default, so
+          without it none of the library&rsquo;s classes are generated and the
+          shell renders unstyled. If you use HeaderNav dropdowns, also install{" "}
+          <InlineCode>tw-animate-css</InlineCode> (and import it) for the{" "}
+          <InlineCode>animate-in</InlineCode> entrance utilities.
+        </DocNote>
+      </DocSection>
+
+      <DocSection title="Optional: spring animations">
+        <DocProse>
+          Out of the box every transition is plain CSS. For spring-based
+          reveal and drawer animations, wrap your app once:
+        </DocProse>
+        <CodePanel html={motionHtml} code={motionSetup} filename="app.tsx" />
+        <DocProse>
+          Details and the adapter contract live in{" "}
+          <Link href="/docs/motion" className="text-brand hover:underline">
+            Motion
+          </Link>
+          .
+        </DocProse>
+      </DocSection>
+
+      <DocSection title="Next steps">
+        <DocProse>
+          Set up your palette in{" "}
+          <Link href="/docs/theming" className="text-brand hover:underline">
+            Theming
+          </Link>
+          , or jump straight to the{" "}
+          <Link
+            href="/docs/components/app-shell"
+            className="text-brand hover:underline"
+          >
+            AppShell reference
+          </Link>
+          .
+        </DocProse>
+      </DocSection>
+    </article>
   );
 }

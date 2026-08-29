@@ -10,6 +10,7 @@ import { snippet as floatingFooter } from "@/app/examples/preview/floating-foote
 import { snippet as floatingDock } from "@/app/examples/preview/floating-dock/snippet";
 import { snippet as miniFooter } from "@/app/examples/preview/mini-footer/snippet";
 import { snippet as sidebar } from "@/app/examples/preview/sidebar/snippet";
+import { snippet as dockedSidebar } from "@/app/examples/preview/docked-sidebar/snippet";
 import { snippet as scrollNav } from "@/app/examples/preview/scroll-nav/snippet";
 import { snippet as inPageNav } from "@/app/examples/preview/in-page-nav/snippet";
 import { snippet as desktopNav } from "@/app/examples/preview/desktop-nav/snippet";
@@ -32,6 +33,7 @@ export const demoCode: Record<string, string> = {
   "floating-dock": floatingDock,
   "mini-footer": miniFooter,
   sidebar,
+  "docked-sidebar": dockedSidebar,
   "scroll-nav": scrollNav,
   "in-page-nav": inPageNav,
   "desktop-nav": desktopNav,

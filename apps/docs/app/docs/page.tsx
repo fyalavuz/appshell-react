@@ -1,181 +1,157 @@
 import Link from "next/link";
-import { CodeBlock } from "@/components/docs/code-block";
 import { ArrowRight } from "lucide-react";
+import {
+  DocHeader,
+  DocSection,
+  DocProse,
+  InlineCode,
+} from "@/components/docs/doc-page";
+import { CodePanel } from "@/components/docs/code-panel";
+import { highlight } from "@/lib/highlight";
 
-const installCode = `npm install appshell-react
-# or
-pnpm add appshell-react
-# or
-yarn add appshell-react`;
+export const metadata = {
+  title: "Introduction",
+  description:
+    "What appshell-react is, what it solves, and how the pieces fit together.",
+};
 
-const basicUsageCode = `import { AppShell, Header, Content, Footer, FooterItem } from "appshell-react";
-import { Home, Search, Bell, User } from "lucide-react";
+const quickStart = `import { AppShell, Header, Content, Footer, FooterItem } from "appshell-react";
+import { Home, Search, User } from "lucide-react";
 
 export default function App() {
   return (
     <AppShell safeArea>
-      <Header 
-        behavior="fixed" 
-        logo={<span className="font-bold">My App</span>}
-        title="Dashboard"
-        subtitle="Overview"
+      <Header
+        behavior="reveal-all"
+        logo={<span className="font-bold">MyApp</span>}
+        title="Home"
       />
-      <Content className="p-4">
-        <h1 className="text-2xl font-bold">Welcome!</h1>
-        <p className="text-muted-foreground mt-2">
-          Start building your mobile-first app.
-        </p>
-      </Content>
-      <Footer variant="tab-bar">
+      <Content className="pb-24">{/* your content */}</Content>
+      <Footer variant="tab-bar" behavior="auto-hide">
         <FooterItem icon={<Home />} label="Home" active />
         <FooterItem icon={<Search />} label="Search" />
-        <FooterItem icon={<Bell />} label="Alerts" badge={3} />
         <FooterItem icon={<User />} label="Profile" />
       </Footer>
     </AppShell>
   );
 }`;
 
-const motionCode = `import { MotionProvider } from "appshell-react";
-import { framerMotionAdapter } from "appshell-react/motion-framer";
+const pieces = [
+  {
+    title: "AppShell",
+    href: "/docs/components/app-shell",
+    text: "Root wrapper: shell context, safe areas, and automatic placement of Header and docked Sidebar children.",
+  },
+  {
+    title: "Header",
+    href: "/docs/components/header",
+    text: "Four composable rows with 10 scroll behaviors, from pinned to per-row reveal.",
+  },
+  {
+    title: "Footer",
+    href: "/docs/components/footer",
+    text: "Tab bar, floating slot, or mini bar — with scroll-aware auto-hide.",
+  },
+  {
+    title: "Sidebar",
+    href: "/docs/components/sidebar",
+    text: "Modal drawer on phones; persistent, collapsible docked panel on desktop.",
+  },
+  {
+    title: "SafeArea",
+    href: "/docs/components/safe-area",
+    text: "Notch and home-indicator padding for arbitrary regions.",
+  },
+  {
+    title: "Hooks",
+    href: "/docs/hooks",
+    text: "useAppShell, useScrollDirection, useSafeArea, useHeaderTheme.",
+  },
+];
 
-export default function App() {
+export default async function DocsPage() {
+  const highlighted = await highlight(quickStart);
+
   return (
-    <MotionProvider adapter={framerMotionAdapter}>
-      <AppShell safeArea>
-        {/* Your app content */}
-      </AppShell>
-    </MotionProvider>
-  );
-}`;
+    <article>
+      <DocHeader
+        eyebrow="Getting started"
+        title="Introduction"
+        description="appshell-react is a composable layout system for mobile-first React apps: scroll-aware headers, tab bars, drawers, docked sidebars, and safe areas — without writing a single scroll listener."
+      />
 
-export default function DocsPage() {
-  return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="scroll-m-20 text-4xl font-bold tracking-tight">
-          Introduction
-        </h1>
-        <p className="text-lg text-muted-foreground mt-4 text-balance">
-          AppShell is a collection of mobile-first layout components for React.
-          Build native-feeling mobile web apps with scroll-aware headers,
-          footers, sidebars, and safe areas.
-        </p>
-      </div>
+      <DocSection title="The idea">
+        <DocProse>
+          Every mobile web app rewrites the same tricky 10% of UI: a header
+          that hides politely on scroll, a tab bar that returns exactly when
+          the thumb needs it, insets around notches, and a sidebar that is a
+          drawer on phones but a persistent panel on desktop. appshell-react
+          ships those as small composable components that coordinate through
+          shared context and CSS variables like{" "}
+          <InlineCode>--header-height</InlineCode>.
+        </DocProse>
+        <DocProse>
+          Animations run on plain CSS transitions by default — the core has
+          zero runtime dependencies. Wrap your app in{" "}
+          <InlineCode>MotionProvider</InlineCode> with the optional Framer
+          Motion adapter when you want springs. See{" "}
+          <Link href="/docs/motion" className="text-brand hover:underline">
+            Motion
+          </Link>
+          .
+        </DocProse>
+      </DocSection>
 
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Features
-        </h2>
-        <ul className="my-6 ml-6 list-disc [&>li]:mt-2">
-          <li>
-            <strong>Header</strong> - 10 scroll behaviors including fixed,
-            reveal, and sticky variants
-          </li>
-          <li>
-            <strong>Footer</strong> - Tab bar, floating action, and mini bar
-            variants with auto-hide
-          </li>
-          <li>
-            <strong>Sidebar</strong> - Slide-out drawer with backdrop and
-            keyboard dismiss
-          </li>
-          <li>
-            <strong>SafeArea</strong> - Automatic safe area inset handling for
-            notched devices
-          </li>
-          <li>
-            <strong>ScrollNav</strong> - Horizontal scrollable navigation pills
-          </li>
-          <li>
-            <strong>Context</strong> - Shared state for header/footer visibility
-            and scroll direction
-          </li>
-        </ul>
-      </div>
+      <DocSection title="Quick start">
+        <CodePanel html={highlighted} code={quickStart} filename="app.tsx" />
+        <DocProse>
+          That is a complete native-feeling shell: the header reveals on
+          scroll up, the tab bar auto-hides, and safe areas are handled. Head
+          to{" "}
+          <Link
+            href="/docs/installation"
+            className="text-brand hover:underline"
+          >
+            Installation
+          </Link>{" "}
+          for the Tailwind v4 setup.
+        </DocProse>
+      </DocSection>
 
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Installation
-        </h2>
-        <p className="text-muted-foreground">
-          Install AppShell using your preferred package manager:
-        </p>
-        <CodeBlock code={installCode} language="bash" />
-      </div>
+      <DocSection title="The pieces">
+        <div className="grid gap-3 sm:grid-cols-2">
+          {pieces.map((piece) => (
+            <Link
+              key={piece.href}
+              href={piece.href}
+              className="group rounded-xl border bg-card p-4 transition-colors hover:border-brand/40"
+            >
+              <span className="flex items-center gap-1.5 font-semibold">
+                {piece.title}
+                <ArrowRight className="size-3.5 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-brand" />
+              </span>
+              <span className="mt-1 block text-sm leading-relaxed text-muted-foreground">
+                {piece.text}
+              </span>
+            </Link>
+          ))}
+        </div>
+      </DocSection>
 
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Basic Usage
-        </h2>
-        <p className="text-muted-foreground">
-          Here is a simple example showing the core components working together:
-        </p>
-        <CodeBlock code={basicUsageCode} language="tsx" filename="app.tsx" />
-      </div>
-
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Animations (Optional)
-        </h2>
-        <p className="text-muted-foreground">
-          AppShell works without any animation library. For smooth animations,
-          you can optionally add Framer Motion:
-        </p>
-        <CodeBlock
-          code={`npm install framer-motion`}
-          language="bash"
-        />
-        <p className="text-muted-foreground">
-          Then wrap your app with the MotionProvider:
-        </p>
-        <CodeBlock code={motionCode} language="tsx" filename="app.tsx" />
-      </div>
-
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Design Tokens
-        </h2>
-        <p className="text-muted-foreground">
-          AppShell uses shadcn/ui design tokens out of the box. All components
-          automatically adapt to your theme using CSS custom properties like{" "}
-          <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm">
-            --background
-          </code>
-          ,{" "}
-          <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm">
-            --foreground
-          </code>
-          ,{" "}
-          <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm">
-            --primary
-          </code>
-          , etc.
-        </p>
-        <p className="text-muted-foreground">
-          Dark mode works automatically when you toggle the{" "}
-          <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm">
-            .dark
-          </code>{" "}
-          class on your root element.
-        </p>
-      </div>
-
-      <div className="flex items-center gap-4 pt-4">
-        <Link
-          href="/docs/components/app-shell"
-          className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90 transition-colors"
-        >
-          Components
-          <ArrowRight className="ml-2 size-4" />
-        </Link>
-        <Link
-          href="/examples"
-          className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium shadow-sm hover:bg-accent transition-colors"
-        >
-          View Examples
-        </Link>
-      </div>
-    </div>
+      <DocSection title="See it live">
+        <DocProse>
+          The{" "}
+          <Link href="/examples" className="text-brand hover:underline">
+            examples gallery
+          </Link>{" "}
+          covers every variant as a small believable app, and the{" "}
+          <Link href="/playground" className="text-brand hover:underline">
+            playground
+          </Link>{" "}
+          lets you mix every behavior, theme, speed, and footer variant on one
+          phone — then copy the code.
+        </DocProse>
+      </DocSection>
+    </article>
   );
 }

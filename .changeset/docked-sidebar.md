@@ -1,0 +1,5 @@
+---
+"appshell-react": minor
+---
+
+Add a docked Sidebar variant: `<Sidebar variant="docked">` renders a persistent panel that sticks below the Header, optionally collapses to an icon rail (`collapsible`, `collapsed`/`defaultCollapsed`/`onCollapsedChange`, `width`/`railWidth`), and automatically degrades to the existing overlay drawer below a breakpoint (`breakpoint="sm" | "md" | "lg" | "none"`). AppShell now hoists a docked Sidebar child into a two-column layout automatically. NavItem and NavGroup gained icon-rail styling (labels hide, `title` tooltips) driven by the sidebar's collapsed state. The default overlay variant is unchanged; `SidebarProps` is now a discriminated union (`SidebarOverlayProps | SidebarDockedProps`, both exported). `useAppShell().scrollDirection` now reports the real scroll direction instead of always `null`. The dead `"./styles.css"` package export (the file was never built) was removed. Also fixed: `useSafeArea`'s env() fallback never resolved (env() cannot be read via getPropertyValue) — insets are now measured with a probe element.

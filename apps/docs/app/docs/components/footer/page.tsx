@@ -1,250 +1,248 @@
 import Link from "next/link";
-import { CodeBlock } from "@/components/docs/code-block";
+import {
+  DocHeader,
+  DocSection,
+  DocProse,
+  DocNote,
+  InlineCode,
+} from "@/components/docs/doc-page";
+import { CodePanel } from "@/components/docs/code-panel";
 import { ComponentPreview } from "@/components/docs/component-preview";
-import { ArrowRight, ArrowLeft } from "lucide-react";
+import { PropsTable } from "@/components/docs/props-table";
+import { footerApi, footerItemApi } from "@/lib/api-docs";
+import { highlight } from "@/lib/highlight";
 
 export const metadata = {
   title: "Footer",
-  description: "A versatile footer component with tab bar, floating, and mini variants.",
+  description:
+    "Bottom bar in three shapes — tab bar, floating slot, mini bar — with scroll-aware auto-hide.",
 };
 
 const tabBarCode = `import { AppShell, Content, Footer, FooterItem } from "appshell-react";
-import { Home, Search, Bell, User } from "lucide-react";
+import { useState } from "react";
+import { Bell, Home, Search, User } from "lucide-react";
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState("home");
+  const [tab, setTab] = useState("home");
 
   return (
     <AppShell safeArea>
+      {/* pb-24 keeps the last item clear of the fixed tab bar */}
       <Content className="pb-24">
-        {/* Your content */}
+        <div className="p-4">{/* active tab's screen */}</div>
       </Content>
       <Footer variant="tab-bar" behavior="auto-hide">
         <FooterItem
           icon={<Home />}
           label="Home"
-          active={activeTab === "home"}
-          onClick={() => setActiveTab("home")}
+          active={tab === "home"}
+          onClick={() => setTab("home")}
         />
         <FooterItem
           icon={<Search />}
           label="Search"
-          active={activeTab === "search"}
-          onClick={() => setActiveTab("search")}
+          active={tab === "search"}
+          onClick={() => setTab("search")}
         />
         <FooterItem
           icon={<Bell />}
           label="Alerts"
-          badge={3}
-          active={activeTab === "alerts"}
-          onClick={() => setActiveTab("alerts")}
+          badge={12}
+          active={tab === "alerts"}
+          onClick={() => setTab("alerts")}
         />
         <FooterItem
           icon={<User />}
           label="Profile"
-          active={activeTab === "profile"}
-          onClick={() => setActiveTab("profile")}
+          active={tab === "profile"}
+          onClick={() => setTab("profile")}
         />
       </Footer>
     </AppShell>
   );
 }`;
 
-const floatingCode = `<Footer variant="floating" position="center">
-  <button className="rounded-full bg-primary px-6 py-3 font-medium text-primary-foreground shadow-lg">
-    Add to Cart
-  </button>
-</Footer>`;
+const floatingCode = `import { AppShell, Content, Footer } from "appshell-react";
+import { ShoppingBag } from "lucide-react";
 
-const miniCode = `<Footer variant="mini">
-  <div className="flex items-center justify-between px-4 py-2">
-    <span className="text-sm text-muted-foreground">Now Playing</span>
-    <button className="text-primary">View</button>
-  </div>
-</Footer>`;
-
-const variants = [
-  { name: "tab-bar", description: "Standard mobile bottom navigation with icons and labels" },
-  { name: "floating", description: "Elevated floating action button or pill" },
-  { name: "mini", description: "Compact bar for persistent info like media players" },
-];
-
-const footerProps = [
-  { name: "variant", type: '"tab-bar" | "floating" | "mini"', default: '"tab-bar"', description: "Visual variant" },
-  { name: "behavior", type: '"static" | "auto-hide"', default: '"static"', description: "Scroll behavior" },
-  { name: "position", type: '"left" | "center" | "right"', default: '"center"', description: "Content alignment (floating only)" },
-  { name: "className", type: "string", default: "-", description: "Additional CSS classes" },
-  { name: "children", type: "ReactNode", default: "-", description: "FooterItem components or custom content" },
-];
-
-const footerItemProps = [
-  { name: "icon", type: "ReactNode", default: "-", description: "Icon element" },
-  { name: "label", type: "string", default: "-", description: "Text label" },
-  { name: "active", type: "boolean", default: "false", description: "Whether this item is active" },
-  { name: "badge", type: "number | string", default: "-", description: "Badge count or text" },
-  { name: "onClick", type: "() => void", default: "-", description: "Click handler" },
-];
-
-export default function FooterPage() {
+export default function App() {
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="scroll-m-20 text-4xl font-bold tracking-tight">
-          Footer
-        </h1>
-        <p className="text-lg text-muted-foreground mt-4 text-balance">
-          A versatile footer component with tab bar navigation, floating action buttons,
-          and mini bars for persistent content.
-        </p>
-      </div>
+    <AppShell safeArea>
+      <Content className="pb-28">
+        <div className="p-4">{/* product grid */}</div>
+      </Content>
+      <Footer variant="floating" position="center" behavior="auto-hide">
+        <button
+          type="button"
+          className="flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-medium text-primary-foreground shadow-lg"
+        >
+          <ShoppingBag className="size-4" />
+          Add to cart
+        </button>
+      </Footer>
+    </AppShell>
+  );
+}`;
 
-      <ComponentPreview
-        name="Tab Bar"
-        code={tabBarCode}
-        previewUrl="/examples/preview/tab-bar"
-        isMobile={true}
+const miniCode = `import { AppShell, Content, Footer } from "appshell-react";
+import { Pause } from "lucide-react";
+
+export default function App() {
+  return (
+    <AppShell safeArea>
+      <Content className="pb-20">
+        <div className="p-4">{/* track list */}</div>
+      </Content>
+      <Footer variant="mini">
+        <div className="flex flex-1 items-center justify-between">
+          <span className="text-sm font-medium">Now playing — Midnight Sun</span>
+          <button type="button" aria-label="Pause" className="text-primary">
+            <Pause className="size-5" />
+          </button>
+        </div>
+      </Footer>
+    </AppShell>
+  );
+}`;
+
+export default async function FooterPage() {
+  const [tabBarHtml, floatingHtml, miniHtml] = await Promise.all([
+    highlight(tabBarCode),
+    highlight(floatingCode),
+    highlight(miniCode),
+  ]);
+
+  return (
+    <article>
+      <DocHeader
+        eyebrow="Components"
+        title="Footer"
+        description="One component, three shapes: a tab bar for primary navigation, a floating slot for pills and FABs, and a slim mini bar for persistent status — all fixed to the bottom, safe-area aware, and optionally scroll-aware."
       />
 
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Variants
-        </h2>
-        <p className="text-muted-foreground">
-          The Footer supports 3 different variants:
-        </p>
-        <div className="grid gap-3">
-          {variants.map((v) => (
-            <div key={v.name} className="rounded-lg border p-4">
-              <code className="font-mono text-sm text-primary">{v.name}</code>
-              <p className="mt-1 text-sm text-muted-foreground">{v.description}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Tab Bar
-        </h2>
-        <p className="text-muted-foreground">
-          The most common mobile navigation pattern with icons, labels, and optional badges:
-        </p>
-        <CodeBlock code={tabBarCode} language="tsx" filename="app.tsx" />
-      </div>
-
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Floating Action
-        </h2>
-        <p className="text-muted-foreground">
-          Perfect for primary actions like "Add to Cart" or "Create New":
-        </p>
+      <DocSection title="Tab bar">
+        <DocProse>
+          The default variant is a fixed bottom bar that lays out{" "}
+          <InlineCode>FooterItem</InlineCode> children as equal-width tabs.
+          Active state is fully controlled — pass{" "}
+          <InlineCode>active</InlineCode> and switch it in{" "}
+          <InlineCode>onClick</InlineCode>. A <InlineCode>badge</InlineCode>{" "}
+          number renders a count bubble on the icon; values over 99 render as
+          &ldquo;99+&rdquo;. Three to five tabs is the sweet spot — beyond
+          five, each tab gets too narrow for a comfortable tap target.
+        </DocProse>
         <ComponentPreview
-          name="Floating Footer"
+          name="Tab bar"
+          code={tabBarCode}
+          previewUrl="/examples/preview/tab-bar/"
+        />
+        <CodePanel html={tabBarHtml} code={tabBarCode} filename="app.tsx" />
+        <DocNote>
+          <InlineCode>badge</InlineCode> is a <InlineCode>number</InlineCode>,
+          not a string — the bubble only renders for values greater than 0, so
+          there is no &ldquo;dot&rdquo; or text-badge mode. Need one? Put your
+          own element inside <InlineCode>icon</InlineCode>.
+        </DocNote>
+      </DocSection>
+
+      <DocSection title="Floating">
+        <DocProse>
+          <InlineCode>variant=&quot;floating&quot;</InlineCode> renders no bar
+          at all — it is a fixed, full-width slot along the bottom edge that
+          positions whatever you put inside it. Your pill, FAB, or button
+          group is the child; <InlineCode>position</InlineCode> docks it{" "}
+          <InlineCode>left</InlineCode>, <InlineCode>center</InlineCode>, or{" "}
+          <InlineCode>right</InlineCode>, and the slot pads itself above the
+          bottom safe-area inset. The slot itself ignores pointer events, so
+          the page stays tappable around your content.
+        </DocProse>
+        <ComponentPreview
+          name="Floating footer"
           code={floatingCode}
-          previewUrl="/examples/preview/floating-footer"
-          isMobile={true}
+          previewUrl="/examples/preview/floating-footer/"
         />
-      </div>
+        <CodePanel html={floatingHtml} code={floatingCode} filename="app.tsx" />
+      </DocSection>
 
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Mini Bar
-        </h2>
-        <p className="text-muted-foreground">
-          Compact bar for persistent information like media players:
-        </p>
-        <CodeBlock code={miniCode} language="tsx" />
-      </div>
+      <DocSection title="Mini">
+        <DocProse>
+          <InlineCode>variant=&quot;mini&quot;</InlineCode> is a slim strip —
+          a 3rem (<InlineCode>h-12</InlineCode>) content row with a top border
+          and background blur, sitting above the bottom safe-area inset. Use
+          it for now-playing bars, upload progress, or connection status.
+          Children render inside the centered row; lay them out yourself with
+          flex utilities.
+        </DocProse>
+        <CodePanel html={miniHtml} code={miniCode} filename="app.tsx" />
+      </DocSection>
 
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Auto-Hide Behavior
-        </h2>
-        <p className="text-muted-foreground">
-          Set <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-sm">behavior="auto-hide"</code> to
-          automatically hide the footer when scrolling down and show it when scrolling up:
-        </p>
-        <CodeBlock
-          code={`<Footer variant="tab-bar" behavior="auto-hide">
-  {/* Footer items */}
-</Footer>`}
-          language="tsx"
-        />
-      </div>
+      <DocSection title="Auto-hide">
+        <DocProse>
+          <InlineCode>behavior=&quot;auto-hide&quot;</InlineCode> slips the
+          footer away when the user scrolls down and brings it back the moment
+          they scroll up — the same{" "}
+          <InlineCode>useScrollDirection</InlineCode> hook that powers reveal
+          headers, so both bars move in sync. All three variants support it.
+          Tune the animation with{" "}
+          <InlineCode>
+            speed=&quot;slow&quot; | &quot;normal&quot; | &quot;fast&quot;
+          </InlineCode>
+          ; with the Framer Motion adapter
+          installed the hide/show becomes a real exit/enter transition (see{" "}
+          <Link href="/docs/motion" className="text-brand hover:underline">
+            Motion
+          </Link>
+          ).
+        </DocProse>
+      </DocSection>
 
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Footer Props
-        </h2>
-        <div className="rounded-lg border overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b bg-muted/50">
-                <th className="px-4 py-3 text-left font-medium">Prop</th>
-                <th className="px-4 py-3 text-left font-medium">Type</th>
-                <th className="px-4 py-3 text-left font-medium">Default</th>
-                <th className="px-4 py-3 text-left font-medium">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              {footerProps.map((prop, i) => (
-                <tr key={prop.name} className={i < footerProps.length - 1 ? "border-b" : ""}>
-                  <td className="px-4 py-3 font-mono text-xs text-primary whitespace-nowrap">{prop.name}</td>
-                  <td className="px-4 py-3 font-mono text-xs text-muted-foreground whitespace-nowrap">{prop.type}</td>
-                  <td className="px-4 py-3 font-mono text-xs">{prop.default}</td>
-                  <td className="px-4 py-3 text-muted-foreground">{prop.description}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <DocSection title="Clearing the footer">
+        <DocProse>
+          Every variant is <InlineCode>position: fixed</InlineCode>, so it
+          overlaps the end of your page — the Footer does not reserve space
+          for itself. Give{" "}
+          <Link
+            href="/docs/components/content"
+            className="text-brand hover:underline"
+          >
+            Content
+          </Link>{" "}
+          enough bottom padding to scroll the last element clear:{" "}
+          <InlineCode>pb-24</InlineCode> for a tab bar,{" "}
+          <InlineCode>pb-28</InlineCode> for a floating pill,{" "}
+          <InlineCode>pb-20</InlineCode> for a mini bar — the values the{" "}
+          <Link href="/examples" className="text-brand hover:underline">
+            examples
+          </Link>{" "}
+          use.
+        </DocProse>
+      </DocSection>
 
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          FooterItem Props
-        </h2>
-        <div className="rounded-lg border overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b bg-muted/50">
-                <th className="px-4 py-3 text-left font-medium">Prop</th>
-                <th className="px-4 py-3 text-left font-medium">Type</th>
-                <th className="px-4 py-3 text-left font-medium">Default</th>
-                <th className="px-4 py-3 text-left font-medium">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              {footerItemProps.map((prop, i) => (
-                <tr key={prop.name} className={i < footerItemProps.length - 1 ? "border-b" : ""}>
-                  <td className="px-4 py-3 font-mono text-xs text-primary whitespace-nowrap">{prop.name}</td>
-                  <td className="px-4 py-3 font-mono text-xs text-muted-foreground whitespace-nowrap">{prop.type}</td>
-                  <td className="px-4 py-3 font-mono text-xs">{prop.default}</td>
-                  <td className="px-4 py-3 text-muted-foreground">{prop.description}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <DocSection title="Footer props">
+        <PropsTable api={footerApi} />
+      </DocSection>
 
-      <div className="flex items-center justify-between pt-4">
-        <Link
-          href="/docs/components/header"
-          className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
-        >
-          <ArrowLeft className="mr-2 size-4" />
-          Header
-        </Link>
-        <Link
-          href="/docs/components/content"
-          className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90 transition-colors"
-        >
-          Next: Content
-          <ArrowRight className="ml-2 size-4" />
-        </Link>
-      </div>
-    </div>
+      <DocSection title="FooterItem props">
+        <PropsTable api={footerItemApi} />
+      </DocSection>
+
+      <DocSection title="Related">
+        <DocProse>
+          See the{" "}
+          <Link
+            href="/examples/preview/mini-footer/"
+            className="text-brand hover:underline"
+          >
+            mini footer example
+          </Link>{" "}
+          for a full now-playing bar, or mix footer variants with every header
+          behavior in the{" "}
+          <Link href="/playground" className="text-brand hover:underline">
+            playground
+          </Link>
+          .
+        </DocProse>
+      </DocSection>
+    </article>
   );
 }

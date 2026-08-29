@@ -7,14 +7,15 @@ import {
   useMemo,
   type ReactNode,
 } from "react";
-import type { AppShellContextValue, ScrollDirection } from "./types";
+import { useScrollDirection } from "./hooks/use-scroll-direction";
+import type { AppShellContextValue } from "./types";
 
 const AppShellContext = createContext<AppShellContextValue | null>(null);
 
 export function AppShellProvider({ children }: { children: ReactNode }) {
   const [headerVisible, setHeaderVisible] = useState(true);
   const [footerVisible, setFooterVisible] = useState(true);
-  const [scrollDirection] = useState<ScrollDirection>(null);
+  const scrollDirection = useScrollDirection();
 
   const value = useMemo<AppShellContextValue>(
     () => ({

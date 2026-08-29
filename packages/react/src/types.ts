@@ -87,13 +87,49 @@ export interface AppShellProps {
 
 export type SidebarSide = "left" | "right";
 
-export interface SidebarProps {
-  open: boolean;
-  onClose: () => void;
+export type SidebarVariant = "overlay" | "docked";
+
+export type SidebarBreakpoint = "sm" | "md" | "lg" | "none";
+
+interface SidebarBaseProps {
   side?: SidebarSide;
   className?: string;
   children: ReactNode;
 }
+
+/** Modal drawer — the default variant and the library's original behavior. */
+export interface SidebarOverlayProps extends SidebarBaseProps {
+  variant?: "overlay";
+  open: boolean;
+  onClose: () => void;
+}
+
+/**
+ * Persistent panel that lives in the shell layout. Sticky below the Header,
+ * optionally collapsible to an icon rail, and automatically degrades to the
+ * overlay drawer below the given breakpoint.
+ */
+export interface SidebarDockedProps extends SidebarBaseProps {
+  variant: "docked";
+  /** Drives the mobile drawer fallback below the breakpoint. Default false. */
+  open?: boolean;
+  onClose?: () => void;
+  /** Render the built-in collapse-to-rail toggle. Default false. */
+  collapsible?: boolean;
+  /** Controlled collapse state. */
+  collapsed?: boolean;
+  /** Uncontrolled initial collapse state. Default false. */
+  defaultCollapsed?: boolean;
+  onCollapsedChange?: (collapsed: boolean) => void;
+  /** Below this viewport width the docked panel hides and the drawer takes over. Default "md". */
+  breakpoint?: SidebarBreakpoint;
+  /** Expanded width. Default "16rem". */
+  width?: string;
+  /** Collapsed rail width. Default "3.25rem". */
+  railWidth?: string;
+}
+
+export type SidebarProps = SidebarOverlayProps | SidebarDockedProps;
 
 export interface NavGroupProps {
   title: string;

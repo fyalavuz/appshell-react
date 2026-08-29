@@ -11,7 +11,7 @@ Mobile-first app shell components for React. Build native-feeling headers, foote
 pnpm add appshell-react
 ```
 
-Peer dependencies: `react`, `react-dom`, `framer-motion`, `tailwindcss` (v4+).
+Peer dependencies: `react`, `react-dom`, `tailwindcss` (v4+). `framer-motion` is optional — add it for the spring animation adapter.
 
 ## Quick Start
 
@@ -46,6 +46,7 @@ export default function App() {
 - **Animation Speed** control: `slow`, `normal`, `fast` durations for all transitions
 - **Footer** with 3 variants: `tab-bar`, `floating`, `mini`
 - **Auto-hide** footer behavior tied to scroll direction
+- **Sidebar** in two variants: modal drawer, and a docked panel with a collapsible icon rail and responsive drawer fallback
 - **Sticky Sub-navigation** support via dynamic `--header-height` CSS variable
 - **SafeArea** for mobile notch/gesture-bar insets
 - **Dark, light, and primary** header themes + `none` for custom styling
@@ -76,11 +77,11 @@ Visit the [documentation site](https://fyalavuz.github.io/appshell-react) for fu
 
 ## Examples
 
-Explore 19 fullscreen demos at [fyalavuz.github.io/appshell-react/examples](https://fyalavuz.github.io/appshell-react/examples):
+Explore 20 fullscreen demos at [fyalavuz.github.io/appshell-react/examples](https://fyalavuz.github.io/appshell-react/examples):
 
 - **Headers** -- fixed, static, sticky, and every per-row reveal behavior
 - **Footers** -- tab bar with badges, floating action pill, liquid-glass dock, mini now-playing bar
-- **Layout & Navigation** -- sidebar drawer, scroll pills, scroll-spy anchors, desktop dropdowns, safe areas
+- **Layout & Navigation** -- sidebar drawer, docked sidebar with icon rail, scroll pills, scroll-spy anchors, desktop dropdowns, safe areas
 - **Patterns & Theming** -- combined reveal choreography, header themes, dark mode
 
 Or mix every behavior, theme, speed, and footer variant live in the [Playground](https://fyalavuz.github.io/appshell-react/playground).

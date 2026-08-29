@@ -1,130 +1,111 @@
 import Link from "next/link";
-import { CodeBlock } from "@/components/docs/code-block";
-import { ArrowRight, ArrowLeft } from "lucide-react";
+import {
+  DocHeader,
+  DocSection,
+  DocProse,
+  DocNote,
+  InlineCode,
+} from "@/components/docs/doc-page";
+import { CodePanel } from "@/components/docs/code-panel";
+import { PropsTable } from "@/components/docs/props-table";
+import { contentApi } from "@/lib/api-docs";
+import { highlight } from "@/lib/highlight";
 
 export const metadata = {
   title: "Content",
-  description: "The main content area that handles scrolling and safe area padding.",
+  description:
+    "The semantic <main> region of the shell — and the place to add padding that clears fixed bars.",
 };
 
-const basicCode = `import { AppShell, Header, Content } from "appshell-react";
+const basicCode = `import { AppShell, Content, Footer, FooterItem, Header } from "appshell-react";
+import { Home, Search, User } from "lucide-react";
 
 export default function App() {
   return (
     <AppShell safeArea>
-      <Header behavior="fixed" logo={<span>App</span>} />
-      <Content className="p-4">
+      <Header behavior="fixed" logo={<span className="font-bold">MyApp</span>} />
+      {/* p-4 for breathing room, pb-24 to scroll clear of the tab bar */}
+      <Content className="p-4 pb-24">
         <h1 className="text-2xl font-bold">Welcome</h1>
-        <p>Your content goes here...</p>
+        <p className="mt-2 text-muted-foreground">Your page goes here.</p>
       </Content>
+      <Footer variant="tab-bar">
+        <FooterItem icon={<Home />} label="Home" active />
+        <FooterItem icon={<Search />} label="Search" />
+        <FooterItem icon={<User />} label="Profile" />
+      </Footer>
     </AppShell>
   );
 }`;
 
-const withFooterCode = `<AppShell safeArea>
-  <Header behavior="fixed" logo={<span>App</span>} />
-  <Content className="pb-24">
-    {/* Extra bottom padding for footer */}
-  </Content>
-  <Footer variant="tab-bar">
-    {/* Footer items */}
-  </Footer>
-</AppShell>`;
+export default async function ContentPage() {
+  const basicHtml = await highlight(basicCode);
 
-const propsTable = [
-  { name: "className", type: "string", default: "-", description: "Additional CSS classes" },
-  { name: "style", type: "CSSProperties", default: "-", description: "Inline styles" },
-  { name: "children", type: "ReactNode", default: "-", description: "Content children" },
-];
-
-export default function ContentPage() {
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="scroll-m-20 text-4xl font-bold tracking-tight">
-          Content
-        </h1>
-        <p className="text-lg text-muted-foreground mt-4 text-balance">
-          The main scrollable area that automatically handles spacing for headers
-          and footers.
-        </p>
-      </div>
+    <article>
+      <DocHeader
+        eyebrow="Components"
+        title="Content"
+        description="A deliberately thin component: the semantic <main> element that fills the shell's remaining space. Everything else — padding, scrolling, insets — stays under your control."
+      />
 
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Usage
-        </h2>
-        <p className="text-muted-foreground">
-          Content is the main scrollable container for your application:
-        </p>
-        <CodeBlock code={basicCode} language="tsx" filename="app.tsx" />
-      </div>
+      <DocSection title="What it is">
+        <DocProse>
+          Content renders a <InlineCode>&lt;main&gt;</InlineCode> with{" "}
+          <InlineCode>flex-1</InlineCode>, so it stretches to fill whatever
+          vertical space the shell&rsquo;s flex column has left. That is the
+          entire job. It does <em>not</em> create a scroll container (the page
+          scrolls the window as usual), does not apply safe-area padding, does
+          not reserve space for fixed headers or footers, and does not track
+          scroll position — scroll direction comes from{" "}
+          <InlineCode>useScrollDirection</InlineCode> listening on the window,
+          not from this component.
+        </DocProse>
+        <CodePanel html={basicHtml} code={basicCode} filename="app.tsx" />
+        <DocNote>
+          There is no <InlineCode>style</InlineCode> prop — Content accepts
+          only <InlineCode>className</InlineCode> and{" "}
+          <InlineCode>children</InlineCode>. All spacing is done with utility
+          classes.
+        </DocNote>
+      </DocSection>
 
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          With Footer
-        </h2>
-        <p className="text-muted-foreground">
-          When using a footer, add bottom padding to prevent content from being hidden:
-        </p>
-        <CodeBlock code={withFooterCode} language="tsx" />
-      </div>
+      <DocSection title="Clearing fixed bars">
+        <DocProse>
+          Fixed footers overlap the end of the page, so the last stretch of
+          content needs bottom padding to scroll clear. The values the{" "}
+          <Link href="/examples" className="text-brand hover:underline">
+            examples
+          </Link>{" "}
+          use: <InlineCode>pb-24</InlineCode> for a tab bar,{" "}
+          <InlineCode>pb-28</InlineCode> for a floating pill or FAB, and{" "}
+          <InlineCode>pb-20</InlineCode> for a mini bar. No footer, no
+          padding needed — and pinned headers are already handled by the
+          Header itself, so top padding is rarely yours to manage.
+        </DocProse>
+      </DocSection>
 
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Props
-        </h2>
-        <div className="rounded-lg border">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b bg-muted/50">
-                <th className="px-4 py-3 text-left font-medium">Prop</th>
-                <th className="px-4 py-3 text-left font-medium">Type</th>
-                <th className="px-4 py-3 text-left font-medium">Default</th>
-                <th className="px-4 py-3 text-left font-medium">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              {propsTable.map((prop, i) => (
-                <tr key={prop.name} className={i < propsTable.length - 1 ? "border-b" : ""}>
-                  <td className="px-4 py-3 font-mono text-xs text-primary">{prop.name}</td>
-                  <td className="px-4 py-3 font-mono text-xs text-muted-foreground">{prop.type}</td>
-                  <td className="px-4 py-3 font-mono text-xs">{prop.default}</td>
-                  <td className="px-4 py-3 text-muted-foreground">{prop.description}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <DocSection title="Props">
+        <PropsTable api={contentApi} />
+      </DocSection>
 
-      <div className="space-y-4">
-        <h2 className="scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight">
-          Scroll Events
-        </h2>
-        <p className="text-muted-foreground">
-          Content automatically tracks scroll position and direction, which is used
-          by Header and Footer components for auto-hide behavior. You can access this
-          information using the <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-sm">useAppShell</code> hook.
-        </p>
-      </div>
-
-      <div className="flex items-center justify-between pt-4">
-        <Link
-          href="/docs/components/footer"
-          className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
-        >
-          <ArrowLeft className="mr-2 size-4" />
-          Footer
-        </Link>
-        <Link
-          href="/docs/components/sidebar"
-          className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow hover:bg-primary/90 transition-colors"
-        >
-          Next: Sidebar
-          <ArrowRight className="ml-2 size-4" />
-        </Link>
-      </div>
-    </div>
+      <DocSection title="When to reach for SafeArea">
+        <DocProse>
+          With <InlineCode>&lt;AppShell safeArea&gt;</InlineCode> the shell
+          already keeps Content&rsquo;s column inside the device&rsquo;s safe
+          region, so most pages need nothing more. Reach for{" "}
+          <Link
+            href="/docs/components/safe-area"
+            className="text-brand hover:underline"
+          >
+            SafeArea
+          </Link>{" "}
+          when a specific region inside your content needs its own insets — a
+          full-bleed map or carousel that must respect the landscape
+          notch, for example — by wrapping just that region with the edges it
+          should pad.
+        </DocProse>
+      </DocSection>
+    </article>
   );
 }

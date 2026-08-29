@@ -1,7 +1,7 @@
 {
   "name": "appshell-react",
   "version": "0.3.0",
-  "description": "Mobile-first app shell components for React — Header, Footer, Sidebar, TabBar, SafeArea",
+  "description": "Mobile-first app shell components for React \u2014 Header, Footer, Sidebar, TabBar, SafeArea",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -45,8 +45,7 @@
         "types": "./dist/motion-framer.d.cts",
         "default": "./dist/motion-framer.cjs"
       }
-    },
-    "./styles.css": "./dist/styles.css"
+    }
   },
   "files": [
     "dist",
