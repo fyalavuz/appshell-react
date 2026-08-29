@@ -162,6 +162,24 @@ export interface HeaderNavItemProps {
   children?: ReactNode;
 }
 
+export type SearchFieldVariant = "pill" | "full";
+
+export interface SearchFieldProps {
+  /** "pill" (default): rounded inset field. "full": edge-to-edge flat field. */
+  variant?: SearchFieldVariant;
+  placeholder?: string;
+  /** Controlled value. */
+  value?: string;
+  /** Uncontrolled initial value. */
+  defaultValue?: string;
+  onChange?: (value: string) => void;
+  /** Called with the current value when Enter is pressed. */
+  onSubmit?: (value: string) => void;
+  className?: string;
+  inputClassName?: string;
+  "aria-label"?: string;
+}
+
 export interface ScrollNavProps {
   className?: string;
   children: ReactNode;

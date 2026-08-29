@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import {
+  SearchField,
   AppShell,
   Content,
   Header,
@@ -27,7 +28,6 @@ import {
   Milk,
   Plus,
   Salad,
-  Search,
   ShoppingBasket,
   Wheat,
   type LucideIcon,
@@ -99,15 +99,7 @@ export default function RevealSearchPage() {
           }
           title="Fresh today"
           subtitle="Delivery before 6 pm"
-          searchContent={
-            <label className="mx-4 mb-3 flex items-center gap-2 rounded-full bg-muted px-3.5 py-2 text-sm text-muted-foreground">
-              <Search className="size-4" />
-              <input
-                className="w-full bg-transparent outline-none placeholder:text-muted-foreground"
-                placeholder="Search 2,400 products"
-              />
-            </label>
-          }
+          searchContent={<SearchField placeholder="Search 2,400 products" />}
         />
 
         <Content className="pb-12">

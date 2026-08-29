@@ -429,6 +429,7 @@ export const docsNavigation = [
       { title: "Sidebar", href: "/docs/components/sidebar" },
       { title: "SafeArea", href: "/docs/components/safe-area" },
       { title: "ScrollNav", href: "/docs/components/scroll-nav" },
+      { title: "SearchField", href: "/docs/components/search-field" },
     ],
   },
   {

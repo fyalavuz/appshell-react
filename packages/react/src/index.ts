@@ -13,6 +13,7 @@ export { NavGroup } from "./NavGroup";
 export { NavItem } from "./NavItem";
 export { HeaderNav, HeaderNavItem } from "./HeaderNav";
 export { ScrollNav, ScrollNavItem } from "./ScrollNav";
+export { SearchField } from "./SearchField";
 export { cn } from "./cn";
 
 export type {
@@ -43,6 +44,8 @@ export type {
   HeaderNavItemProps,
   ScrollNavProps,
   ScrollNavItemProps,
+  SearchFieldVariant,
+  SearchFieldProps,
 } from "./types";
 
 export type { MotionAdapter } from "./motion";

@@ -4,6 +4,7 @@ import type {
   FooterPosition,
   HeaderBehavior,
   HeaderTheme,
+  SidebarBreakpoint,
 } from "appshell-react";
 
 export interface PlaygroundConfig {
@@ -13,6 +14,10 @@ export interface PlaygroundConfig {
   showNav: boolean;
   showContext: boolean;
   showSearch: boolean;
+  searchVariant: "pill" | "full";
+  sidebar: "none" | "overlay" | "docked";
+  sidebarCollapsible: boolean;
+  sidebarBreakpoint: SidebarBreakpoint;
   footer: "none" | "tab-bar" | "floating" | "mini";
   footerBehavior: FooterBehavior;
   footerPosition: FooterPosition;
@@ -26,11 +31,17 @@ export const defaultConfig: PlaygroundConfig = {
   showNav: false,
   showContext: true,
   showSearch: true,
+  searchVariant: "pill",
+  sidebar: "none",
+  sidebarCollapsible: true,
+  sidebarBreakpoint: "md",
   footer: "tab-bar",
   footerBehavior: "auto-hide",
   footerPosition: "center",
   safeArea: true,
 };
+
+export const sidebarBreakpoints: SidebarBreakpoint[] = ["sm", "md", "lg", "none"];
 
 export const headerBehaviors: HeaderBehavior[] = [
   "static",
@@ -52,6 +63,8 @@ export const animationSpeeds: AnimationSpeed[] = ["slow", "normal", "fast"];
 /** Generate the code for the current configuration. */
 export function generateCode(config: PlaygroundConfig): string {
   const imports = ["AppShell", "Header", "Content"];
+  if (config.showSearch) imports.push("SearchField");
+  if (config.sidebar !== "none") imports.push("Sidebar", "NavGroup", "NavItem");
   if (config.footer === "tab-bar") imports.push("Footer", "FooterItem");
   else if (config.footer !== "none") imports.push("Footer");
   if (config.showNav) imports.push("HeaderNav", "HeaderNavItem");
@@ -63,18 +76,27 @@ export function generateCode(config: PlaygroundConfig): string {
     headerProps.push(`className={yourOwnStyles /* theme 'none' ships zero styles */}`);
   if (config.speed !== "normal") headerProps.push(`speed="${config.speed}"`);
 
+  const hasSidebar = config.sidebar !== "none";
+
   const lines: string[] = [];
   lines.push(
     `import { ${imports.join(", ")} } from "appshell-react";`,
     `import { framerMotionAdapter } from "appshell-react/motion-framer";`,
     ``,
-    `export default function App() {`,
+    `export default function App() {`
+  );
+  if (hasSidebar) {
+    lines.push(`  const [open, setOpen] = useState(false);`, ``);
+  }
+  lines.push(
     `  return (`,
     `    <MotionProvider adapter={framerMotionAdapter}>`,
     `      <AppShell${config.safeArea ? " safeArea" : ""}>`,
     `        <Header`,
     ...headerProps.map((p) => `          ${p}`),
-    `          logo={<span className="font-bold">Fieldnotes</span>}`
+    hasSidebar
+      ? `          logo={<MenuButton onOpen={() => setOpen(true)} />}`
+      : `          logo={<span className="font-bold">Fieldnotes</span>}`
   );
 
   if (config.showNav) {
@@ -95,9 +117,46 @@ export function generateCode(config: PlaygroundConfig): string {
     );
   }
   if (config.showSearch) {
-    lines.push(`          searchContent={<SearchField />}`);
+    lines.push(
+      config.searchVariant === "full"
+        ? `          searchContent={<SearchField variant="full" placeholder="Search notes" />}`
+        : `          searchContent={<SearchField placeholder="Search notes" />}`
+    );
   }
-  lines.push(`        />`, ``, `        <Content>{/* … */}</Content>`);
+  lines.push(`        />`);
+
+  if (config.sidebar === "overlay") {
+    lines.push(
+      ``,
+      `        <Sidebar open={open} onClose={() => setOpen(false)}>`,
+      `          <NavGroup title="Browse" defaultOpen>`,
+      `            <NavItem label="Today" active />`,
+      `            <NavItem label="Library" />`,
+      `            <NavItem label="People" />`,
+      `          </NavGroup>`,
+      `        </Sidebar>`
+    );
+  } else if (config.sidebar === "docked") {
+    lines.push(
+      ``,
+      `        {/* Docked panel; below the breakpoint it opens as a drawer */}`,
+      `        <Sidebar`,
+      `          variant="docked"`,
+      `          breakpoint="${config.sidebarBreakpoint}"`,
+      ...(config.sidebarCollapsible ? [`          collapsible`] : []),
+      `          open={open}`,
+      `          onClose={() => setOpen(false)}`,
+      `        >`,
+      `          <NavGroup title="Browse" defaultOpen>`,
+      `            <NavItem label="Today" active />`,
+      `            <NavItem label="Library" />`,
+      `            <NavItem label="People" />`,
+      `          </NavGroup>`,
+      `        </Sidebar>`
+    );
+  }
+
+  lines.push(``, `        <Content>{/* … */}</Content>`);
 
   if (config.footer === "tab-bar") {
     lines.push(

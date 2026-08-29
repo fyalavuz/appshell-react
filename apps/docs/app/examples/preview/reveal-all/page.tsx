@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import {
+  SearchField,
   AppShell,
   Content,
   Header,
@@ -14,7 +15,6 @@ import {
   Heart,
   MessageCircle,
   Repeat2,
-  Search,
 } from "lucide-react";
 import { Avatar, DemoHint, MediaBlock } from "@/components/demos/demo-ui";
 
@@ -202,15 +202,7 @@ export default function RevealAllPage() {
           }
           title="Home"
           subtitle="Catch up on today"
-          searchContent={
-            <label className="mx-4 mb-3 flex items-center gap-2 rounded-full bg-muted px-3.5 py-2 text-sm text-muted-foreground">
-              <Search className="size-4" />
-              <input
-                className="w-full bg-transparent outline-none placeholder:text-muted-foreground"
-                placeholder="Search Pulse"
-              />
-            </label>
-          }
+          searchContent={<SearchField placeholder="Search Pulse" />}
         />
 
         <Content className="pb-16">

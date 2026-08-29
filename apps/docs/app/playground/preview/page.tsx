@@ -10,17 +10,23 @@ import {
   HeaderNav,
   HeaderNavItem,
   MotionProvider,
+  NavGroup,
+  NavItem,
+  SearchField,
+  Sidebar,
 } from "appshell-react";
 import { framerMotionAdapter } from "appshell-react/motion-framer";
 import {
+  Archive,
   Bell,
   Bookmark,
   Compass,
   Home,
   Leaf,
+  Menu,
   Plus,
-  Search,
   User,
+  Users,
 } from "lucide-react";
 import { Avatar, MediaBlock } from "@/components/demos/demo-ui";
 import { defaultConfig, type PlaygroundConfig } from "../config";
@@ -76,9 +82,34 @@ const notes = [
   },
 ];
 
+// Hamburger visibility must match the docked sidebar's breakpoint.
+const menuGate: Record<string, string> = {
+  sm: "sm:hidden",
+  md: "md:hidden",
+  lg: "lg:hidden",
+  none: "hidden",
+};
+
+function FieldnotesNav() {
+  return (
+    <div className="p-2">
+      <NavGroup title="Browse" defaultOpen>
+        <NavItem icon={<Home className="size-4" />} label="Today" active />
+        <NavItem icon={<Compass className="size-4" />} label="Library" />
+        <NavItem icon={<Users className="size-4" />} label="People" />
+      </NavGroup>
+      <NavGroup title="Collections" defaultOpen>
+        <NavItem icon={<Bookmark className="size-4" />} label="Saved" />
+        <NavItem icon={<Archive className="size-4" />} label="Archive" />
+      </NavGroup>
+    </div>
+  );
+}
+
 export default function PlaygroundPreviewPage() {
   const [config, setConfig] = useState<PlaygroundConfig>(defaultConfig);
   const [activeTab, setActiveTab] = useState("home");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     const onMessage = (event: MessageEvent) => {
@@ -105,6 +136,10 @@ export default function PlaygroundPreviewPage() {
           ? "pb-16"
           : "pb-8";
 
+  const showMenuButton =
+    config.sidebar === "overlay" ||
+    (config.sidebar === "docked" && config.sidebarBreakpoint !== "none");
+
   return (
     <MotionProvider adapter={framerMotionAdapter}>
       <AppShell safeArea={config.safeArea} key={config.safeArea ? "sa" : "no-sa"}>
@@ -119,9 +154,25 @@ export default function PlaygroundPreviewPage() {
               : undefined
           }
           logo={
-            <span className="flex items-center gap-2 font-bold tracking-tight">
-              <Leaf className="size-5" />
-              Fieldnotes
+            <span className="flex items-center gap-1.5">
+              {showMenuButton && (
+                <button
+                  type="button"
+                  aria-label="Open menu"
+                  onClick={() => setSidebarOpen(true)}
+                  className={
+                    config.sidebar === "docked"
+                      ? `-ml-1.5 rounded-md p-1.5 opacity-70 transition-opacity hover:opacity-100 ${menuGate[config.sidebarBreakpoint]}`
+                      : "-ml-1.5 rounded-md p-1.5 opacity-70 transition-opacity hover:opacity-100"
+                  }
+                >
+                  <Menu className="size-5" />
+                </button>
+              )}
+              <span className="flex items-center gap-2 font-bold tracking-tight">
+                <Leaf className="size-5" />
+                Fieldnotes
+              </span>
             </span>
           }
           actions={
@@ -148,16 +199,31 @@ export default function PlaygroundPreviewPage() {
           }
           searchContent={
             config.showSearch ? (
-              <label className="mx-4 mb-3 flex items-center gap-2 rounded-full bg-muted px-3.5 py-2 text-sm text-muted-foreground">
-                <Search className="size-4" />
-                <input
-                  className="w-full bg-transparent outline-none placeholder:text-muted-foreground"
-                  placeholder="Search notes"
-                />
-              </label>
+              <SearchField
+                variant={config.searchVariant}
+                placeholder="Search notes"
+              />
             ) : undefined
           }
         />
+
+        {config.sidebar === "overlay" && (
+          <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)}>
+            <FieldnotesNav />
+          </Sidebar>
+        )}
+
+        {config.sidebar === "docked" && (
+          <Sidebar
+            variant="docked"
+            breakpoint={config.sidebarBreakpoint}
+            collapsible={config.sidebarCollapsible}
+            open={sidebarOpen}
+            onClose={() => setSidebarOpen(false)}
+          >
+            <FieldnotesNav />
+          </Sidebar>
+        )}
 
         <Content className={contentPadding}>
           {notes.map((note) => (

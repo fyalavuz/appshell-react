@@ -401,6 +401,58 @@ export const safeAreaApi: ApiDef = {
   ],
 };
 
+export const searchFieldApi: ApiDef = {
+  component: "SearchField",
+  description:
+    "Ready-made search input for the Header's search row (usable anywhere). Adapts its surface to the active header theme.",
+  props: [
+    {
+      name: "variant",
+      type: '"pill" | "full"',
+      default: '"pill"',
+      description:
+        '"pill" is the rounded inset field; "full" spans the row edge to edge as a flat bar.',
+    },
+    {
+      name: "placeholder",
+      type: "string",
+      default: '"Search"',
+      description: "Placeholder and default accessible name.",
+    },
+    { name: "value", type: "string", description: "Controlled value." },
+    {
+      name: "defaultValue",
+      type: "string",
+      description: "Uncontrolled initial value.",
+    },
+    {
+      name: "onChange",
+      type: "(value: string) => void",
+      description: "Fires on every keystroke with the new value.",
+    },
+    {
+      name: "onSubmit",
+      type: "(value: string) => void",
+      description: "Fires with the current value when Enter is pressed.",
+    },
+    {
+      name: "className",
+      type: "string",
+      description: "Extra classes for the field surface.",
+    },
+    {
+      name: "inputClassName",
+      type: "string",
+      description: "Extra classes for the inner input element.",
+    },
+    {
+      name: "aria-label",
+      type: "string",
+      description: "Accessible name override (defaults to the placeholder).",
+    },
+  ],
+};
+
 export const scrollNavApi: ApiDef = {
   component: "ScrollNavItem",
   description: "One pill inside a horizontally scrollable <ScrollNav>.",

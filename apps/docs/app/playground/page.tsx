@@ -3,7 +3,10 @@
 import * as React from "react";
 import { Check, Copy, RotateCcw } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
-import { PhoneMockup } from "@/components/docs/phone-mockup";
+import {
+  DevicePreview,
+  type PreviewDevice,
+} from "@/components/docs/device-preview";
 import { withBasePath } from "@/lib/base-path";
 import { cn } from "@/lib/utils";
 import {
@@ -12,6 +15,7 @@ import {
   generateCode,
   headerBehaviors,
   headerThemes,
+  sidebarBreakpoints,
   type PlaygroundConfig,
 } from "./config";
 
@@ -93,6 +97,7 @@ function Toggle({
 
 export default function PlaygroundPage() {
   const [config, setConfig] = React.useState<PlaygroundConfig>(defaultConfig);
+  const [device, setDevice] = React.useState<PreviewDevice>("mobile");
   const [copied, setCopied] = React.useState(false);
   const iframeEl = React.useRef<HTMLIFrameElement | null>(null);
 
@@ -100,6 +105,13 @@ export default function PlaygroundPage() {
     key: K,
     value: PlaygroundConfig[K]
   ) => setConfig((c) => ({ ...c, [key]: value }));
+
+  const setSidebar = (value: PlaygroundConfig["sidebar"]) => {
+    set("sidebar", value);
+    // A docked panel is invisible in the phone frame (it lives above the
+    // breakpoint) — jump to the desktop frame so the choice is seen.
+    if (value === "docked" && device === "mobile") setDevice("desktop");
+  };
 
   const send = React.useCallback((cfg: PlaygroundConfig) => {
     iframeEl.current?.contentWindow?.postMessage(
@@ -146,13 +158,14 @@ export default function PlaygroundPage() {
         <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 md:py-14">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div className="max-w-xl">
-              <p className="eyebrow text-brand">Every variant, one phone</p>
+              <p className="eyebrow text-brand">Every variant, every device</p>
               <h1 className="mt-3 text-4xl font-bold tracking-tight">
                 Playground
               </h1>
               <p className="mt-3 text-lg leading-relaxed text-muted-foreground">
-                Scroll the phone while you switch props. The code below always
-                matches what you&rsquo;re looking at.
+                Switch props and scroll the preview — on a phone, tablet, or
+                desktop frame. The code below always matches what you&rsquo;re
+                looking at.
               </p>
             </div>
             <button
@@ -166,10 +179,15 @@ export default function PlaygroundPage() {
           </div>
 
           <div className="mt-10 grid gap-10 lg:grid-cols-[auto_1fr] lg:gap-14">
-            {/* Phone */}
-            <div className="mx-auto lg:sticky lg:top-24 lg:mx-0 lg:self-start">
-              <PhoneMockup
+            {/* Preview — mobile / tablet / desktop frames */}
+            <div className="mx-auto w-full max-w-[660px] lg:sticky lg:top-20 lg:mx-0 lg:w-[420px] lg:self-start xl:w-[620px]">
+              <DevicePreview
                 src={withBasePath("/playground/preview/")}
+                title="Playground"
+                device={device}
+                onDeviceChange={setDevice}
+                tabletMaxWidth={400}
+                desktopMaxWidth={620}
                 onIframeLoad={(el) => {
                   iframeEl.current = el;
                   send(config);
@@ -241,6 +259,71 @@ export default function PlaygroundPage() {
                     onChange={(v) => set("safeArea", v)}
                   />
                 </div>
+              </div>
+
+              {config.showSearch && (
+                <ControlGroup label="Search · style">
+                  {(["pill", "full"] as const).map((v) => (
+                    <Chip
+                      key={v}
+                      active={config.searchVariant === v}
+                      onClick={() => set("searchVariant", v)}
+                    >
+                      {v === "pill" ? "pill (rounded)" : "full-width"}
+                    </Chip>
+                  ))}
+                </ControlGroup>
+              )}
+
+              <div>
+                <ControlGroup label="Sidebar">
+                  {(["none", "overlay", "docked"] as const).map((s) => (
+                    <Chip
+                      key={s}
+                      active={config.sidebar === s}
+                      onClick={() => setSidebar(s)}
+                    >
+                      {s === "overlay" ? "drawer" : s}
+                    </Chip>
+                  ))}
+                </ControlGroup>
+                {config.sidebar === "docked" && (
+                  <div className="mt-4 space-y-4">
+                    <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+                      <Toggle
+                        label="Collapsible rail"
+                        checked={config.sidebarCollapsible}
+                        onChange={(v) => set("sidebarCollapsible", v)}
+                      />
+                    </div>
+                    <ControlGroup label="Sidebar · breakpoint">
+                      {sidebarBreakpoints.map((bp) => (
+                        <Chip
+                          key={bp}
+                          active={config.sidebarBreakpoint === bp}
+                          onClick={() => set("sidebarBreakpoint", bp)}
+                        >
+                          {bp}
+                        </Chip>
+                      ))}
+                    </ControlGroup>
+                    <p className="text-xs leading-relaxed text-muted-foreground">
+                      Docked panels live above the breakpoint — watch them in
+                      the tablet or desktop frame. Below it, the menu button in
+                      the header opens the same nav as a drawer. Pick{" "}
+                      <code className="rounded bg-muted px-1 font-mono text-[11px]">
+                        none
+                      </code>{" "}
+                      to keep it docked even on the phone.
+                    </p>
+                  </div>
+                )}
+                {config.sidebar === "overlay" && (
+                  <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+                    Tap the menu button in the preview&rsquo;s header to open
+                    the drawer.
+                  </p>
+                )}
               </div>
 
               <ControlGroup label="Footer · variant">

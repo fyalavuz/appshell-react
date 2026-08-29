@@ -45,8 +45,9 @@ export default function ExamplesPage() {
                 <ArrowUpRight className="size-4 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand" />
               </h2>
               <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                Mix all 10 header behaviors, 4 themes, 3 speeds, and 3 footer
-                variants live on one phone — then copy the exact code.
+                Mix all 10 header behaviors, 4 themes, 3 speeds, 3 footer
+                variants, both sidebar modes, and both search styles — on a
+                phone, tablet, or desktop frame — then copy the exact code.
               </p>
             </div>
             <div className="hidden shrink-0 items-center gap-1.5 md:flex" aria-hidden>

@@ -5,7 +5,8 @@ import { ArrowUpRight, Monitor, Smartphone, Tablet } from "lucide-react";
 import { PhoneMockup } from "./phone-mockup";
 import { cn } from "@/lib/utils";
 
-type Device = "mobile" | "tablet" | "desktop";
+export type PreviewDevice = "mobile" | "tablet" | "desktop";
+type Device = PreviewDevice;
 
 // iPad Mini portrait logical resolution
 const TABLET_W = 768;
@@ -43,6 +44,7 @@ function ScaledFrame({
   saBottom = 0,
   frameClassName,
   chrome,
+  onIframeLoad,
 }: {
   src: string;
   title: string;
@@ -53,6 +55,7 @@ function ScaledFrame({
   saBottom?: number;
   frameClassName?: string;
   chrome?: React.ReactNode;
+  onIframeLoad?: (iframe: HTMLIFrameElement) => void;
 }) {
   const { ref, width } = useContainerWidth<HTMLDivElement>();
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
@@ -62,14 +65,16 @@ function ScaledFrame({
   const injectInsets = React.useCallback(() => {
     try {
       const doc = iframeRef.current?.contentDocument;
-      if (!doc) return;
-      const style = doc.createElement("style");
-      style.textContent = `:root{--sa-top:${saTop}px;--sa-bottom:${saBottom}px;--sa-left:0px;--sa-right:0px}`;
-      doc.head.appendChild(style);
+      if (doc) {
+        const style = doc.createElement("style");
+        style.textContent = `:root{--sa-top:${saTop}px;--sa-bottom:${saBottom}px;--sa-left:0px;--sa-right:0px}`;
+        doc.head.appendChild(style);
+      }
     } catch {
       // cross-origin — ignored
     }
-  }, [saTop, saBottom]);
+    if (iframeRef.current) onIframeLoad?.(iframeRef.current);
+  }, [saTop, saBottom, onIframeLoad]);
 
   return (
     <div ref={ref} className="w-full">
@@ -108,13 +113,39 @@ const devices: { id: Device; label: string; icon: typeof Smartphone }[] = [
   { id: "desktop", label: "Desktop", icon: Monitor },
 ];
 
+interface DevicePreviewProps {
+  src: string;
+  title: string;
+  /** Controlled device selection (uncontrolled when omitted). */
+  device?: Device;
+  onDeviceChange?: (device: Device) => void;
+  /** Called whenever the active frame's iframe finishes loading. */
+  onIframeLoad?: (iframe: HTMLIFrameElement) => void;
+  /** Frame size caps — smaller values suit side-column layouts. */
+  tabletMaxWidth?: number;
+  desktopMaxWidth?: number;
+}
+
 /**
  * Example preview with a mobile / tablet / desktop switcher.
  * Mobile renders the phone mockup; tablet and desktop render the demo at
  * real logical resolutions, scaled to fit.
  */
-export function DevicePreview({ src, title }: { src: string; title: string }) {
-  const [device, setDevice] = React.useState<Device>("mobile");
+export function DevicePreview({
+  src,
+  title,
+  device: controlledDevice,
+  onDeviceChange,
+  onIframeLoad,
+  tabletMaxWidth = 460,
+  desktopMaxWidth = 1024,
+}: DevicePreviewProps) {
+  const [internalDevice, setInternalDevice] = React.useState<Device>("mobile");
+  const device = controlledDevice ?? internalDevice;
+  const setDevice = (d: Device) => {
+    if (controlledDevice === undefined) setInternalDevice(d);
+    onDeviceChange?.(d);
+  };
 
   return (
     <div>
@@ -152,7 +183,7 @@ export function DevicePreview({ src, title }: { src: string; title: string }) {
       <div className="mt-6">
         {device === "mobile" && (
           <div className="flex justify-center">
-            <PhoneMockup src={src} />
+            <PhoneMockup src={src} onIframeLoad={onIframeLoad} />
           </div>
         )}
 
@@ -162,10 +193,11 @@ export function DevicePreview({ src, title }: { src: string; title: string }) {
             title={`${title} — tablet preview`}
             logicalWidth={TABLET_W}
             logicalHeight={TABLET_H}
-            maxWidth={460}
+            maxWidth={tabletMaxWidth}
             saTop={TABLET_SA_TOP}
             saBottom={TABLET_SA_BOTTOM}
             frameClassName="rounded-[1.75rem] border-[10px] border-zinc-800 bg-black shadow-2xl shadow-black/30 dark:border-zinc-700"
+            onIframeLoad={onIframeLoad}
           />
         )}
 
@@ -175,7 +207,8 @@ export function DevicePreview({ src, title }: { src: string; title: string }) {
             title={`${title} — desktop preview`}
             logicalWidth={DESKTOP_W}
             logicalHeight={DESKTOP_H}
-            maxWidth={1024}
+            maxWidth={desktopMaxWidth}
+            onIframeLoad={onIframeLoad}
             frameClassName="rounded-xl border bg-background shadow-xl shadow-black/10"
             chrome={
               <div className="flex items-center gap-1.5 border-b bg-muted/40 px-3 py-2">

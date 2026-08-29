@@ -1,6 +1,6 @@
-export const snippet = `import { AppShell, Header, Content, MotionProvider } from "appshell-react";
+export const snippet = `import { AppShell, Header, Content, SearchField, MotionProvider } from "appshell-react";
 import { framerMotionAdapter } from "appshell-react/motion-framer";
-import { Bell, Search } from "lucide-react";
+import { Bell } from "lucide-react";
 
 export default function App() {
   return (
@@ -12,15 +12,10 @@ export default function App() {
           actions={<button aria-label="Notifications"><Bell /></button>}
           title="Home"
           subtitle="Catch up on today"
-          searchContent={
-            <label className="mx-4 mb-3 flex items-center gap-2 rounded-full bg-muted px-3.5 py-2">
-              <Search className="size-4" />
-              <input placeholder="Search Pulse" />
-            </label>
-          }
+          searchContent={<SearchField placeholder="Search Pulse" />}
         />
         <Content>
-          {/* Scroll down: all rows hide. Scroll up: all rows reveal. */}
+          {/* Scroll down: title + search rows hide. Scroll up: all rows reveal. */}
         </Content>
       </AppShell>
     </MotionProvider>

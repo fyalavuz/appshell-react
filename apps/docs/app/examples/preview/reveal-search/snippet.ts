@@ -1,6 +1,6 @@
-export const snippet = `import { AppShell, Header, Content, MotionProvider } from "appshell-react";
+export const snippet = `import { AppShell, Header, Content, SearchField, MotionProvider } from "appshell-react";
 import { framerMotionAdapter } from "appshell-react/motion-framer";
-import { Leaf, Search } from "lucide-react";
+import { Leaf } from "lucide-react";
 
 export default function App() {
   return (
@@ -16,12 +16,7 @@ export default function App() {
           }
           title="Fresh today"
           subtitle="Delivery before 6 pm"
-          searchContent={
-            <label className="mx-4 mb-3 flex items-center gap-2 rounded-full bg-muted px-3.5 py-2">
-              <Search className="size-4" />
-              <input placeholder="Search 2,400 products" />
-            </label>
-          }
+          searchContent={<SearchField placeholder="Search 2,400 products" />}
         />
         <Content>
           {/* Scroll down: the header scrolls away. Scroll up: the
