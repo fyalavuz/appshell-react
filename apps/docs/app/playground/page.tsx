@@ -284,6 +284,21 @@ export default function PlaygroundPage() {
                       </Chip>
                     ))}
                   </ControlGroup>
+                  {config.showContext && (
+                    <div className="mt-3">
+                      <ControlGroup label="Header · row order">
+                        {([false, true] as const).map((v) => (
+                          <Chip
+                            key={String(v)}
+                            active={config.searchFirst === v}
+                            onClick={() => set("searchFirst", v)}
+                          >
+                            {v ? "search, then title" : "title, then search"}
+                          </Chip>
+                        ))}
+                      </ControlGroup>
+                    </div>
+                  )}
                   <div className="mt-3">
                     <Toggle
                       label="Opens the search modal"

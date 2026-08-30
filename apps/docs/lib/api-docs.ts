@@ -102,6 +102,13 @@ export const headerApi: ApiDef = {
       description: "Search row content — an input, filters, or a <ScrollNav>.",
     },
     {
+      name: "rowOrder",
+      type: '("context" | "search")[]',
+      default: '["context", "search"]',
+      description:
+        "Order of the two lower rows. Flip it to put the search row directly under the nav row, above the title block. Reveal thresholds follow whatever order you set.",
+    },
+    {
       name: "mobileMenu",
       type: "ReactNode",
       description:
@@ -435,7 +442,7 @@ export const searchFieldApi: ApiDef = {
       type: '"pill" | "full"',
       default: '"pill"',
       description:
-        '"pill" is the rounded inset field; "full" spans the row edge to edge as a flat bar.',
+        '"pill" is the rounded inset field; "full" spans the row edge to edge with no surface of its own, taking the background it sits on so the search row reads as part of the header.',
     },
     {
       name: "placeholder",

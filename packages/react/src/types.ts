@@ -34,6 +34,9 @@ export interface AppShellContextValue {
   setFooterVisible: (visible: boolean) => void;
 }
 
+/** The two rows below the nav row, in the order they stack. */
+export type HeaderRow = "context" | "search";
+
 export interface HeaderProps {
   logo?: ReactNode;
   actions?: ReactNode;
@@ -41,6 +44,12 @@ export interface HeaderProps {
   title?: ReactNode;
   subtitle?: ReactNode;
   searchContent?: ReactNode;
+  /**
+   * Order of the two lower rows. Default ["context", "search"] — the title
+   * block above the search row. Flip it to put search directly under the
+   * nav row. Reveal thresholds follow whatever order you set.
+   */
+  rowOrder?: HeaderRow[];
   theme?: HeaderTheme;
   behavior?: HeaderBehavior;
   speed?: AnimationSpeed;

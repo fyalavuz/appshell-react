@@ -1,4 +1,4 @@
-export const snippet = `import { AppShell, Header, Content, Footer, FooterItem, MotionProvider } from "appshell-react";
+export const snippet = `import { AppShell, Header, Content, Footer, FooterItem, MotionProvider, SearchField } from "appshell-react";
 import { framerMotionAdapter } from "appshell-react/motion-framer";
 import { House, Search, CirclePlus, Bell, User } from "lucide-react";
 
@@ -13,6 +13,8 @@ export default function App() {
           behavior="reveal-all"
           logo={<span className="font-bold">Pulse</span>}
           title="Home"
+          subtitle="Catch up on today"
+          searchContent={<SearchField variant="full" placeholder="Search Pulse" />}
         />
 
         <Content>{/* feed */}</Content>

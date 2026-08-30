@@ -1,8 +1,10 @@
 "use client";
 
 import {
+  Fragment,
   memo,
   useEffect,
+  useMemo,
   useRef,
   useState,
   useCallback,
@@ -11,7 +13,7 @@ import { cn } from "./cn";
 import { useLabel } from "./I18nContext";
 import { useMotion, premiumSpring } from "./motion";
 import { useScrollDirection } from "./hooks/use-scroll-direction";
-import type { HeaderProps, AnimationSpeed } from "./types";
+import type { HeaderProps, HeaderRow, AnimationSpeed } from "./types";
 import { HeaderProvider } from "./HeaderContext";
 
 const themeStyles = {
@@ -58,6 +60,7 @@ export const Header = memo(function Header({
   title,
   subtitle,
   searchContent,
+  rowOrder = ["context", "search"],
   theme = "light",
   behavior = "fixed",
   speed = "normal",
@@ -73,6 +76,12 @@ export const Header = memo(function Header({
   const duration = speedMap[speed];
 
   const ghostRef = useRef<HTMLElement>(null);
+  const rowOrderKey = rowOrder.join(",");
+  const rows = useMemo(
+    () => rowOrderKey.split(",") as HeaderRow[],
+    [rowOrderKey]
+  );
+
   const [threshold, setThreshold] = useState(0);
   const menuToggleLabel = useLabel(mobileOpen ? "closeMenu" : "openMenu");
 
@@ -97,17 +106,29 @@ export const Header = memo(function Header({
     if (!el || behavior === "static" || behavior === "fixed" || behavior === "sticky") return;
 
     const measure = () => {
-      const navEl = el.querySelector("[data-header-nav]");
-      const ctxEl = el.querySelector("[data-header-context]");
-      const navH = navEl ? (navEl as HTMLElement).offsetHeight : 0;
-      const ctxH = ctxEl ? (ctxEl as HTMLElement).offsetHeight : 0;
+      const heightOf = (selector: string) => {
+        const node = el.querySelector(selector);
+        return node ? (node as HTMLElement).offsetHeight : 0;
+      };
+      const navH = heightOf("[data-header-nav]");
+      const rowHeight: Record<HeaderRow, number> = {
+        context: heightOf("[data-header-context]"),
+        search: heightOf("[data-header-search]"),
+      };
+
+      // A row starts hiding once everything stacked above it has scrolled
+      // past — which depends on the order the rows are in.
+      const spaceAbove = (row: HeaderRow) =>
+        rows
+          .slice(0, rows.indexOf(row))
+          .reduce((total, above) => total + rowHeight[above], navH);
 
       if (behavior === "reveal-all" || behavior === "reveal-nav") {
         setThreshold(0);
       } else if (behavior === "reveal-context" || behavior === "reveal-nav-context") {
-        setThreshold(navH);
+        setThreshold(spaceAbove("context"));
       } else if (behavior === "reveal-search" || behavior === "reveal-nav-search") {
-        setThreshold(navH + ctxH);
+        setThreshold(spaceAbove("search"));
       } else if (behavior === "reveal-context-search") {
         setThreshold(navH);
       }
@@ -117,7 +138,7 @@ export const Header = memo(function Header({
     const ro = new ResizeObserver(measure);
     ro.observe(el);
     return () => ro.disconnect();
-  }, [behavior]);
+  }, [behavior, rows]);
 
   const [isPastThreshold, setIsPastThreshold] = useState(false);
 
@@ -250,6 +271,16 @@ export const Header = memo(function Header({
       </motion.div>
     ) : null;
 
+  const renderLowerRows = (include?: (row: HeaderRow) => boolean) =>
+    rows.map((row) => {
+      if (include && !include(row)) return null;
+      return (
+        <Fragment key={row}>
+          {row === "context" ? renderContextRow() : renderSearchRow()}
+        </Fragment>
+      );
+    });
+
   const renderMobileMenuPanel = () => (
     <AnimatePresence>
       {mobileMenu && mobileOpen && (
@@ -272,8 +303,7 @@ export const Header = memo(function Header({
   const renderContent = () => (
     <HeaderProvider value={{ theme }}>
       {renderNavRow(behavior !== "static" && behavior !== "fixed" && behavior !== "sticky")}
-      {renderContextRow()}
-      {renderSearchRow()}
+      {renderLowerRows()}
       {renderMobileMenuPanel()}
     </HeaderProvider>
   );
@@ -295,8 +325,7 @@ export const Header = memo(function Header({
       >
         <HeaderProvider value={{ theme }}>
           {renderNavRow()}
-          {renderContextRow()}
-          {renderSearchRow()}
+          {renderLowerRows()}
           {renderMobileMenuPanel()}
         </HeaderProvider>
       </motion.header>
@@ -337,8 +366,7 @@ export const Header = memo(function Header({
             >
               <HeaderProvider value={{ theme }}>
                 {shouldShowInOverlay("nav") && renderNavRow()}
-                {shouldShowInOverlay("context") && renderContextRow()}
-                {shouldShowInOverlay("search") && renderSearchRow()}
+                {renderLowerRows(shouldShowInOverlay)}
               </HeaderProvider>
             </motion.div>
           )}

@@ -15,6 +15,7 @@ export interface PlaygroundConfig {
   showContext: boolean;
   showSearch: boolean;
   searchVariant: "pill" | "full";
+  searchFirst: boolean;
   searchModal: boolean;
   userMenu: boolean;
   notifications: boolean;
@@ -35,6 +36,7 @@ export const defaultConfig: PlaygroundConfig = {
   showContext: true,
   showSearch: true,
   searchVariant: "pill",
+  searchFirst: false,
   searchModal: false,
   userMenu: false,
   notifications: false,
@@ -159,6 +161,9 @@ export function generateCode(config: PlaygroundConfig): string {
       `          title="Today"`,
       `          subtitle="Six new notes from your circle"`
     );
+  }
+  if (config.searchFirst && config.showContext && config.showSearch) {
+    lines.push(`          rowOrder={["search", "context"]}`);
   }
   if (config.showSearch) {
     const variantAttr =

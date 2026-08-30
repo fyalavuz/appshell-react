@@ -252,6 +252,9 @@ export default function PlaygroundPreviewPage() {
               </HeaderNav>
             ) : undefined
           }
+          rowOrder={
+            config.searchFirst ? ["search", "context"] : ["context", "search"]
+          }
           title={config.showContext ? "Today" : undefined}
           subtitle={
             config.showContext ? "Six new notes from your circle" : undefined

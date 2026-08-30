@@ -38,7 +38,9 @@ const SearchIcon = () => (
  * A ready-made search input for the Header's search row (usable anywhere).
  *
  * - variant="pill": rounded, inset field — the classic mobile search bar.
- * - variant="full": edge-to-edge flat field spanning the entire row.
+ * - variant="full": edge-to-edge field spanning the entire row, with no
+ *   surface of its own — it takes the background it sits on, so a search
+ *   row reads as part of the header rather than a box inside it.
  *
  * Adapts its surface colors to the active Header theme via useHeaderTheme().
  */
@@ -94,9 +96,8 @@ export const SearchField = memo(function SearchField({
       <label
         data-search-field="full"
         className={cn(
-          "flex w-full cursor-text items-center gap-2.5 px-4 py-2.5",
+          "flex w-full cursor-text items-center gap-2.5 bg-transparent px-4 py-2.5",
           "transition-colors focus-within:ring-2 focus-within:ring-inset focus-within:ring-ring",
-          onDark ? "bg-white/10" : "border-y border-border/60 bg-muted/60",
           className
         )}
       >
