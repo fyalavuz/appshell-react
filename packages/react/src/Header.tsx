@@ -8,6 +8,7 @@ import {
   useCallback,
 } from "react";
 import { cn } from "./cn";
+import { useLabel } from "./I18nContext";
 import { useMotion, premiumSpring } from "./motion";
 import { useScrollDirection } from "./hooks/use-scroll-direction";
 import type { HeaderProps, AnimationSpeed } from "./types";
@@ -73,6 +74,7 @@ export const Header = memo(function Header({
 
   const ghostRef = useRef<HTMLElement>(null);
   const [threshold, setThreshold] = useState(0);
+  const menuToggleLabel = useLabel(mobileOpen ? "closeMenu" : "openMenu");
 
   // Sync header height to CSS variable for sticky siblings
   useEffect(() => {
@@ -185,7 +187,7 @@ export const Header = memo(function Header({
                 type="button"
                 className="p-1 rounded-md hover:bg-accent/50 md:hidden transition-colors"
                 onClick={toggleMobile}
-                aria-label={mobileOpen ? "Close menu" : "Open menu"}
+                aria-label={menuToggleLabel}
               >
                 {mobileOpen ? closeIcon : menuIcon}
               </button>

@@ -10,6 +10,7 @@ import {
 import { createPortal } from "react-dom";
 import { cn } from "./cn";
 import { useHeaderTheme } from "./HeaderContext";
+import { useDirection, useLabel } from "./I18nContext";
 import { useAnchoredPanel } from "./menu-popover";
 import type { NotificationItemProps, NotificationsMenuProps } from "./types";
 
@@ -45,7 +46,7 @@ export const NotificationsMenu = memo(function NotificationsMenu({
   open: controlledOpen,
   onOpenChange,
   align = "end",
-  title = "Notifications",
+  title,
   action,
   footer,
   emptyState,
@@ -79,11 +80,12 @@ export const NotificationsMenu = memo(function NotificationsMenu({
     }
   };
 
-  const label =
-    ariaLabel ??
-    (unreadCount > 0
-      ? `Notifications (${unreadCount} unread)`
-      : "Notifications");
+  const unreadLabel = useLabel("notificationsUnread", { count: unreadCount });
+  const plainLabel = useLabel("notifications");
+  const panelTitle = title ?? plainLabel;
+  const label = ariaLabel ?? (unreadCount > 0 ? unreadLabel : plainLabel);
+  const overflowLabel = useLabel("badgeOverflow", { max: 99 });
+  const dir = useDirection();
 
   const hasItems = Children.count(children) > 0;
 
@@ -95,7 +97,7 @@ export const NotificationsMenu = memo(function NotificationsMenu({
           aria-hidden
           className="absolute end-0.5 top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-destructive px-1 text-[10px] font-bold text-white"
         >
-          {unreadCount > 99 ? "99+" : unreadCount}
+          {unreadCount > 99 ? overflowLabel : unreadCount}
         </span>
       )}
     </span>
@@ -104,6 +106,7 @@ export const NotificationsMenu = memo(function NotificationsMenu({
   const panel = open && mounted && (
     <div
       ref={panelCallbackRef}
+      dir={dir}
       role="menu"
       aria-label={label}
       onClick={handlePanelClick}
@@ -115,7 +118,7 @@ export const NotificationsMenu = memo(function NotificationsMenu({
       style={{ zIndex }}
     >
       <div className="flex items-center justify-between gap-3 px-4 pb-2 pt-3">
-        <p className="text-sm font-semibold">{title}</p>
+        <p className="text-sm font-semibold">{panelTitle}</p>
         {action}
       </div>
       <div role="none" className="mx-1 h-px bg-border" />

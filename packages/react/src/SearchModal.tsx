@@ -11,6 +11,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import { cn } from "./cn";
+import { useDirection, useLabel } from "./I18nContext";
 import { useFocusTrap } from "./focus-trap";
 import { useOverlayLayer } from "./overlay-stack";
 import { useMotion } from "./motion";
@@ -55,9 +56,9 @@ export function SearchModal({
   defaultQuery = "",
   onQueryChange,
   onSubmit,
-  placeholder = "Search",
+  placeholder,
   children,
-  closeLabel = "Cancel",
+  closeLabel,
   className,
   overlayClassName,
   "aria-label": ariaLabel,
@@ -107,6 +108,9 @@ export function SearchModal({
   // Escape and the scroll lock are the stack's job: opened over a drawer,
   // this modal answers the close request alone and the drawer stays put.
   const { zIndex } = useOverlayLayer({ open, onClose });
+  const placeholderText = useLabel("search", undefined, placeholder);
+  const cancelText = useLabel("cancel", undefined, closeLabel);
+  const dir = useDirection();
 
   if (!mounted) return null;
 
@@ -149,7 +153,8 @@ export function SearchModal({
             key="search-modal-panel"
             role="dialog"
             aria-modal="true"
-            aria-label={ariaLabel ?? placeholder}
+            aria-label={ariaLabel ?? placeholderText}
+            dir={dir}
             data-search-modal
             data-focus-trap-id={trapId}
             initial={{ opacity: 0, y: 12 }}
@@ -180,8 +185,8 @@ export function SearchModal({
                   ref={inputRef}
                   type="search"
                   role="searchbox"
-                  aria-label={ariaLabel ?? placeholder}
-                  placeholder={placeholder}
+                  aria-label={ariaLabel ?? placeholderText}
+                  placeholder={placeholderText}
                   value={query}
                   onChange={handleChange}
                   onKeyDown={handleKeyDown}
@@ -197,7 +202,7 @@ export function SearchModal({
                 onClick={onClose}
                 className="shrink-0 rounded-md px-2 py-1 text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
-                {closeLabel}
+                {cancelText}
               </button>
             </div>
 

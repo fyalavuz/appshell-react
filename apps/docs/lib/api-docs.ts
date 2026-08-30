@@ -1003,3 +1003,36 @@ export const contentHeaderApi: ApiDef = {
     { name: "className", type: "string", description: "Extra classes." },
   ],
 };
+
+export const i18nProviderApi: ApiDef = {
+  component: "I18nProvider",
+  description:
+    "Localizes the strings the library renders on its own and sets the writing direction. Ships no translations and adds no dependency — it is the seam your i18n library plugs into.",
+  props: [
+    {
+      name: "labels",
+      type: "Partial<AppShellLabels>",
+      description:
+        "Overrides for the library's own strings. Any subset; unspecified keys keep their English default. Values interpolate {token} placeholders, e.g. \"Notifications ({count} unread)\".",
+    },
+    {
+      name: "t",
+      type: "(key, defaultValue, vars?) => string",
+      description:
+        "Resolve every key through your own i18n library instead. Receives the English default, so it degrades gracefully before the keys exist in your catalogue. Takes precedence over labels; a component's own prop still wins over both.",
+    },
+    {
+      name: "dir",
+      type: '"ltr" | "rtl"',
+      default: '"ltr"',
+      description:
+        "Writing direction for the shell. Explicit rather than inferred from a locale, and delivered through context — portalled overlays (SearchModal, BottomSheet, menus) cannot inherit dir from the DOM.",
+    },
+    {
+      name: "children",
+      type: "ReactNode",
+      required: true,
+      description: "The app.",
+    },
+  ],
+};

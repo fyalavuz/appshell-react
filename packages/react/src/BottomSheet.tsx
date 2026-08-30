@@ -11,6 +11,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import { cn } from "./cn";
+import { useDirection, useLabel } from "./I18nContext";
 import { useFocusTrap } from "./focus-trap";
 import { useOverlayLayer } from "./overlay-stack";
 import type { BottomSheetProps } from "./types";
@@ -91,6 +92,8 @@ export function BottomSheet({
   // layer; a non-modal one only takes a stacking slot, so it sits above
   // whatever was opened before it and leaves the page alone.
   const { zIndex } = useOverlayLayer({ open, onClose, modal });
+  const sheetLabel = useLabel("sheet", undefined, ariaLabel);
+  const dir = useDirection();
 
   const dragState = useRef<{ startY: number; startOffset: number } | null>(
     null
@@ -158,6 +161,7 @@ export function BottomSheet({
 
   return createPortal(
     <div
+      dir={dir}
       data-bottom-sheet-root
       className={cn("fixed inset-0", !modal && "pointer-events-none")}
       style={{ zIndex }}
@@ -176,7 +180,7 @@ export function BottomSheet({
       <div
         role="dialog"
         aria-modal={modal || undefined}
-        aria-label={ariaLabel ?? "Sheet"}
+        aria-label={sheetLabel}
         data-bottom-sheet
         data-focus-trap-id={trapId}
         style={panelStyle}

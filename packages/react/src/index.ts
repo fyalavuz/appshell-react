@@ -20,6 +20,8 @@ export { Avatar } from "./Avatar";
 export { UserMenu, UserMenuItem } from "./UserMenu";
 export { NotificationsMenu, NotificationItem } from "./NotificationsMenu";
 export { LinkProvider, useLinkComponent } from "./LinkContext";
+export { I18nProvider, useLabel, useDirection } from "./I18nContext";
+export { defaultLabels } from "./labels";
 export { BottomSheet } from "./BottomSheet";
 export { Tabs, Tab } from "./Tabs";
 export { Breadcrumbs, BreadcrumbItem, ContentHeader } from "./ContentHeader";
@@ -72,3 +74,9 @@ export type {
 
 export type { MotionAdapter } from "./motion";
 export type { LinkProviderProps } from "./LinkContext";
+export type { I18nProviderProps, Direction } from "./I18nContext";
+export type {
+  AppShellLabels,
+  AppShellLabelKey,
+  AppShellLabelsInput,
+} from "./labels";

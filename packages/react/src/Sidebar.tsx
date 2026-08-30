@@ -2,6 +2,7 @@
 
 import { memo, useId, useState, type CSSProperties } from "react";
 import { cn } from "./cn";
+import { useLabel } from "./I18nContext";
 import { useFocusTrap } from "./focus-trap";
 import { useOverlayLayer } from "./overlay-stack";
 import { useMotion } from "./motion";
@@ -70,6 +71,8 @@ export const Sidebar = memo(function Sidebar(props: SidebarProps) {
   );
   const collapsed = isDocked ? (props.collapsed ?? internalCollapsed) : false;
   const panelId = useId();
+  const navLabel = useLabel("navigationMenu", undefined, props["aria-label"]);
+  const collapseLabel = useLabel(collapsed ? "expandSidebar" : "collapseSidebar");
 
   // Keep Tab inside the open drawer and hand focus back on close.
   useFocusTrap(open && overlayActive, panelId);
@@ -105,7 +108,7 @@ export const Sidebar = memo(function Sidebar(props: SidebarProps) {
             key="sidebar-panel"
             role="dialog"
             aria-modal="true"
-            aria-label="Navigation menu"
+            aria-label={navLabel}
             data-focus-trap-id={panelId}
             initial={{ x: isLeft ? "-100%" : "100%" }}
             animate={{ x: 0 }}
@@ -217,7 +220,7 @@ export const Sidebar = memo(function Sidebar(props: SidebarProps) {
             onClick={toggleCollapsed}
             aria-expanded={!collapsed}
             aria-controls={panelId}
-            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+            aria-label={collapseLabel}
             className="mt-auto flex h-10 w-full shrink-0 items-center justify-center border-t border-border text-muted-foreground outline-none transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
           >
             <CollapseChevrons

@@ -2,6 +2,7 @@
 
 import { Children, Fragment, memo } from "react";
 import { cn } from "./cn";
+import { useLabel } from "./I18nContext";
 import { useLinkComponent } from "./LinkContext";
 import type {
   BreadcrumbItemProps,
@@ -32,11 +33,13 @@ const Chevron = () => (
 export const Breadcrumbs = memo(function Breadcrumbs({
   className,
   children,
+  "aria-label": ariaLabel,
 }: BreadcrumbsProps) {
   const items = Children.toArray(children);
+  const label = useLabel("breadcrumb", undefined, ariaLabel);
 
   return (
-    <nav aria-label="Breadcrumb" className={cn("min-w-0", className)}>
+    <nav aria-label={label} className={cn("min-w-0", className)}>
       <ol className="flex flex-wrap items-center gap-1.5 text-sm">
         {items.map((item, index) => (
           <Fragment key={index}>

@@ -480,6 +480,7 @@ export const docsNavigation = [
       { title: "Hooks", href: "/docs/hooks" },
       { title: "Motion", href: "/docs/motion" },
       { title: "Routing", href: "/docs/routing" },
+      { title: "Internationalization", href: "/docs/i18n" },
     ],
   },
   {

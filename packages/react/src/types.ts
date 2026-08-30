@@ -94,6 +94,11 @@ export type SidebarBreakpoint = "sm" | "md" | "lg" | "none";
 interface SidebarBaseProps {
   side?: SidebarSide;
   /**
+   * Accessible name of the drawer. Defaults to the `navigationMenu` label,
+   * so an I18nProvider can rename it once for the whole app.
+   */
+  "aria-label"?: string;
+  /**
    * Pinned at the top of the panel, above the scrolling nav — the desktop
    * spot for a SearchField or a workspace switcher, filling the space a
    * docked sidebar usually leaves empty.
@@ -399,6 +404,10 @@ export interface TabProps {
 export interface BreadcrumbsProps {
   className?: string;
   children: ReactNode;
+  /**
+   * Accessible name of the trail. Defaults to the `breadcrumb` label.
+   */
+  "aria-label"?: string;
 }
 
 export interface BreadcrumbItemProps {

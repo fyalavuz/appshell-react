@@ -8,6 +8,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import { cn } from "./cn";
+import { useDirection, useLabel } from "./I18nContext";
 import { Avatar } from "./Avatar";
 import { useHeaderTheme } from "./HeaderContext";
 import { useAnchoredPanel } from "./menu-popover";
@@ -53,6 +54,8 @@ export const UserMenu = memo(function UserMenu({
     onOpenChange?.(next);
   };
 
+  const menuLabel = useLabel("userMenu", undefined, ariaLabel);
+  const dir = useDirection();
   const { mounted, triggerRef, panelCallbackRef, zIndex } = useAnchoredPanel({
     open,
     onClose: () => setOpen(false),
@@ -74,8 +77,9 @@ export const UserMenu = memo(function UserMenu({
   const panel = open && mounted && (
     <div
       ref={panelCallbackRef}
+      dir={dir}
       role="menu"
-      aria-label={ariaLabel ?? "User menu"}
+      aria-label={menuLabel}
       onClick={handlePanelClick}
       className={cn(
         "fixed min-w-56 rounded-xl border border-border bg-popover p-1 text-popover-foreground shadow-lg",
@@ -106,7 +110,7 @@ export const UserMenu = memo(function UserMenu({
         onClick={() => setOpen(!open)}
         aria-haspopup="menu"
         aria-expanded={open}
-        aria-label={ariaLabel ?? "User menu"}
+        aria-label={menuLabel}
         className={cn(
           "flex items-center justify-center rounded-full outline-none transition-shadow",
           "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",

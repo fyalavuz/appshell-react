@@ -13,6 +13,7 @@ import {
   type ReactNode,
 } from "react";
 import { cn } from "./cn";
+import { useLabel } from "./I18nContext";
 import type { TabProps, TabsProps } from "./types";
 
 interface TabsContextValue {
@@ -62,6 +63,7 @@ export const Tabs = memo(function Tabs({
   );
   const value = controlledValue ?? internalValue;
   const listRef = useRef<HTMLDivElement>(null);
+  const tabsLabel = useLabel("tabs", undefined, ariaLabel);
 
   const setValue = (next: string) => {
     if (controlledValue === undefined) setInternalValue(next);
@@ -97,7 +99,7 @@ export const Tabs = memo(function Tabs({
       <div
         ref={listRef}
         role="tablist"
-        aria-label={ariaLabel ?? "Tabs"}
+        aria-label={tabsLabel}
         onKeyDown={handleKeyDown}
         className="mx-auto flex w-full max-w-2xl"
       >

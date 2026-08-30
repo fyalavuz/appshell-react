@@ -2,6 +2,7 @@
 
 import { memo, type ChangeEvent, type ReactNode } from "react";
 import { cn } from "./cn";
+import { useLabel } from "./I18nContext";
 import { useHeaderTheme } from "./HeaderContext";
 import type { SearchFieldProps } from "./types";
 
@@ -43,7 +44,7 @@ const SearchIcon = () => (
  */
 export const SearchField = memo(function SearchField({
   variant = "pill",
-  placeholder = "Search",
+  placeholder,
   value,
   defaultValue,
   onChange,
@@ -57,6 +58,7 @@ export const SearchField = memo(function SearchField({
   "aria-label": ariaLabel,
 }: SearchFieldProps) {
   const theme = useHeaderTheme();
+  const placeholderText = useLabel("search", undefined, placeholder);
   const onDark = theme === "primary" || theme === "dark";
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
@@ -66,8 +68,8 @@ export const SearchField = memo(function SearchField({
     <input
       type="search"
       role="searchbox"
-      aria-label={ariaLabel ?? placeholder}
-      placeholder={placeholder}
+      aria-label={ariaLabel ?? placeholderText}
+      placeholder={placeholderText}
       value={value}
       defaultValue={defaultValue}
       onChange={handleChange}

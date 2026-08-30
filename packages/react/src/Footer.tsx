@@ -2,6 +2,7 @@
 
 import { memo, useCallback, useEffect, useRef } from "react";
 import { cn } from "./cn";
+import { useLabel } from "./I18nContext";
 import { useMotion, premiumSpring } from "./motion";
 import { useScrollDirection } from "./hooks/use-scroll-direction";
 import type { FooterProps, FooterItemProps, AnimationSpeed } from "./types";
@@ -55,6 +56,7 @@ export const FooterItem = memo(function FooterItem({
   onClick,
   className,
 }: FooterItemProps) {
+  const overflowLabel = useLabel("badgeOverflow", { max: 99 });
   const { motion } = useMotion();
 
   return (
@@ -72,7 +74,7 @@ export const FooterItem = memo(function FooterItem({
         {icon}
         {badge != null && badge > 0 && (
           <span className="absolute -top-1.5 -end-2.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-destructive px-1 text-[10px] font-bold text-white">
-            {badge > 99 ? "99+" : badge}
+            {badge > 99 ? overflowLabel : badge}
           </span>
         )}
       </span>

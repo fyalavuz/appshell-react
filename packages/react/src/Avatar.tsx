@@ -2,6 +2,7 @@
 
 import { memo, useState } from "react";
 import { cn } from "./cn";
+import { useLabel } from "./I18nContext";
 import type { AvatarProps } from "./types";
 
 /**
@@ -16,6 +17,7 @@ export const Avatar = memo(function Avatar({
   className,
 }: AvatarProps) {
   const [imageFailed, setImageFailed] = useState(false);
+  const avatarLabel = useLabel("avatar");
   const showImage = Boolean(src) && !imageFailed;
 
   return (
@@ -30,7 +32,7 @@ export const Avatar = memo(function Avatar({
       {showImage ? (
         <img
           src={src}
-          alt={alt ?? initials ?? "Avatar"}
+          alt={alt ?? initials ?? avatarLabel}
           onError={() => setImageFailed(true)}
           className="size-full object-cover"
         />
