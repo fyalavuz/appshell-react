@@ -1,9 +1,21 @@
 "use client";
 
-import { memo, type ChangeEvent } from "react";
+import { memo, type ChangeEvent, type ReactNode } from "react";
 import { cn } from "./cn";
 import { useHeaderTheme } from "./HeaderContext";
 import type { SearchFieldProps } from "./types";
+
+const ShortcutHint = ({ hint, onDark }: { hint: ReactNode; onDark: boolean }) => (
+  <kbd
+    aria-hidden
+    className={cn(
+      "pointer-events-none hidden h-5 shrink-0 select-none items-center rounded border px-1.5 font-sans text-[11px] font-medium sm:inline-flex",
+      onDark ? "border-white/25 text-current/70" : "border-border text-muted-foreground"
+    )}
+  >
+    {hint}
+  </kbd>
+);
 
 const SearchIcon = () => (
   <svg
@@ -38,6 +50,8 @@ export const SearchField = memo(function SearchField({
   onSubmit,
   onFocus,
   onClick,
+  shortcutHint,
+  inset = true,
   className,
   inputClassName,
   "aria-label": ariaLabel,
@@ -86,27 +100,33 @@ export const SearchField = memo(function SearchField({
       >
         <SearchIcon />
         {input}
+        {shortcutHint && <ShortcutHint hint={shortcutHint} onDark={onDark} />}
       </label>
     );
   }
 
+  const pill = (
+    <label
+      data-search-field="pill"
+      className={cn(
+        "flex cursor-text items-center gap-2.5 rounded-full px-3.5 py-2",
+        "transition-colors focus-within:ring-2 focus-within:ring-ring",
+        onDark ? "bg-white/15" : "bg-muted",
+        className
+      )}
+    >
+      <SearchIcon />
+      {input}
+      {shortcutHint && <ShortcutHint hint={shortcutHint} onDark={onDark} />}
+    </label>
+  );
+
+  if (!inset) return pill;
+
   return (
     // Centered with a sane max width on large screens — a phone-width pill
     // stretched across a desktop header reads as a bug, not a search bar.
-    <div className="w-full px-4 pb-3 sm:mx-auto sm:max-w-xl">
-      <label
-        data-search-field="pill"
-        className={cn(
-          "flex cursor-text items-center gap-2.5 rounded-full px-3.5 py-2",
-          "transition-colors focus-within:ring-2 focus-within:ring-ring",
-          onDark ? "bg-white/15" : "bg-muted",
-          className
-        )}
-      >
-        <SearchIcon />
-        {input}
-      </label>
-    </div>
+    <div className="w-full px-4 pb-3 sm:mx-auto sm:max-w-xl">{pill}</div>
   );
 });
 

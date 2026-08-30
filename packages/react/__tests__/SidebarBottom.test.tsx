@@ -50,3 +50,47 @@ describe("Sidebar bottomContent", () => {
     expect(container.querySelector("[data-sidebar-bottom]")).toBeNull();
   });
 });
+
+describe("Sidebar topContent", () => {
+  it("pins top content above the nav scroll area in the docked panel", () => {
+    const { container } = render(
+      <Sidebar
+        variant="docked"
+        breakpoint="none"
+        topContent={<input aria-label="Search projects" />}
+      >
+        <NavItem label="Home" />
+      </Sidebar>
+    );
+    const aside = container.querySelector('[data-sidebar="docked"]')!;
+    const top = aside.querySelector("[data-sidebar-top]")!;
+    expect(top).toBeInTheDocument();
+    expect(screen.getByLabelText("Search projects")).toBeInTheDocument();
+    // The pinned top section comes before the nav scroll area.
+    expect(
+      top.compareDocumentPosition(screen.getByText("Home")) &
+        Node.DOCUMENT_POSITION_FOLLOWING
+    ).toBeTruthy();
+  });
+
+  it("pins top content in the overlay drawer", () => {
+    render(
+      <Sidebar open onClose={() => {}} topContent={<span>Search</span>}>
+        <NavItem label="Home" />
+      </Sidebar>
+    );
+    const dialog = screen.getByRole("dialog");
+    const top = dialog.querySelector("[data-sidebar-top]")!;
+    expect(top).toBeInTheDocument();
+    expect(top.textContent).toContain("Search");
+  });
+
+  it("renders no top section when the prop is absent", () => {
+    const { container } = render(
+      <Sidebar variant="docked" breakpoint="none">
+        <NavItem label="Home" />
+      </Sidebar>
+    );
+    expect(container.querySelector("[data-sidebar-top]")).toBeNull();
+  });
+});

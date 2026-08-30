@@ -253,15 +253,16 @@ export const categories: ExampleCategory[] = [
         slug: "docked-sidebar",
         title: "Docked Sidebar",
         description:
-          "A persistent sidebar that collapses to an icon rail on desktop and becomes the drawer on phones.",
+          "A persistent sidebar with search pinned at its top that collapses to an icon rail on desktop and becomes the drawer on phones.",
         icon: PanelLeftClose,
         category: "layout",
-        tags: ["sidebar", "docked", "rail", "responsive"],
+        tags: ["sidebar", "docked", "rail", "responsive", "search", "shortcut"],
         appName: "Terra — project tracker",
-        props: 'variant="docked" collapsible',
+        props: 'variant="docked" collapsible topContent',
         tryHints: [
-          "Desktop: collapse the panel to an icon rail",
-          "Phone: the same nav opens as a drawer",
+          "Press ⌘K — or click the search at the panel's top",
+          "Collapse to a rail — search becomes an icon",
+          "Phone: the same nav and search open as a drawer",
         ],
       },
       {

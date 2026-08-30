@@ -255,6 +255,12 @@ export const sidebarOverlayApi: ApiDef = {
       description: "Which edge the drawer slides from.",
     },
     {
+      name: "topContent",
+      type: "ReactNode",
+      description:
+        "Pinned above the scrolling nav — a SearchField, a workspace switcher. Safe-area padded in the drawer.",
+    },
+    {
       name: "bottomContent",
       type: "ReactNode",
       description:
@@ -338,6 +344,12 @@ export const sidebarDockedApi: ApiDef = {
       type: '"left" | "right"',
       default: '"left"',
       description: "Which side of the content the panel docks to.",
+    },
+    {
+      name: "topContent",
+      type: "ReactNode",
+      description:
+        "Pinned above the scrolling nav in both the docked panel and the drawer fallback — the desktop home for a SearchField, filling the space a docked panel usually leaves empty.",
     },
     {
       name: "bottomContent",
@@ -457,6 +469,19 @@ export const searchFieldApi: ApiDef = {
       name: "onFocus",
       type: "() => void",
       description: "Focus passthrough on the input.",
+    },
+    {
+      name: "shortcutHint",
+      type: "ReactNode",
+      description:
+        'Keyboard-shortcut chip at the right edge — "⌘K", "Ctrl K". Hidden below the sm breakpoint; pair with useSearchShortcut.',
+    },
+    {
+      name: "inset",
+      type: "boolean",
+      default: "true",
+      description:
+        "Pill only. Header-row insetting (padding + centered max width). Set false when the pill lives somewhere already padded — a Sidebar's topContent slot, a card.",
     },
     {
       name: "className",
@@ -811,5 +836,12 @@ export const hooksApi: {
     signature: 'useHeaderTheme(): "light" | "primary" | "dark" | "none"',
     description:
       "The active Header theme, for custom components rendered inside header rows that need to adapt their colors.",
+  },
+  {
+    name: "useSearchShortcut",
+    signature:
+      "useSearchShortcut(onTrigger, { key = 'k', slash = false, enabled = true }?)",
+    description:
+      "Binds the desktop search shortcut — ⌘K on macOS, Ctrl+K elsewhere — to a handler, typically opening a SearchModal. Opt into a bare “/” trigger (ignored while typing) with slash: true.",
   },
 ];

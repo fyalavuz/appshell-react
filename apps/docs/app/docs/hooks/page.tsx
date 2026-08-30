@@ -13,7 +13,7 @@ import { highlight } from "@/lib/highlight";
 export const metadata = {
   title: "Hooks",
   description:
-    "useAppShell, useScrollDirection, useSafeArea, useHeaderTheme — the shell's state, exposed to your own components.",
+    "useAppShell, useScrollDirection, useSafeArea, useHeaderTheme, useSearchShortcut — the shell's state and shortcuts, exposed to your own components.",
 };
 
 const hookByName = Object.fromEntries(hooksApi.map((h) => [h.name, h]));
@@ -102,26 +102,44 @@ export function AppHeader() {
   return <Header behavior="fixed" theme="primary" actions={<CartButton />} />;
 }`;
 
+const useSearchShortcutCode = `import { SearchModal, useSearchShortcut } from "appshell-react";
+import { useState } from "react";
+
+export function AppSearch() {
+  const [open, setOpen] = useState(false);
+
+  // ⌘K on macOS, Ctrl+K elsewhere. Add { slash: true } for "/" too.
+  useSearchShortcut(() => setOpen(true));
+
+  return (
+    <SearchModal open={open} onClose={() => setOpen(false)}>
+      {(q) => <Results query={q} />}
+    </SearchModal>
+  );
+}`;
+
 export default async function HooksPage() {
-  const [appShellHtml, scrollDirHtml, safeAreaHtml, headerThemeHtml] =
+  const [appShellHtml, scrollDirHtml, safeAreaHtml, headerThemeHtml, searchShortcutHtml] =
     await Promise.all([
       highlight(useAppShellCode),
       highlight(useScrollDirectionCode),
       highlight(useSafeAreaCode),
       highlight(useHeaderThemeCode),
+      highlight(useSearchShortcutCode),
     ]);
 
   const useAppShellApi = hookByName["useAppShell"];
   const useScrollDirectionApi = hookByName["useScrollDirection"];
   const useSafeAreaApi = hookByName["useSafeArea"];
   const useHeaderThemeApi = hookByName["useHeaderTheme"];
+  const useSearchShortcutApi = hookByName["useSearchShortcut"];
 
   return (
     <article>
       <DocHeader
         eyebrow="Advanced"
         title="Hooks"
-        description="Four hooks expose the state the shell already tracks — scroll direction, bar visibility, safe-area insets, and the active header theme — so your own components can join in."
+        description="Five hooks expose the state the shell already tracks — scroll direction, bar visibility, safe-area insets, the active header theme — plus the desktop search shortcut, so your own components can join in."
       />
 
       <DocSection title={useAppShellApi.name}>
@@ -210,6 +228,24 @@ export default async function HooksPage() {
           Elsewhere it does not throw — it just falls back to the default,{" "}
           <InlineCode>&quot;light&quot;</InlineCode>.
         </DocNote>
+      </DocSection>
+
+      <DocSection title={useSearchShortcutApi.name}>
+        <Signature>{useSearchShortcutApi.signature}</Signature>
+        <DocProse>{useSearchShortcutApi.description}</DocProse>
+        <DocProse>
+          The ⌘/Ctrl combination fires even while an input has focus —
+          palette muscle memory — while the opt-in{" "}
+          <InlineCode>slash</InlineCode> trigger stays quiet inside editable
+          fields. Show the shortcut on the trigger with SearchField&rsquo;s{" "}
+          <InlineCode>shortcutHint</InlineCode> prop, and suspend the binding
+          without unmounting via <InlineCode>enabled: false</InlineCode>.
+        </DocProse>
+        <CodePanel
+          html={searchShortcutHtml}
+          code={useSearchShortcutCode}
+          filename="app-search.tsx"
+        />
       </DocSection>
     </article>
   );

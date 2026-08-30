@@ -38,7 +38,7 @@ const CollapseChevrons = ({ className }: { className?: string }) => (
 
 export const Sidebar = memo(function Sidebar(props: SidebarProps) {
   const { motion, AnimatePresence } = useMotion();
-  const { side = "left", bottomContent, className, children } = props;
+  const { side = "left", topContent, bottomContent, className, children } = props;
 
   const isDocked = props.variant === "docked";
   const open = props.open ?? false;
@@ -117,6 +117,18 @@ export const Sidebar = memo(function Sidebar(props: SidebarProps) {
               className
             )}
           >
+            {topContent && (
+              <div
+                data-sidebar-top
+                className="shrink-0 border-b border-border"
+                style={{
+                  paddingTop:
+                    "var(--appshell-safe-area-inset-top, env(safe-area-inset-top, 0px))",
+                }}
+              >
+                {topContent}
+              </div>
+            )}
             <div className="min-h-0 flex-1 overflow-y-auto">{children}</div>
             {bottomContent && (
               <div
@@ -174,6 +186,11 @@ export const Sidebar = memo(function Sidebar(props: SidebarProps) {
         )}
         style={asideStyle}
       >
+        {topContent && (
+          <div data-sidebar-top className="shrink-0 border-b border-border">
+            {topContent}
+          </div>
+        )}
         <div
           id={panelId}
           className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden"

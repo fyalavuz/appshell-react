@@ -89,6 +89,29 @@ export default async function SearchFieldPage() {
         <CodePanel html={fullHtml} code={fullCode} filename="header.tsx" />
       </DocSection>
 
+      <DocSection title="Where does search go on desktop?">
+        <DocProse>
+          The full-row search bar is a mobile pattern. On desktop, follow
+          the layout: <strong>no sidebar</strong> — keep a compact pill in
+          the Header (its centered max width handles wide screens) and give
+          it a <InlineCode>shortcutHint</InlineCode> like{" "}
+          <InlineCode>&quot;⌘K&quot;</InlineCode>, bound with{" "}
+          <InlineCode>useSearchShortcut</InlineCode>;{" "}
+          <strong>docked sidebar</strong> — move the pill into the
+          Sidebar&rsquo;s <InlineCode>topContent</InlineCode> slot with{" "}
+          <InlineCode>inset={"{false}"}</InlineCode>, where it fills the
+          panel&rsquo;s otherwise-empty top and leaves the header clean.
+          The{" "}
+          <Link
+            href="/examples/docked-sidebar"
+            className="text-brand hover:underline"
+          >
+            Docked Sidebar demo
+          </Link>{" "}
+          shows the whole arrangement live.
+        </DocProse>
+      </DocSection>
+
       <DocSection title="Theme awareness">
         <DocProse>
           Inside a <InlineCode>theme=&quot;primary&quot;</InlineCode> or{" "}

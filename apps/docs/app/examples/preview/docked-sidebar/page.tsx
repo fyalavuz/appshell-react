@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AppShell,
   Content,
@@ -8,7 +8,10 @@ import {
   MotionProvider,
   NavGroup,
   NavItem,
+  SearchField,
+  SearchModal,
   Sidebar,
+  useSearchShortcut,
 } from "appshell-react";
 import { framerMotionAdapter } from "appshell-react/motion-framer";
 import {
@@ -19,6 +22,7 @@ import {
   Menu,
   Mountain,
   Rocket,
+  Search,
   Settings,
   Users,
   Globe,
@@ -48,12 +52,6 @@ const stateIcon = {
 function TerraNav({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <>
-      <div className="flex items-center gap-2 border-b p-4">
-        <Mountain className="size-5 shrink-0 text-teal-600 dark:text-teal-400" />
-        <span className="truncate font-bold tracking-tight group-data-[collapsed=true]/sidebar:hidden">
-          Terra
-        </span>
-      </div>
       <div className="p-2">
         <NavGroup title="Projects" defaultOpen>
           <NavItem
@@ -97,9 +95,22 @@ function TerraNav({ onNavigate }: { onNavigate?: () => void }) {
 
 export default function DockedSidebarPage() {
   const [open, setOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const [done, setDone] = useState<string[]>(
     tasks.filter((t) => t.state === "done").map((t) => t.title)
   );
+
+  // Resolve the platform after mount so the static export hydrates cleanly.
+  const [hint, setHint] = useState<string>();
+  useEffect(() => {
+    setHint(/Mac|iPhone|iPad/.test(navigator.platform) ? "⌘K" : "Ctrl K");
+  }, []);
+
+  const openSearch = () => {
+    setSearchOpen(true);
+    setOpen(false);
+  };
+  useSearchShortcut(openSearch);
 
   const toggleTask = (title: string) =>
     setDone((d) =>
@@ -145,6 +156,36 @@ export default function DockedSidebarPage() {
           collapsible
           open={open}
           onClose={() => setOpen(false)}
+          topContent={
+            <div>
+              <div className="flex items-center gap-2 p-4 pb-3">
+                <Mountain className="size-5 shrink-0 text-teal-600 dark:text-teal-400" />
+                <span className="truncate font-bold tracking-tight group-data-[collapsed=true]/sidebar:hidden">
+                  Terra
+                </span>
+              </div>
+              {/* Expanded panel and drawer: a real search field. */}
+              <div className="px-3 pb-3 group-data-[collapsed=true]/sidebar:hidden">
+                <SearchField
+                  inset={false}
+                  placeholder="Search tasks"
+                  shortcutHint={hint}
+                  className="py-1.5"
+                  onClick={openSearch}
+                  onFocus={openSearch}
+                />
+              </div>
+              {/* Collapsed rail: the same search, one icon wide. */}
+              <button
+                type="button"
+                aria-label="Search tasks"
+                onClick={openSearch}
+                className="mx-auto mb-2 hidden size-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-accent hover:text-foreground group-data-[collapsed=true]/sidebar:flex"
+              >
+                <Search className="size-4" />
+              </button>
+            </div>
+          }
           bottomContent={
             <div className="p-2">
               <NavItem
@@ -160,9 +201,11 @@ export default function DockedSidebarPage() {
 
         <Content className="mx-auto w-full max-w-3xl pb-16">
           <DemoHint>
-            On a desktop window the panel is docked — collapse it to a rail
-            with the toggle at its foot. On a phone, open the same nav as a
-            drawer with the menu button.
+            On a desktop window the panel is docked and search lives at its
+            top — press <kbd className="rounded border px-1">⌘K</kbd> or
+            click the field. Collapse the panel to a rail and search shrinks
+            to an icon. On a phone the same nav (search included) opens as a
+            drawer.
           </DemoHint>
 
           <div className="px-4">
@@ -218,6 +261,61 @@ export default function DockedSidebarPage() {
             </p>
           </div>
         </Content>
+
+        <SearchModal
+          open={searchOpen}
+          onClose={() => setSearchOpen(false)}
+          placeholder="Search tasks"
+          onSubmit={() => setSearchOpen(false)}
+        >
+          {(q) => {
+            const matches = tasks.filter((t) =>
+              `${t.title} ${t.owner}`.toLowerCase().includes(q.toLowerCase())
+            );
+            if (q && matches.length === 0) {
+              return (
+                <p className="px-4 py-10 text-center text-sm text-muted-foreground">
+                  Nothing for &ldquo;{q}&rdquo; — try an owner&rsquo;s name.
+                </p>
+              );
+            }
+            return (
+              <div className="py-1">
+                <p className="px-4 pb-1 pt-2 text-xs font-medium uppercase tracking-wide text-muted-foreground/70">
+                  {q ? `${matches.length} task${matches.length === 1 ? "" : "s"}` : "All tasks"}
+                </p>
+                {matches.map((task) => {
+                  const isDone = done.includes(task.title);
+                  return (
+                    <button
+                      key={task.title}
+                      type="button"
+                      onClick={() => {
+                        toggleTask(task.title);
+                        setSearchOpen(false);
+                      }}
+                      className="flex w-full items-center gap-3 px-4 py-2.5 text-left transition-colors hover:bg-muted/60"
+                    >
+                      <span className="shrink-0">
+                        {isDone
+                          ? stateIcon.done
+                          : stateIcon[task.state as "doing" | "todo"]}
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-sm font-medium">
+                          {task.title}
+                        </span>
+                        <span className="text-xs text-muted-foreground">
+                          {task.owner} · {isDone ? "Done" : task.due}
+                        </span>
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            );
+          }}
+        </SearchModal>
       </AppShell>
     </MotionProvider>
   );

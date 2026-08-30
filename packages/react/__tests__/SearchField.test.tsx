@@ -50,4 +50,28 @@ describe("SearchField", () => {
     const label = container.querySelector("[data-search-field='pill']")!;
     expect(label.className).toContain("bg-white/15");
   });
+
+  it("drops the header-row wrapper with inset={false}", () => {
+    const { container, rerender } = render(<SearchField placeholder="Search" />);
+    expect(
+      container.querySelector("[data-search-field='pill']")!.parentElement!
+        .className
+    ).toContain("max-w-xl");
+    rerender(<SearchField placeholder="Search" inset={false} />);
+    expect(
+      container.querySelector("[data-search-field='pill']")!.parentElement!
+        .className
+    ).not.toContain("max-w-xl");
+  });
+
+  it("shows a shortcut hint chip only when asked", () => {
+    const { container, rerender } = render(
+      <SearchField placeholder="Search" shortcutHint="⌘K" />
+    );
+    const kbd = container.querySelector("kbd")!;
+    expect(kbd).toBeInTheDocument();
+    expect(kbd.textContent).toBe("⌘K");
+    rerender(<SearchField placeholder="Search" />);
+    expect(container.querySelector("kbd")).toBeNull();
+  });
 });

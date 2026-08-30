@@ -7,6 +7,7 @@ export { AppShellProvider, useAppShell } from "./context";
 export { HeaderProvider, useHeaderTheme } from "./HeaderContext";
 export { useScrollDirection } from "./hooks/use-scroll-direction";
 export { useSafeArea } from "./hooks/use-safe-area";
+export { useSearchShortcut } from "./hooks/use-search-shortcut";
 export { MotionProvider } from "./motion";
 export { Sidebar } from "./Sidebar";
 export { NavGroup } from "./NavGroup";
@@ -50,6 +51,7 @@ export type {
   ScrollNavItemProps,
   SearchFieldVariant,
   SearchFieldProps,
+  SearchShortcutOptions,
   SearchModalProps,
   AvatarProps,
   UserMenuProps,

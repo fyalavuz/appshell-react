@@ -142,21 +142,33 @@ export default async function SidebarPage() {
         </DocNote>
       </DocSection>
 
-      <DocSection title="Bottom section">
+      <DocSection title="Top and bottom sections">
         <DocProse>
-          Both variants take a <InlineCode>bottomContent</InlineCode> prop:
-          a slot pinned below the scrolling nav, for the infrastructural
-          actions that don&rsquo;t navigate — settings, about, a theme
-          toggle, or a{" "}
+          Both variants take a <InlineCode>topContent</InlineCode> and a{" "}
+          <InlineCode>bottomContent</InlineCode> prop — slots pinned above
+          and below the scrolling nav. The top slot is the desktop home for
+          a{" "}
+          <Link
+            href="/docs/components/search-field"
+            className="text-brand hover:underline"
+          >
+            SearchField
+          </Link>{" "}
+          (pass <InlineCode>inset={"{false}"}</InlineCode> and pad the slot
+          yourself) or a workspace switcher: with a docked panel the header
+          stays clean, and the space the sidebar usually leaves empty earns
+          its keep. The bottom slot holds the infrastructural actions that
+          don&rsquo;t navigate — settings, about, a theme toggle, or a{" "}
           <Link
             href="/docs/components/user-menu"
             className="text-brand hover:underline"
           >
             UserMenu
           </Link>
-          . In the drawer it also pads itself past the home indicator. The
-          pattern comes straight from industrial design systems: navigation
-          scrolls, infrastructure stays put.
+          . In the drawer, the top slot pads itself past the status bar and
+          the bottom slot past the home indicator. The pattern comes
+          straight from industrial design systems: navigation scrolls,
+          infrastructure stays put.
         </DocProse>
       </DocSection>
 

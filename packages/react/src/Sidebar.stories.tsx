@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Sidebar } from './Sidebar';
 import { NavGroup } from './NavGroup';
 import { NavItem } from './NavItem';
+import { SearchField } from './SearchField';
 import { AppShellProvider } from './context';
 import { MotionProvider } from './motion';
 import { framerMotionAdapter } from './motion-framer';
@@ -94,7 +95,13 @@ function DockedNav() {
   );
 }
 
-function DockedDemo({ collapsible = false }: { collapsible?: boolean }) {
+function DockedDemo({
+  collapsible = false,
+  withSearch = false,
+}: {
+  collapsible?: boolean;
+  withSearch?: boolean;
+}) {
   const [open, setOpen] = useState(false);
   return (
     <div className="flex min-h-dvh">
@@ -103,6 +110,13 @@ function DockedDemo({ collapsible = false }: { collapsible?: boolean }) {
         collapsible={collapsible}
         open={open}
         onClose={() => setOpen(false)}
+        topContent={
+          withSearch ? (
+            <div className="p-2 group-data-[collapsed=true]/sidebar:hidden">
+              <SearchField placeholder="Search" shortcutHint="⌘K" inset={false} className="py-1.5" />
+            </div>
+          ) : undefined
+        }
       >
         <DockedNav />
       </Sidebar>
@@ -135,4 +149,9 @@ export const Docked: Story = {
 /** Built-in toggle collapses the panel to an icon rail. */
 export const DockedCollapsible: Story = {
   render: () => <DockedDemo collapsible />,
+};
+
+/** A SearchField pinned in the topContent slot — the desktop search home. */
+export const DockedWithSearch: Story = {
+  render: () => <DockedDemo collapsible withSearch />,
 };

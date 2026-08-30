@@ -94,6 +94,12 @@ export type SidebarBreakpoint = "sm" | "md" | "lg" | "none";
 interface SidebarBaseProps {
   side?: SidebarSide;
   /**
+   * Pinned at the top of the panel, above the scrolling nav — the desktop
+   * spot for a SearchField or a workspace switcher, filling the space a
+   * docked sidebar usually leaves empty.
+   */
+  topContent?: ReactNode;
+  /**
    * Pinned at the bottom of the panel, below the scrolling nav — the spot
    * for infrastructural actions that don't navigate: settings, about,
    * a theme toggle, a UserMenu.
@@ -184,9 +190,29 @@ export interface SearchFieldProps {
   /** Focus/click passthroughs — wire these to open a SearchModal. */
   onFocus?: () => void;
   onClick?: () => void;
+  /**
+   * Keyboard-shortcut chip at the right edge of the field — "⌘K",
+   * "Ctrl K". Hidden below the sm breakpoint; pair with useSearchShortcut.
+   */
+  shortcutHint?: ReactNode;
+  /**
+   * Pill only. Header-row insetting: horizontal padding plus a centered
+   * max width on large screens. Set false when the pill lives somewhere
+   * already padded — a Sidebar's topContent slot, a card. Default true.
+   */
+  inset?: boolean;
   className?: string;
   inputClassName?: string;
   "aria-label"?: string;
+}
+
+export interface SearchShortcutOptions {
+  /** Letter combined with ⌘ (mac) or Ctrl. Default "k". */
+  key?: string;
+  /** Also trigger on a bare "/" pressed outside editable fields. Default false. */
+  slash?: boolean;
+  /** Set false to suspend the binding without unmounting. Default true. */
+  enabled?: boolean;
 }
 
 export interface SearchModalProps {
