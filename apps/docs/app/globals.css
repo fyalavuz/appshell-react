@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import "appshell-react/safe-area.css";
 @source "../../../packages/react/src";
 
 @custom-variant dark (&:is(.dark *));

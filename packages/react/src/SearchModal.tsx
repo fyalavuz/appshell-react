@@ -14,6 +14,7 @@ import { cn } from "./cn";
 import { useDirection, useLabel } from "./I18nContext";
 import { useFocusTrap } from "./focus-trap";
 import { useOverlayLayer } from "./overlay-stack";
+import { useKeyboardInset } from "./hooks/use-keyboard-inset";
 import { useMotion } from "./motion";
 import type { SearchModalProps } from "./types";
 
@@ -110,6 +111,8 @@ export function SearchModal({
   const { zIndex } = useOverlayLayer({ open, onClose });
   const placeholderText = useLabel("search", undefined, placeholder);
   const cancelText = useLabel("cancel", undefined, closeLabel);
+  // Subscribe so the CSS variable the panel padding reads is published.
+  useKeyboardInset();
   const dir = useDirection();
 
   if (!mounted) return null;
@@ -209,8 +212,10 @@ export function SearchModal({
             <div
               className="min-h-0 flex-1 overflow-y-auto overscroll-contain"
               style={{
+                // Reserve the keyboard's height as well: on a phone the
+                // modal is a full-height sheet and the keyboard is always up.
                 paddingBottom:
-                  "var(--appshell-safe-area-inset-bottom, env(safe-area-inset-bottom, 0px))",
+                  "calc(var(--appshell-safe-area-inset-bottom, env(safe-area-inset-bottom, 0px)) + var(--appshell-keyboard-inset-bottom, 0px))",
               }}
             >
               {results}

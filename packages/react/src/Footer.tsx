@@ -5,6 +5,8 @@ import { cn } from "./cn";
 import { useLabel } from "./I18nContext";
 import { useMotion, premiumSpring } from "./motion";
 import { useScrollDirection } from "./hooks/use-scroll-direction";
+import { useKeyboardInset } from "./hooks/use-keyboard-inset";
+import { useLinkComponent } from "./LinkContext";
 import type { FooterProps, FooterItemProps, AnimationSpeed } from "./types";
 
 const speedMap: Record<AnimationSpeed, number> = {
@@ -53,16 +55,25 @@ export const FooterItem = memo(function FooterItem({
   label,
   active = false,
   badge,
+  href,
   onClick,
   className,
 }: FooterItemProps) {
   const overflowLabel = useLabel("badgeOverflow", { max: 99 });
   const { motion } = useMotion();
+  const LinkComp = useLinkComponent();
+
+  // A tab that navigates is a link, and the current one is the current page —
+  // that is what a screen reader announces. Without href it stays a button,
+  // but still says which one is current.
+  const Element = href ? LinkComp : "button";
 
   return (
-    <button
-      type="button"
+    // eslint-disable-next-line react-hooks/static-components -- stable component from context, not created during render
+    <Element
+      {...(href ? { href } : { type: "button" as const })}
       onClick={onClick}
+      aria-current={active ? "page" : undefined}
       data-active={active || undefined}
       className={cn(
         "flex flex-1 flex-col items-center justify-center gap-0.5 py-1 transition-colors relative",
@@ -86,13 +97,14 @@ export const FooterItem = memo(function FooterItem({
           transition={premiumSpring}
         />
       )}
-    </button>
+    </Element>
   );
 });
 
 export const Footer = memo(function Footer({
   variant = "tab-bar",
   behavior = "static",
+  hideOnKeyboard = false,
   position = "center",
   speed = "normal",
   className,
@@ -100,7 +112,12 @@ export const Footer = memo(function Footer({
 }: FooterProps) {
   const { motion, AnimatePresence } = useMotion();
   const scrollDirection = useScrollDirection();
-  const shouldHide = behavior === "auto-hide" && scrollDirection === "down";
+  // Subscribing only when asked keeps the visualViewport listeners off pages
+  // that do not need them.
+  const keyboardInset = useKeyboardInset();
+  const shouldHide =
+    (behavior === "auto-hide" && scrollDirection === "down") ||
+    (hideOnKeyboard && keyboardInset > 0);
   const measureRef = useFooterHeightVar();
   const duration = speedMap[speed];
 

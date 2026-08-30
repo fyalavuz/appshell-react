@@ -31,6 +31,26 @@ export const appShellApi: ApiDef = {
         "Pad the shell for device safe areas (notch, home indicator). Static headers stay inside the padded scroll container; pinned headers manage their own top inset.",
     },
     {
+      name: "skipToContent",
+      type: "boolean",
+      default: "false",
+      description:
+        "Render a skip link as the first focusable thing on the page, jumping past the header and navigation to Content. Visible only while focused.",
+    },
+    {
+      name: "routeKey",
+      type: "string",
+      description:
+        "Something that changes on navigation — a pathname is the usual choice. When it changes, focus moves to the top of the new screen so a screen reader announces it instead of the keyboard being left in the link the user just used.",
+    },
+    {
+      name: "focusOnRouteChange",
+      type: '"heading" | "content" | false',
+      default: '"heading"',
+      description:
+        "Where that focus lands. \"heading\" targets the Header title and falls back to Content when a screen has none.",
+    },
+    {
       name: "className",
       type: "string",
       description: "Extra classes for the root element.",
@@ -191,6 +211,13 @@ export const footerApi: ApiDef = {
       default: '"normal"',
       description: "Duration preset for hide/show animations.",
     },
+    {
+      name: "hideOnKeyboard",
+      type: "boolean",
+      default: "false",
+      description:
+        "Step out of the way while the on-screen keyboard is up, the way a native tab bar does — otherwise the bar sits on top of the keyboard.",
+    },
     { name: "className", type: "string", description: "Extra classes." },
     {
       name: "children",
@@ -207,6 +234,12 @@ export const footerItemApi: ApiDef = {
   props: [
     { name: "icon", type: "ReactNode", required: true, description: "Tab icon." },
     { name: "label", type: "string", required: true, description: "Tab label." },
+    {
+      name: "href",
+      type: "string",
+      description:
+        "Destination URL — rendered through the LinkProvider component, so the tab announces as a link. The active one carries aria-current=\"page\" either way.",
+    },
     {
       name: "active",
       type: "boolean",
@@ -229,6 +262,13 @@ export const contentApi: ApiDef = {
     "The main content region — a semantic <main> that fills the remaining shell space. Add your own padding to clear fixed footers (e.g. pb-24 for a tab bar).",
   props: [
     { name: "className", type: "string", description: "Extra classes." },
+    {
+      name: "id",
+      type: "string",
+      default: '"appshell-content"',
+      description:
+        "Element id. The default is what the AppShell skip link targets and where focus lands on a route change.",
+    },
     {
       name: "children",
       type: "ReactNode",
@@ -831,6 +871,18 @@ export const hooksApi: {
     signature: 'useScrollDirection(threshold = 10): "up" | "down" | null',
     description:
       "Window scroll direction with a movement threshold in pixels. Powers reveal headers and auto-hide footers; use it for your own scroll-aware UI.",
+  },
+  {
+    name: "useKeyboardInset",
+    signature: "useKeyboardInset(): number",
+    description:
+      "How many pixels of the viewport the on-screen keyboard covers, and — while anything is subscribed — the same value published as --appshell-keyboard-inset-bottom for CSS. Measured through visualViewport, the only mechanism iOS Safari supports; 0 with no keyboard and during SSR.",
+  },
+  {
+    name: "useBelowBreakpoint",
+    signature: 'useBelowBreakpoint(bp: "sm" | "md" | "lg" | "none" | null): boolean',
+    description:
+      "True when the viewport is narrower than that Tailwind breakpoint. The docked Sidebar uses it to decide when the drawer takes over — ask the same question rather than re-deriving it and disagreeing. Pass null to disable.",
   },
   {
     name: "useSafeArea",

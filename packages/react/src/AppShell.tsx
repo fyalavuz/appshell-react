@@ -11,12 +11,23 @@ import {
 } from "react";
 import { cn } from "./cn";
 import { AppShellProvider } from "./context";
+import { SkipLink } from "./SkipLink";
+import { useRouteFocus } from "./hooks/use-route-focus";
 import { SafeArea } from "./SafeArea";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
 import type { AppShellProps, HeaderProps } from "./types";
 
-function AppShellInner({ safeArea = false, className, children }: AppShellProps) {
+function AppShellInner({
+  safeArea = false,
+  skipToContent = false,
+  routeKey,
+  focusOnRouteChange = "heading",
+  className,
+  children,
+}: AppShellProps) {
+  useRouteFocus(routeKey, focusOnRouteChange);
+
   let header: ReactNode = null;
   let headerBehavior: string = "fixed";
   const dockedSidebars: ReactNode[] = [];
@@ -52,6 +63,7 @@ function AppShellInner({ safeArea = false, className, children }: AppShellProps)
   if (!safeArea && !hasDocked) {
     return (
       <div className={cn("flex min-h-dvh flex-col relative", className)}>
+        {skipToContent && <SkipLink />}
         {children}
       </div>
     );
@@ -81,6 +93,7 @@ function AppShellInner({ safeArea = false, className, children }: AppShellProps)
   if (!safeArea) {
     return (
       <div className={cn("flex min-h-dvh flex-col relative", className)}>
+        {skipToContent && <SkipLink />}
         {header}
         {withDockedRow(
           <div className="flex min-w-0 flex-1 flex-col">{otherChildren}</div>
@@ -94,6 +107,7 @@ function AppShellInner({ safeArea = false, className, children }: AppShellProps)
   if (isStatic) {
     return (
       <SafeArea edges={["top", "bottom"]} className={cn("flex min-h-dvh flex-col relative", className)}>
+        {skipToContent && <SkipLink />}
         {header}
         {withDockedRow(
           <div className="flex flex-col flex-1 min-w-0">
@@ -108,6 +122,7 @@ function AppShellInner({ safeArea = false, className, children }: AppShellProps)
   // and stays pinned or manages its own animation.
   return (
     <div className={cn("flex min-h-dvh flex-col relative", className)}>
+      {skipToContent && <SkipLink />}
       {header && isValidElement(header)
         ? cloneElement(header as ReactElement<HeaderProps>, { forceSafeAreaTop: true })
         : header}

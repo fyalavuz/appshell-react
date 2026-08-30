@@ -168,6 +168,19 @@ export const Header = memo(function Header({
     onVisibilityChange?.(behavior === "fixed" || behavior === "sticky" || !hasRevealEffect || isOverlayVisible);
   }, [isOverlayVisible, behavior, hasRevealEffect, onVisibilityChange]);
 
+  // While the overlay copy stands in for it, the original is off screen with
+  // the same controls inside. inert takes it out of the tab order and the
+  // accessibility tree together, so the two are never both offered. Set on
+  // the node rather than as a prop: React 18 and 19 disagree about how
+  // `inert` is typed and serialised, and the attribute is all either writes.
+  useEffect(() => {
+    const el = ghostRef.current;
+    if (!el) return;
+    if (isOverlayVisible) el.setAttribute("inert", "");
+    else el.removeAttribute("inert");
+    return () => el.removeAttribute("inert");
+  }, [isOverlayVisible]);
+
   const shouldShowInOverlay = useCallback(
     (row: "nav" | "context" | "search") => {
       if (behavior === "reveal-all") return true;
@@ -364,7 +377,12 @@ export const Header = memo(function Header({
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -8, opacity: 0 }}
               transition={{ duration: duration, ease: [0.16, 1, 0.3, 1] }}
-              aria-hidden
+              // Not aria-hidden: while this is on screen it *is* the header,
+              // and marking it hidden while it holds the only visible menu
+              // button put focusable controls inside a hidden subtree. The
+              // scrolled-away original is inert instead, so the two copies
+              // never both answer to the keyboard.
+              data-header-overlay
               className={cn(
                 "fixed top-0 left-0 right-0 z-[60] shadow-lg",
                 t.wrapper

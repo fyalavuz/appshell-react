@@ -102,6 +102,43 @@ export function AppHeader() {
   return <Header behavior="fixed" theme="primary" actions={<CartButton />} />;
 }`;
 
+const useKeyboardInsetCode = `import { useKeyboardInset } from "appshell-react";
+
+function Composer() {
+  // Pixels the keyboard covers — 0 when it is down.
+  const keyboard = useKeyboardInset();
+
+  return (
+    <form style={{ paddingBottom: keyboard }}>
+      <input placeholder="Write a reply" />
+    </form>
+  );
+}
+
+// Or stay in CSS: the hook publishes the same value as a variable while
+// anything is subscribed, and appshell-react/safe-area.css wraps it.
+// <div className="pb-safe-keyboard">…</div>`;
+
+const useBelowBreakpointCode = `import { Sidebar, useBelowBreakpoint } from "appshell-react";
+
+function Shell() {
+  const [open, setOpen] = useState(false);
+  // The same answer the Sidebar itself uses, so the two never disagree.
+  const isPhone = useBelowBreakpoint("md");
+
+  return (
+    <Sidebar
+      variant="docked"
+      breakpoint="md"
+      open={open}
+      onClose={() => setOpen(false)}
+      collapsible={!isPhone}
+    >
+      …
+    </Sidebar>
+  );
+}`;
+
 const useSearchShortcutCode = `import { SearchModal, useSearchShortcut } from "appshell-react";
 import { useState } from "react";
 
@@ -119,18 +156,29 @@ export function AppSearch() {
 }`;
 
 export default async function HooksPage() {
-  const [appShellHtml, scrollDirHtml, safeAreaHtml, headerThemeHtml, searchShortcutHtml] =
-    await Promise.all([
-      highlight(useAppShellCode),
-      highlight(useScrollDirectionCode),
-      highlight(useSafeAreaCode),
-      highlight(useHeaderThemeCode),
-      highlight(useSearchShortcutCode),
-    ]);
+  const [
+    appShellHtml,
+    scrollDirHtml,
+    safeAreaHtml,
+    keyboardInsetHtml,
+    belowBreakpointHtml,
+    headerThemeHtml,
+    searchShortcutHtml,
+  ] = await Promise.all([
+    highlight(useAppShellCode),
+    highlight(useScrollDirectionCode),
+    highlight(useSafeAreaCode),
+    highlight(useKeyboardInsetCode),
+    highlight(useBelowBreakpointCode),
+    highlight(useHeaderThemeCode),
+    highlight(useSearchShortcutCode),
+  ]);
 
   const useAppShellApi = hookByName["useAppShell"];
   const useScrollDirectionApi = hookByName["useScrollDirection"];
   const useSafeAreaApi = hookByName["useSafeArea"];
+  const useKeyboardInsetApi = hookByName["useKeyboardInset"];
+  const useBelowBreakpointApi = hookByName["useBelowBreakpoint"];
   const useHeaderThemeApi = hookByName["useHeaderTheme"];
   const useSearchShortcutApi = hookByName["useSearchShortcut"];
 
@@ -139,7 +187,7 @@ export default async function HooksPage() {
       <DocHeader
         eyebrow="Advanced"
         title="Hooks"
-        description="Five hooks expose the state the shell already tracks — scroll direction, bar visibility, safe-area insets, the active header theme — plus the desktop search shortcut, so your own components can join in."
+        description="Seven hooks expose the state the shell already tracks — scroll direction, bar visibility, safe-area insets, how much of the screen the keyboard covers, the active breakpoint, the header theme — plus the desktop search shortcut, so your own components can join in."
       />
 
       <DocSection title={useAppShellApi.name}>
@@ -204,6 +252,55 @@ export default async function HooksPage() {
           html={safeAreaHtml}
           code={useSafeAreaCode}
           filename="overlay.tsx"
+        />
+      </DocSection>
+
+      <DocSection title={useKeyboardInsetApi.name}>
+        <Signature>{useKeyboardInsetApi.signature}</Signature>
+        <DocProse>{useKeyboardInsetApi.description}</DocProse>
+        <DocProse>
+          A fixed bar, a bottom sheet or a full-screen search all end up
+          underneath the on-screen keyboard, and the web gives you no keyboard
+          event to react to. <InlineCode>visualViewport</InlineCode> is what
+          works everywhere — the <InlineCode>VirtualKeyboard</InlineCode> API
+          is Chromium-only and iOS Safari ignores the{" "}
+          <InlineCode>interactive-widget</InlineCode> meta. The shell already
+          uses this: a modal BottomSheet and the SearchModal keep their
+          content clear, and <InlineCode>&lt;Footer hideOnKeyboard&gt;</InlineCode>{" "}
+          steps aside.
+        </DocProse>
+        <CodePanel
+          html={keyboardInsetHtml}
+          code={useKeyboardInsetCode}
+          filename="composer.tsx"
+        />
+        <DocNote>
+          A shrink smaller than 80px is treated as browser chrome — a URL bar
+          sliding back in — rather than a keyboard, so a tab bar does not
+          flicker away as you scroll.
+        </DocNote>
+      </DocSection>
+
+      <DocSection title={useBelowBreakpointApi.name}>
+        <Signature>{useBelowBreakpointApi.signature}</Signature>
+        <DocProse>{useBelowBreakpointApi.description}</DocProse>
+        <DocProse>
+          The docked{" "}
+          <Link
+            href="/docs/components/sidebar"
+            className="text-brand hover:underline"
+          >
+            Sidebar
+          </Link>{" "}
+          decides with it whether the drawer is the active presentation.
+          Rendering stays CSS-gated so there is no hydration mismatch — this
+          hook is for the decisions around it, like whether your trigger
+          button should be in the header at all.
+        </DocProse>
+        <CodePanel
+          html={belowBreakpointHtml}
+          code={useBelowBreakpointCode}
+          filename="shell.tsx"
         />
       </DocSection>
 

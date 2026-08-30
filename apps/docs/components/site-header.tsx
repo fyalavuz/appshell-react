@@ -42,7 +42,10 @@ export function SiteHeader() {
             </span>
             <span className="font-bold tracking-tight">AppShell</span>
           </Link>
-          <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
+          <nav
+            aria-label="Main"
+            className="hidden items-center gap-6 text-sm font-medium md:flex"
+          >
             {mainNav.map((item) => (
               <Link
                 key={item.href}
@@ -96,7 +99,7 @@ export function SiteHeader() {
       {/* Mobile menu */}
       {mobileMenuOpen && (
         <div className="border-t md:hidden">
-          <nav className="grid gap-1 p-4">
+          <nav aria-label="Mobile" className="grid gap-1 p-4">
             {mainNav.map((item) => (
               <Link
                 key={item.href}

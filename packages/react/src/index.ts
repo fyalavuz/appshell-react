@@ -8,6 +8,8 @@ export { HeaderProvider, useHeaderTheme } from "./HeaderContext";
 export { useScrollDirection } from "./hooks/use-scroll-direction";
 export { useSafeArea } from "./hooks/use-safe-area";
 export { useSearchShortcut } from "./hooks/use-search-shortcut";
+export { useBelowBreakpoint } from "./hooks/use-below-breakpoint";
+export { useKeyboardInset } from "./hooks/use-keyboard-inset";
 export { MotionProvider } from "./motion";
 export { Sidebar } from "./Sidebar";
 export { NavGroup } from "./NavGroup";
@@ -21,6 +23,8 @@ export { UserMenu, UserMenuItem } from "./UserMenu";
 export { NotificationsMenu, NotificationItem } from "./NotificationsMenu";
 export { LinkProvider, useLinkComponent } from "./LinkContext";
 export { I18nProvider, useLabel, useDirection } from "./I18nContext";
+export { SkipLink } from "./SkipLink";
+export { CONTENT_ID } from "./Content";
 export { defaultLabels } from "./labels";
 export { BottomSheet } from "./BottomSheet";
 export { Tabs, Tab } from "./Tabs";
@@ -81,3 +85,4 @@ export type {
   AppShellLabelKey,
   AppShellLabelsInput,
 } from "./labels";
+export type { SkipLinkProps } from "./SkipLink";

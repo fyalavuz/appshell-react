@@ -14,6 +14,7 @@ import { cn } from "./cn";
 import { useDirection, useLabel } from "./I18nContext";
 import { useFocusTrap } from "./focus-trap";
 import { useOverlayLayer } from "./overlay-stack";
+import { useKeyboardInset } from "./hooks/use-keyboard-inset";
 import type { BottomSheetProps } from "./types";
 
 const subscribeNever = () => () => {};
@@ -93,6 +94,8 @@ export function BottomSheet({
   // whatever was opened before it and leaves the page alone.
   const { zIndex } = useOverlayLayer({ open, onClose, modal });
   const sheetLabel = useLabel("sheet", undefined, ariaLabel);
+  // Subscribe so the CSS variable the padding below reads is being published.
+  useKeyboardInset();
   const dir = useDirection();
 
   const dragState = useRef<{ startY: number; startOffset: number } | null>(
@@ -210,8 +213,11 @@ export function BottomSheet({
         <div
           className="min-h-0 flex-1 overflow-y-auto overscroll-contain"
           style={{
+            // The keyboard covers the bottom of the viewport, so the last row
+            // is unreachable without reserving what it takes. Resolves to the
+            // safe-area inset alone when no keyboard is up.
             paddingBottom:
-              "var(--appshell-safe-area-inset-bottom, env(safe-area-inset-bottom, 0px))",
+              "calc(var(--appshell-safe-area-inset-bottom, env(safe-area-inset-bottom, 0px)) + var(--appshell-keyboard-inset-bottom, 0px))",
           }}
         >
           {children}

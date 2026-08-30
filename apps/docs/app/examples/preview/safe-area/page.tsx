@@ -108,7 +108,9 @@ export default function SafeAreaPage() {
             </button>
           </div>
 
-          <div className="space-y-4 px-4 pt-4">
+          {/* pb-safe-6 comes from appshell-react/safe-area.css: the home
+              indicator's inset plus six spacing units, in one class. */}
+          <div className="space-y-4 px-4 pt-4 pb-safe-6">
             <ConceptCard
               icon={Smartphone}
               title="AppShell pads the whole shell"

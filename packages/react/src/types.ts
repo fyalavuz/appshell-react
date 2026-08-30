@@ -64,6 +64,12 @@ export interface FooterProps {
   behavior?: FooterBehavior;
   position?: FooterPosition;
   speed?: AnimationSpeed;
+  /**
+   * Step out of the way while the on-screen keyboard is up, the way a native
+   * tab bar does — otherwise the bar sits on top of the keyboard. Default
+   * false. Measured through `useKeyboardInset`.
+   */
+  hideOnKeyboard?: boolean;
   className?: string;
   children: ReactNode;
 }
@@ -71,6 +77,11 @@ export interface FooterProps {
 export interface FooterItemProps {
   icon: ReactNode;
   label: string;
+  /**
+   * Destination URL — rendered through the LinkProvider component, so the tab
+   * announces as a link and the active one carries aria-current="page".
+   */
+  href?: string;
   active?: boolean;
   badge?: number;
   onClick?: () => void;
@@ -86,10 +97,32 @@ export interface SafeAreaProps {
 export interface ContentProps {
   className?: string;
   children: ReactNode;
+  /**
+   * Element id. Defaults to "appshell-content", which is what the AppShell
+   * skip link targets and where focus lands on a route change.
+   */
+  id?: string;
 }
 
 export interface AppShellProps {
   safeArea?: boolean;
+  /**
+   * Render a skip link as the first focusable thing on the page, jumping past
+   * the header and navigation to Content. Visible only while focused.
+   */
+  skipToContent?: boolean;
+  /**
+   * Something that changes on navigation — a pathname is the usual choice.
+   * When it changes, focus moves to the top of the new screen so a screen
+   * reader announces it and the keyboard starts from the top, instead of
+   * being left wherever the previous screen's link was.
+   */
+  routeKey?: string;
+  /**
+   * Where that focus goes: the Header's title, or Content. Default "heading",
+   * which falls back to Content when there is no heading.
+   */
+  focusOnRouteChange?: "heading" | "content" | false;
   className?: string;
   children: ReactNode;
 }
@@ -178,6 +211,12 @@ export interface NavItemProps {
 export interface HeaderNavProps {
   className?: string;
   children: ReactNode;
+  /**
+   * Accessible name for this navigation landmark. Defaults to the
+   * `mainNavigation` label — a page with two unnamed <nav> landmarks is a
+   * WCAG failure, so give a second one its own name.
+   */
+  "aria-label"?: string;
 }
 
 export interface HeaderNavItemProps {

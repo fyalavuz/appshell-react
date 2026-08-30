@@ -2,17 +2,25 @@
 
 import { memo, useState, useRef, useEffect, useCallback } from "react";
 import { cn } from "./cn";
+import { useLabel } from "./I18nContext";
 import { useOverlayLayer } from "./overlay-stack";
 import { useHeaderTheme } from "./HeaderContext";
 import { useLinkComponent } from "./LinkContext";
 import type { HeaderNavProps, HeaderNavItemProps } from "./types";
 
 export const HeaderNav = memo(function HeaderNav({
+  "aria-label": ariaLabel,
   className,
   children,
 }: HeaderNavProps) {
+  const navLabel = useLabel("mainNavigation", undefined, ariaLabel);
   return (
-    <nav className={cn("flex items-center gap-1", className)}>{children}</nav>
+    <nav
+      aria-label={navLabel}
+      className={cn("flex items-center gap-1", className)}
+    >
+      {children}
+    </nav>
   );
 });
 

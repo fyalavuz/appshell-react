@@ -1,0 +1,81 @@
+/*
+ * Safe-area utilities for Tailwind v4.
+ *
+ * The library pads its own chrome, but your content is yours — and writing
+ * `pb-[calc(env(safe-area-inset-bottom)+1rem)]` by hand at every call site is
+ * the kind of thing a utility framework exists to avoid.
+ *
+ * Import once from your Tailwind entry, after `@import "tailwindcss"`:
+ *
+ *   @import "appshell-react/safe-area.css";
+ *
+ * Every utility resolves through the same chain the components use, so the
+ * `--appshell-safe-area-inset-*` override that device mockups and tests
+ * inject moves these too.
+ */
+
+@utility pt-safe {
+  padding-top: var(--appshell-safe-area-inset-top, env(safe-area-inset-top, 0px));
+}
+@utility pb-safe {
+  padding-bottom: var(--appshell-safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
+}
+@utility ps-safe {
+  padding-inline-start: var(--appshell-safe-area-inset-left, env(safe-area-inset-left, 0px));
+}
+@utility pe-safe {
+  padding-inline-end: var(--appshell-safe-area-inset-right, env(safe-area-inset-right, 0px));
+}
+@utility px-safe {
+  padding-inline-start: var(--appshell-safe-area-inset-left, env(safe-area-inset-left, 0px));
+  padding-inline-end: var(--appshell-safe-area-inset-right, env(safe-area-inset-right, 0px));
+}
+@utility py-safe {
+  padding-top: var(--appshell-safe-area-inset-top, env(safe-area-inset-top, 0px));
+  padding-bottom: var(--appshell-safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
+}
+
+/* The inset plus your own spacing: pt-safe-4, pb-safe-6, … */
+@utility pt-safe-* {
+  padding-top: calc(
+    var(--appshell-safe-area-inset-top, env(safe-area-inset-top, 0px)) +
+      --spacing(--value(integer))
+  );
+}
+@utility pb-safe-* {
+  padding-bottom: calc(
+    var(--appshell-safe-area-inset-bottom, env(safe-area-inset-bottom, 0px)) +
+      --spacing(--value(integer))
+  );
+}
+
+@utility mt-safe {
+  margin-top: var(--appshell-safe-area-inset-top, env(safe-area-inset-top, 0px));
+}
+@utility mb-safe {
+  margin-bottom: var(--appshell-safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
+}
+
+@utility top-safe {
+  top: var(--appshell-safe-area-inset-top, env(safe-area-inset-top, 0px));
+}
+@utility bottom-safe {
+  bottom: var(--appshell-safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
+}
+@utility start-safe {
+  inset-inline-start: var(--appshell-safe-area-inset-left, env(safe-area-inset-left, 0px));
+}
+@utility end-safe {
+  inset-inline-end: var(--appshell-safe-area-inset-right, env(safe-area-inset-right, 0px));
+}
+
+/* The keyboard's height, published by useKeyboardInset while it is mounted. */
+@utility pb-keyboard {
+  padding-bottom: var(--appshell-keyboard-inset-bottom, 0px);
+}
+@utility pb-safe-keyboard {
+  padding-bottom: calc(
+    var(--appshell-safe-area-inset-bottom, env(safe-area-inset-bottom, 0px)) +
+      var(--appshell-keyboard-inset-bottom, 0px)
+  );
+}

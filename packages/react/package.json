@@ -45,10 +45,12 @@
         "types": "./dist/motion-framer.d.cts",
         "default": "./dist/motion-framer.cjs"
       }
-    }
+    },
+    "./safe-area.css": "./styles/safe-area.css"
   },
   "files": [
     "dist",
+    "styles",
     "README.md",
     "LICENSE"
   ],

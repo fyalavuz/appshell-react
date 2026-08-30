@@ -13,7 +13,7 @@ function DocsNav({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
 
   return (
-    <nav className="py-6 pr-4 md:py-8">
+    <nav aria-label="Documentation" className="py-6 pr-4 md:py-8">
       {docsNavigation.map((section, index) => (
         <div key={section.title} className={cn(index > 0 && "mt-7")}>
           <p className="eyebrow mb-2 px-2 text-muted-foreground/70">

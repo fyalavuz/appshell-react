@@ -14,9 +14,11 @@ const noopSubscribe = () => () => {};
 /**
  * True when the viewport is narrower than the given Tailwind breakpoint.
  *
- * Internal: used by the docked Sidebar to decide whether the overlay drawer
- * is the active presentation, so modal side effects (body scroll lock,
- * Escape-to-close) only engage below the breakpoint. Rendering is gated by
+ * The docked Sidebar uses it to decide whether the overlay drawer is the
+ * active presentation, so modal side effects (body scroll lock,
+ * Escape-to-close) only engage below the breakpoint — and it is exported so
+ * your own code can ask the same question and get the same answer, rather
+ * than re-deriving it and disagreeing. Rendering is gated by
  * pure CSS (`hidden md:flex` / `md:hidden`), never by this hook, so there is
  * no hydration mismatch. Pass `null` to disable entirely (overlay variant).
  */

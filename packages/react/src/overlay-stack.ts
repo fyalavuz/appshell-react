@@ -117,20 +117,66 @@ function topmostDismissable(): Layer | undefined {
   return undefined;
 }
 
-// A single listener for the whole stack. The platform's own close-request
-// plumbing (CloseWatcher, which also covers the Android back gesture) is the
-// eventual home for this; keydown is what works everywhere today.
+/**
+ * One close-request owner for the whole stack.
+ *
+ * Where the platform has CloseWatcher, use it: it defines a "close request"
+ * as whatever the device means by it — Escape on a keyboard, the back
+ * gesture or button on Android, the TalkBack back gesture — so the drawer
+ * closes on Android back instead of the page navigating away. Its stack
+ * semantics are the same as ours (only the most recently constructed watcher
+ * is called), and we only ever hold one.
+ *
+ * Everywhere else, a single keydown listener does the Escape half. The two
+ * are alternatives, never both: CloseWatcher already answers Escape, and
+ * listening as well would close two layers per press.
+ */
+interface CloseWatcherLike {
+  destroy: () => void;
+  onclose: (() => void) | null;
+}
+
 let keyListener: ((e: KeyboardEvent) => void) | null = null;
+let closeWatcher: CloseWatcherLike | null = null;
+
+function createCloseWatcher(): CloseWatcherLike | null {
+  const Ctor = (
+    globalThis as unknown as {
+      CloseWatcher?: new () => CloseWatcherLike;
+    }
+  ).CloseWatcher;
+  if (!Ctor) return null;
+
+  const watcher = new Ctor();
+  watcher.onclose = () => {
+    // The platform destroys a watcher once it fires, so take a fresh one for
+    // whatever is still open underneath.
+    closeWatcher = null;
+    topmostDismissable()?.close();
+    syncCloseRequestListener();
+  };
+  return watcher;
+}
 
 function syncCloseRequestListener() {
   const wanted = layers.some((layer) => layer.dismissable);
-  if (wanted && !keyListener) {
+
+  if (wanted) {
+    if (closeWatcher || keyListener) return;
+    closeWatcher = createCloseWatcher();
+    if (closeWatcher) return;
+
     keyListener = (e: KeyboardEvent) => {
       if (e.key !== "Escape") return;
       topmostDismissable()?.close();
     };
     document.addEventListener("keydown", keyListener);
-  } else if (!wanted && keyListener) {
+    return;
+  }
+
+  closeWatcher?.destroy();
+  closeWatcher = null;
+  if (keyListener) {
     document.removeEventListener("keydown", keyListener);
     keyListener = null;
   }

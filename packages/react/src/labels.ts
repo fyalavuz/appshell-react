@@ -23,6 +23,10 @@ export interface AppShellLabels {
   /** Accessible name of the bell. Tokens: {count}. */
   notificationsUnread: string;
   breadcrumb: string;
+  /** Accessible name of the Header's own navigation. */
+  mainNavigation: string;
+  /** The skip link AppShell renders above everything else. */
+  skipToContent: string;
   search: string;
   cancel: string;
   tabs: string;
@@ -42,6 +46,8 @@ export const defaultLabels: AppShellLabels = {
   notifications: "Notifications",
   notificationsUnread: "Notifications ({count} unread)",
   breadcrumb: "Breadcrumb",
+  mainNavigation: "Main",
+  skipToContent: "Skip to content",
   search: "Search",
   cancel: "Cancel",
   tabs: "Tabs",

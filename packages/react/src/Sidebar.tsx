@@ -184,6 +184,7 @@ export const Sidebar = memo(function Sidebar(props: SidebarProps) {
   return (
     <>
       <aside
+        aria-label={navLabel}
         data-sidebar="docked"
         data-collapsed={collapsed ? "true" : "false"}
         className={cn(

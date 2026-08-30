@@ -42,7 +42,10 @@ export default async function ExamplePage({ params }: ExamplePageProps) {
   return (
     <article>
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
+      <nav
+        aria-label="Breadcrumb"
+        className="flex items-center gap-2 font-mono text-xs text-muted-foreground"
+      >
         <Link
           href="/examples"
           className="transition-colors hover:text-foreground"

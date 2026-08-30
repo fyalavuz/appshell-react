@@ -13,7 +13,7 @@ function ExamplesNav({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
 
   return (
-    <nav className="py-6 pr-4 lg:py-8">
+    <nav aria-label="Examples" className="py-6 pr-4 lg:py-8">
       <Link
         href="/playground"
         onClick={onNavigate}

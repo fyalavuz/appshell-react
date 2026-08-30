@@ -14,7 +14,7 @@ export function SidebarNav({ className }: SidebarNavProps) {
   const pathname = usePathname();
 
   return (
-    <nav className={cn("w-full", className)}>
+    <div className={cn("w-full", className)}>
       {docsNavigation.map((section, index) => (
         <div key={section.title} className={cn(index > 0 && "mt-6")}>
           <h4 className="mb-1 rounded-md px-2 py-1 text-sm font-semibold">
@@ -38,6 +38,6 @@ export function SidebarNav({ className }: SidebarNavProps) {
           </div>
         </div>
       ))}
-    </nav>
+    </div>
   );
 }
