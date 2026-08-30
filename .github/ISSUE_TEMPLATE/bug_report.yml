@@ -1,0 +1,56 @@
+name: Bug report
+description: Something in the library behaves differently than documented.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happens
+      description: What you saw, and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction
+      description: >
+        The smallest component that shows it. A link to a StackBlitz or a repo
+        gets a fix far faster than a description.
+      render: tsx
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: appshell-react version
+      placeholder: 0.4.0
+    validations:
+      required: true
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Where
+      multiple: true
+      options:
+        - Next.js App Router
+        - Next.js Pages Router
+        - Vite / CRA / other SPA
+        - React Router / TanStack Router
+        - Server-side rendering or RSC
+        - Storybook / test environment
+    validations:
+      required: true
+  - type: input
+    id: browsers
+    attributes:
+      label: Browsers and devices
+      placeholder: iOS Safari 18, Chrome 141 on Android
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before filing
+      options:
+        - label: I checked the [docs](https://fyalavuz.github.io/appshell-react/docs/) for this component.
+          required: true
+        - label: I searched existing issues.
+          required: true

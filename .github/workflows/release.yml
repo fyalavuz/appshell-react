@@ -10,7 +10,6 @@ concurrency:
 
 permissions:
   contents: write
-  pull-requests: write
   id-token: write
 
 jobs:
@@ -21,6 +20,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: main
 
       - uses: pnpm/action-setup@v4
 
@@ -36,22 +36,54 @@ jobs:
 
       - run: pnpm turbo test
 
-      - name: Create Release PR or Publish
-        id: changesets
-        uses: changesets/action@v1
-        with:
-          version: pnpm version-packages
-          publish: pnpm release
-          title: "chore: version packages"
-          commit: "chore: version packages"
+      # Version and publish straight from main — no release PR. The PR flow
+      # needs "Allow GitHub Actions to create and approve pull requests",
+      # which this repo does not grant, so every run failed at that step.
+      - name: Apply changesets
+        id: version
+        run: |
+          if [ -z "$(ls .changeset/*.md 2>/dev/null | grep -v README)" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No changesets pending — nothing to release."
+            exit 0
+          fi
+          pnpm version-packages
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+          echo "version=$(node -p "require('./packages/react/package.json').version")" >> "$GITHUB_OUTPUT"
         env:
+          # @changesets/changelog-github reads this to build changelog links.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Land the bump on main before publishing. The other order can leave a
+      # version live on npm while main still carries the old one and the
+      # consumed changesets — which no re-run can repair.
+      - name: Commit the version bump
+        if: steps.version.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore: version packages [skip ci]"
+          # Another merge may have landed during install/build/test.
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+      # Tags are created here, on the commit that actually carries the bump.
+      - name: Publish to npm
+        if: steps.version.outputs.changed == 'true'
+        run: pnpm release
+        env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Push tags
+        if: steps.version.outputs.changed == 'true'
+        run: git push origin --tags
+
       - name: Create GitHub Release
-        if: steps.changesets.outputs.published == 'true'
+        if: steps.version.outputs.changed == 'true'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ fromJson(steps.changesets.outputs.publishedPackages)[0].version }}
+          tag_name: appshell-react@${{ steps.version.outputs.version }}
+          name: v${{ steps.version.outputs.version }}
           generate_release_notes: true

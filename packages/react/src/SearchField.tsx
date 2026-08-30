@@ -113,8 +113,12 @@ export const SearchField = memo(function SearchField({
       data-search-field="pill"
       className={cn(
         "flex cursor-text items-center gap-2.5 rounded-full px-3.5 py-2",
-        "transition-colors focus-within:ring-2 focus-within:ring-ring",
-        onDark ? "bg-white/15" : "bg-muted",
+        "border transition-colors focus-within:ring-2 focus-within:ring-ring",
+        // A hairline border carries the shape, so the fill can stay faint
+        // instead of reading as a grey slab across the header.
+        onDark
+          ? "border-white/15 bg-white/5 hover:bg-white/10"
+          : "border-border bg-muted/40 hover:bg-muted/70",
         className
       )}
     >

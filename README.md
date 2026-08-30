@@ -1,7 +1,15 @@
 # appshell-react
 
+[![npm](https://img.shields.io/npm/v/appshell-react?color=0b7285)](https://www.npmjs.com/package/appshell-react)
+[![CI](https://github.com/fyalavuz/appshell-react/actions/workflows/ci.yml/badge.svg)](https://github.com/fyalavuz/appshell-react/actions/workflows/ci.yml)
+[![Bundle size](https://img.shields.io/bundlejs/size/appshell-react?label=bundle)](https://bundlejs.com/?q=appshell-react)
+[![Downloads](https://img.shields.io/npm/dm/appshell-react?color=555)](https://www.npmjs.com/package/appshell-react)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
-[![npm](https://img.shields.io/npm/v/appshell-react)](https://www.npmjs.com/package/appshell-react)
+
+[Documentation](https://fyalavuz.github.io/appshell-react/docs/) ·
+[Live examples](https://fyalavuz.github.io/appshell-react/examples/) ·
+[Playground](https://fyalavuz.github.io/appshell-react/playground/) ·
+[Changelog](./packages/react/CHANGELOG.md)
 
 Mobile-first app shell components for React. Build native-feeling headers, footers, tab bars, and safe-area layouts with scroll-aware behaviors and smooth animations.
 

@@ -29,6 +29,7 @@ export { cn } from "./cn";
 
 export type {
   HeaderBehavior,
+  HeaderRow,
   HeaderTheme,
   HeaderProps,
   AnimationSpeed,

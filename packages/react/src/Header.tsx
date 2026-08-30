@@ -78,7 +78,9 @@ export const Header = memo(function Header({
   const ghostRef = useRef<HTMLElement>(null);
   const rowOrderKey = rowOrder.join(",");
   const rows = useMemo(
-    () => rowOrderKey.split(",") as HeaderRow[],
+    // filter(Boolean): an empty rowOrder joins to "" and would split back
+    // into [""], rendering a row nobody asked for.
+    () => rowOrderKey.split(",").filter(Boolean) as HeaderRow[],
     [rowOrderKey]
   );
 
@@ -118,10 +120,15 @@ export const Header = memo(function Header({
 
       // A row starts hiding once everything stacked above it has scrolled
       // past — which depends on the order the rows are in.
-      const spaceAbove = (row: HeaderRow) =>
-        rows
-          .slice(0, rows.indexOf(row))
+      const spaceAbove = (row: HeaderRow) => {
+        const index = rows.indexOf(row);
+        // A row that was ordered away has nothing above it but the nav row —
+        // slice(0, -1) would otherwise count every row except the last.
+        if (index < 0) return navH;
+        return rows
+          .slice(0, index)
           .reduce((total, above) => total + rowHeight[above], navH);
+      };
 
       if (behavior === "reveal-all" || behavior === "reveal-nav") {
         setThreshold(0);

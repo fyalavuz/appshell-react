@@ -12,8 +12,6 @@ export default function App() {
         <Header
           behavior="reveal-all"
           logo={<span className="font-bold">Pulse</span>}
-          title="Home"
-          subtitle="Catch up on today"
           searchContent={<SearchField variant="full" placeholder="Search Pulse" />}
         />
 

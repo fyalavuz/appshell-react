@@ -1,0 +1,30 @@
+name: Feature request
+description: A shell pattern the library cannot express today.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: >
+        What are you trying to build, and where does the library get in the
+        way? Describe the app, not the API you have in mind.
+    validations:
+      required: true
+  - type: textarea
+    id: shape
+    attributes:
+      label: What the API might look like
+      description: Optional — a sketch is useful even if it is not the final shape.
+      render: tsx
+  - type: textarea
+    id: workaround
+    attributes:
+      label: What you do today instead
+  - type: textarea
+    id: prior-art
+    attributes:
+      label: Prior art
+      description: >
+        Does Ionic, Quasar, Mantine, Carbon, Material or a native platform
+        solve this? A link to how they did it helps a lot.

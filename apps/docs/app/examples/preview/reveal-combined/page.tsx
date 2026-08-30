@@ -235,8 +235,6 @@ export default function RevealCombinedPage() {
               <span className="absolute right-1.5 top-1.5 size-2 rounded-full bg-rose-500" />
             </button>
           }
-          title="Home"
-          subtitle="Catch up on today"
           searchContent={
             <SearchField variant="full" placeholder="Search Pulse" />
           }

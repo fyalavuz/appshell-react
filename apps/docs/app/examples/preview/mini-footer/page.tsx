@@ -84,8 +84,6 @@ export default function MiniFooterPage() {
               Tempo
             </span>
           }
-          title="Late Focus"
-          subtitle="18 tracks · 1 hr 12 min"
         />
 
         <Content className="mx-auto w-full max-w-2xl sm:border-x">

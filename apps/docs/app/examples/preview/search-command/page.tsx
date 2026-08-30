@@ -174,8 +174,6 @@ export default function SearchCommandPage() {
               </UserMenu>
             </>
           }
-          title="Help center"
-          subtitle="Guides, answers, and shortcuts"
           searchContent={
             <SearchField
               placeholder="Search articles"

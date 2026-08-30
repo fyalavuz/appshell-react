@@ -11,8 +11,7 @@ export default function App() {
   return (
     <MotionProvider adapter={framerMotionAdapter}>
       <AppShell safeArea>
-        <Header behavior="fixed" logo={<span className="font-bold">Tempo</span>}
-          title="Late Focus" subtitle="18 tracks · 1 hr 12 min" />
+        <Header behavior="fixed" logo={<span className="font-bold">Tempo</span>} />
 
         <Content>{/* track list rows call setTrack */}</Content>
 

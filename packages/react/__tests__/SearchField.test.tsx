@@ -48,7 +48,10 @@ describe("SearchField", () => {
       </HeaderProvider>
     );
     const label = container.querySelector("[data-search-field='pill']")!;
-    expect(label.className).toContain("bg-white/15");
+    // On a dark header the pill is carried by a hairline border with only a
+    // faint fill, rather than a solid slab.
+    expect(label.className).toContain("border-white/15");
+    expect(label.className).toContain("bg-white/5");
   });
 
   it("drops the header-row wrapper with inset={false}", () => {

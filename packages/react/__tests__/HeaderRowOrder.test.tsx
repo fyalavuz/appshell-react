@@ -48,6 +48,13 @@ describe("Header rowOrder", () => {
     expect(screen.getByRole("searchbox", { name: "Find" })).toBeInTheDocument();
   });
 
+  it("renders neither lower row for an empty rowOrder", () => {
+    render(
+      <Header title="Home" searchContent={<SearchField />} rowOrder={[]} />
+    );
+    expect(rowOrderOf()).toEqual([]);
+  });
+
   it("omits a row whose content is absent, whatever the order", () => {
     render(<Header searchContent={<SearchField />} rowOrder={["search", "context"]} />);
     expect(rowOrderOf()).toEqual(["search"]);
