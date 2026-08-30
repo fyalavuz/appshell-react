@@ -19,6 +19,7 @@ export { SearchModal } from "./SearchModal";
 export { Avatar } from "./Avatar";
 export { UserMenu, UserMenuItem } from "./UserMenu";
 export { NotificationsMenu, NotificationItem } from "./NotificationsMenu";
+export { LinkProvider, useLinkComponent } from "./LinkContext";
 export { cn } from "./cn";
 
 export type {
@@ -61,3 +62,4 @@ export type {
 } from "./types";
 
 export type { MotionAdapter } from "./motion";
+export type { LinkProviderProps } from "./LinkContext";

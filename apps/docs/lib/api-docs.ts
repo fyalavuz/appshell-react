@@ -138,7 +138,7 @@ export const headerNavApi: ApiDef = {
       required: true,
       description: "Link text.",
     },
-    { name: "href", type: "string", description: "Destination URL." },
+    { name: "href", type: "string", description: "Destination URL — rendered through the LinkProvider component (plain <a> by default)." },
     {
       name: "active",
       type: "boolean",
@@ -391,7 +391,7 @@ export const navItemApi: ApiDef = {
   props: [
     { name: "label", type: "string", required: true, description: "Row text (and rail tooltip)." },
     { name: "icon", type: "ReactNode", description: "Leading icon." },
-    { name: "href", type: "string", description: "Renders as a link." },
+    { name: "href", type: "string", description: "Renders as a link, through the LinkProvider component (plain <a> by default)." },
     {
       name: "active",
       type: "boolean",
@@ -668,7 +668,7 @@ export const userMenuItemApi: ApiDef = {
     {
       name: "href",
       type: "string",
-      description: "Renders the row as a link instead of a button.",
+      description: "Renders the row as a link (through the LinkProvider component) instead of a button.",
     },
     { name: "onClick", type: "() => void", description: "Action handler." },
     {
@@ -784,7 +784,7 @@ export const notificationItemApi: ApiDef = {
     {
       name: "href",
       type: "string",
-      description: "Renders the row as a link instead of a button.",
+      description: "Renders the row as a link (through the LinkProvider component) instead of a button.",
     },
     { name: "onClick", type: "() => void", description: "Action handler." },
     { name: "className", type: "string", description: "Extra classes." },

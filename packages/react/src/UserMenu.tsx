@@ -11,6 +11,7 @@ import { cn } from "./cn";
 import { Avatar } from "./Avatar";
 import { useHeaderTheme } from "./HeaderContext";
 import { useAnchoredPanel } from "./menu-popover";
+import { useLinkComponent } from "./LinkContext";
 import type { UserMenuItemProps, UserMenuProps } from "./types";
 
 /**
@@ -132,6 +133,7 @@ export const UserMenuItem = memo(function UserMenuItem({
   destructive = false,
   className,
 }: UserMenuItemProps) {
+  const LinkComp = useLinkComponent();
   const classes = cn(
     "flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-sm outline-none transition-colors",
     destructive
@@ -153,9 +155,9 @@ export const UserMenuItem = memo(function UserMenuItem({
 
   if (href) {
     return (
-      <a href={href} role="menuitem" className={classes}>
+      <LinkComp href={href} role="menuitem" className={classes}>
         {content}
-      </a>
+      </LinkComp>
     );
   }
 

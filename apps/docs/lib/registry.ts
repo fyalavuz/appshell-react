@@ -458,6 +458,7 @@ export const docsNavigation = [
     items: [
       { title: "Hooks", href: "/docs/hooks" },
       { title: "Motion", href: "/docs/motion" },
+      { title: "Routing", href: "/docs/routing" },
     ],
   },
   {

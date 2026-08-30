@@ -1,5 +1,8 @@
+"use client";
+
 import { memo } from "react";
 import { cn } from "./cn";
+import { useLinkComponent } from "./LinkContext";
 import type { NavItemProps } from "./types";
 
 export const NavItem = memo(function NavItem({
@@ -11,6 +14,7 @@ export const NavItem = memo(function NavItem({
   onClick,
   className,
 }: NavItemProps) {
+  const LinkComp = useLinkComponent();
   const classes = cn(
     "flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors outline-none ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
     "group-data-[collapsed=true]/sidebar:justify-center group-data-[collapsed=true]/sidebar:px-2",
@@ -37,9 +41,9 @@ export const NavItem = memo(function NavItem({
 
   if (href) {
     return (
-      <a href={href} {...commonProps}>
+      <LinkComp href={href} {...commonProps}>
         {content}
-      </a>
+      </LinkComp>
     );
   }
 

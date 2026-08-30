@@ -3,6 +3,7 @@
 import { memo, useState, useRef, useEffect, useCallback } from "react";
 import { cn } from "./cn";
 import { useHeaderTheme } from "./HeaderContext";
+import { useLinkComponent } from "./LinkContext";
 import type { HeaderNavProps, HeaderNavItemProps } from "./types";
 
 export const HeaderNav = memo(function HeaderNav({
@@ -22,6 +23,7 @@ export const HeaderNavItem = memo(function HeaderNavItem({
   children,
 }: HeaderNavItemProps) {
   const theme = useHeaderTheme();
+  const LinkComp = useLinkComponent();
   const [open, setOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -125,9 +127,9 @@ export const HeaderNavItem = memo(function HeaderNavItem({
   if (!hasDropdown) {
     if (href) {
       return (
-        <a href={href} {...commonProps}>
+        <LinkComp href={href} {...commonProps}>
           {label}
-        </a>
+        </LinkComp>
       );
     }
 

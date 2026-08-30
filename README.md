@@ -76,6 +76,7 @@ export default function App() {
 | `NotificationItem` | One notification row: icon, text, time, unread dot |
 | `Avatar` | Image-or-initials identity mark |
 | `SafeArea` | Safe-area padding via the standard `env(safe-area-inset-*)` |
+| `LinkProvider` | Router integration: href items render your router's Link |
 
 ## Documentation
 

@@ -8,6 +8,7 @@ import { describe, it, expect } from "vitest";
 import {
   AppShell,
   Avatar,
+  LinkProvider,
   Content,
   Footer,
   FooterItem,
@@ -104,6 +105,19 @@ describe("server-side rendering", () => {
     const full = renderToString(<SearchField variant="full" placeholder="f" />);
     expect(pill).toContain('data-search-field="pill"');
     expect(full).toContain('data-search-field="full"');
+  });
+
+  it("renders href items through a LinkProvider on the server", () => {
+    const Fake = (props: Record<string, unknown>) => (
+      <a data-ssr-link {...(props as object)} />
+    );
+    const html = renderToString(
+      <LinkProvider component={Fake}>
+        <NavItem href="/library" label="Library" />
+      </LinkProvider>
+    );
+    expect(html).toContain("data-ssr-link");
+    expect(html).toContain('href="/library"');
   });
 
   it("renders SearchModal harmlessly on the server (portal defers to the client)", () => {
