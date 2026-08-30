@@ -68,16 +68,25 @@ jobs:
           git pull --rebase origin main
           git push origin HEAD:main
 
-      # Tags are created here, on the commit that actually carries the bump.
+      # Unconditional on purpose: `changeset publish` only pushes versions the
+      # registry does not have, so a run whose publish failed for an external
+      # reason (an expired token, an npm outage) heals itself on the next push
+      # instead of stranding a version that only main knows about.
+      # Tags are created here, on the commit that carries the bump.
       - name: Publish to npm
-        if: steps.version.outputs.changed == 'true'
-        run: pnpm release
+        run: |
+          if [ -z "$NODE_AUTH_TOKEN" ]; then
+            echo "::error::NPM_TOKEN is not set — the registry answers an" \
+                 "unauthenticated publish with a misleading 404. Add an npm" \
+                 "automation token with publish rights as the NPM_TOKEN secret."
+            exit 1
+          fi
+          pnpm release
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Push tags
-        if: steps.version.outputs.changed == 'true'
         run: git push origin --tags
 
       - name: Create GitHub Release
