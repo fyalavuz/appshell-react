@@ -165,8 +165,10 @@ export default async function SidebarPage() {
           >
             UserMenu
           </Link>
-          . In the drawer, the top slot pads itself past the status bar and
-          the bottom slot past the home indicator. The pattern comes
+          . In the drawer, the panel itself clears the status bar — slot or
+          no slot — and the bottom edge clears the home indicator, whether
+          the inset lands on the bottom slot or on the scrolling nav. The
+          pattern comes
           straight from industrial design systems: navigation scrolls,
           infrastructure stays put.
         </DocProse>

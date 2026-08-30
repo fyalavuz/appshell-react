@@ -94,3 +94,51 @@ describe("Sidebar topContent", () => {
     expect(container.querySelector("[data-sidebar-top]")).toBeNull();
   });
 });
+
+describe("Sidebar drawer safe areas", () => {
+  it("pads the panel top even without topContent", () => {
+    render(
+      <Sidebar open onClose={() => {}}>
+        <NavItem label="Home" />
+      </Sidebar>
+    );
+    const dialog = screen.getByRole("dialog") as HTMLElement;
+    expect(dialog.style.paddingTop).toContain("env(safe-area-inset-top");
+  });
+
+  it("pads the leading edge matching the side", () => {
+    render(
+      <Sidebar open onClose={() => {}} side="right">
+        <NavItem label="Home" />
+      </Sidebar>
+    );
+    const dialog = screen.getByRole("dialog") as HTMLElement;
+    expect(dialog.style.paddingRight).toContain("env(safe-area-inset-right");
+    expect(dialog.style.paddingLeft).toBe("");
+  });
+
+  it("hands the bottom inset to the scroll area when no bottomContent", () => {
+    render(
+      <Sidebar open onClose={() => {}}>
+        <NavItem label="Home" />
+      </Sidebar>
+    );
+    const scroll = screen
+      .getByRole("dialog")
+      .querySelector(".overflow-y-auto") as HTMLElement;
+    expect(scroll.style.paddingBottom).toContain("env(safe-area-inset-bottom");
+  });
+
+  it("hands the bottom inset to bottomContent when present", () => {
+    render(
+      <Sidebar open onClose={() => {}} bottomContent={<span>About</span>}>
+        <NavItem label="Home" />
+      </Sidebar>
+    );
+    const dialog = screen.getByRole("dialog");
+    const scroll = dialog.querySelector(".overflow-y-auto") as HTMLElement;
+    const bottom = dialog.querySelector("[data-sidebar-bottom]") as HTMLElement;
+    expect(scroll.style.paddingBottom).toBe("");
+    expect(bottom.style.paddingBottom).toContain("env(safe-area-inset-bottom");
+  });
+});

@@ -258,7 +258,7 @@ export const sidebarOverlayApi: ApiDef = {
       name: "topContent",
       type: "ReactNode",
       description:
-        "Pinned above the scrolling nav — a SearchField, a workspace switcher. Safe-area padded in the drawer.",
+        "Pinned above the scrolling nav — a SearchField, a workspace switcher. The drawer panel itself clears the top safe area, slot or not.",
     },
     {
       name: "bottomContent",

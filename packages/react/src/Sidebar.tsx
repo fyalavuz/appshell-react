@@ -21,6 +21,17 @@ const overlayGate: Record<Exclude<SidebarBreakpoint, "none">, string> = {
   lg: "lg:hidden",
 };
 
+// Safe-area chains: the --appshell-* var is a simulation/override hook,
+// the env() value is the platform truth (iOS notch, Android edge-to-edge).
+const SAFE_TOP =
+  "var(--appshell-safe-area-inset-top, env(safe-area-inset-top, 0px))";
+const SAFE_BOTTOM =
+  "var(--appshell-safe-area-inset-bottom, env(safe-area-inset-bottom, 0px))";
+const SAFE_LEFT =
+  "var(--appshell-safe-area-inset-left, env(safe-area-inset-left, 0px))";
+const SAFE_RIGHT =
+  "var(--appshell-safe-area-inset-right, env(safe-area-inset-right, 0px))";
+
 const CollapseChevrons = ({ className }: { className?: string }) => (
   <svg
     className={className}
@@ -121,28 +132,34 @@ export const Sidebar = memo(function Sidebar(props: SidebarProps) {
               gate,
               className
             )}
+            style={{
+              // The panel itself clears the status bar / notch, whether or
+              // not a topContent slot is rendered.
+              paddingTop: SAFE_TOP,
+              ...(isLeft
+                ? { paddingLeft: SAFE_LEFT }
+                : { paddingRight: SAFE_RIGHT }),
+            }}
           >
             {topContent && (
-              <div
-                data-sidebar-top
-                className="shrink-0 border-b border-border"
-                style={{
-                  paddingTop:
-                    "var(--appshell-safe-area-inset-top, env(safe-area-inset-top, 0px))",
-                }}
-              >
+              <div data-sidebar-top className="shrink-0 border-b border-border">
                 {topContent}
               </div>
             )}
-            <div className="min-h-0 flex-1 overflow-y-auto">{children}</div>
+            <div
+              className="min-h-0 flex-1 overflow-y-auto"
+              // Without a pinned bottom section the scroll area owns the
+              // bottom inset — content scrolls through it and the last item
+              // rests above the home indicator.
+              style={bottomContent ? undefined : { paddingBottom: SAFE_BOTTOM }}
+            >
+              {children}
+            </div>
             {bottomContent && (
               <div
                 data-sidebar-bottom
                 className="shrink-0 border-t border-border"
-                style={{
-                  paddingBottom:
-                    "var(--appshell-safe-area-inset-bottom, env(safe-area-inset-bottom, 0px))",
-                }}
+                style={{ paddingBottom: SAFE_BOTTOM }}
               >
                 {bottomContent}
               </div>
@@ -171,10 +188,8 @@ export const Sidebar = memo(function Sidebar(props: SidebarProps) {
     top: "var(--appshell-sidebar-top, var(--header-height, 0px))",
     height:
       "calc(100dvh - var(--appshell-sidebar-top, var(--header-height, 0px)))",
-    paddingBottom: "var(--appshell-safe-area-inset-bottom, env(safe-area-inset-bottom, 0px))",
-    ...(isLeft
-      ? { paddingLeft: "var(--appshell-safe-area-inset-left, env(safe-area-inset-left, 0px))" }
-      : { paddingRight: "var(--appshell-safe-area-inset-right, env(safe-area-inset-right, 0px))" }),
+    paddingBottom: SAFE_BOTTOM,
+    ...(isLeft ? { paddingLeft: SAFE_LEFT } : { paddingRight: SAFE_RIGHT }),
   };
 
   return (
