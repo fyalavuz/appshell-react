@@ -53,7 +53,7 @@ export const UserMenu = memo(function UserMenu({
     onOpenChange?.(next);
   };
 
-  const { mounted, triggerRef, panelCallbackRef } = useAnchoredPanel({
+  const { mounted, triggerRef, panelCallbackRef, zIndex } = useAnchoredPanel({
     open,
     onClose: () => setOpen(false),
     align,
@@ -78,10 +78,11 @@ export const UserMenu = memo(function UserMenu({
       aria-label={ariaLabel ?? "User menu"}
       onClick={handlePanelClick}
       className={cn(
-        "fixed z-[75] min-w-56 rounded-xl border border-border bg-popover p-1 text-popover-foreground shadow-lg",
+        "fixed min-w-56 rounded-xl border border-border bg-popover p-1 text-popover-foreground shadow-lg",
         "animate-in fade-in zoom-in-95 duration-200",
         className
       )}
+      style={{ zIndex }}
     >
       <div className="flex items-center gap-3 px-3 py-2.5">
         <Avatar src={src} initials={initials} size="2.25rem" />

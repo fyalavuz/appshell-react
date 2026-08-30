@@ -2,6 +2,7 @@
 
 import { memo, useState, useRef, useEffect, useCallback } from "react";
 import { cn } from "./cn";
+import { useOverlayLayer } from "./overlay-stack";
 import { useHeaderTheme } from "./HeaderContext";
 import { useLinkComponent } from "./LinkContext";
 import type { HeaderNavProps, HeaderNavItemProps } from "./types";
@@ -55,19 +56,14 @@ export const HeaderNavItem = memo(function HeaderNavItem({
     setOpen((prev) => !prev);
   }, [hasDropdown]);
 
-  // Close on Escape key
-  useEffect(() => {
-    if (!open) return;
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setOpen(false);
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [open]);
+  // The open dropdown joins the overlay stack, so Escape closes it without
+  // also closing whatever it was opened over.
+  useOverlayLayer({
+    open,
+    onClose: () => setOpen(false),
+    modal: false,
+    dismissable: true,
+  });
 
   // Close on outside click
   useEffect(() => {

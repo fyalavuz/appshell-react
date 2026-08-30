@@ -1,8 +1,9 @@
 "use client";
 
-import { memo, useEffect, useId, useState, type CSSProperties } from "react";
+import { memo, useId, useState, type CSSProperties } from "react";
 import { cn } from "./cn";
 import { useFocusTrap } from "./focus-trap";
+import { useOverlayLayer } from "./overlay-stack";
 import { useMotion } from "./motion";
 import { useBelowBreakpoint } from "./hooks/use-below-breakpoint";
 import type { SidebarBreakpoint, SidebarProps } from "./types";
@@ -73,29 +74,12 @@ export const Sidebar = memo(function Sidebar(props: SidebarProps) {
   // Keep Tab inside the open drawer and hand focus back on close.
   useFocusTrap(open && overlayActive, panelId);
 
-  // Close on Escape key — only while the drawer presentation is active.
-  useEffect(() => {
-    if (!open || !overlayActive || !onClose) return;
-    const close = onClose;
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [open, onClose, overlayActive]);
-
-  // Lock body scroll while the drawer presentation is open.
-  useEffect(() => {
-    if (!open || !overlayActive) return;
-
-    const original = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = original;
-    };
-  }, [open, overlayActive]);
+  // The stack owns Escape and the scroll lock, so a menu opened inside the
+  // drawer closes on its own instead of taking the drawer down with it.
+  const { zIndex } = useOverlayLayer({
+    open: open && overlayActive,
+    onClose,
+  });
 
   const isLeft = side === "left";
 
@@ -110,7 +94,8 @@ export const Sidebar = memo(function Sidebar(props: SidebarProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className={cn("fixed inset-0 z-[70] bg-black/50 backdrop-blur-sm", gate)}
+            className={cn("fixed inset-0 bg-black/50 backdrop-blur-sm", gate)}
+            style={{ zIndex }}
             onClick={onClose}
             aria-hidden="true"
           />
@@ -127,12 +112,13 @@ export const Sidebar = memo(function Sidebar(props: SidebarProps) {
             exit={{ x: isLeft ? "-100%" : "100%" }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
             className={cn(
-              "fixed top-0 z-[71] flex h-full w-80 max-w-[85vw] flex-col bg-background shadow-2xl",
+              "fixed top-0 flex h-full w-80 max-w-[85vw] flex-col bg-background shadow-2xl",
               isLeft ? "left-0" : "right-0",
               gate,
               className
             )}
             style={{
+              zIndex: zIndex + 1,
               // The panel itself clears the status bar / notch, whether or
               // not a topContent slot is rendered.
               paddingTop: SAFE_TOP,

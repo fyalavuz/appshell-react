@@ -12,6 +12,7 @@ import {
 import { createPortal } from "react-dom";
 import { cn } from "./cn";
 import { useFocusTrap } from "./focus-trap";
+import { useOverlayLayer } from "./overlay-stack";
 import type { BottomSheetProps } from "./types";
 
 const subscribeNever = () => () => {};
@@ -86,25 +87,10 @@ export function BottomSheet({
     return () => clearTimeout(timer);
   }, [open]);
 
-  // Escape closes (modal only).
-  useEffect(() => {
-    if (!open || !modal) return;
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [open, modal, onClose]);
-
-  // Scroll lock (modal only).
-  useEffect(() => {
-    if (!open || !modal) return;
-    const original = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = original;
-    };
-  }, [open, modal]);
+  // A modal sheet joins the stack as a scroll-locking, Escape-answering
+  // layer; a non-modal one only takes a stacking slot, so it sits above
+  // whatever was opened before it and leaves the page alone.
+  const { zIndex } = useOverlayLayer({ open, onClose, modal });
 
   const dragState = useRef<{ startY: number; startOffset: number } | null>(
     null
@@ -173,7 +159,8 @@ export function BottomSheet({
   return createPortal(
     <div
       data-bottom-sheet-root
-      className={cn("fixed inset-0 z-[60]", !modal && "pointer-events-none")}
+      className={cn("fixed inset-0", !modal && "pointer-events-none")}
+      style={{ zIndex }}
     >
       {modal && (
         <div

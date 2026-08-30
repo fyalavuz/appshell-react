@@ -6,6 +6,7 @@ import {
   useRef,
   useSyncExternalStore,
 } from "react";
+import { useOverlayLayer } from "./overlay-stack";
 
 const subscribeNever = () => () => {};
 
@@ -86,13 +87,20 @@ export function useAnchoredPanel({ open, onClose, align }: AnchoredPanelOptions)
     };
   }, [open, placePanel]);
 
-  // Close on Escape and on any press outside both the trigger and the panel.
+  // A menu is a non-modal layer: it takes a stacking slot above whatever it
+  // was opened from and answers Escape while it is the frontmost thing, but
+  // it does not lock the page or dim it.
+  const { zIndex } = useOverlayLayer({
+    open,
+    onClose,
+    modal: false,
+    dismissable: true,
+  });
+
+  // Close on any press outside both the trigger and the panel.
   useEffect(() => {
     if (!open) return;
 
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onCloseRef.current();
-    };
     const handleMouseDown = (e: MouseEvent) => {
       const target = e.target as Node;
       if (
@@ -103,12 +111,8 @@ export function useAnchoredPanel({ open, onClose, align }: AnchoredPanelOptions)
       }
     };
 
-    document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("mousedown", handleMouseDown);
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener("mousedown", handleMouseDown);
-    };
+    return () => document.removeEventListener("mousedown", handleMouseDown);
   }, [open]);
 
   // Mutual exclusion: opening this menu closes every other open one.
@@ -122,5 +126,5 @@ export function useAnchoredPanel({ open, onClose, align }: AnchoredPanelOptions)
     };
   }, [open]);
 
-  return { mounted, triggerRef, panelRef, panelCallbackRef };
+  return { mounted, triggerRef, panelRef, panelCallbackRef, zIndex };
 }

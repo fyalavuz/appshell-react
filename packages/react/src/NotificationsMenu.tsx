@@ -65,7 +65,7 @@ export const NotificationsMenu = memo(function NotificationsMenu({
     onOpenChange?.(next);
   };
 
-  const { mounted, triggerRef, panelCallbackRef } = useAnchoredPanel({
+  const { mounted, triggerRef, panelCallbackRef, zIndex } = useAnchoredPanel({
     open,
     onClose: () => setOpen(false),
     align,
@@ -108,10 +108,11 @@ export const NotificationsMenu = memo(function NotificationsMenu({
       aria-label={label}
       onClick={handlePanelClick}
       className={cn(
-        "fixed z-[75] flex w-80 max-w-[calc(100vw-1rem)] flex-col rounded-xl border border-border bg-popover text-popover-foreground shadow-lg",
+        "fixed flex w-80 max-w-[calc(100vw-1rem)] flex-col rounded-xl border border-border bg-popover text-popover-foreground shadow-lg",
         "animate-in fade-in zoom-in-95 duration-200",
         className
       )}
+      style={{ zIndex }}
     >
       <div className="flex items-center justify-between gap-3 px-4 pb-2 pt-3">
         <p className="text-sm font-semibold">{title}</p>

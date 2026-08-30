@@ -12,6 +12,7 @@ import {
 import { createPortal } from "react-dom";
 import { cn } from "./cn";
 import { useFocusTrap } from "./focus-trap";
+import { useOverlayLayer } from "./overlay-stack";
 import { useMotion } from "./motion";
 import type { SearchModalProps } from "./types";
 
@@ -103,25 +104,9 @@ export function SearchModal({
     };
   }, [open]);
 
-  // Escape closes.
-  useEffect(() => {
-    if (!open) return;
-    const handleKeyDown = (e: globalThis.KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [open, onClose]);
-
-  // Lock body scroll while open.
-  useEffect(() => {
-    if (!open) return;
-    const original = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = original;
-    };
-  }, [open]);
+  // Escape and the scroll lock are the stack's job: opened over a drawer,
+  // this modal answers the close request alone and the drawer stays put.
+  const { zIndex } = useOverlayLayer({ open, onClose });
 
   if (!mounted) return null;
 
@@ -151,9 +136,10 @@ export function SearchModal({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.15 }}
             className={cn(
-              "fixed inset-0 z-[80] bg-black/50 backdrop-blur-sm",
+              "fixed inset-0 bg-black/50 backdrop-blur-sm",
               overlayClassName
             )}
+            style={{ zIndex }}
             onClick={onClose}
             aria-hidden="true"
           />
@@ -171,11 +157,12 @@ export function SearchModal({
             exit={{ opacity: 0, y: 12 }}
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className={cn(
-              "fixed z-[81] flex flex-col overflow-hidden bg-background",
+              "fixed flex flex-col overflow-hidden bg-background",
               "inset-0",
               "sm:inset-x-0 sm:top-[10vh] sm:bottom-auto sm:mx-auto sm:max-h-[70vh] sm:w-full sm:max-w-xl sm:rounded-2xl sm:border sm:border-border sm:shadow-2xl",
               className
             )}
+            style={{ zIndex: zIndex + 1 }}
           >
             {/* Sheet mode only: keep the input row clear of the status bar */}
             <div

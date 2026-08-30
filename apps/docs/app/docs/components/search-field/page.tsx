@@ -132,7 +132,7 @@ export default async function SearchFieldPage() {
 
       <DocSection title="Related">
         <DocProse>
-          Wire its <InlineCode>onFocus</InlineCode> to open a{" "}
+          Wire its <InlineCode>onClick</InlineCode> to open a{" "}
           <Link
             href="/docs/components/search-modal"
             className="text-brand hover:underline"

@@ -109,10 +109,9 @@ export default function DockedSidebarPage() {
     setHint(/Mac|iPhone|iPad/.test(navigator.platform) ? "⌘K" : "Ctrl K");
   }, []);
 
-  const openSearch = () => {
-    setSearchOpen(true);
-    setOpen(false);
-  };
+  // No need to close the drawer first: the search modal stacks above it and
+  // Escape hands you back to the drawer you opened it from.
+  const openSearch = () => setSearchOpen(true);
   useSearchShortcut(openSearch);
 
   const toggleTask = (title: string) =>
@@ -175,7 +174,6 @@ export default function DockedSidebarPage() {
                   shortcutHint={hint}
                   className="py-1.5"
                   onClick={openSearch}
-                  onFocus={openSearch}
                 />
               </div>
               {/* Collapsed rail: the same search, one icon wide. */}
