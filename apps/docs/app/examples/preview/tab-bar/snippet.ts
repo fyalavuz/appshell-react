@@ -21,7 +21,7 @@ export default function App() {
         <Header behavior="sticky" logo={<span className="font-bold">Feedflow</span>} />
 
         {/* pb-24 keeps the last card clear of the tab bar */}
-        <Content className="pb-24">{/* active tab's screen */}</Content>
+        <Content>{/* active tab's screen */}</Content>
 
         <Footer variant="tab-bar" behavior="auto-hide">
           {items.map((item) => (

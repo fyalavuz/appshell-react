@@ -23,7 +23,7 @@ export default function App() {
   return (
     <AppShell safeArea>
       <Header behavior="fixed" className="border-b-0 bg-background/70 backdrop-blur-2xl" />
-      <Content className="pb-32">{/* Wallpaper grid */}</Content>
+      <Content className="pb-8">{/* Wallpaper grid */}</Content>
 
       {/* The floating slot positions and safe-area-pads the dock */}
       <Footer variant="floating" position="center">

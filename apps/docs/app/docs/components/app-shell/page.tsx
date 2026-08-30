@@ -29,7 +29,7 @@ export default function App() {
         logo={<span className="font-bold">Feedflow</span>}
         title="Timeline"
       />
-      <Content className="p-4 pb-24">{/* page content */}</Content>
+      <Content className="p-4">{/* page content */}</Content>
       <Footer variant="tab-bar" behavior="auto-hide">
         <FooterItem icon={<Home />} label="Home" active />
         <FooterItem icon={<Search />} label="Search" badge={3} />

@@ -1,6 +1,6 @@
 "use client";
 
-import { memo } from "react";
+import { memo, useCallback, useEffect, useRef } from "react";
 import { cn } from "./cn";
 import { useMotion, premiumSpring } from "./motion";
 import { useScrollDirection } from "./hooks/use-scroll-direction";
@@ -11,6 +11,41 @@ const speedMap: Record<AnimationSpeed, number> = {
   normal: 0.3,
   slow: 0.6,
 };
+
+/**
+ * Publishes the footer's height as --appshell-footer-height so Content (and
+ * anything else pinned to the bottom) can reserve exactly the right space
+ * instead of guessing a padding value.
+ *
+ * The value survives an auto-hide: the element unmounts while it is hidden,
+ * and reflowing the page every time the bar slides away would be worse than
+ * holding the space open.
+ */
+function useFooterHeightVar() {
+  const observerRef = useRef<ResizeObserver | null>(null);
+
+  useEffect(
+    () => () => {
+      observerRef.current?.disconnect();
+      document.documentElement.style.removeProperty("--appshell-footer-height");
+    },
+    []
+  );
+
+  return useCallback((el: HTMLElement | null) => {
+    observerRef.current?.disconnect();
+    if (!el) return;
+    const sync = () =>
+      document.documentElement.style.setProperty(
+        "--appshell-footer-height",
+        `${el.offsetHeight}px`
+      );
+    sync();
+    const ro = new ResizeObserver(sync);
+    ro.observe(el);
+    observerRef.current = ro;
+  }, []);
+}
 
 export const FooterItem = memo(function FooterItem({
   icon,
@@ -64,6 +99,7 @@ export const Footer = memo(function Footer({
   const { motion, AnimatePresence } = useMotion();
   const scrollDirection = useScrollDirection();
   const shouldHide = behavior === "auto-hide" && scrollDirection === "down";
+  const measureRef = useFooterHeightVar();
   const duration = speedMap[speed];
 
   if (variant === "floating") {
@@ -75,6 +111,7 @@ export const Footer = memo(function Footer({
 
     return (
       <div
+        ref={measureRef}
         data-footer-floating
         className={cn(
           "fixed bottom-0 left-0 right-0 z-50 flex pointer-events-none",
@@ -105,6 +142,7 @@ export const Footer = memo(function Footer({
       <AnimatePresence>
         {!shouldHide && (
           <motion.footer
+            ref={measureRef}
             initial={{ y: 48 }}
             animate={{ y: 0 }}
             exit={{ y: 48 }}
@@ -129,6 +167,7 @@ export const Footer = memo(function Footer({
     <AnimatePresence>
       {!shouldHide && (
         <motion.footer
+          ref={measureRef}
           initial={{ y: 80 }}
           animate={{ y: 0 }}
           exit={{ y: 80 }}

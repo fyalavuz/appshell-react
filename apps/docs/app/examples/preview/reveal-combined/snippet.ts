@@ -15,7 +15,7 @@ export default function App() {
           title="Home"
         />
 
-        <Content className="pb-24">{/* feed */}</Content>
+        <Content>{/* feed */}</Content>
 
         <Footer variant="tab-bar" behavior="auto-hide">
           <FooterItem icon={<House className="size-5" />} label="Home"

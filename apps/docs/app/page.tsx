@@ -30,7 +30,7 @@ export default function App() {
         title="Home"
         subtitle="Catch up on today"
       />
-      <Content className="pb-24">
+      <Content>
         {/* Your content */}
       </Content>
       <Footer variant="tab-bar" behavior="auto-hide">

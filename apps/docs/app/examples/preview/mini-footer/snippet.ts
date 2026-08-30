@@ -14,7 +14,7 @@ export default function App() {
         <Header behavior="fixed" logo={<span className="font-bold">Tempo</span>}
           title="Late Focus" subtitle="18 tracks · 1 hr 12 min" />
 
-        <Content className="pb-20">{/* track list rows call setTrack */}</Content>
+        <Content>{/* track list rows call setTrack */}</Content>
 
         {/* Mount the mini bar only when there is something to show —
             it animates in above the safe area on its own. */}

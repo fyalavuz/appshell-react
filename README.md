@@ -27,9 +27,7 @@ export default function App() {
         theme="light"
         logo={<span className="font-bold">MyApp</span>}
       />
-      <Content>
-        <main className="p-4">Your content here</main>
-      </Content>
+      <Content className="p-4">Your content here</Content>
       <Footer variant="tab-bar" behavior="auto-hide">
         <FooterItem icon={<Home />} label="Home" active />
         <FooterItem icon={<Search />} label="Search" />

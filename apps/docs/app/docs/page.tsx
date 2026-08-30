@@ -26,7 +26,7 @@ export default function App() {
         logo={<span className="font-bold">MyApp</span>}
         title="Home"
       />
-      <Content className="pb-24">{/* your content */}</Content>
+      <Content>{/* your content */}</Content>
       <Footer variant="tab-bar" behavior="auto-hide">
         <FooterItem icon={<Home />} label="Home" active />
         <FooterItem icon={<Search />} label="Search" />

@@ -8,7 +8,7 @@ export default function App() {
     <AppShell safeArea>
       <Header behavior="fixed" logo={<span className="font-bold">Crate</span>} />
 
-      <Content className="pb-28">{/* Product grid */}</Content>
+      <Content className="pb-8">{/* Product grid */}</Content>
 
       {/* position: "left" | "center" | "right" */}
       <Footer variant="floating" position="center">

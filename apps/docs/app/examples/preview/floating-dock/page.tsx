@@ -143,7 +143,7 @@ export default function FloatingDockPage() {
           subtitle="Curated for depth effect"
         />
 
-        <Content className="mx-auto w-full max-w-5xl pb-32">
+        <Content className="mx-auto w-full max-w-5xl pb-8">
           <DemoHint>
             Scroll down — the glass dock condenses into a pill. On a desktop
             window, sweep the pointer across it to magnify the icons.

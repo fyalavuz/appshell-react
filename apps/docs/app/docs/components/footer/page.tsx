@@ -28,7 +28,7 @@ export default function App() {
   return (
     <AppShell safeArea>
       {/* pb-24 keeps the last item clear of the fixed tab bar */}
-      <Content className="pb-24">
+      <Content>
         <div className="p-4">{/* active tab's screen */}</div>
       </Content>
       <Footer variant="tab-bar" behavior="auto-hide">
@@ -68,7 +68,7 @@ import { ShoppingBag } from "lucide-react";
 export default function App() {
   return (
     <AppShell safeArea>
-      <Content className="pb-28">
+      <Content>
         <div className="p-4">{/* product grid */}</div>
       </Content>
       <Footer variant="floating" position="center" behavior="auto-hide">
@@ -90,7 +90,7 @@ import { Pause } from "lucide-react";
 export default function App() {
   return (
     <AppShell safeArea>
-      <Content className="pb-20">
+      <Content>
         <div className="p-4">{/* track list */}</div>
       </Content>
       <Footer variant="mini">

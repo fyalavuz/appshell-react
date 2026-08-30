@@ -71,7 +71,7 @@ export default function FloatingFooterPage() {
           }
         />
 
-        <Content className="mx-auto w-full max-w-5xl pb-28">
+        <Content className="mx-auto w-full max-w-5xl pb-8">
           <DemoHint>
             Add records to your bag — the floating pill tracks the total. Use
             the switch above to dock it left, center, or right.

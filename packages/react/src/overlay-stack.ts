@@ -64,19 +64,48 @@ function emit() {
 
 let lockCount = 0;
 let originalOverflow = "";
+let originalPaddingRight = "";
+
+/** Width the classic scrollbar occupies, or 0 where it overlays content. */
+function scrollbarGap(): number {
+  const viewport = document.documentElement.clientWidth;
+  // No layout (SSR shims, jsdom) reports 0 — treat it as no scrollbar rather
+  // than as a viewport-wide gap.
+  if (!viewport) return 0;
+  return Math.max(0, window.innerWidth - viewport);
+}
 
 function acquireScrollLock() {
   lockCount += 1;
   if (lockCount > 1) return;
-  originalOverflow = document.body.style.overflow;
-  document.body.style.overflow = "hidden";
+
+  const body = document.body;
+  originalOverflow = body.style.overflow;
+  originalPaddingRight = body.style.paddingRight;
+
+  // Hiding the scrollbar hands its width back to the viewport, so the page
+  // jumps sideways under the overlay unless the space is held open. Fixed
+  // chrome reads the same value through the variable.
+  const gap = scrollbarGap();
+  body.style.overflow = "hidden";
+  if (gap > 0) {
+    const current = parseFloat(getComputedStyle(body).paddingRight) || 0;
+    body.style.paddingRight = `${current + gap}px`;
+    document.documentElement.style.setProperty(
+      "--appshell-scrollbar-gap",
+      `${gap}px`
+    );
+  }
 }
 
 function releaseScrollLock() {
   lockCount = Math.max(0, lockCount - 1);
   if (lockCount > 0) return;
   document.body.style.overflow = originalOverflow;
+  document.body.style.paddingRight = originalPaddingRight;
+  document.documentElement.style.removeProperty("--appshell-scrollbar-gap");
   originalOverflow = "";
+  originalPaddingRight = "";
 }
 
 // --- Close requests --------------------------------------------------------

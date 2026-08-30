@@ -25,7 +25,7 @@ export default function App() {
     <AppShell safeArea>
       <Header behavior="fixed" logo={<span className="font-bold">MyApp</span>} />
       {/* p-4 for breathing room, pb-24 to scroll clear of the tab bar */}
-      <Content className="p-4 pb-24">
+      <Content className="p-4">
         <h1 className="text-2xl font-bold">Welcome</h1>
         <p className="mt-2 text-muted-foreground">Your page goes here.</p>
       </Content>

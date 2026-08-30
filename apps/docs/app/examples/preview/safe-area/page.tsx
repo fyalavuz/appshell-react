@@ -75,7 +75,7 @@ export default function SafeAreaPage() {
           subtitle="How the shell avoids notches and home indicators"
         />
 
-        <Content className="mx-auto w-full max-w-2xl pb-28">
+        <Content className="mx-auto w-full max-w-2xl">
           <DemoHint>
             Toggle the overlays below to highlight the top and bottom insets —
             then notice the header and tab bar already keep clear of them.

@@ -88,7 +88,7 @@ export default function MiniFooterPage() {
           subtitle="18 tracks · 1 hr 12 min"
         />
 
-        <Content className="mx-auto w-full max-w-2xl pb-20 sm:border-x">
+        <Content className="mx-auto w-full max-w-2xl sm:border-x">
           <DemoHint>
             Tap a track — the mini player slides in above the safe area. Play,
             pause, and skip without leaving the list.
