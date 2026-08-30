@@ -73,13 +73,26 @@ jobs:
       # reason (an expired token, an npm outage) heals itself on the next push
       # instead of stranding a version that only main knows about.
       # Tags are created here, on the commit that carries the bump.
+      # Two ways to be allowed to publish, and npm picks whichever is present:
+      # an automation token in NPM_TOKEN, or trusted publishing, where the
+      # registry trusts this workflow directly and npm mints a short-lived
+      # OIDC token per run — nothing to store or rotate, and provenance is
+      # attached automatically. Neither configured is the one real error, and
+      # it is worth saying plainly: npm answers an unauthenticated publish
+      # with a 404, which reads as "no such package".
       - name: Publish to npm
         run: |
-          if [ -z "$NODE_AUTH_TOKEN" ]; then
-            echo "::error::NPM_TOKEN is not set — the registry answers an" \
-                 "unauthenticated publish with a misleading 404. Add an npm" \
-                 "automation token with publish rights as the NPM_TOKEN secret."
+          if [ -z "$NODE_AUTH_TOKEN" ] && [ -z "$ACTIONS_ID_TOKEN_REQUEST_URL" ]; then
+            echo "::error::No way to authenticate the publish. Either add an" \
+                 "npm automation token as the NPM_TOKEN secret, or configure" \
+                 "this workflow as a trusted publisher on npmjs.com."
             exit 1
+          fi
+          if [ -z "$NODE_AUTH_TOKEN" ]; then
+            # OIDC support landed in recent npm; the runner's bundled version
+            # may predate it.
+            echo "No NPM_TOKEN — publishing through trusted publishing (OIDC)."
+            npm install -g npm@latest
           fi
           pnpm release
         env:
