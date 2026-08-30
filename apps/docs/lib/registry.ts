@@ -266,18 +266,18 @@ export const categories: ExampleCategory[] = [
       },
       {
         slug: "search-command",
-        title: "Search Modal & User Menu",
+        title: "Search, Notifications & User Menu",
         description:
-          "Tapping search opens a full search overlay seeded with what you typed; the avatar opens the account menu.",
+          "Tapping search opens a full search overlay seeded with what you typed; the bell and the avatar each open their own menu — never both at once.",
         icon: Command,
         category: "layout",
-        tags: ["search", "modal", "user-menu", "avatar"],
+        tags: ["search", "modal", "notifications", "user-menu", "avatar"],
         appName: "Nimbus — knowledge base",
-        props: "<SearchModal defaultQuery> + <UserMenu>",
+        props: "<SearchModal> + <NotificationsMenu> + <UserMenu>",
         tryHints: [
           "Tap the search field — the modal opens with your text",
-          "Type to filter articles live",
-          "Open the avatar menu in the top corner",
+          "Open the bell — unread items, mark all read",
+          "Open the avatar menu — the bell menu closes itself",
         ],
       },
       {
@@ -449,6 +449,7 @@ export const docsNavigation = [
       { title: "SearchField", href: "/docs/components/search-field" },
       { title: "SearchModal", href: "/docs/components/search-modal" },
       { title: "UserMenu", href: "/docs/components/user-menu" },
+      { title: "NotificationsMenu", href: "/docs/components/notifications-menu" },
     ],
   },
   {

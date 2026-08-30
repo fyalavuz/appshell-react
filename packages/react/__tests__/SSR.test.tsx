@@ -16,6 +16,8 @@ import {
   HeaderNavItem,
   NavGroup,
   NavItem,
+  NotificationItem,
+  NotificationsMenu,
   SafeArea,
   ScrollNav,
   ScrollNavItem,
@@ -133,5 +135,25 @@ describe("server-side rendering", () => {
     );
     expect(open).toContain('aria-expanded="true"');
     expect(open).not.toContain("Log out");
+  });
+
+  it("renders NotificationsMenu on the server", () => {
+    const closed = renderToString(
+      <NotificationsMenu unreadCount={3}>
+        <NotificationItem title="Deploy finished" />
+      </NotificationsMenu>
+    );
+    expect(closed).toContain("data-notifications-menu");
+    expect(closed).toContain("3");
+
+    // Even forced open, the panel is a client portal — the server renders
+    // just the trigger, without crashing.
+    const open = renderToString(
+      <NotificationsMenu open onOpenChange={() => {}}>
+        <NotificationItem title="Deploy finished" />
+      </NotificationsMenu>
+    );
+    expect(open).toContain('aria-expanded="true"');
+    expect(open).not.toContain("Deploy finished");
   });
 });

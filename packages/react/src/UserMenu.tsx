@@ -2,11 +2,7 @@
 
 import {
   memo,
-  useCallback,
-  useEffect,
-  useRef,
   useState,
-  useSyncExternalStore,
   type MouseEvent,
   type ReactNode,
 } from "react";
@@ -14,9 +10,8 @@ import { createPortal } from "react-dom";
 import { cn } from "./cn";
 import { Avatar } from "./Avatar";
 import { useHeaderTheme } from "./HeaderContext";
+import { useAnchoredPanel } from "./menu-popover";
 import type { UserMenuItemProps, UserMenuProps } from "./types";
-
-const subscribeNever = () => () => {};
 
 /**
  * The signed-in user's menu: an avatar trigger opening a dropdown with the
@@ -25,6 +20,8 @@ const subscribeNever = () => () => {};
  *
  * The panel renders through a portal positioned against the trigger, so it
  * can never be painted under sibling header rows or clipped by overflow.
+ * Near the bottom of the viewport (a Sidebar's bottom slot) it opens
+ * upward instead, and opening it closes any other anchored menu.
  *
  * Standalone and replaceable by design: it needs no Header (the trigger
  * adapts when one is around), the trigger can be swapped via `trigger`,
@@ -49,83 +46,17 @@ export const UserMenu = memo(function UserMenu({
 
   const [internalOpen, setInternalOpen] = useState(false);
   const open = controlledOpen ?? internalOpen;
-  const triggerRef = useRef<HTMLButtonElement>(null);
-  const panelRef = useRef<HTMLDivElement | null>(null);
-
-  // Portals need a document — skip the panel during SSR.
-  const mounted = useSyncExternalStore(
-    subscribeNever,
-    () => true,
-    () => false
-  );
 
   const setOpen = (next: boolean) => {
     if (controlledOpen === undefined) setInternalOpen(next);
     onOpenChange?.(next);
   };
 
-  // Anchor the fixed panel to the trigger, imperatively — the panel is a
-  // portal, so React state isn't needed and no re-render happens on scroll.
-  const placePanel = useCallback(() => {
-    const rect = triggerRef.current?.getBoundingClientRect();
-    const el = panelRef.current;
-    if (!rect || !el) return;
-    el.style.top = `${rect.bottom + 8}px`;
-    if (align === "end") {
-      el.style.right = `${Math.max(8, window.innerWidth - rect.right)}px`;
-      el.style.left = "auto";
-    } else {
-      el.style.left = `${Math.max(8, rect.left)}px`;
-      el.style.right = "auto";
-    }
-  }, [align]);
-
-  const panelCallbackRef = useCallback(
-    (el: HTMLDivElement | null) => {
-      panelRef.current = el;
-      if (el) placePanel();
-    },
-    [placePanel]
-  );
-
-  // Follow the trigger on resize and scroll while open.
-  useEffect(() => {
-    if (!open) return;
-    window.addEventListener("resize", placePanel);
-    window.addEventListener("scroll", placePanel, true);
-    return () => {
-      window.removeEventListener("resize", placePanel);
-      window.removeEventListener("scroll", placePanel, true);
-    };
-  }, [open, placePanel]);
-
-  // Close on Escape.
-  useEffect(() => {
-    if (!open) return;
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
-
-  // Close on outside click — outside both the trigger and the panel.
-  useEffect(() => {
-    if (!open) return;
-    const handleMouseDown = (e: globalThis.MouseEvent) => {
-      const target = e.target as Node;
-      if (
-        !triggerRef.current?.contains(target) &&
-        !panelRef.current?.contains(target)
-      ) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleMouseDown);
-    return () => document.removeEventListener("mousedown", handleMouseDown);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
+  const { mounted, triggerRef, panelCallbackRef } = useAnchoredPanel({
+    open,
+    onClose: () => setOpen(false),
+    align,
+  });
 
   // A click on any menu item closes the menu — including custom items,
   // as long as they carry role="menuitem".

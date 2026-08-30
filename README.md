@@ -72,6 +72,8 @@ export default function App() {
 | `SearchField` | Theme-aware search input — rounded pill or full-width bar |
 | `SearchModal` | Full search overlay: sheet on phones, palette on desktop |
 | `UserMenu` | Avatar trigger + account dropdown for the header corner |
+| `NotificationsMenu` | Bell trigger + notification dropdown with unread badge |
+| `NotificationItem` | One notification row: icon, text, time, unread dot |
 | `Avatar` | Image-or-initials identity mark |
 | `SafeArea` | Safe-area padding via the standard `env(safe-area-inset-*)` |
 

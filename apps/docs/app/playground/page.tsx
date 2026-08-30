@@ -263,6 +263,11 @@ export default function PlaygroundPage() {
                     checked={config.userMenu}
                     onChange={(v) => set("userMenu", v)}
                   />
+                  <Toggle
+                    label="Notifications"
+                    checked={config.notifications}
+                    onChange={(v) => set("notifications", v)}
+                  />
                 </div>
               </div>
 

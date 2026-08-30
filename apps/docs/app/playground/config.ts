@@ -17,6 +17,7 @@ export interface PlaygroundConfig {
   searchVariant: "pill" | "full";
   searchModal: boolean;
   userMenu: boolean;
+  notifications: boolean;
   sidebar: "none" | "overlay" | "docked";
   sidebarCollapsible: boolean;
   sidebarBreakpoint: SidebarBreakpoint;
@@ -36,6 +37,7 @@ export const defaultConfig: PlaygroundConfig = {
   searchVariant: "pill",
   searchModal: false,
   userMenu: false,
+  notifications: false,
   sidebar: "none",
   sidebarCollapsible: true,
   sidebarBreakpoint: "md",
@@ -70,6 +72,7 @@ export function generateCode(config: PlaygroundConfig): string {
   if (config.showSearch) imports.push("SearchField");
   if (config.showSearch && config.searchModal) imports.push("SearchModal");
   if (config.userMenu) imports.push("UserMenu", "UserMenuItem");
+  if (config.notifications) imports.push("NotificationsMenu", "NotificationItem");
   if (config.sidebar !== "none") imports.push("Sidebar", "NavGroup", "NavItem");
   if (config.footer === "tab-bar") imports.push("Footer", "FooterItem");
   else if (config.footer !== "none") imports.push("Footer");
@@ -113,16 +116,31 @@ export function generateCode(config: PlaygroundConfig): string {
       : `          logo={<span className="font-bold">Fieldnotes</span>}`
   );
 
-  if (config.userMenu) {
-    lines.push(
-      `          actions={`,
-      `            <UserMenu username="Mara Kealoha" detail="mara@fieldnotes.app" initials="MK">`,
-      `              <UserMenuItem label="Profile" />`,
-      `              <UserMenuItem label="Settings" />`,
-      `              <UserMenuItem label="Log out" destructive />`,
-      `            </UserMenu>`,
-      `          }`
-    );
+  if (config.userMenu || config.notifications) {
+    const both = config.userMenu && config.notifications;
+    const indent = both ? "              " : "            ";
+    const actionLines: string[] = [];
+    if (config.notifications) {
+      actionLines.push(
+        `${indent}<NotificationsMenu unreadCount={2}>`,
+        `${indent}  <NotificationItem title="Deploy finished" time="2m" unread />`,
+        `${indent}  <NotificationItem title="Weekly digest ready" time="1d" />`,
+        `${indent}</NotificationsMenu>`
+      );
+    }
+    if (config.userMenu) {
+      actionLines.push(
+        `${indent}<UserMenu username="Mara Kealoha" detail="mara@fieldnotes.app" initials="MK">`,
+        `${indent}  <UserMenuItem label="Profile" />`,
+        `${indent}  <UserMenuItem label="Settings" />`,
+        `${indent}  <UserMenuItem label="Log out" destructive />`,
+        `${indent}</UserMenu>`
+      );
+    }
+    lines.push(`          actions={`);
+    if (both) lines.push(`            <>`, ...actionLines, `            </>`);
+    else lines.push(...actionLines);
+    lines.push(`          }`);
   }
 
   if (config.showNav) {

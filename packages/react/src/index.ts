@@ -17,6 +17,7 @@ export { SearchField } from "./SearchField";
 export { SearchModal } from "./SearchModal";
 export { Avatar } from "./Avatar";
 export { UserMenu, UserMenuItem } from "./UserMenu";
+export { NotificationsMenu, NotificationItem } from "./NotificationsMenu";
 export { cn } from "./cn";
 
 export type {
@@ -53,6 +54,8 @@ export type {
   AvatarProps,
   UserMenuProps,
   UserMenuItemProps,
+  NotificationsMenuProps,
+  NotificationItemProps,
 } from "./types";
 
 export type { MotionAdapter } from "./motion";

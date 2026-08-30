@@ -6,6 +6,8 @@ import {
   Content,
   Header,
   MotionProvider,
+  NotificationItem,
+  NotificationsMenu,
   SearchField,
   SearchModal,
   UserMenu,
@@ -18,6 +20,8 @@ import {
   Compass,
   FileText,
   LogOut,
+  MessageSquare,
+  Rocket,
   Settings,
   Sparkles,
   User,
@@ -67,9 +71,45 @@ function ArticleRow({
   );
 }
 
+const initialNotifications = [
+  {
+    id: 1,
+    icon: MessageSquare,
+    title: "Mara commented on your doc",
+    description: "“The shortcuts table is exactly what was missing.”",
+    time: "2m",
+    unread: true,
+  },
+  {
+    id: 2,
+    icon: Rocket,
+    title: "Knowledge base published",
+    description: "Your public help center is live at help.nimbus.app.",
+    time: "1h",
+    unread: true,
+  },
+  {
+    id: 3,
+    icon: BookOpen,
+    title: "Weekly digest ready",
+    description: "12 article updates across 3 spaces.",
+    time: "yesterday",
+    unread: false,
+  },
+];
+
 export default function SearchCommandPage() {
   const [query, setQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
+  const [notifications, setNotifications] = useState(initialNotifications);
+  const unreadCount = notifications.filter((n) => n.unread).length;
+
+  const markAllRead = () =>
+    setNotifications((current) => current.map((n) => ({ ...n, unread: false })));
+  const markRead = (id: number) =>
+    setNotifications((current) =>
+      current.map((n) => (n.id === id ? { ...n, unread: false } : n))
+    );
 
   return (
     <MotionProvider adapter={framerMotionAdapter}>
@@ -84,24 +124,55 @@ export default function SearchCommandPage() {
             </span>
           }
           actions={
-            <UserMenu
-              username="Mara Kealoha"
-              detail="mara@nimbus.app"
-              initials="MK"
-            >
-              <UserMenuItem icon={<User />} label="Profile" onClick={() => {}} />
-              <UserMenuItem
-                icon={<Settings />}
-                label="Settings"
-                onClick={() => {}}
-              />
-              <UserMenuItem
-                icon={<LogOut />}
-                label="Log out"
-                destructive
-                onClick={() => {}}
-              />
-            </UserMenu>
+            <>
+              <NotificationsMenu
+                unreadCount={unreadCount}
+                action={
+                  unreadCount > 0 ? (
+                    <button
+                      type="button"
+                      onClick={markAllRead}
+                      className="text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
+                    >
+                      Mark all read
+                    </button>
+                  ) : undefined
+                }
+              >
+                {notifications.map((n) => {
+                  const Icon = n.icon;
+                  return (
+                    <NotificationItem
+                      key={n.id}
+                      icon={<Icon />}
+                      title={n.title}
+                      description={n.description}
+                      time={n.time}
+                      unread={n.unread}
+                      onClick={() => markRead(n.id)}
+                    />
+                  );
+                })}
+              </NotificationsMenu>
+              <UserMenu
+                username="Mara Kealoha"
+                detail="mara@nimbus.app"
+                initials="MK"
+              >
+                <UserMenuItem icon={<User />} label="Profile" onClick={() => {}} />
+                <UserMenuItem
+                  icon={<Settings />}
+                  label="Settings"
+                  onClick={() => {}}
+                />
+                <UserMenuItem
+                  icon={<LogOut />}
+                  label="Log out"
+                  destructive
+                  onClick={() => {}}
+                />
+              </UserMenu>
+            </>
           }
           title="Help center"
           subtitle="Guides, answers, and shortcuts"
@@ -118,7 +189,8 @@ export default function SearchCommandPage() {
         <Content className="mx-auto w-full max-w-2xl pb-16 sm:border-x">
           <DemoHint>
             Tap the search field — the full search modal opens with whatever
-            you typed. And that avatar in the corner? It&rsquo;s a menu.
+            you typed. Up in the corner, the bell and the avatar each open
+            their own menu; opening one closes the other.
           </DemoHint>
 
           <div className="px-4 pb-2 pt-1">

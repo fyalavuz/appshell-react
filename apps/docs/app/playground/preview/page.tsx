@@ -12,6 +12,8 @@ import {
   MotionProvider,
   NavGroup,
   NavItem,
+  NotificationItem,
+  NotificationsMenu,
   SearchField,
   SearchModal,
   Sidebar,
@@ -183,25 +185,54 @@ export default function PlaygroundPreviewPage() {
             </span>
           }
           actions={
-            config.userMenu ? (
-              <UserMenu
-                username="Mara Kealoha"
-                detail="mara@fieldnotes.app"
-                initials="MK"
-              >
-                <UserMenuItem icon={<User />} label="Profile" onClick={() => {}} />
-                <UserMenuItem
-                  icon={<Settings />}
-                  label="Settings"
-                  onClick={() => {}}
-                />
-                <UserMenuItem
-                  icon={<LogOut />}
-                  label="Log out"
-                  destructive
-                  onClick={() => {}}
-                />
-              </UserMenu>
+            config.userMenu || config.notifications ? (
+              <>
+                {config.notifications && (
+                  <NotificationsMenu unreadCount={2}>
+                    <NotificationItem
+                      icon={<Leaf />}
+                      title="Six new notes from your circle"
+                      description="Fresh field notes landed in Today."
+                      time="2m"
+                      unread
+                      onClick={() => {}}
+                    />
+                    <NotificationItem
+                      icon={<Users />}
+                      title="Mara started following you"
+                      time="1h"
+                      unread
+                      onClick={() => {}}
+                    />
+                    <NotificationItem
+                      icon={<Bookmark />}
+                      title="Weekly digest ready"
+                      time="1d"
+                      onClick={() => {}}
+                    />
+                  </NotificationsMenu>
+                )}
+                {config.userMenu && (
+                  <UserMenu
+                    username="Mara Kealoha"
+                    detail="mara@fieldnotes.app"
+                    initials="MK"
+                  >
+                    <UserMenuItem icon={<User />} label="Profile" onClick={() => {}} />
+                    <UserMenuItem
+                      icon={<Settings />}
+                      label="Settings"
+                      onClick={() => {}}
+                    />
+                    <UserMenuItem
+                      icon={<LogOut />}
+                      label="Log out"
+                      destructive
+                      onClick={() => {}}
+                    />
+                  </UserMenu>
+                )}
+              </>
             ) : (
               <button
                 type="button"

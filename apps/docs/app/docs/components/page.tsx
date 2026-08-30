@@ -85,6 +85,11 @@ const searchAndIdentity: ComponentCard[] = [
     href: "/docs/components/user-menu",
     text: "The signed-in user's corner: an avatar trigger opening an account dropdown, with a standalone Avatar underneath.",
   },
+  {
+    title: "NotificationsMenu",
+    href: "/docs/components/notifications-menu",
+    text: "The bell next to the avatar: an unread badge and a notification dropdown that coexists with the UserMenu instead of fighting it.",
+  },
 ];
 
 function CardGrid({ cards }: { cards: ComponentCard[] }) {

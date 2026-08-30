@@ -263,6 +263,52 @@ export interface UserMenuItemProps {
   className?: string;
 }
 
+export interface NotificationsMenuProps {
+  /** Unread notifications shown as a badge on the bell. 0 hides the badge. */
+  unreadCount?: number;
+  /** Replace the default bell button content entirely. */
+  trigger?: ReactNode;
+  /** Controlled open state. Omit for uncontrolled. */
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  /** Horizontal alignment of the panel relative to the trigger. Default "end". */
+  align?: "start" | "end";
+  /** Panel heading. Default "Notifications". */
+  title?: ReactNode;
+  /**
+   * Rendered at the right of the heading — a "Mark all read" button, a
+   * settings link. Clicks here keep the menu open (no role="menuitem").
+   */
+  action?: ReactNode;
+  /** Pinned row under the list — a "View all notifications" link. */
+  footer?: ReactNode;
+  /** Shown instead of the built-in empty state when there are no items. */
+  emptyState?: ReactNode;
+  /** The list — NotificationItem elements, separators, anything. */
+  children?: ReactNode;
+  /** Extra classes for the dropdown panel. */
+  className?: string;
+  /** Extra classes for the default trigger button. */
+  triggerClassName?: string;
+  "aria-label"?: string;
+}
+
+export interface NotificationItemProps {
+  /** Leading visual — an icon or a small Avatar. */
+  icon?: ReactNode;
+  /** Main line of the notification. */
+  title: string;
+  /** Secondary line — clamps to two lines. */
+  description?: string;
+  /** Short timestamp — "2m", "yesterday". */
+  time?: string;
+  /** Marks the item unread: bolder title plus a dot. */
+  unread?: boolean;
+  href?: string;
+  onClick?: () => void;
+  className?: string;
+}
+
 export interface ScrollNavProps {
   className?: string;
   children: ReactNode;

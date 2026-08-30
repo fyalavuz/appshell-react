@@ -656,6 +656,116 @@ export const userMenuItemApi: ApiDef = {
   ],
 };
 
+export const notificationsMenuApi: ApiDef = {
+  component: "NotificationsMenu",
+  description:
+    "Bell trigger + notification dropdown for the header corner. Standalone like UserMenu — and built to coexist with it: opening one closes the other.",
+  props: [
+    {
+      name: "unreadCount",
+      type: "number",
+      default: "0",
+      description:
+        "Unread notifications shown as a badge on the bell (caps at 99+). 0 hides the badge.",
+    },
+    {
+      name: "trigger",
+      type: "ReactNode",
+      description: "Replace the default bell button content entirely.",
+    },
+    {
+      name: "open",
+      type: "boolean",
+      description: "Controlled open state. Omit for uncontrolled.",
+    },
+    {
+      name: "onOpenChange",
+      type: "(open: boolean) => void",
+      description: "Open-state change requests.",
+    },
+    {
+      name: "align",
+      type: '"start" | "end"',
+      default: '"end"',
+      description: "Horizontal alignment of the panel relative to the trigger.",
+    },
+    {
+      name: "title",
+      type: "ReactNode",
+      default: '"Notifications"',
+      description: "Panel heading.",
+    },
+    {
+      name: "action",
+      type: "ReactNode",
+      description:
+        "Rendered at the right of the heading — a \"Mark all read\" button. Clicks here keep the menu open.",
+    },
+    {
+      name: "footer",
+      type: "ReactNode",
+      description: "Pinned row under the list — a \"View all notifications\" link.",
+    },
+    {
+      name: "emptyState",
+      type: "ReactNode",
+      description: "Shown instead of the built-in empty state when there are no items.",
+    },
+    {
+      name: "children",
+      type: "ReactNode",
+      description:
+        "The list — NotificationItem elements or anything else. Clicks on role=\"menuitem\" elements close the menu.",
+    },
+    {
+      name: "className",
+      type: "string",
+      description: "Extra classes for the dropdown panel.",
+    },
+    {
+      name: "triggerClassName",
+      type: "string",
+      description: "Extra classes for the default trigger button.",
+    },
+  ],
+};
+
+export const notificationItemApi: ApiDef = {
+  component: "NotificationItem",
+  description: "One notification row inside a NotificationsMenu.",
+  props: [
+    { name: "title", type: "string", required: true, description: "Main line." },
+    {
+      name: "description",
+      type: "string",
+      description: "Secondary line — clamps to two lines.",
+    },
+    {
+      name: "icon",
+      type: "ReactNode",
+      description: "Leading visual — a 16px icon or a small Avatar.",
+    },
+    {
+      name: "time",
+      type: "string",
+      description: 'Short timestamp — "2m", "yesterday".',
+    },
+    {
+      name: "unread",
+      type: "boolean",
+      default: "false",
+      description: "Marks the row unread: bolder title plus a dot.",
+    },
+    {
+      name: "href",
+      type: "string",
+      description: "Renders the row as a link instead of a button.",
+    },
+    { name: "onClick", type: "() => void", description: "Action handler." },
+    { name: "className", type: "string", description: "Extra classes." },
+  ],
+};
+
 export const scrollNavApi: ApiDef = {
   component: "ScrollNavItem",
   description: "One pill inside a horizontally scrollable <ScrollNav>.",
