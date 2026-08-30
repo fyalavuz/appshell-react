@@ -2,6 +2,7 @@
 
 import {
   useEffect,
+  useId,
   useRef,
   useState,
   useSyncExternalStore,
@@ -10,6 +11,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import { cn } from "./cn";
+import { useFocusTrap } from "./focus-trap";
 import { useMotion } from "./motion";
 import type { SearchModalProps } from "./types";
 
@@ -74,6 +76,10 @@ export function SearchModal({
 
   const inputRef = useRef<HTMLInputElement>(null);
   const restoreFocusRef = useRef<HTMLElement | null>(null);
+  const trapId = useId();
+
+  // Tab stays inside the dialog; the modal's own effect restores focus.
+  useFocusTrap(open, trapId, { restoreFocus: false });
 
   // Portals need a document — render nothing during SSR and hydrate in.
   const mounted = useSyncExternalStore(
@@ -159,6 +165,7 @@ export function SearchModal({
             aria-modal="true"
             aria-label={ariaLabel ?? placeholder}
             data-search-modal
+            data-focus-trap-id={trapId}
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 12 }}

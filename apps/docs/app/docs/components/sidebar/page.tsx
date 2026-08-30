@@ -192,11 +192,12 @@ export default async function SidebarPage() {
             activate it, with <InlineCode>aria-expanded</InlineCode> and a
             visible focus ring
           </li>
+          <li>
+            • The open drawer traps <InlineCode>Tab</InlineCode>/
+            <InlineCode>Shift+Tab</InlineCode> inside itself, pulls focus in
+            on the first Tab, and hands focus back to the trigger on close
+          </li>
         </ul>
-        <DocNote>
-          The drawer does not trap focus yet — if your menu contains many
-          focusable elements, consider a focus-trap utility until that lands.
-        </DocNote>
       </DocSection>
 
       <DocSection title="Related">

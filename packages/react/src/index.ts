@@ -20,6 +20,9 @@ export { Avatar } from "./Avatar";
 export { UserMenu, UserMenuItem } from "./UserMenu";
 export { NotificationsMenu, NotificationItem } from "./NotificationsMenu";
 export { LinkProvider, useLinkComponent } from "./LinkContext";
+export { BottomSheet } from "./BottomSheet";
+export { Tabs, Tab } from "./Tabs";
+export { Breadcrumbs, BreadcrumbItem, ContentHeader } from "./ContentHeader";
 export { cn } from "./cn";
 
 export type {
@@ -59,6 +62,12 @@ export type {
   UserMenuItemProps,
   NotificationsMenuProps,
   NotificationItemProps,
+  BottomSheetProps,
+  TabsProps,
+  TabProps,
+  BreadcrumbsProps,
+  BreadcrumbItemProps,
+  ContentHeaderProps,
 } from "./types";
 
 export type { MotionAdapter } from "./motion";

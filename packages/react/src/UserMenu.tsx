@@ -135,7 +135,7 @@ export const UserMenuItem = memo(function UserMenuItem({
 }: UserMenuItemProps) {
   const LinkComp = useLinkComponent();
   const classes = cn(
-    "flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-sm outline-none transition-colors",
+    "flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-start text-sm outline-none transition-colors",
     destructive
       ? "text-destructive hover:bg-destructive/10 focus-visible:bg-destructive/10"
       : "text-foreground hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent",

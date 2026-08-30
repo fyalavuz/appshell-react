@@ -346,3 +346,77 @@ export interface ScrollNavItemProps {
   onClick?: () => void;
   className?: string;
 }
+
+export interface BottomSheetProps {
+  open: boolean;
+  onClose: () => void;
+  /**
+   * Resting heights as fractions of the viewport, ascending.
+   * Dragging the grabber moves the sheet between them; dragging well
+   * below the smallest one dismisses. Default [0.45, 0.9].
+   */
+  snapPoints?: number[];
+  /** Index into snapPoints the sheet opens at. Default 0. */
+  defaultSnap?: number;
+  /** Fires when a drag settles on a different snap point. */
+  onSnapChange?: (index: number) => void;
+  /**
+   * Modal (default): backdrop, scroll lock, Escape and backdrop-tap close.
+   * Non-modal: no backdrop, the page behind stays interactive — the map
+   * pattern.
+   */
+  modal?: boolean;
+  /** Extra classes for the sheet panel. */
+  className?: string;
+  "aria-label"?: string;
+  children: ReactNode;
+}
+
+export interface TabsProps {
+  /** Controlled selected value. */
+  value?: string;
+  /** Uncontrolled initial value. Defaults to the first Tab. */
+  defaultValue?: string;
+  onValueChange?: (value: string) => void;
+  /**
+   * Dock the row below a pinned Header via --header-height (default true).
+   * Pass false for an inline, non-sticky row.
+   */
+  sticky?: boolean;
+  className?: string;
+  "aria-label"?: string;
+  children: ReactNode;
+}
+
+export interface TabProps {
+  /** Identifies this tab in value/onValueChange. */
+  value: string;
+  label: string;
+  badge?: ReactNode;
+  className?: string;
+}
+
+export interface BreadcrumbsProps {
+  className?: string;
+  children: ReactNode;
+}
+
+export interface BreadcrumbItemProps {
+  label: string;
+  /** Rendered through the LinkProvider component. Omit for plain text. */
+  href?: string;
+  /** Marks the current page: aria-current, no link styling. */
+  current?: boolean;
+  onClick?: () => void;
+  className?: string;
+}
+
+export interface ContentHeaderProps {
+  title: ReactNode;
+  subtitle?: ReactNode;
+  /** Typically a <Breadcrumbs> — rendered above the title. */
+  breadcrumbs?: ReactNode;
+  /** Right-aligned controls — buttons, menus. */
+  actions?: ReactNode;
+  className?: string;
+}

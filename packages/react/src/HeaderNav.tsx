@@ -177,7 +177,7 @@ export const HeaderNavItem = memo(function HeaderNavItem({
       {open && (
         <div
           role="menu"
-          className="absolute top-full left-0 mt-1 min-w-48 rounded-lg border border-border bg-popover p-1 shadow-md animate-in fade-in zoom-in-95 duration-200"
+          className="absolute top-full start-0 mt-1 min-w-48 rounded-lg border border-border bg-popover p-1 shadow-md animate-in fade-in zoom-in-95 duration-200"
         >
           {children}
         </div>

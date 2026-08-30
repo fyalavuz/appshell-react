@@ -27,8 +27,8 @@ export const NavItem = memo(function NavItem({
   const content = (
     <>
       {icon && <span className="shrink-0 opacity-70 group-data-[active=true]:opacity-100 transition-opacity">{icon}</span>}
-      <span className="flex-1 truncate text-left group-data-[collapsed=true]/sidebar:hidden">{label}</span>
-      {badge && <span className="shrink-0 ml-auto group-data-[collapsed=true]/sidebar:hidden">{badge}</span>}
+      <span className="flex-1 truncate text-start group-data-[collapsed=true]/sidebar:hidden">{label}</span>
+      {badge && <span className="shrink-0 ms-auto group-data-[collapsed=true]/sidebar:hidden">{badge}</span>}
     </>
   );
 

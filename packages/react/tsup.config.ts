@@ -1,18 +1,21 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig({
-  entry: ["src/index.ts", "src/motion-framer.tsx"],
+  // Transpile file-by-file instead of bundling ("preserve modules"): the
+  // published package mirrors src/, index.js only re-exports, and with
+  // "sideEffects": false a consumer bundler drops every module it doesn't
+  // import — pulling one component no longer pays for the whole library.
+  entry: ["src/**/*.ts", "src/**/*.tsx", "!src/**/*.stories.tsx"],
   format: ["esm", "cjs"],
+  bundle: false,
   dts: true,
-  splitting: true,
   sourcemap: true,
   clean: true,
-  external: ["react", "react-dom", "framer-motion"],
-  treeshake: true,
   minify: true,
-  // Every module in this package is a client component. esbuild and the
-  // treeshake (rollup) pass both strip "use client" directives, so they are
-  // re-added per chunk after the build — without this the published package
-  // breaks in Next.js App Router server components.
+  // Every module in this package is a client component. esbuild strips
+  // "use client" directives, so they are re-added per file after the build —
+  // without this the published package breaks in Next.js App Router server
+  // components. The script also gives ESM-strict runtimes real extensions
+  // on relative imports.
   onSuccess: "node scripts/add-use-client.mjs",
 });

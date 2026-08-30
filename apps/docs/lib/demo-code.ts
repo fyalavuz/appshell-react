@@ -19,6 +19,7 @@ import { snippet as revealCombined } from "@/app/examples/preview/reveal-combine
 import { snippet as headerThemes } from "@/app/examples/preview/header-themes/snippet";
 import { snippet as darkMode } from "@/app/examples/preview/dark-mode/snippet";
 import { snippet as searchCommand } from "@/app/examples/preview/search-command/snippet";
+import { snippet as bottomSheet } from "@/app/examples/preview/bottom-sheet/snippet";
 
 /** Curated code snippets shown on each example's detail page. */
 export const demoCode: Record<string, string> = {
@@ -36,6 +37,7 @@ export const demoCode: Record<string, string> = {
   sidebar,
   "docked-sidebar": dockedSidebar,
   "search-command": searchCommand,
+  "bottom-sheet": bottomSheet,
   "scroll-nav": scrollNav,
   "in-page-nav": inPageNav,
   "desktop-nav": desktopNav,

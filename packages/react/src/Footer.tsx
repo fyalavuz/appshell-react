@@ -36,7 +36,7 @@ export const FooterItem = memo(function FooterItem({
       <span className="relative">
         {icon}
         {badge != null && badge > 0 && (
-          <span className="absolute -top-1.5 -right-2.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-destructive px-1 text-[10px] font-bold text-white">
+          <span className="absolute -top-1.5 -end-2.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-destructive px-1 text-[10px] font-bold text-white">
             {badge > 99 ? "99+" : badge}
           </span>
         )}
@@ -69,8 +69,8 @@ export const Footer = memo(function Footer({
   if (variant === "floating") {
     const positionClass = {
       center: "justify-center",
-      left: "justify-start pl-4",
-      right: "justify-end pr-4",
+      left: "justify-start ps-4",
+      right: "justify-end pe-4",
     }[position];
 
     return (

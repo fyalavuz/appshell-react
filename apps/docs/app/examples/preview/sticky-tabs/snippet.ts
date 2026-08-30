@@ -1,5 +1,6 @@
-export const snippet = `import { AppShell, Header, Content, MotionProvider } from "appshell-react";
+export const snippet = `import { AppShell, Header, Content, Tabs, Tab, MotionProvider } from "appshell-react";
 import { framerMotionAdapter } from "appshell-react/motion-framer";
+import { useState } from "react";
 
 export default function App() {
   const [tab, setTab] = useState("posts");
@@ -14,18 +15,14 @@ export default function App() {
           subtitle="@nadia · Product designer"
         />
 
-        {/* The Header keeps --header-height in sync, so a sibling
-            can dock right below it with position: sticky. */}
-        <div
-          style={{ top: "var(--header-height)" }}
-          className="sticky z-40 border-b bg-background/95 backdrop-blur"
-        >
-          {["posts", "replies", "media", "likes"].map((id) => (
-            <button key={id} onClick={() => setTab(id)}>
-              {id}
-            </button>
-          ))}
-        </div>
+        {/* Docks itself below the fixed header via --header-height —
+            real tablist semantics, arrow-key navigation included. */}
+        <Tabs value={tab} onValueChange={setTab} aria-label="Profile sections">
+          <Tab value="posts" label="Posts" />
+          <Tab value="replies" label="Replies" />
+          <Tab value="media" label="Media" />
+          <Tab value="likes" label="Likes" />
+        </Tabs>
 
         <Content>{/* content for the active tab */}</Content>
       </AppShell>

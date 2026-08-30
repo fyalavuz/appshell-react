@@ -25,6 +25,11 @@ const structure: ComponentCard[] = [
     text: "Root wrapper: shell context, safe-area orchestration, and automatic placement of Header and docked Sidebar children.",
   },
   {
+    title: "ContentHeader & Breadcrumbs",
+    href: "/docs/components/content-header",
+    text: "The heading block of a workspace screen: router-aware breadcrumb trail, title, subtitle, and actions.",
+  },
+  {
     title: "Content",
     href: "/docs/components/content",
     text: "The main region — a semantic <main> that fills the remaining shell space.",
@@ -61,6 +66,16 @@ const navigation: ComponentCard[] = [
     title: "NavGroup & NavItem",
     href: "/docs/components/sidebar",
     text: "Collapsible sections and navigation rows for Sidebar content — documented on the Sidebar page.",
+  },
+  {
+    title: "Tabs & Tab",
+    href: "/docs/components/tabs",
+    text: "A tab row that docks itself below the header via --header-height, with tablist semantics and arrow-key navigation.",
+  },
+  {
+    title: "BottomSheet",
+    href: "/docs/components/bottom-sheet",
+    text: "A draggable sheet with snap points — modal, or non-modal floating over a map that stays interactive.",
   },
   {
     title: "ScrollNav & ScrollNavItem",

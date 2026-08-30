@@ -2,6 +2,7 @@
 
 import { memo, useEffect, useId, useState, type CSSProperties } from "react";
 import { cn } from "./cn";
+import { useFocusTrap } from "./focus-trap";
 import { useMotion } from "./motion";
 import { useBelowBreakpoint } from "./hooks/use-below-breakpoint";
 import type { SidebarBreakpoint, SidebarProps } from "./types";
@@ -58,6 +59,9 @@ export const Sidebar = memo(function Sidebar(props: SidebarProps) {
   const collapsed = isDocked ? (props.collapsed ?? internalCollapsed) : false;
   const panelId = useId();
 
+  // Keep Tab inside the open drawer and hand focus back on close.
+  useFocusTrap(open && overlayActive, panelId);
+
   // Close on Escape key — only while the drawer presentation is active.
   useEffect(() => {
     if (!open || !overlayActive || !onClose) return;
@@ -106,6 +110,7 @@ export const Sidebar = memo(function Sidebar(props: SidebarProps) {
             role="dialog"
             aria-modal="true"
             aria-label="Navigation menu"
+            data-focus-trap-id={panelId}
             initial={{ x: isLeft ? "-100%" : "100%" }}
             animate={{ x: 0 }}
             exit={{ x: isLeft ? "-100%" : "100%" }}

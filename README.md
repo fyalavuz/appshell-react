@@ -69,6 +69,10 @@ export default function App() {
 | `FooterItem` | Individual tab inside a tab-bar footer |
 | `ScrollNav` | Horizontal scrollable pill navigation |
 | `Sidebar` | Overlay drawer or docked panel with icon rail and bottom slot |
+| `BottomSheet` | Draggable sheet with snap points — modal or map-style |
+| `Tabs` | Tab row that docks below the header, arrow-key navigable |
+| `Breadcrumbs` | Router-aware breadcrumb trail with automatic separators |
+| `ContentHeader` | Screen heading: breadcrumbs, title, subtitle, actions |
 | `SearchField` | Theme-aware search input — rounded pill or full-width bar |
 | `SearchModal` | Full search overlay: sheet on phones, palette on desktop |
 | `UserMenu` | Avatar trigger + account dropdown for the header corner |
@@ -84,11 +88,11 @@ Visit the [documentation site](https://fyalavuz.github.io/appshell-react) for fu
 
 ## Examples
 
-Explore 21 fullscreen demos at [fyalavuz.github.io/appshell-react/examples](https://fyalavuz.github.io/appshell-react/examples):
+Explore 22 fullscreen demos at [fyalavuz.github.io/appshell-react/examples](https://fyalavuz.github.io/appshell-react/examples):
 
 - **Headers** -- fixed, static, sticky, and every per-row reveal behavior
 - **Footers** -- tab bar with badges, floating action pill, liquid-glass dock, mini now-playing bar
-- **Layout & Navigation** -- sidebar drawer, docked sidebar with icon rail, search modal with user menu, scroll pills, scroll-spy anchors, desktop dropdowns, safe areas
+- **Layout & Navigation** -- sidebar drawer, docked sidebar with icon rail, draggable bottom sheet, search modal with user menu, scroll pills, scroll-spy anchors, desktop dropdowns, safe areas
 - **Patterns & Theming** -- combined reveal choreography, header themes, dark mode
 
 Or mix every behavior, theme, speed, and footer variant live in the [Playground](https://fyalavuz.github.io/appshell-react/playground).

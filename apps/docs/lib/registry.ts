@@ -1,6 +1,7 @@
 import {
   Command,
   Dock,
+  Map as MapIcon,
   PanelLeftClose,
   PanelTop,
   Minus,
@@ -145,16 +146,17 @@ export const categories: ExampleCategory[] = [
       },
       {
         slug: "sticky-tabs",
-        title: "Sticky Sub-navigation",
+        title: "Tabs Below the Header",
         description:
-          "A tab row that docks below the header using the --header-height CSS variable.",
+          "The Tabs component docks itself below the fixed header — tablist semantics and arrow-key navigation included.",
         icon: TableOfContents,
         category: "headers",
-        tags: ["header", "tabs", "css-variable"],
+        tags: ["header", "tabs", "tablist"],
         appName: "Orbit — profile",
-        props: 'top: "var(--header-height)"',
+        props: "<Tabs> + <Tab>",
         tryHints: [
           "Scroll down — tabs hitch below the header",
+          "Arrow keys move between tabs",
           "Switch tabs while everything stays docked",
         ],
       },
@@ -263,6 +265,22 @@ export const categories: ExampleCategory[] = [
           "Press ⌘K — or click the search at the panel's top",
           "Collapse to a rail — search becomes an icon",
           "Phone: the same nav and search open as a drawer",
+        ],
+      },
+      {
+        slug: "bottom-sheet",
+        title: "Bottom Sheet",
+        description:
+          "A draggable sheet with snap points floating over a map — non-modal, so the map behind stays interactive.",
+        icon: MapIcon,
+        category: "layout",
+        tags: ["bottom-sheet", "drag", "snap-points", "map"],
+        appName: "Wander — city guide",
+        props: "snapPoints={[0.4, 0.85]} modal={false}",
+        tryHints: [
+          "Drag the handle up — the sheet snaps taller",
+          "Drag well down — it dismisses; reopen from the button",
+          "The map stays interactive behind it",
         ],
       },
       {
@@ -445,6 +463,9 @@ export const docsNavigation = [
       { title: "Footer", href: "/docs/components/footer" },
       { title: "Content", href: "/docs/components/content" },
       { title: "Sidebar", href: "/docs/components/sidebar" },
+      { title: "BottomSheet", href: "/docs/components/bottom-sheet" },
+      { title: "Tabs", href: "/docs/components/tabs" },
+      { title: "ContentHeader", href: "/docs/components/content-header" },
       { title: "SafeArea", href: "/docs/components/safe-area" },
       { title: "ScrollNav", href: "/docs/components/scroll-nav" },
       { title: "SearchField", href: "/docs/components/search-field" },

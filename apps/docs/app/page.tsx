@@ -46,7 +46,7 @@ export default function App() {
 const stats = [
   { value: "10", label: "header behaviors" },
   { value: "3", label: "footer variants" },
-  { value: "21", label: "live demos" },
+  { value: "22", label: "live demos" },
   { value: "0", label: "required deps" },
 ];
 

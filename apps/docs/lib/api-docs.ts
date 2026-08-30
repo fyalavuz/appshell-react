@@ -845,3 +845,161 @@ export const hooksApi: {
       "Binds the desktop search shortcut — ⌘K on macOS, Ctrl+K elsewhere — to a handler, typically opening a SearchModal. Opt into a bare “/” trigger (ignored while typing) with slash: true.",
   },
 ];
+
+export const bottomSheetApi: ApiDef = {
+  component: "BottomSheet",
+  description:
+    "A draggable bottom sheet with snap points — content layered over a map, a player, or a feed. CSS-transform motion, portaled, SSR-safe.",
+  props: [
+    {
+      name: "open",
+      type: "boolean",
+      required: true,
+      description: "Whether the sheet is visible.",
+    },
+    {
+      name: "onClose",
+      type: "() => void",
+      required: true,
+      description:
+        "Called on Escape / backdrop tap (modal) and when dragged below the lowest snap.",
+    },
+    {
+      name: "snapPoints",
+      type: "number[]",
+      default: "[0.45, 0.9]",
+      description:
+        "Resting heights as viewport fractions, ascending. Dragging moves between them.",
+    },
+    {
+      name: "defaultSnap",
+      type: "number",
+      default: "0",
+      description: "Index into snapPoints the sheet opens at.",
+    },
+    {
+      name: "onSnapChange",
+      type: "(index: number) => void",
+      description: "Fires when a drag settles on a different snap point.",
+    },
+    {
+      name: "modal",
+      type: "boolean",
+      default: "true",
+      description:
+        "Modal: backdrop, scroll lock, Escape, focus trap. false keeps the page behind interactive — the map pattern.",
+    },
+    { name: "className", type: "string", description: "Extra classes for the panel." },
+    {
+      name: "aria-label",
+      type: "string",
+      default: '"Sheet"',
+      description: "Accessible dialog name.",
+    },
+    {
+      name: "children",
+      type: "ReactNode",
+      required: true,
+      description: "Sheet content — scrolls internally below the grabber.",
+    },
+  ],
+};
+
+export const tabsApi: ApiDef = {
+  component: "Tabs",
+  description:
+    "A tab row that docks below a pinned Header via --header-height. tablist semantics with ArrowLeft/ArrowRight roving focus.",
+  props: [
+    { name: "value", type: "string", description: "Controlled selected value." },
+    {
+      name: "defaultValue",
+      type: "string",
+      description: "Uncontrolled initial value. Defaults to the first Tab.",
+    },
+    {
+      name: "onValueChange",
+      type: "(value: string) => void",
+      description: "Selection handler.",
+    },
+    {
+      name: "sticky",
+      type: "boolean",
+      default: "true",
+      description:
+        "Dock below the Header via --header-height. false renders an inline row.",
+    },
+    { name: "className", type: "string", description: "Extra classes for the row." },
+    {
+      name: "aria-label",
+      type: "string",
+      default: '"Tabs"',
+      description: "Accessible tablist name.",
+    },
+    {
+      name: "children",
+      type: "ReactNode",
+      required: true,
+      description: "Tab elements.",
+    },
+  ],
+};
+
+export const tabApi: ApiDef = {
+  component: "Tab",
+  description: "One tab inside a <Tabs> row.",
+  props: [
+    {
+      name: "value",
+      type: "string",
+      required: true,
+      description: "Identifies this tab in value/onValueChange.",
+    },
+    { name: "label", type: "string", required: true, description: "Tab text." },
+    { name: "badge", type: "ReactNode", description: "Trailing count or dot." },
+    { name: "className", type: "string", description: "Extra classes." },
+  ],
+};
+
+export const breadcrumbsApi: ApiDef = {
+  component: "BreadcrumbItem",
+  description:
+    "One crumb inside a <Breadcrumbs> trail. Separators between crumbs are automatic.",
+  props: [
+    { name: "label", type: "string", required: true, description: "Crumb text." },
+    {
+      name: "href",
+      type: "string",
+      description:
+        "Renders as a link, through the LinkProvider component (plain <a> by default).",
+    },
+    {
+      name: "current",
+      type: "boolean",
+      default: "false",
+      description: "Marks the current page: aria-current, no link styling.",
+    },
+    { name: "onClick", type: "() => void", description: "Click handler (renders a button when no href)." },
+    { name: "className", type: "string", description: "Extra classes." },
+  ],
+};
+
+export const contentHeaderApi: ApiDef = {
+  component: "ContentHeader",
+  description:
+    "The heading block of a screen: optional breadcrumb trail, title with supporting line, right-aligned actions.",
+  props: [
+    { name: "title", type: "ReactNode", required: true, description: "Screen title." },
+    { name: "subtitle", type: "ReactNode", description: "Supporting line under the title." },
+    {
+      name: "breadcrumbs",
+      type: "ReactNode",
+      description: "Typically a <Breadcrumbs> — rendered above the title.",
+    },
+    {
+      name: "actions",
+      type: "ReactNode",
+      description: "Right-aligned controls — buttons, menus.",
+    },
+    { name: "className", type: "string", description: "Extra classes." },
+  ],
+};

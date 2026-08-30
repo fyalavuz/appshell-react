@@ -93,7 +93,7 @@ export const NotificationsMenu = memo(function NotificationsMenu({
       {unreadCount > 0 && (
         <span
           aria-hidden
-          className="absolute right-0.5 top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-destructive px-1 text-[10px] font-bold text-white"
+          className="absolute end-0.5 top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-destructive px-1 text-[10px] font-bold text-white"
         >
           {unreadCount > 99 ? "99+" : unreadCount}
         </span>
@@ -175,7 +175,7 @@ export const NotificationItem = memo(function NotificationItem({
   className,
 }: NotificationItemProps) {
   const classes = cn(
-    "flex w-full items-start gap-3 rounded-lg px-3 py-2.5 text-left outline-none transition-colors",
+    "flex w-full items-start gap-3 rounded-lg px-3 py-2.5 text-start outline-none transition-colors",
     "hover:bg-accent focus-visible:bg-accent",
     className
   );

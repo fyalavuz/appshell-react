@@ -94,7 +94,8 @@ export default async function SearchModalPage() {
       <DocSection title="Results are yours">
         <DocProse>
           The modal owns the input, the backdrop, Escape/backdrop dismissal,
-          scroll locking, and focus restore. Everything below the input row is{" "}
+          scroll locking, a <InlineCode>Tab</InlineCode> focus trap, and focus
+          restore. Everything below the input row is{" "}
           <InlineCode>children</InlineCode>: pass a render function to build
           live results from the current query, or plain nodes for recents and
           suggestions. Nothing else is prescribed — list, grid, sections,

@@ -38,7 +38,7 @@ export const NavGroup = memo(function NavGroup({
         className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground transition-colors group-data-[collapsed=true]/sidebar:hidden"
       >
         {icon && <span className="shrink-0">{icon}</span>}
-        <span className="flex-1 text-left">{title}</span>
+        <span className="flex-1 text-start">{title}</span>
         <span
           className={cn(
             "shrink-0 transition-transform duration-200",
@@ -56,7 +56,7 @@ export const NavGroup = memo(function NavGroup({
           open ? "max-h-[500px]" : "max-h-0"
         )}
       >
-        <div className="pl-4 py-1 group-data-[collapsed=true]/sidebar:pl-0">{children}</div>
+        <div className="ps-4 py-1 group-data-[collapsed=true]/sidebar:ps-0">{children}</div>
       </div>
     </div>
   );

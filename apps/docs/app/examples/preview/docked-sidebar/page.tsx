@@ -3,7 +3,10 @@
 import { useEffect, useState } from "react";
 import {
   AppShell,
+  BreadcrumbItem,
+  Breadcrumbs,
   Content,
+  ContentHeader,
   Header,
   MotionProvider,
   NavGroup,
@@ -208,15 +211,24 @@ export default function DockedSidebarPage() {
             drawer.
           </DemoHint>
 
-          <div className="px-4">
-            <div className="flex items-baseline justify-between">
-              <h1 className="text-lg font-semibold tracking-tight">
-                Launch week
-              </h1>
+          <ContentHeader
+            breadcrumbs={
+              <Breadcrumbs>
+                <BreadcrumbItem label="Terra" onClick={() => {}} />
+                <BreadcrumbItem label="Projects" onClick={() => {}} />
+                <BreadcrumbItem label="Atlas launch" current />
+              </Breadcrumbs>
+            }
+            title="Launch week"
+            subtitle={`${done.length} of ${tasks.length} tasks done`}
+            actions={
               <span className="font-mono text-xs text-muted-foreground">
-                {done.length}/{tasks.length} done
+                due Friday
               </span>
-            </div>
+            }
+          />
+
+          <div className="px-4">
             <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-muted">
               <div
                 className="h-full rounded-full bg-teal-500 transition-all duration-300"

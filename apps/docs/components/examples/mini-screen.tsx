@@ -318,6 +318,29 @@ function renderMotif(slug: string) {
         </>
       );
 
+    case "bottom-sheet":
+      return (
+        <>
+          {/* Map-ish backdrop */}
+          <div className="absolute inset-0 bg-emerald-50 dark:bg-emerald-950/30">
+            <span className="absolute left-1/4 top-1/4 size-2 rounded-full bg-emerald-500/70" />
+            <span className="absolute left-2/3 top-1/3 size-2 rounded-full bg-emerald-500/70" />
+            <span className="absolute left-1/2 top-1/2 size-2 rounded-full bg-emerald-500/70" />
+          </div>
+          <Anim
+            name="ms-rise"
+            className="absolute inset-x-2 bottom-0 z-10 rounded-t-lg border border-b-0 border-brand/30 bg-background p-2 shadow-lg"
+          >
+            <span className="mx-auto block h-1 w-8 rounded-full bg-foreground/20" />
+            <div className="mt-2 space-y-1.5">
+              <span className="block h-1.5 w-3/4 rounded-full bg-brand" />
+              <span className="block h-1.5 w-full rounded-full bg-foreground/15" />
+              <span className="block h-1.5 w-5/6 rounded-full bg-foreground/15" />
+            </div>
+          </Anim>
+        </>
+      );
+
     case "search-command":
       return (
         <>

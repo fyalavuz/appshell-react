@@ -6,6 +6,8 @@ import {
   Content,
   Header,
   MotionProvider,
+  Tab,
+  Tabs,
 } from "appshell-react";
 import { framerMotionAdapter } from "appshell-react/motion-framer";
 import {
@@ -236,31 +238,16 @@ export default function StickyTabsPage() {
           subtitle="@nadia · Product designer"
         />
 
-        {/* Sticky tab row — docks below the fixed header via --header-height */}
-        <div
-          style={{ top: "var(--header-height)" }}
-          className="sticky z-40 border-b bg-background/95 backdrop-blur"
+        {/* The library's Tabs row — docks below the fixed header on its own */}
+        <Tabs
+          value={tab}
+          onValueChange={(v) => setTab(v as TabId)}
+          aria-label="Profile sections"
         >
-          <div className="mx-auto flex w-full max-w-2xl">
-            {tabs.map((t) => (
-              <button
-                key={t.id}
-                type="button"
-                onClick={() => setTab(t.id)}
-                className={`relative flex-1 py-3 text-sm font-medium transition-colors ${
-                  tab === t.id
-                    ? "text-foreground"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {t.label}
-                {tab === t.id && (
-                  <span className="absolute inset-x-4 bottom-0 h-0.5 rounded-full bg-indigo-600 dark:bg-indigo-400" />
-                )}
-              </button>
-            ))}
-          </div>
-        </div>
+          {tabs.map((t) => (
+            <Tab key={t.id} value={t.id} label={t.label} />
+          ))}
+        </Tabs>
 
         <Content className="mx-auto w-full max-w-2xl pb-20 sm:border-x">
           <DemoHint>

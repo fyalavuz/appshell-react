@@ -192,7 +192,7 @@ export const Header = memo(function Header({
             )}
             {logo}
           </div>
-          {nav && <div className="hidden md:flex items-center ml-4">{nav}</div>}
+          {nav && <div className="hidden md:flex items-center ms-4">{nav}</div>}
         </div>
         <div className="flex items-center gap-2">{actions}</div>
       </div>
