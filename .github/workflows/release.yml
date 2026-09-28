@@ -89,10 +89,11 @@ jobs:
             exit 1
           fi
           if [ -z "$NODE_AUTH_TOKEN" ]; then
-            # OIDC support landed in recent npm; the runner's bundled version
-            # may predate it.
+            # OIDC support landed in npm 11.5; the runner's bundled version
+            # may predate it. Not @latest: npm 12 prints `npm view --json` as
+            # an array, and changesets reads `.versions` off it and crashes.
             echo "No NPM_TOKEN — publishing through trusted publishing (OIDC)."
-            npm install -g npm@latest
+            npm install -g npm@11
           fi
           pnpm release
         env:
