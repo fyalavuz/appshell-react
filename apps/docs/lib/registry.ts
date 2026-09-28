@@ -1,5 +1,10 @@
 import {
+  BookOpen,
   Command,
+  Languages,
+  Layers2,
+  ListTree,
+  MessageCircle,
   Dock,
   Map as MapIcon,
   PanelLeftClose,
@@ -15,7 +20,6 @@ import {
   Palette,
   TableOfContents,
   Search,
-  MessageSquare,
   ListMusic,
   GalleryHorizontal,
   Columns3,
@@ -142,6 +146,21 @@ export const categories: ExampleCategory[] = [
         tryHints: [
           "Scroll deep into the product grid",
           "Scroll up — the search row comes right back",
+        ],
+      },
+      {
+        slug: "reveal-context",
+        title: "Reveal Context Row",
+        description:
+          "The title row tucks away as you read and floats back on scroll up, its subtitle tracking the step you're on.",
+        icon: BookOpen,
+        category: "headers",
+        tags: ["header", "reveal", "context"],
+        appName: "Hearth — recipe app",
+        props: "behavior=\"reveal-context\"",
+        tryHints: [
+          "Scroll down through the steps",
+          "Scroll up — the title returns with the current step",
         ],
       },
       {
@@ -300,6 +319,21 @@ export const categories: ExampleCategory[] = [
         ],
       },
       {
+        slug: "content-header",
+        title: "Content Header",
+        description:
+          "Breadcrumbs, a title, actions, and docked tabs that stay in sync as you move between screens.",
+        icon: ListTree,
+        category: "layout",
+        tags: ["content-header", "breadcrumbs", "tabs"],
+        appName: "Bramble — project tracker",
+        props: "<ContentHeader breadcrumbs> + <Tabs>",
+        tryHints: [
+          "Click a breadcrumb to jump between screens",
+          "Switch tabs — the row stays docked under the header",
+        ],
+      },
+      {
         slug: "scroll-nav",
         title: "Scroll Navigation",
         description:
@@ -371,15 +405,30 @@ export const categories: ExampleCategory[] = [
         slug: "reveal-combined",
         title: "Combined Reveal",
         description:
-          "The full choreography: header reveals on scroll up while the tab bar auto-hides.",
+          "Category nav and search return together on scroll up, in step with an auto-hiding tab bar.",
         icon: PanelBottom,
         category: "patterns",
         tags: ["pattern", "reveal", "auto-hide"],
-        appName: "Pulse — social feed",
-        props: '"reveal-all" + "auto-hide"',
+        appName: "Drift — home goods marketplace",
+        props: "behavior=\"reveal-nav-search\" + \"auto-hide\"",
         tryHints: [
-          "Scroll down — both bars clear the screen",
-          "Scroll up — they return in sync",
+          "Scroll deep into the shop — every bar clears the screen",
+          "Scroll up — nav, search, and the tab bar return together",
+        ],
+      },
+      {
+        slug: "nested-overlays",
+        title: "Nested Overlays",
+        description:
+          "A drawer, a sheet, and search stacked three deep — Escape closes only the top layer, and the page never scrolls behind them.",
+        icon: Layers2,
+        category: "patterns",
+        tags: ["overlay-stack", "sidebar", "bottom-sheet", "search-modal"],
+        appName: "Ridgeline — trail maps",
+        props: "Sidebar → BottomSheet → SearchModal",
+        tryHints: [
+          "Open the trail list, pick a trail, then search from its sheet",
+          "Press Escape three times — one layer closes each time",
         ],
       },
       {
@@ -410,6 +459,36 @@ export const categories: ExampleCategory[] = [
         tryHints: [
           "Flip the toggle in the header",
           "Every component re-themes instantly",
+        ],
+      },
+      {
+        slug: "chat",
+        title: "Chat Composer",
+        description:
+          "A group thread whose composer rides above the on-screen keyboard instead of hiding under it.",
+        icon: MessageCircle,
+        category: "patterns",
+        tags: ["chat", "keyboard", "useKeyboardInset"],
+        appName: "Alpine Traverse — trip chat",
+        props: "useKeyboardInset()",
+        tryHints: [
+          "On a phone, tap the message field — the composer lifts above the keyboard",
+          "Send a message — the thread scrolls to it",
+        ],
+      },
+      {
+        slug: "rtl",
+        title: "RTL & Arabic",
+        description:
+          "The same shell in Arabic and right-to-left: labels, drawer edge, and tab order flip live.",
+        icon: Languages,
+        category: "patterns",
+        tags: ["i18n", "rtl", "arabic", "I18nProvider"],
+        appName: "Al-Noor Bank — banking",
+        props: "<I18nProvider dir=\"rtl\" labels>",
+        tryHints: [
+          "Tap the language pill — the app flips to Arabic",
+          "Open the menu — the drawer slides in from the right",
         ],
       },
     ],

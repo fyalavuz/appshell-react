@@ -202,6 +202,30 @@ export default async function SidebarPage() {
         </ul>
       </DocSection>
 
+      <DocSection title="Overlay stack">
+        <DocProse>
+          The open overlay drawer shares its Escape handling, scroll lock,
+          and z-index stacking with every other overlay in the library
+          (SearchModal, a modal BottomSheet, UserMenu/NotificationsMenu) —
+          one stack, so opening a menu inside the drawer closes just the
+          menu, not the drawer underneath it. See{" "}
+          <Link
+            href="/docs/components/bottom-sheet#overlay-stack"
+            className="text-brand hover:underline"
+          >
+            BottomSheet&rsquo;s overlay stack section
+          </Link>{" "}
+          for the full mechanism, and the{" "}
+          <Link
+            href="/examples/nested-overlays"
+            className="text-brand hover:underline"
+          >
+            nested overlays example
+          </Link>{" "}
+          to see it live.
+        </DocProse>
+      </DocSection>
+
       <DocSection title="Related">
         <DocProse>
           See the{" "}

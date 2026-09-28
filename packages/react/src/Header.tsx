@@ -78,6 +78,7 @@ export const Header = memo(function Header({
   const duration = speedMap[speed];
 
   const ghostRef = useRef<HTMLElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
   const rowOrderKey = rowOrder.join(",");
   const rows = useMemo(
     // filter(Boolean): an empty rowOrder joins to "" and would split back
@@ -88,22 +89,6 @@ export const Header = memo(function Header({
 
   const [threshold, setThreshold] = useState(0);
   const menuToggleLabel = useLabel(mobileOpen ? "closeMenu" : "openMenu");
-
-  // Sync header height to CSS variable for sticky siblings
-  useEffect(() => {
-    const el = ghostRef.current;
-    if (!el) return;
-
-    const syncHeight = () => {
-      const height = el.offsetHeight;
-      document.documentElement.style.setProperty("--header-height", `${height}px`);
-    };
-
-    syncHeight();
-    const ro = new ResizeObserver(syncHeight);
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
 
   useEffect(() => {
     const el = ghostRef.current;
@@ -165,6 +150,50 @@ export const Header = memo(function Header({
   const hasRevealEffect = behavior.startsWith("reveal-");
   const isOverlayVisible =
     hasRevealEffect && scrollDirection === "up" && isPastThreshold;
+
+  // --header-height is what sticky siblings (Tabs, the docked Sidebar, your
+  // own anchor rows) dock under, so it has to be the header chrome actually
+  // covering the top of the viewport — not the header's own size. A pinned
+  // header always covers its full height. A static or reveal header scrolls
+  // away with the page, so it covers only what is still on screen, and the
+  // overlay's height while the overlay stands in for it. Publishing the full
+  // height there left docked rows hanging below an empty gap.
+  useEffect(() => {
+    const el = ghostRef.current;
+    if (!el) return;
+
+    const pinned = behavior === "fixed" || behavior === "sticky";
+    const root = document.documentElement;
+    let last = -1;
+    let frame = 0;
+
+    const publish = () => {
+      frame = 0;
+      const overlay = overlayRef.current;
+      const height = pinned
+        ? el.offsetHeight
+        : isOverlayVisible && overlay
+          ? overlay.offsetHeight
+          : Math.max(0, Math.round(el.getBoundingClientRect().bottom));
+      if (height === last) return;
+      last = height;
+      root.style.setProperty("--header-height", `${height}px`);
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(publish);
+    };
+
+    publish();
+    const ro = new ResizeObserver(schedule);
+    ro.observe(el);
+    if (overlayRef.current) ro.observe(overlayRef.current);
+    if (!pinned) window.addEventListener("scroll", schedule, { passive: true });
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("scroll", schedule);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, [behavior, isOverlayVisible]);
 
   useEffect(() => {
     onVisibilityChange?.(behavior === "fixed" || behavior === "sticky" || !hasRevealEffect || isOverlayVisible);
@@ -382,6 +411,7 @@ export const Header = memo(function Header({
           {isOverlayVisible && (
             <motion.div
               key="header-overlay"
+              ref={overlayRef}
               initial={{ y: -8, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -8, opacity: 0 }}

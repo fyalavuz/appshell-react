@@ -1,4 +1,4 @@
-export const snippet = `import { AppShell, Header, Content, SearchField, SearchModal, NotificationsMenu, NotificationItem, UserMenu, UserMenuItem, MotionProvider } from "appshell-react";
+export const snippet = `import { AppShell, Header, Content, SearchField, SearchModal, NotificationsMenu, NotificationItem, UserMenu, UserMenuItem, MotionProvider, useSearchShortcut } from "appshell-react";
 import { framerMotionAdapter } from "appshell-react/motion-framer";
 import { LogOut, MessageSquare, Rocket, Settings, User } from "lucide-react";
 import { useState } from "react";
@@ -7,6 +7,9 @@ export default function App() {
   const [query, setQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
   const [unread, setUnread] = useState(2);
+
+  // ⌘K on macOS, Ctrl+K elsewhere — SearchField's shortcutHint shows whichever applies
+  useSearchShortcut(() => setSearchOpen(true));
 
   return (
     <MotionProvider adapter={framerMotionAdapter}>
@@ -37,6 +40,7 @@ export default function App() {
               value={query}
               onChange={setQuery}
               onClick={() => setSearchOpen(true)}  // tapping search opens the modal
+              shortcutHint="⌘K"                    // or "Ctrl K" — resolve from navigator.platform
             />
           }
         />

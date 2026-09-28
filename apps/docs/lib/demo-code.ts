@@ -20,6 +20,11 @@ import { snippet as headerThemes } from "@/app/examples/preview/header-themes/sn
 import { snippet as darkMode } from "@/app/examples/preview/dark-mode/snippet";
 import { snippet as searchCommand } from "@/app/examples/preview/search-command/snippet";
 import { snippet as bottomSheet } from "@/app/examples/preview/bottom-sheet/snippet";
+import { snippet as revealContext } from "@/app/examples/preview/reveal-context/snippet";
+import { snippet as contentHeader } from "@/app/examples/preview/content-header/snippet";
+import { snippet as nestedOverlays } from "@/app/examples/preview/nested-overlays/snippet";
+import { snippet as chat } from "@/app/examples/preview/chat/snippet";
+import { snippet as rtl } from "@/app/examples/preview/rtl/snippet";
 
 /** Curated code snippets shown on each example's detail page. */
 export const demoCode: Record<string, string> = {
@@ -38,6 +43,11 @@ export const demoCode: Record<string, string> = {
   "docked-sidebar": dockedSidebar,
   "search-command": searchCommand,
   "bottom-sheet": bottomSheet,
+  "reveal-context": revealContext,
+  "content-header": contentHeader,
+  "nested-overlays": nestedOverlays,
+  chat,
+  rtl,
   "scroll-nav": scrollNav,
   "in-page-nav": inPageNav,
   "desktop-nav": desktopNav,

@@ -7,264 +7,159 @@ import {
   Footer,
   FooterItem,
   Header,
+  HeaderNav,
+  HeaderNavItem,
   MotionProvider,
   SearchField,
 } from "appshell-react";
 import { framerMotionAdapter } from "appshell-react/motion-framer";
 import {
-  Bell,
-  Bookmark,
-  CirclePlus,
+  Armchair,
+  BedDouble,
+  Blinds,
+  Check,
+  Coffee,
+  CookingPot,
+  Flame,
+  Flower2,
+  Gem,
+  HandPlatter,
   Heart,
   House,
-  Image as ImageIcon,
-  MessageCircle,
-  Music4,
-  Repeat2,
+  Lamp,
+  Lightbulb,
+  Package,
+  Palette,
+  Plus,
   Search,
+  ShoppingBag,
+  Sofa,
+  Spool,
   User,
+  type LucideIcon,
 } from "lucide-react";
-import { Avatar, DemoHint, MediaBlock } from "@/components/demos/demo-ui";
+import { DemoHint, MediaBlock } from "@/components/demos/demo-ui";
 
-const posts = [
-  {
-    author: "Priya Raghavan",
-    handle: "@priya",
-    initials: "PR",
-    time: "8m",
-    text: "Finally wired the tab bar to auto-hide alongside the header. Scroll down and the content owns the whole screen; scroll up and everything is back before your thumb lifts.",
-    likes: 342,
-    replies: 41,
-    reposts: 58,
-    media: null,
-  },
-  {
-    author: "Owen Gallagher",
-    handle: "@owen",
-    initials: "OG",
-    time: "27m",
-    text: "Recorded the last track for the EP in one take. Sometimes the demo is the record.",
-    likes: 918,
-    replies: 76,
-    reposts: 114,
-    media: "audio",
-  },
-  {
-    author: "Lucia Ferretti",
-    handle: "@lucia",
-    initials: "LF",
-    time: "1h",
-    text: "Ninth week of baking the same sourdough. This one finally has the open crumb I was chasing. Consistency beats novelty, in bread and everything else.",
-    likes: 764,
-    replies: 92,
-    reposts: 37,
-    media: null,
-  },
-  {
-    author: "Dev Okafor",
-    handle: "@dev",
-    initials: "DO",
-    time: "3h",
-    text: "Fog rolled over the ridge right at sunrise. Waited two hours in the cold for this one frame. Worth it.",
-    likes: 1873,
-    replies: 141,
-    reposts: 402,
-    media: "photo",
-  },
-  {
-    author: "June Nakamura",
-    handle: "@june",
-    initials: "JN",
-    time: "4h",
-    text: "Unpopular opinion: meeting notes should be written for the people who weren't there. Future-you counts as one of them.",
-    likes: 526,
-    replies: 188,
-    reposts: 95,
-    media: null,
-  },
-  {
-    author: "Sasha Petrov",
-    handle: "@sasha",
-    initials: "SP",
-    time: "6h",
-    text: "First cold plunge of the season. 4°C. I have never felt more awake or more foolish, simultaneously.",
-    likes: 1105,
-    replies: 97,
-    reposts: 61,
-    media: null,
-  },
-];
-
-const suggestions = [
-  { name: "Field Notes Daily", handle: "@fieldnotes", initials: "FN" },
-  { name: "Marta Silva", handle: "@marta", initials: "MS" },
-];
-
-function PostCard({ post }: { post: (typeof posts)[number] }) {
-  const [liked, setLiked] = useState(false);
-  const [saved, setSaved] = useState(false);
-
-  return (
-    <article className="border-b px-4 py-4">
-      <div className="flex gap-3">
-        <Avatar initials={post.initials} />
-        <div className="min-w-0 flex-1">
-          <div className="flex items-baseline gap-1.5 text-sm">
-            <span className="truncate font-semibold">{post.author}</span>
-            <span className="truncate text-muted-foreground">
-              {post.handle} · {post.time}
-            </span>
-          </div>
-          <p className="mt-1 text-sm leading-relaxed">{post.text}</p>
-          {post.media && (
-            <MediaBlock className="mt-3 h-44 bg-rose-100/70 dark:bg-rose-950/30">
-              {post.media === "audio" ? (
-                <Music4
-                  className="size-8 text-rose-300 dark:text-rose-800"
-                  strokeWidth={1.5}
-                />
-              ) : (
-                <ImageIcon
-                  className="size-8 text-rose-300 dark:text-rose-800"
-                  strokeWidth={1.5}
-                />
-              )}
-            </MediaBlock>
-          )}
-          <div className="mt-3 flex items-center gap-1 text-muted-foreground">
-            <button
-              type="button"
-              onClick={() => setLiked(!liked)}
-              className={`flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-xs transition-colors ${
-                liked
-                  ? "text-rose-600 dark:text-rose-400"
-                  : "hover:bg-muted hover:text-foreground"
-              }`}
-            >
-              <Heart className={`size-4 ${liked ? "fill-current" : ""}`} />
-              {post.likes + (liked ? 1 : 0)}
-            </button>
-            <button
-              type="button"
-              className="flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-xs transition-colors hover:bg-muted hover:text-foreground"
-            >
-              <MessageCircle className="size-4" />
-              {post.replies}
-            </button>
-            <button
-              type="button"
-              className="flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-xs transition-colors hover:bg-muted hover:text-foreground"
-            >
-              <Repeat2 className="size-4" />
-              {post.reposts}
-            </button>
-            <button
-              type="button"
-              aria-label="Save post"
-              onClick={() => setSaved(!saved)}
-              className={`ml-auto rounded-full p-1.5 transition-colors ${
-                saved
-                  ? "text-rose-600 dark:text-rose-400"
-                  : "hover:bg-muted hover:text-foreground"
-              }`}
-            >
-              <Bookmark className={`size-4 ${saved ? "fill-current" : ""}`} />
-            </button>
-          </div>
-        </div>
-      </div>
-    </article>
-  );
+interface Product {
+  name: string;
+  category: string;
+  price: string;
+  icon: LucideIcon;
+  hue: string;
 }
 
-function SuggestionRow({
-  suggestion,
-}: {
-  suggestion: (typeof suggestions)[number];
-}) {
-  const [following, setFollowing] = useState(false);
-
-  return (
-    <div className="flex items-center gap-3 px-4 py-3">
-      <Avatar initials={suggestion.initials} />
-      <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-semibold">{suggestion.name}</p>
-        <p className="truncate text-xs text-muted-foreground">
-          {suggestion.handle}
-        </p>
-      </div>
-      <button
-        type="button"
-        onClick={() => setFollowing(!following)}
-        className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors ${
-          following
-            ? "bg-muted text-muted-foreground"
-            : "bg-rose-600 text-white hover:bg-rose-700 dark:bg-rose-500 dark:hover:bg-rose-400"
-        }`}
-      >
-        {following ? "Following" : "Follow"}
-      </button>
-    </div>
-  );
-}
+const products: Product[] = [
+  { name: "Arc floor lamp", category: "Lighting", price: "$189", icon: Lamp, hue: "bg-amber-100/70 text-amber-500 dark:bg-amber-950/30 dark:text-amber-700" },
+  { name: "Pendant light trio", category: "Lighting", price: "$265", icon: Lightbulb, hue: "bg-amber-100/70 text-amber-500 dark:bg-amber-950/30 dark:text-amber-700" },
+  { name: "Ceramic pendant sconce", category: "Lighting", price: "$132", icon: Lamp, hue: "bg-amber-100/70 text-amber-500 dark:bg-amber-950/30 dark:text-amber-700" },
+  { name: "Bentwood lounge chair", category: "Seating", price: "$340", icon: Armchair, hue: "bg-stone-200/60 text-stone-400 dark:bg-stone-800/40 dark:text-stone-500" },
+  { name: "Bouclé accent chair", category: "Seating", price: "$410", icon: Sofa, hue: "bg-stone-200/60 text-stone-400 dark:bg-stone-800/40 dark:text-stone-500" },
+  { name: "Storage daybed", category: "Seating", price: "$610", icon: BedDouble, hue: "bg-stone-200/60 text-stone-400 dark:bg-stone-800/40 dark:text-stone-500" },
+  { name: "Terracotta planter trio", category: "Decor", price: "$58", icon: Flower2, hue: "bg-violet-100/70 text-violet-400 dark:bg-violet-950/30 dark:text-violet-800" },
+  { name: "Amber glass vase", category: "Decor", price: "$44", icon: Gem, hue: "bg-violet-100/70 text-violet-400 dark:bg-violet-950/30 dark:text-violet-800" },
+  { name: "Woven storage baskets", category: "Decor", price: "$76", icon: Package, hue: "bg-violet-100/70 text-violet-400 dark:bg-violet-950/30 dark:text-violet-800" },
+  { name: "Bronze candle trio", category: "Decor", price: "$52", icon: Flame, hue: "bg-violet-100/70 text-violet-400 dark:bg-violet-950/30 dark:text-violet-800" },
+  { name: "Linen window blinds", category: "Decor", price: "$145", icon: Blinds, hue: "bg-violet-100/70 text-violet-400 dark:bg-violet-950/30 dark:text-violet-800" },
+  { name: "Wool yarn bundle", category: "Decor", price: "$38", icon: Spool, hue: "bg-violet-100/70 text-violet-400 dark:bg-violet-950/30 dark:text-violet-800" },
+  { name: "Cast-iron dutch oven", category: "Kitchen", price: "$120", icon: CookingPot, hue: "bg-sky-100/70 text-sky-400 dark:bg-sky-950/30 dark:text-sky-800" },
+  { name: "Hand-painted ceramic bowl", category: "Kitchen", price: "$34", icon: Palette, hue: "bg-sky-100/70 text-sky-400 dark:bg-sky-950/30 dark:text-sky-800" },
+  { name: "Marble cheese board", category: "Kitchen", price: "$68", icon: HandPlatter, hue: "bg-sky-100/70 text-sky-400 dark:bg-sky-950/30 dark:text-sky-800" },
+  { name: "Pour-over coffee set", category: "Kitchen", price: "$54", icon: Coffee, hue: "bg-sky-100/70 text-sky-400 dark:bg-sky-950/30 dark:text-sky-800" },
+];
 
 export default function RevealCombinedPage() {
   const [tab, setTab] = useState("home");
+  const [cart, setCart] = useState<string[]>([]);
+
+  const toggle = (name: string) =>
+    setCart((c) => (c.includes(name) ? c.filter((n) => n !== name) : [...c, name]));
 
   return (
     <MotionProvider adapter={framerMotionAdapter}>
       <AppShell safeArea>
         <Header
-          behavior="reveal-all"
+          behavior="reveal-nav-search"
           theme="light"
           logo={
             <span className="flex items-center gap-2 font-bold tracking-tight">
-              <span className="flex size-6 items-center justify-center rounded-full bg-rose-500 text-[10px] font-black text-white">
-                P
+              <span className="flex size-6 items-center justify-center rounded-full bg-indigo-600 text-[10px] font-black text-white">
+                D
               </span>
-              Pulse
+              Drift
             </span>
+          }
+          nav={
+            <HeaderNav>
+              <HeaderNavItem label="All" active />
+              <HeaderNavItem label="Lighting" />
+              <HeaderNavItem label="Seating" />
+              <HeaderNavItem label="Decor" />
+              <HeaderNavItem label="Kitchen" />
+            </HeaderNav>
           }
           actions={
             <button
               type="button"
-              aria-label="Notifications"
-              className="relative rounded-full p-2 text-muted-foreground transition-colors hover:bg-muted"
+              aria-label="Bag"
+              className="relative rounded-full p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             >
-              <Bell className="size-5" />
-              <span className="absolute right-1.5 top-1.5 size-2 rounded-full bg-rose-500" />
+              <ShoppingBag className="size-5" />
+              {cart.length > 0 && (
+                <span className="absolute -right-0.5 -top-0.5 flex size-4 items-center justify-center rounded-full bg-indigo-600 text-[9px] font-bold text-white">
+                  {cart.length}
+                </span>
+              )}
             </button>
           }
-          searchContent={
-            <SearchField variant="full" placeholder="Search Pulse" />
-          }
+          searchContent={<SearchField variant="full" placeholder="Search Drift" />}
         />
 
-        <Content className="mx-auto w-full max-w-2xl sm:border-x">
+        <Content className="mx-auto w-full max-w-5xl pb-16">
           <DemoHint>
-            Scroll down — the header and the tab bar clear the screen together.
-            Scroll up and both glide back in sync.
+            Scroll deep into the shop, then scroll up — the category row and
+            search return together, and the tab bar rises back into view.
           </DemoHint>
 
-          {posts.slice(0, 4).map((post) => (
-            <PostCard key={post.handle} post={post} />
-          ))}
-
-          <div className="border-b bg-muted/30 py-2">
-            <p className="px-4 pb-1 pt-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Suggested for you
+          <div className="px-4 pb-2 pt-1">
+            <h2 className="text-sm font-semibold">New in home &amp; living</h2>
+            <p className="text-xs text-muted-foreground">
+              Handpicked pieces, restocked every Friday
             </p>
-            {suggestions.map((suggestion) => (
-              <SuggestionRow key={suggestion.handle} suggestion={suggestion} />
-            ))}
           </div>
 
-          {posts.slice(4).map((post) => (
-            <PostCard key={post.handle} post={post} />
-          ))}
+          <div className="grid grid-cols-2 gap-x-4 gap-y-6 px-4 sm:grid-cols-3 lg:grid-cols-4">
+            {products.map((p) => {
+              const added = cart.includes(p.name);
+              return (
+                <div key={p.name}>
+                  <div className="relative">
+                    <MediaBlock className={`aspect-square ${p.hue}`}>
+                      <p.icon className="size-10" strokeWidth={1.25} />
+                    </MediaBlock>
+                    <button
+                      type="button"
+                      aria-label={added ? `Remove ${p.name}` : `Add ${p.name}`}
+                      onClick={() => toggle(p.name)}
+                      className={`absolute bottom-2 right-2 flex size-8 items-center justify-center rounded-full shadow-sm transition-colors ${
+                        added
+                          ? "bg-indigo-600 text-white"
+                          : "bg-background text-foreground hover:bg-muted"
+                      }`}
+                    >
+                      {added ? <Check className="size-4" /> : <Plus className="size-4" />}
+                    </button>
+                  </div>
+                  <p className="mt-2 truncate text-sm font-medium">{p.name}</p>
+                  <p className="truncate text-xs text-muted-foreground">
+                    {p.category} · {p.price}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
 
           <p className="px-4 py-8 text-center text-xs text-muted-foreground">
-            You&rsquo;re all caught up
+            Free shipping over $75 · Returns within 30 days
           </p>
         </Content>
 
@@ -282,23 +177,23 @@ export default function RevealCombinedPage() {
             onClick={() => setTab("search")}
           />
           <FooterItem
-            icon={<CirclePlus className="size-5" />}
-            label="Create"
-            active={tab === "create"}
-            onClick={() => setTab("create")}
+            icon={<ShoppingBag className="size-5" />}
+            label="Bag"
+            badge={cart.length > 0 ? cart.length : undefined}
+            active={tab === "bag"}
+            onClick={() => setTab("bag")}
           />
           <FooterItem
-            icon={<Bell className="size-5" />}
-            label="Alerts"
-            badge={2}
-            active={tab === "alerts"}
-            onClick={() => setTab("alerts")}
+            icon={<Heart className="size-5" />}
+            label="Wishlist"
+            active={tab === "wishlist"}
+            onClick={() => setTab("wishlist")}
           />
           <FooterItem
             icon={<User className="size-5" />}
-            label="Profile"
-            active={tab === "profile"}
-            onClick={() => setTab("profile")}
+            label="Account"
+            active={tab === "account"}
+            onClick={() => setTab("account")}
           />
         </Footer>
       </AppShell>

@@ -155,6 +155,27 @@ export const headerApi: ApiDef = {
 };
 
 export const headerNavApi: ApiDef = {
+  component: "HeaderNav",
+  description:
+    "A flex <nav> that lines up HeaderNavItems for the Header's nav slot.",
+  props: [
+    { name: "className", type: "string", description: "Extra classes." },
+    {
+      name: "children",
+      type: "ReactNode",
+      required: true,
+      description: "HeaderNavItems.",
+    },
+    {
+      name: "aria-label",
+      type: "string",
+      description:
+        'Accessible name for this navigation landmark. Defaults to the "Main" label — give it one when the page has more than one nav landmark.',
+    },
+  ],
+};
+
+export const headerNavItemApi: ApiDef = {
   component: "HeaderNavItem",
   description:
     "A link inside <HeaderNav>. Pass children to turn it into a dropdown: the panel opens on hover or click and closes on Escape or an outside click.",
@@ -259,7 +280,7 @@ export const footerItemApi: ApiDef = {
 export const contentApi: ApiDef = {
   component: "Content",
   description:
-    "The main content region — a semantic <main> that fills the remaining shell space. Add your own padding to clear fixed footers (e.g. pb-24 for a tab bar).",
+    "The main content region — a semantic <main> that fills the remaining shell space. Automatically reserves the exact height of a rendered Footer via margin-bottom — no manual bottom padding needed.",
   props: [
     { name: "className", type: "string", description: "Extra classes." },
     {
@@ -284,6 +305,12 @@ export const sidebarOverlayApi: ApiDef = {
     "The default variant: a modal drawer with a backdrop, Escape-to-close, and body scroll locking.",
   props: [
     {
+      name: "variant",
+      type: '"overlay"',
+      default: '"overlay"',
+      description: "Selects the overlay presentation — the default when omitted.",
+    },
+    {
       name: "open",
       type: "boolean",
       required: true,
@@ -297,9 +324,16 @@ export const sidebarOverlayApi: ApiDef = {
     },
     {
       name: "side",
-      type: '"left" | "right"',
-      default: '"left"',
-      description: "Which edge the drawer slides from.",
+      type: '"start" | "end" | "left" | "right"',
+      default: '"start"',
+      description:
+        'Which edge the drawer slides from. "start"/"end" follow the writing direction from I18nProvider (start is left in LTR, right in RTL); "left"/"right" are physical and never flip.',
+    },
+    {
+      name: "aria-label",
+      type: "string",
+      description:
+        'Accessible name of the drawer. Defaults to the "Navigation menu" label.',
     },
     {
       name: "topContent",
@@ -388,9 +422,16 @@ export const sidebarDockedApi: ApiDef = {
     },
     {
       name: "side",
-      type: '"left" | "right"',
-      default: '"left"',
-      description: "Which side of the content the panel docks to.",
+      type: '"start" | "end" | "left" | "right"',
+      default: '"start"',
+      description:
+        'Which side of the content the panel docks to. "start"/"end" follow the writing direction from I18nProvider (start is left in LTR, right in RTL); "left"/"right" are physical and never flip.',
+    },
+    {
+      name: "aria-label",
+      type: "string",
+      description:
+        'Accessible name of the panel (and its drawer fallback). Defaults to the "Navigation menu" label.',
     },
     {
       name: "topContent",
@@ -615,6 +656,12 @@ export const searchModalApi: ApiDef = {
       type: "string",
       description: "Extra classes for the backdrop.",
     },
+    {
+      name: "aria-label",
+      type: "string",
+      description:
+        "Accessible dialog name override (defaults to the placeholder text).",
+    },
   ],
 };
 
@@ -702,6 +749,12 @@ export const userMenuApi: ApiDef = {
       name: "triggerClassName",
       type: "string",
       description: "Extra classes for the default trigger button.",
+    },
+    {
+      name: "aria-label",
+      type: "string",
+      description:
+        'Accessible name override for the trigger. Defaults to the "User menu" label.',
     },
   ],
 };
@@ -799,6 +852,12 @@ export const notificationsMenuApi: ApiDef = {
       type: "string",
       description: "Extra classes for the default trigger button.",
     },
+    {
+      name: "aria-label",
+      type: "string",
+      description:
+        'Accessible name override for the trigger. Defaults to "Notifications", or the "Notifications ({count} unread)" label when unreadCount is greater than 0.',
+    },
   ],
 };
 
@@ -839,6 +898,21 @@ export const notificationItemApi: ApiDef = {
 };
 
 export const scrollNavApi: ApiDef = {
+  component: "ScrollNav",
+  description:
+    "A horizontally scrollable flex row of ScrollNavItems, with no visible scrollbar.",
+  props: [
+    { name: "className", type: "string", description: "Extra classes." },
+    {
+      name: "children",
+      type: "ReactNode",
+      required: true,
+      description: "ScrollNavItems.",
+    },
+  ],
+};
+
+export const scrollNavItemApi: ApiDef = {
   component: "ScrollNavItem",
   description: "One pill inside a horizontally scrollable <ScrollNav>.",
   props: [
@@ -902,6 +976,25 @@ export const hooksApi: {
       "useSearchShortcut(onTrigger, { key = 'k', slash = false, enabled = true }?)",
     description:
       "Binds the desktop search shortcut — ⌘K on macOS, Ctrl+K elsewhere — to a handler, typically opening a SearchModal. Opt into a bare “/” trigger (ignored while typing) with slash: true.",
+  },
+  {
+    name: "useLabel",
+    signature:
+      "useLabel(key: AppShellLabelKey, vars?: Record<string, string | number>, override?: string): string",
+    description:
+      "Resolves one of the library's own strings the same way its components do: override wins (typically a component's own aria-label-style prop), then the I18nProvider's t, then its labels, then the English default. Interpolates {token} placeholders from vars.",
+  },
+  {
+    name: "useDirection",
+    signature: 'useDirection(): "ltr" | "rtl"',
+    description:
+      'The shell\'s writing direction from I18nProvider — "ltr" with no provider. Portalled overlays (SearchModal, BottomSheet, the anchored menus) read it from context, since a portal does not inherit dir from the DOM.',
+  },
+  {
+    name: "useLinkComponent",
+    signature: "useLinkComponent(): ElementType",
+    description:
+      'The active link component from LinkProvider — a plain "a" with no provider above. Every component that renders an href (NavItem, HeaderNavItem, UserMenuItem, BreadcrumbItem) reads it through this hook.',
   },
 ];
 
@@ -1020,6 +1113,27 @@ export const tabApi: ApiDef = {
 };
 
 export const breadcrumbsApi: ApiDef = {
+  component: "Breadcrumbs",
+  description:
+    "A breadcrumb trail. Separators between crumbs are inserted automatically.",
+  props: [
+    { name: "className", type: "string", description: "Extra classes." },
+    {
+      name: "children",
+      type: "ReactNode",
+      required: true,
+      description: "BreadcrumbItems.",
+    },
+    {
+      name: "aria-label",
+      type: "string",
+      description:
+        'Accessible name of the trail. Defaults to the "Breadcrumb" label.',
+    },
+  ],
+};
+
+export const breadcrumbItemApi: ApiDef = {
   component: "BreadcrumbItem",
   description:
     "One crumb inside a <Breadcrumbs> trail. Separators between crumbs are automatic.",
@@ -1093,5 +1207,47 @@ export const i18nProviderApi: ApiDef = {
       required: true,
       description: "The app.",
     },
+  ],
+};
+
+export const linkProviderApi: ApiDef = {
+  component: "LinkProvider",
+  description:
+    "Router integration point. Every component that renders an href asks this context for the link component to use and falls back to a plain <a>.",
+  props: [
+    {
+      name: "component",
+      type: "ElementType",
+      required: true,
+      description:
+        'The component to render for href-based items, e.g. Next.js Link. Any component accepting { href, className, children, onClick } works; adapt routers whose link takes a different prop (React Router\'s "to") with a one-line wrapper.',
+    },
+    {
+      name: "children",
+      type: "ReactNode",
+      required: true,
+      description: "The app.",
+    },
+  ],
+};
+
+export const skipLinkApi: ApiDef = {
+  component: "SkipLink",
+  description:
+    "The first focusable thing on the page: one Tab from a cold load, and a keyboard user is past the header, the navigation and the search row. Invisible until it takes focus. <AppShell skipToContent> renders it for you; use it directly only when not using AppShell.",
+  props: [
+    {
+      name: "targetId",
+      type: "string",
+      default: "CONTENT_ID",
+      description:
+        'Element id to jump to. Defaults to CONTENT_ID ("appshell-content"), the id Content sets on itself.',
+    },
+    {
+      name: "children",
+      type: "string",
+      description: 'Overrides the "Skip to content" label.',
+    },
+    { name: "className", type: "string", description: "Extra classes." },
   ],
 };

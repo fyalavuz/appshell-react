@@ -62,6 +62,7 @@ export default function BottomSheetPage() {
 
   return (
     <AppShell safeArea>
+      <h1 className="sr-only">Nearby places</h1>
       {/* The "map" — a full-bleed canvas the sheet floats over */}
       <div className="fixed inset-0 bg-[#e8efe6] dark:bg-[#101713]">
         <div

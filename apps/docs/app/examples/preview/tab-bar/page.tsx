@@ -25,7 +25,8 @@ import {
   User,
   UserPlus,
 } from "lucide-react";
-import { Avatar, DemoHint, MediaBlock } from "@/components/demos/demo-ui";
+import { Avatar } from "appshell-react";
+import { DemoHint, MediaBlock } from "@/components/demos/demo-ui";
 
 type TabId = "home" | "search" | "create" | "activity" | "profile";
 
@@ -121,7 +122,7 @@ function FeedCard({ post }: { post: (typeof feed)[number] }) {
   return (
     <article className="border-b px-4 py-4">
       <div className="flex gap-3">
-        <Avatar initials={post.initials} />
+        <Avatar initials={post.initials} size="2.5rem" />
         <div className="min-w-0 flex-1">
           <div className="flex items-baseline gap-1.5 text-sm">
             <span className="truncate font-semibold">{post.author}</span>
@@ -260,6 +261,7 @@ export default function TabBarPage() {
               <div className="flex gap-3">
                 <Avatar
                   initials="JW"
+                  size="2.5rem"
                   className="bg-amber-100 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300"
                 />
                 <textarea
@@ -341,7 +343,8 @@ export default function TabBarPage() {
               <div className="flex items-center gap-4">
                 <Avatar
                   initials="JW"
-                  className="size-16 text-base bg-amber-100 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300"
+                  size="4rem"
+                  className="text-base bg-amber-100 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300"
                 />
                 <div>
                   <h1 className="text-lg font-bold">Jae Winters</h1>

@@ -8,7 +8,8 @@ import {
 } from "appshell-react";
 import { framerMotionAdapter } from "appshell-react/motion-framer";
 import { MessageSquare, SquarePen } from "lucide-react";
-import { Avatar, DemoHint } from "@/components/demos/demo-ui";
+import { Avatar } from "appshell-react";
+import { DemoHint } from "@/components/demos/demo-ui";
 
 const pinned = [
   { name: "Maya", initials: "MC" },
@@ -86,7 +87,7 @@ export default function StickyHeaderPage() {
                   type="button"
                   className="flex flex-col items-center gap-1.5"
                 >
-                  <Avatar initials={p.initials} className="size-14 text-sm" />
+                  <Avatar initials={p.initials} size="3.5rem" className="text-sm" />
                   <span className="text-[11px] text-muted-foreground">
                     {p.name}
                   </span>
@@ -102,7 +103,7 @@ export default function StickyHeaderPage() {
                 type="button"
                 className="flex w-full items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-muted/50"
               >
-                <Avatar initials={c.initials} />
+                <Avatar initials={c.initials} size="2.5rem" />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-baseline justify-between gap-2">
                     <span

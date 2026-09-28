@@ -14,9 +14,9 @@ export default function App() {
     <MotionProvider adapter={framerMotionAdapter}>
       <AppShell safeArea>
         <Header behavior="reveal-nav" logo={<span>Handbook</span>} title="The Overnight" />
-        {/* Anchor pills dock below the header via the --header-height variable */}
+        {/* Anchor pills dock below the visible header, never above the safe area */}
         <div
-          style={{ top: "var(--header-height)" }}
+          style={{ top: "max(var(--header-height), var(--appshell-safe-area-inset-top, env(safe-area-inset-top)))" }}
           className="sticky z-40 border-b bg-background/95 backdrop-blur"
         >
           <nav className="flex gap-2 overflow-x-auto px-4 py-2.5">

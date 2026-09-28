@@ -43,27 +43,6 @@ export function DemoHint({
   );
 }
 
-/** Initials avatar with a per-app tint. */
-export function Avatar({
-  initials,
-  className,
-}: {
-  initials: string;
-  className?: string;
-}) {
-  return (
-    <div
-      className={cn(
-        "flex size-10 shrink-0 items-center justify-center rounded-full",
-        "bg-muted text-xs font-semibold text-muted-foreground",
-        className
-      )}
-    >
-      {initials}
-    </div>
-  );
-}
-
 /** Flat tonal media placeholder — no photo soup, just calm surfaces. */
 export function MediaBlock({
   className,

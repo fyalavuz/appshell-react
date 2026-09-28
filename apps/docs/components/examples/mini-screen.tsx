@@ -486,12 +486,144 @@ function renderMotif(slug: string) {
               <span className="size-2 rounded-full bg-brand" />
               <span className="h-1 w-8 rounded-full bg-foreground/25" />
             </div>
+            <div className="flex h-5 items-center bg-brand/15 px-2.5">
+              <span className="h-2.5 w-full rounded-full border border-brand/50 bg-background" />
+            </div>
           </Anim>
-          <div className="absolute inset-x-0 top-8">
+          <div className="absolute inset-x-0 top-[3.25rem]">
             <Lines />
           </div>
           <Anim name="ms-peek-down" className="absolute inset-x-0 bottom-0 z-10">
             <TabBarBlock />
+          </Anim>
+        </>
+      );
+
+    case "reveal-context":
+      return (
+        <>
+          <Anim name="ms-peek-up" className="absolute inset-x-0 top-0 z-10">
+            <div className="flex h-6 items-center gap-1.5 bg-muted px-2.5">
+              <span className="size-2 rounded-full bg-foreground/25" />
+              <span className="h-1 w-8 rounded-full bg-foreground/25" />
+            </div>
+            <div className="space-y-1 bg-brand/15 px-2.5 py-1.5">
+              <span className="block h-1.5 w-2/3 rounded-full bg-brand" />
+              <span className="block h-1 w-1/3 rounded-full bg-brand/50" />
+            </div>
+          </Anim>
+          <div className="absolute inset-x-0 top-[3.5rem]">
+            <Lines />
+          </div>
+        </>
+      );
+
+    case "content-header":
+      return (
+        <>
+          <HeaderBlock rows={1} />
+          <div className="absolute inset-x-0 top-8 space-y-1.5 px-2.5">
+            <div className="flex items-center gap-1">
+              <span className="h-1 w-5 rounded-full bg-foreground/25" />
+              <span className="text-[6px] leading-none text-foreground/30">›</span>
+              <span className="h-1 w-6 rounded-full bg-foreground/25" />
+              <span className="text-[6px] leading-none text-foreground/30">›</span>
+              <Anim name="ms-pulse" className="h-1 w-8 rounded-full bg-brand" />
+            </div>
+            <span className="block h-2.5 w-1/2 rounded-[3px] bg-brand/70" />
+            <span className="block h-1 w-3/4 rounded-full bg-foreground/15" />
+            <div className="flex gap-2 border-b pb-1 pt-1">
+              <span className="h-1 w-6 rounded-full bg-brand" />
+              <span className="h-1 w-6 rounded-full bg-foreground/20" />
+              <span className="h-1 w-6 rounded-full bg-foreground/20" />
+            </div>
+            <Row className="h-6 w-full bg-foreground/6" />
+            <Row className="h-1.5 w-5/6" />
+          </div>
+        </>
+      );
+
+    case "chat":
+      return (
+        <>
+          <HeaderBlock rows={1} />
+          <div className="absolute inset-x-0 top-8 space-y-1.5 px-2.5">
+            <span className="block h-3 w-1/2 rounded-md bg-foreground/10" />
+            <span className="ml-auto block h-3 w-2/5 rounded-md bg-brand/30" />
+            <span className="block h-3 w-3/5 rounded-md bg-foreground/10" />
+            <span className="ml-auto block h-3 w-1/3 rounded-md bg-brand/30" />
+          </div>
+          <Anim name="ms-drift" className="absolute inset-x-0 bottom-0 z-10">
+            <div className="flex items-center gap-1 border-t border-brand/30 bg-background px-2 py-1.5">
+              <span className="h-3 flex-1 rounded-full border border-brand/50" />
+              <span className="size-3 rounded-full bg-brand" />
+            </div>
+          </Anim>
+          <Anim name="ms-rise" className="absolute inset-x-0 bottom-0 z-20">
+            <div className="grid grid-cols-6 gap-0.5 bg-muted p-1">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <span key={i} className="h-2 rounded-[2px] bg-foreground/15" />
+              ))}
+            </div>
+          </Anim>
+        </>
+      );
+
+    case "rtl":
+      return (
+        <div dir="rtl" className="absolute inset-0">
+          <div className="absolute inset-x-0 top-0 z-10 flex h-6 items-center gap-1.5 bg-muted px-2.5">
+            <span className="size-2 rounded-full bg-brand" />
+            <span className="h-1 w-8 rounded-full bg-foreground/25" />
+            <span className="ms-auto size-1.5 rounded-full bg-foreground/25" />
+          </div>
+          <div className="absolute inset-x-0 top-8">
+            <Lines />
+          </div>
+          <Anim
+            name="ms-drawer-in-end"
+            delay="-1.3s"
+            className="absolute bottom-0 right-0 top-0 z-20 w-2/5 border-l border-brand/30 bg-background shadow-lg"
+          >
+            <div className="space-y-1.5 p-2">
+              <span className="ms-auto block h-1.5 w-3/4 rounded-full bg-brand" />
+              <span className="block h-1.5 w-full rounded-full bg-foreground/15" />
+              <span className="block h-1.5 w-5/6 rounded-full bg-foreground/15" />
+            </div>
+          </Anim>
+        </div>
+      );
+
+    case "nested-overlays":
+      return (
+        <>
+          <HeaderBlock rows={1} />
+          <div className="absolute inset-x-0 top-8 opacity-40">
+            <Lines />
+          </div>
+          <Anim name="ms-drawer-in" className="absolute bottom-0 left-0 top-0 z-10 w-2/5 border-r bg-background shadow-md">
+            <div className="space-y-1.5 p-2">
+              <span className="block h-1.5 w-3/4 rounded-full bg-foreground/25" />
+              <span className="block h-1.5 w-full rounded-full bg-foreground/15" />
+            </div>
+          </Anim>
+          <Anim
+            name="ms-rise"
+            delay="0.25s"
+            className="absolute inset-x-3 bottom-0 z-20 rounded-t-lg border border-b-0 bg-background p-2 shadow-lg"
+          >
+            <span className="mx-auto block h-1 w-8 rounded-full bg-foreground/20" />
+            <span className="mt-2 block h-1.5 w-2/3 rounded-full bg-foreground/20" />
+          </Anim>
+          <Anim
+            name="ms-modal"
+            delay="0.5s"
+            className="absolute inset-x-5 top-7 z-30 rounded-md border border-brand/40 bg-background p-1.5 shadow-lg"
+          >
+            <div className="flex items-center gap-1 rounded-sm bg-brand/15 px-1.5 py-1">
+              <span className="size-1.5 rounded-full bg-brand" />
+              <span className="h-1 w-10 rounded-full bg-brand/60" />
+            </div>
           </Anim>
         </>
       );

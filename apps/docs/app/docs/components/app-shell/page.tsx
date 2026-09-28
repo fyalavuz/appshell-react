@@ -9,7 +9,7 @@ import {
 import { CodePanel } from "@/components/docs/code-panel";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { PropsTable } from "@/components/docs/props-table";
-import { appShellApi } from "@/lib/api-docs";
+import { appShellApi, skipLinkApi } from "@/lib/api-docs";
 import { highlight } from "@/lib/highlight";
 
 export const metadata = {
@@ -131,6 +131,23 @@ export default async function AppShellPage() {
           </Link>
           .
         </DocNote>
+      </DocSection>
+
+      <DocSection title="Skip link">
+        <DocProse>
+          <InlineCode>skipToContent</InlineCode> renders a{" "}
+          <InlineCode>&lt;SkipLink&gt;</InlineCode> as the shell&rsquo;s first
+          focusable element, jumping a keyboard user past the header and
+          navigation straight to <InlineCode>Content</InlineCode>. It targets{" "}
+          <InlineCode>CONTENT_ID</InlineCode> (
+          <InlineCode>&quot;appshell-content&quot;</InlineCode>) by default —
+          the same id <InlineCode>Content</InlineCode> sets on itself and{" "}
+          <InlineCode>focusOnRouteChange</InlineCode> falls back to, so the
+          two ends of the link are wired up without any ids to manage
+          yourself. Use <InlineCode>&lt;SkipLink&gt;</InlineCode> directly
+          only when you are not using AppShell.
+        </DocProse>
+        <PropsTable api={skipLinkApi} />
       </DocSection>
 
       <DocSection title="API">

@@ -40,6 +40,12 @@ function firstTabValue(children: ReactNode): string {
   return found;
 }
 
+// Under the header chrome that is on screen, but never above the safe area:
+// once a reveal header scrolls away --header-height drops to 0, and the row
+// would otherwise dock beneath the status bar.
+const DOCK_TOP =
+  "max(var(--header-height, 0px), var(--appshell-safe-area-inset-top, env(safe-area-inset-top, 0px)))";
+
 /**
  * A tab row that docks itself below a pinned Header through the
  * --header-height variable the Header publishes — the sticky
@@ -94,7 +100,7 @@ export const Tabs = memo(function Tabs({
         sticky && "sticky",
         className
       )}
-      style={sticky ? { top: "var(--header-height, 0px)" } : undefined}
+      style={sticky ? { top: DOCK_TOP } : undefined}
     >
       <div
         ref={listRef}

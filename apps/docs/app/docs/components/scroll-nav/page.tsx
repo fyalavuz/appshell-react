@@ -9,7 +9,7 @@ import {
 import { CodePanel } from "@/components/docs/code-panel";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { PropsTable } from "@/components/docs/props-table";
-import { scrollNavApi } from "@/lib/api-docs";
+import { scrollNavApi, scrollNavItemApi } from "@/lib/api-docs";
 import { highlight } from "@/lib/highlight";
 
 export const metadata = {
@@ -119,7 +119,7 @@ export default async function ScrollNavPage() {
         </DocProse>
       </DocSection>
 
-      <DocSection title="ScrollNavItem props">
+      <DocSection title="ScrollNav props">
         <PropsTable api={scrollNavApi} />
         <DocProse>
           <InlineCode>ScrollNav</InlineCode> itself takes only{" "}
@@ -128,6 +128,10 @@ export default async function ScrollNavPage() {
           padding so the first pill aligns with your content while the row
           still scrolls edge to edge.
         </DocProse>
+      </DocSection>
+
+      <DocSection title="ScrollNavItem props">
+        <PropsTable api={scrollNavItemApi} />
       </DocSection>
     </article>
   );

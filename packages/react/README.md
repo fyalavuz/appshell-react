@@ -111,7 +111,7 @@ Hooks: `useScrollDirection`, `useSafeArea`, `useKeyboardInset`, `useBelowBreakpo
 
 ## Examples
 
-Explore 22 fullscreen demos at [fyalavuz.github.io/appshell-react/examples](https://fyalavuz.github.io/appshell-react/examples/), or mix every behavior, theme, speed, and footer variant live in the [Playground](https://fyalavuz.github.io/appshell-react/playground/).
+Explore every fullscreen demo at [fyalavuz.github.io/appshell-react/examples](https://fyalavuz.github.io/appshell-react/examples/), or mix every behavior, theme, speed, and footer variant live in the [Playground](https://fyalavuz.github.io/appshell-react/playground/).
 
 ## Contributing
 

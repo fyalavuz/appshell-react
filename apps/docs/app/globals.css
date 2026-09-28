@@ -127,6 +127,20 @@
   animation-play-state: running;
 }
 
+/* Touch screens never hover, so paused motifs there would leave Fixed,
+   Static and Sticky looking identical. Loop them instead. */
+@media (hover: none) {
+  .ms-anim {
+    animation-play-state: running;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ms-anim {
+    animation: none;
+  }
+}
+
 @keyframes ms-peek-up {
   0%, 12% { transform: translateY(0); }
   32%, 58% { transform: translateY(-115%); }
@@ -149,6 +163,12 @@
   0%, 14% { transform: translateX(-108%); }
   38%, 66% { transform: translateX(0); }
   88%, 100% { transform: translateX(-108%); }
+}
+
+@keyframes ms-drawer-in-end {
+  0%, 14% { transform: translateX(108%); }
+  38%, 66% { transform: translateX(0); }
+  88%, 100% { transform: translateX(108%); }
 }
 
 @keyframes ms-slide-x {

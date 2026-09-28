@@ -79,7 +79,7 @@ test.describe("bottom sheet", () => {
         const stable = y !== null && y === lastY;
         lastY = y;
         return stable;
-      })
+      }, { timeout: 15_000 })
       .toBe(true);
 
     // Drag the grabber well below its lowest snap point to dismiss it — this

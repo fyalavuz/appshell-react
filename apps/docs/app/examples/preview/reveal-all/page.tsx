@@ -16,7 +16,8 @@ import {
   MessageCircle,
   Repeat2,
 } from "lucide-react";
-import { Avatar, DemoHint, MediaBlock } from "@/components/demos/demo-ui";
+import { Avatar } from "appshell-react";
+import { DemoHint, MediaBlock } from "@/components/demos/demo-ui";
 
 const stories = [
   { initials: "You", self: true },
@@ -104,7 +105,7 @@ function PostCard({ post }: { post: (typeof posts)[number] }) {
   return (
     <article className="border-b px-4 py-4">
       <div className="flex gap-3">
-        <Avatar initials={post.initials} />
+        <Avatar initials={post.initials} size="2.5rem" />
         <div className="min-w-0 flex-1">
           <div className="flex items-baseline gap-1.5 text-sm">
             <span className="truncate font-semibold">{post.author}</span>
@@ -222,7 +223,7 @@ export default function RevealAllPage() {
                   }`}
                 >
                   <div className="rounded-full border-2 border-background">
-                    <Avatar initials={s.initials} className="size-12 text-[11px]" />
+                    <Avatar initials={s.initials} size="3rem" className="text-[11px]" />
                   </div>
                 </div>
                 <span className="text-[10px] text-muted-foreground">

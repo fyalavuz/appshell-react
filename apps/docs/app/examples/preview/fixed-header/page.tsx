@@ -19,7 +19,8 @@ import {
   TrainFront,
   type LucideIcon,
 } from "lucide-react";
-import { Avatar, DemoHint, MediaBlock } from "@/components/demos/demo-ui";
+import { Avatar } from "appshell-react";
+import { DemoHint, MediaBlock } from "@/components/demos/demo-ui";
 
 const savedPlaces: { name: string; area: string; icon: LucideIcon }[] = [
   { name: "teamLab Planets", area: "Toyosu", icon: Sparkles },
@@ -183,7 +184,7 @@ export default function FixedHeaderPage() {
               aria-label="Account"
               className="rounded-full transition-opacity hover:opacity-80"
             >
-              <Avatar initials="DK" className="size-8 text-[10px]" />
+              <Avatar initials="DK" size="2rem" className="text-[10px]" />
             </button>
           }
           title="Tokyo in five days"

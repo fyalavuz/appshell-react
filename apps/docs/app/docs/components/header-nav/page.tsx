@@ -9,7 +9,7 @@ import {
 import { CodePanel } from "@/components/docs/code-panel";
 import { ComponentPreview } from "@/components/docs/component-preview";
 import { PropsTable } from "@/components/docs/props-table";
-import { headerNavApi } from "@/lib/api-docs";
+import { headerNavApi, headerNavItemApi } from "@/lib/api-docs";
 import { highlight } from "@/lib/highlight";
 
 export const metadata = {
@@ -81,9 +81,11 @@ export default async function HeaderNavPage() {
         <DocProse>
           <InlineCode>HeaderNav</InlineCode> itself is deliberately small — a
           flex <InlineCode>&lt;nav&gt;</InlineCode> that lines up{" "}
-          <InlineCode>HeaderNavItem</InlineCode>s (its only props are{" "}
-          <InlineCode>className</InlineCode> and{" "}
-          <InlineCode>children</InlineCode>). Pass it to the Header&rsquo;s{" "}
+          <InlineCode>HeaderNavItem</InlineCode>s, with{" "}
+          <InlineCode>className</InlineCode> and an{" "}
+          <InlineCode>aria-label</InlineCode> override for the landmark
+          (defaults to &ldquo;Main&rdquo;) alongside{" "}
+          <InlineCode>children</InlineCode>. Pass it to the Header&rsquo;s{" "}
           <InlineCode>nav</InlineCode> prop; the Header renders that slot only
           from the <InlineCode>md</InlineCode> breakpoint up, so on phones the
           links disappear and the <InlineCode>mobileMenu</InlineCode> panel
@@ -150,8 +152,12 @@ export default async function HeaderNavPage() {
         </DocProse>
       </DocSection>
 
-      <DocSection title="HeaderNavItem API">
+      <DocSection title="HeaderNav API">
         <PropsTable api={headerNavApi} />
+      </DocSection>
+
+      <DocSection title="HeaderNavItem API">
+        <PropsTable api={headerNavItemApi} />
       </DocSection>
 
       <DocSection title="Related">

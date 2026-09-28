@@ -127,7 +127,12 @@ export interface AppShellProps {
   children: ReactNode;
 }
 
-export type SidebarSide = "left" | "right";
+/**
+ * Which edge the sidebar sits on. `start` and `end` follow the writing
+ * direction from `I18nProvider` (start is left in LTR, right in RTL);
+ * `left` and `right` are physical and never flip.
+ */
+export type SidebarSide = "start" | "end" | "left" | "right";
 
 export type SidebarVariant = "overlay" | "docked";
 

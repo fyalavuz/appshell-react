@@ -158,7 +158,7 @@ export default function ComponentsPage() {
       <DocSection title="Search & identity">
         <DocProse>
           The two things almost every app puts in its chrome: a way to search
-          and the signed-in user. All three components work standalone —
+          and the signed-in user. Every one of them works standalone —
           outside a Header, outside the shell — and every layer can be
           customized or replaced.
         </DocProse>
@@ -171,8 +171,9 @@ export default function ComponentsPage() {
           <Link href="/docs/hooks" className="text-brand hover:underline">
             Hooks
           </Link>{" "}
-          covers useAppShell, useScrollDirection, useSafeArea, and
-          useHeaderTheme for building your own scroll-aware UI, and{" "}
+          covers useAppShell, useScrollDirection, useSafeArea,
+          useKeyboardInset, useBelowBreakpoint, useHeaderTheme, and
+          useSearchShortcut for building your own scroll-aware UI, and{" "}
           <Link href="/docs/motion" className="text-brand hover:underline">
             Motion
           </Link>{" "}

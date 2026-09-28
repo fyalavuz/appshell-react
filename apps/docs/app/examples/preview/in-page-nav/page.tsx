@@ -114,9 +114,9 @@ export default function InPageNavPage() {
           subtitle="Field guide · Issue 04"
         />
 
-        {/* Anchor pills dock directly below the header via --header-height */}
+        {/* Anchor pills dock below the visible header, never above the safe area */}
         <div
-          style={{ top: "var(--header-height)" }}
+          style={{ top: "max(var(--header-height), var(--appshell-safe-area-inset-top, env(safe-area-inset-top)))" }}
           className="sticky z-40 border-b bg-background/95 backdrop-blur"
         >
           <nav

@@ -22,7 +22,8 @@ import {
   Settings,
   Sun,
 } from "lucide-react";
-import { Avatar, DemoHint, MediaBlock } from "@/components/demos/demo-ui";
+import { Avatar } from "appshell-react";
+import { DemoHint, MediaBlock } from "@/components/demos/demo-ui";
 
 type TabId = "posts" | "replies" | "media" | "likes";
 
@@ -158,7 +159,7 @@ function PostCard({ post }: { post: (typeof posts)[number] }) {
   return (
     <article className="border-b px-4 py-4">
       <div className="flex gap-3">
-        <Avatar initials="NR" className="bg-indigo-100 text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-300" />
+        <Avatar initials="NR" size="2.5rem" className="bg-indigo-100 text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-300" />
         <div className="min-w-0 flex-1">
           <div className="flex items-baseline gap-1.5 text-sm">
             <span className="font-semibold">Nadia Reyes</span>
@@ -282,7 +283,8 @@ export default function StickyTabsPage() {
                   <div className="mt-3 flex gap-3">
                     <Avatar
                       initials="NR"
-                      className="size-8 bg-indigo-100 text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-300"
+                      size="2rem"
+                      className="bg-indigo-100 text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-300"
                     />
                     <div className="min-w-0 flex-1">
                       <div className="flex items-baseline gap-1.5 text-sm">
@@ -330,7 +332,7 @@ export default function StickyTabsPage() {
               {likedPosts.map((p) => (
                 <article key={p.handle} className="border-b px-4 py-4">
                   <div className="flex gap-3">
-                    <Avatar initials={p.initials} />
+                    <Avatar initials={p.initials} size="2.5rem" />
                     <div className="min-w-0 flex-1">
                       <div className="flex items-baseline gap-1.5 text-sm">
                         <span className="truncate font-semibold">{p.author}</span>

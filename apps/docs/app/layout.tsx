@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
+import { siteOrigin, siteUrl } from "@/lib/site";
 
 const geistSans = Geist({
   subsets: ["latin"],
@@ -14,6 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteOrigin),
   title: {
     default: "AppShell React - Mobile-First Layout Components",
     template: "%s | AppShell",
@@ -23,8 +25,17 @@ export const metadata: Metadata = {
   authors: [{ name: "Fırat Yalavuz" }],
   openGraph: {
     title: "AppShell React",
-    description: "Mobile-first layout components for React",
+    description:
+      "Scroll-aware headers, tab bars, drawers, and safe areas for mobile web apps.",
     type: "website",
+    url: `${siteUrl}/`,
+    siteName: "AppShell React",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AppShell React",
+    description:
+      "Scroll-aware headers, tab bars, drawers, and safe areas for mobile web apps.",
   },
 };
 

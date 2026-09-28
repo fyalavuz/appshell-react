@@ -94,6 +94,48 @@ export default async function BottomSheetPage() {
         </DocNote>
       </DocSection>
 
+      <DocSection title="Overlay stack">
+        <DocProse>
+          A modal BottomSheet joins the same overlay stack as the Sidebar
+          drawer, SearchModal, and the UserMenu/NotificationsMenu dropdowns —
+          one shared mechanism behind every overlay in the library, so they
+          nest correctly instead of interfering with each other:
+        </DocProse>
+        <ul className="space-y-2 text-[15px] leading-relaxed text-muted-foreground">
+          <li>
+            • <strong className="text-foreground">Close requests.</strong>{" "}
+            One listener for the whole stack answers{" "}
+            <InlineCode>Escape</InlineCode> (and, where supported, the
+            platform&rsquo;s back gesture) by closing only the topmost
+            dismissable layer — open a menu inside this sheet, and one press
+            closes the menu, not both.
+          </li>
+          <li>
+            • <strong className="text-foreground">Scroll lock.</strong> A
+            single ref-counted owner locks body scroll while any modal layer
+            is open, and releases it only once the last one closes, so
+            layering a second modal over the sheet never leaves the page
+            stuck scrollable or stuck locked.
+          </li>
+          <li>
+            • <strong className="text-foreground">Stacking.</strong> z-index
+            follows open order rather than component identity, so whatever
+            you open from inside the sheet always lands above it.
+          </li>
+        </ul>
+        <DocNote>
+          See the{" "}
+          <Link
+            href="/examples/nested-overlays"
+            className="text-brand hover:underline"
+          >
+            nested overlays example
+          </Link>{" "}
+          for the pattern live — open a Sidebar, a SearchModal, and a
+          BottomSheet on top of each other and close them one at a time.
+        </DocNote>
+      </DocSection>
+
       <DocSection title="API">
         <PropsTable api={bottomSheetApi} />
       </DocSection>

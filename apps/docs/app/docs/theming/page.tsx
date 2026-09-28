@@ -319,11 +319,20 @@ export default async function ThemingPage() {
           more.
         </DocProse>
         <DocProse>
-          It <em>writes</em> exactly one variable:{" "}
-          <InlineCode>--header-height</InlineCode>, set in pixels on the root
-          element by the Header via a ResizeObserver whenever the header
-          resizes. Use it to dock sticky sub-navigation or a docked sidebar
-          below the header:
+          It <em>writes</em> a handful of variables on the root element, each
+          one owned by the component that measures it:{" "}
+          <InlineCode>--header-height</InlineCode> (Header, via a
+          ResizeObserver, whenever the header resizes),{" "}
+          <InlineCode>--appshell-footer-height</InlineCode> (Footer, the same
+          way, for Content&rsquo;s automatic bottom margin),{" "}
+          <InlineCode>--appshell-keyboard-inset-bottom</InlineCode> (published
+          only while something calls <InlineCode>useKeyboardInset()</InlineCode>
+          , from <InlineCode>visualViewport</InlineCode>), and{" "}
+          <InlineCode>--appshell-scrollbar-gap</InlineCode> (the overlay stack,
+          only while a modal overlay holds the scroll lock). The one you will
+          reach for directly is <InlineCode>--header-height</InlineCode> — use
+          it to dock sticky sub-navigation or a docked sidebar below the
+          header:
         </DocProse>
         <CodePanel
           html={stickySubNavHtml}
@@ -331,10 +340,10 @@ export default async function ThemingPage() {
           filename="styles.css"
         />
         <DocNote>
-          Do not author <InlineCode>--header-height</InlineCode> statically in
-          your stylesheet — the Header overwrites it with the measured pixel
-          value as soon as it mounts, and keeps it in sync as rows appear,
-          wrap, or animate. See the{" "}
+          Do not author any of these statically in your stylesheet — each one
+          is overwritten by its owning component as soon as it mounts, and
+          kept in sync as things change (rows wrap, the footer variant
+          switches, the keyboard opens). See the{" "}
           <Link
             href="/examples/sticky-tabs"
             className="text-brand hover:underline"

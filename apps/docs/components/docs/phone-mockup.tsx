@@ -9,6 +9,11 @@ const DEVICE_H = 852;
 // Safe area insets (Dynamic Island top + home indicator bottom)
 const SA_TOP = 59;
 const SA_BOTTOM = 34;
+// Dynamic Island, in points: 126 × 37, 11 from the top edge. The status
+// items sit centered on it, in the two "ears" either side.
+const ISLAND_W = 126;
+const ISLAND_H = 37;
+const ISLAND_TOP = 11;
 // Display size
 const FRAME_W = 280;
 const SCALE = FRAME_W / DEVICE_W;
@@ -97,14 +102,30 @@ export function PhoneMockup({ src, className, onIframeLoad }: PhoneMockupProps) 
             />
           </div>
 
-          {/* Status bar overlay */}
+          {/* Dynamic Island — outside the blended layer so it stays black */}
           <div
-            className="pointer-events-none absolute inset-x-0 top-0 z-20 flex items-end justify-between px-6 pb-0.5 text-white mix-blend-difference"
-            style={{ height: Math.round(SA_TOP * SCALE) }}
+            className="pointer-events-none absolute left-1/2 z-30 -translate-x-1/2 rounded-full bg-black"
+            style={{
+              top: ISLAND_TOP * SCALE,
+              width: ISLAND_W * SCALE,
+              height: ISLAND_H * SCALE,
+            }}
+          />
+
+          {/* Status bar overlay, vertically centered on the island */}
+          <div
+            className="pointer-events-none absolute inset-x-0 z-20 grid items-center text-white mix-blend-difference"
+            style={{
+              top: ISLAND_TOP * SCALE,
+              height: ISLAND_H * SCALE,
+              gridTemplateColumns: `1fr ${ISLAND_W * SCALE}px 1fr`,
+            }}
           >
-            <span className="text-[11px] font-semibold leading-none">9:41</span>
-            <div className="absolute left-1/2 top-[3px] -translate-x-1/2 h-[22px] w-[90px] rounded-full bg-black" />
-            <div className="flex items-center gap-[4px]">
+            <span className="justify-self-center ps-2 text-[12px] font-semibold leading-none tracking-tight">
+              9:41
+            </span>
+            <span />
+            <div className="flex items-center gap-[4px] justify-self-center pe-2">
               <svg width="14" height="10" viewBox="0 0 17 12" fill="white">
                 <rect x="0" y="9" width="3" height="3" rx="0.5" opacity="0.4" />
                 <rect

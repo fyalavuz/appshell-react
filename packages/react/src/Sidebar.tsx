@@ -2,7 +2,7 @@
 
 import { memo, useId, useState, type CSSProperties } from "react";
 import { cn } from "./cn";
-import { useLabel } from "./I18nContext";
+import { useDirection, useLabel } from "./I18nContext";
 import { useFocusTrap } from "./focus-trap";
 import { useOverlayLayer } from "./overlay-stack";
 import { useMotion } from "./motion";
@@ -52,7 +52,7 @@ const CollapseChevrons = ({ className }: { className?: string }) => (
 
 export const Sidebar = memo(function Sidebar(props: SidebarProps) {
   const { motion, AnimatePresence } = useMotion();
-  const { side = "left", topContent, bottomContent, className, children } = props;
+  const { side = "start", topContent, bottomContent, className, children } = props;
 
   const isDocked = props.variant === "docked";
   const open = props.open ?? false;
@@ -84,7 +84,15 @@ export const Sidebar = memo(function Sidebar(props: SidebarProps) {
     onClose,
   });
 
-  const isLeft = side === "left";
+  const dir = useDirection();
+  const isLeft =
+    side === "left" ||
+    (side === "start" && dir === "ltr") ||
+    (side === "end" && dir === "rtl");
+  // A docked panel sits in the page's flex row, which already runs in the
+  // writing direction: it only needs reordering when its physical edge is the
+  // row's end.
+  const atFlexEnd = isLeft === (dir === "rtl");
 
   const drawer = (gate: string) => (
     <AnimatePresence>
@@ -191,7 +199,8 @@ export const Sidebar = memo(function Sidebar(props: SidebarProps) {
           dockedDisplay[breakpoint],
           "group/sidebar sticky z-40 shrink-0 flex-col overflow-hidden bg-background",
           "transition-[width] duration-200 ease-out motion-reduce:transition-none",
-          isLeft ? "border-r border-border" : "order-last border-l border-border",
+          isLeft ? "border-r border-border" : "border-l border-border",
+          atFlexEnd && "order-last",
           className
         )}
         style={asideStyle}

@@ -35,7 +35,8 @@ import {
   User,
   Users,
 } from "lucide-react";
-import { Avatar, MediaBlock } from "@/components/demos/demo-ui";
+import { Avatar } from "appshell-react";
+import { MediaBlock } from "@/components/demos/demo-ui";
 import { defaultConfig, type PlaygroundConfig } from "../config";
 
 const notes = [
@@ -303,7 +304,7 @@ export default function PlaygroundPreviewPage() {
           {notes.map((note) => (
             <article key={note.title} className="border-b px-4 py-4">
               <div className="flex gap-3">
-                <Avatar initials={note.initials} />
+                <Avatar initials={note.initials} size="2.5rem" />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-baseline justify-between gap-2">
                     <span className="truncate text-sm font-semibold">
@@ -363,7 +364,7 @@ export default function PlaygroundPreviewPage() {
                       onClick={() => setSearchOpen(false)}
                       className="flex w-full items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-muted/60"
                     >
-                      <Avatar initials={n.initials} />
+                      <Avatar initials={n.initials} size="2.5rem" />
                       <span className="min-w-0 flex-1">
                         <span className="block truncate text-sm font-medium">
                           {n.title}

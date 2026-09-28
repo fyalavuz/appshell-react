@@ -323,7 +323,12 @@ export default async function HooksPage() {
           The theme is provided by the Header to its own rows, so the hook is
           only meaningful for components rendered inside a Header slot.
           Elsewhere it does not throw — it just falls back to the default,{" "}
-          <InlineCode>&quot;light&quot;</InlineCode>.
+          <InlineCode>&quot;light&quot;</InlineCode>. That delivery is{" "}
+          <InlineCode>HeaderProvider</InlineCode> — the context provider
+          Header wraps its rows in internally. It is exported for the rare
+          case of rendering a Header slot&rsquo;s content in isolation (a
+          Storybook story, a unit test) without mounting a real Header:{" "}
+          <InlineCode>{'<HeaderProvider value={{ theme: "dark" }}>'}</InlineCode>.
         </DocNote>
       </DocSection>
 

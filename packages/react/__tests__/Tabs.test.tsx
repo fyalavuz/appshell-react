@@ -70,7 +70,9 @@ describe("Tabs", () => {
     const { container, rerender } = render(<Tabs>{threeTabs}</Tabs>);
     const row = container.querySelector("[data-tabs]") as HTMLElement;
     expect(row.className).toContain("sticky");
-    expect(row.style.top).toBe("var(--header-height, 0px)");
+    // Never above the safe area: a reveal header that scrolled away leaves
+    // --header-height at 0, which would tuck the row under the status bar.
+    expect(row.style.top).toBe("max(var(--header-height, 0px), var(--appshell-safe-area-inset-top, env(safe-area-inset-top, 0px)))");
 
     rerender(<Tabs sticky={false}>{threeTabs}</Tabs>);
     expect(row.className).not.toContain("sticky");

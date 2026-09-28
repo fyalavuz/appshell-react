@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AppShell,
   Content,
@@ -12,6 +12,7 @@ import {
   SearchModal,
   UserMenu,
   UserMenuItem,
+  useSearchShortcut,
 } from "appshell-react";
 import { framerMotionAdapter } from "appshell-react/motion-framer";
 import {
@@ -111,6 +112,14 @@ export default function SearchCommandPage() {
       current.map((n) => (n.id === id ? { ...n, unread: false } : n))
     );
 
+  // Resolve the platform after mount so the static export hydrates cleanly.
+  const [hint, setHint] = useState<string>();
+  useEffect(() => {
+    setHint(/Mac|iPhone|iPad/.test(navigator.platform) ? "⌘K" : "Ctrl K");
+  }, []);
+
+  useSearchShortcut(() => setSearchOpen(true));
+
   return (
     <MotionProvider adapter={framerMotionAdapter}>
       <AppShell safeArea>
@@ -180,15 +189,17 @@ export default function SearchCommandPage() {
               value={query}
               onChange={setQuery}
               onClick={() => setSearchOpen(true)}
+              shortcutHint={hint}
             />
           }
         />
 
         <Content className="mx-auto w-full max-w-2xl pb-16 sm:border-x">
           <DemoHint>
-            Tap the search field — the full search modal opens with whatever
-            you typed. Up in the corner, the bell and the avatar each open
-            their own menu; opening one closes the other.
+            Tap the search field, or press ⌘K / Ctrl+K — the full search
+            modal opens with whatever you typed. Up in the corner, the bell
+            and the avatar each open their own menu; opening one closes the
+            other.
           </DemoHint>
 
           <div className="px-4 pb-2 pt-1">

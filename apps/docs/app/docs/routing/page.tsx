@@ -7,6 +7,8 @@ import {
   InlineCode,
 } from "@/components/docs/doc-page";
 import { CodePanel } from "@/components/docs/code-panel";
+import { PropsTable } from "@/components/docs/props-table";
+import { linkProviderApi } from "@/lib/api-docs";
 import { highlight } from "@/lib/highlight";
 
 export const metadata = {
@@ -92,6 +94,10 @@ export default async function RoutingPage() {
           active link component themselves via{" "}
           <InlineCode>useLinkComponent()</InlineCode>.
         </DocNote>
+      </DocSection>
+
+      <DocSection title="API">
+        <PropsTable api={linkProviderApi} />
       </DocSection>
 
       <DocSection title="Related">

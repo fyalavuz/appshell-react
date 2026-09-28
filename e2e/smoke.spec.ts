@@ -24,19 +24,9 @@ test.describe("smoke", () => {
   ];
 
   for (const route of routes) {
-    // Known gap: this preview has neither an <h1> nor a <header> element —
-    // see report for details. Everything else about the route (loads,
-    // no console/page errors) still gets exercised.
-    const isKnownHeadingGap = route === "/examples/preview/bottom-sheet/";
-
     test(`${route} loads cleanly and has a heading landmark`, async ({
       page,
     }) => {
-      test.fixme(
-        isKnownHeadingGap,
-        "bottom-sheet preview renders no <h1> and no <header> — no page heading for a11y tooling to latch onto"
-      );
-
       const consoleErrors: string[] = [];
       const pageErrors: string[] = [];
       page.on("console", (msg) => {
@@ -57,6 +47,7 @@ test.describe("smoke", () => {
   test("/does-not-exist/ returns the 404 page", async ({ page }) => {
     const response = await page.goto("/does-not-exist/");
     expect(response?.status()).toBe(404);
-    await expect(page.getByText(/could not be found/i).first()).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(/scrolled away/i);
+    await expect(page.getByRole("link", { name: "Back home" })).toBeVisible();
   });
 });

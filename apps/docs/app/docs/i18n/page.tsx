@@ -98,7 +98,11 @@ export default async function I18nPage() {
           <InlineCode>badgeOverflow</InlineCode> gets{" "}
           <InlineCode>{"{max}"}</InlineCode>. Precedence runs{" "}
           <strong>component prop → provider → English default</strong>, so a
-          one-off <InlineCode>aria-label</InlineCode> still wins locally.
+          one-off <InlineCode>aria-label</InlineCode> still wins locally. The
+          full English dictionary is exported as{" "}
+          <InlineCode>defaultLabels</InlineCode> — read it for the complete
+          key list, or spread it yourself when building a translated copy
+          from only a partial catalogue.
         </DocProse>
       </DocSection>
 
@@ -138,8 +142,13 @@ export default async function I18nPage() {
           Inside components, directional spacing already uses CSS logical
           properties, so <InlineCode>dir=&quot;rtl&quot;</InlineCode> mirrors
           padding, margins and badge offsets without extra work. The
-          Sidebar&rsquo;s <InlineCode>side</InlineCode> prop stays physical by
-          design — a docked panel on the right is a layout decision, not a
+          Sidebar&rsquo;s <InlineCode>side</InlineCode> defaults to{" "}
+          <InlineCode>&quot;start&quot;</InlineCode>, so the drawer opens from
+          the leading edge automatically under{" "}
+          <InlineCode>dir=&quot;rtl&quot;</InlineCode> — pass the physical{" "}
+          <InlineCode>&quot;left&quot;</InlineCode>/
+          <InlineCode>&quot;right&quot;</InlineCode> values instead when a
+          docked panel&rsquo;s side is a layout decision rather than a
           language one.
         </DocNote>
       </DocSection>

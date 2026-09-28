@@ -199,22 +199,20 @@ export default async function FooterPage() {
       <DocSection title="Clearing the footer">
         <DocProse>
           Every variant is <InlineCode>position: fixed</InlineCode>, so it
-          overlaps the end of your page — the Footer does not reserve space
-          for itself. Give{" "}
+          overlaps the end of your page — but{" "}
           <Link
             href="/docs/components/content"
             className="text-brand hover:underline"
           >
             Content
           </Link>{" "}
-          enough bottom padding to scroll the last element clear:{" "}
-          <InlineCode>pb-24</InlineCode> for a tab bar,{" "}
-          <InlineCode>pb-28</InlineCode> for a floating pill,{" "}
-          <InlineCode>pb-20</InlineCode> for a mini bar — the values the{" "}
-          <Link href="/examples" className="text-brand hover:underline">
-            examples
-          </Link>{" "}
-          use.
+          clears it for you automatically: the Footer publishes its rendered
+          height as the{" "}
+          <InlineCode>--appshell-footer-height</InlineCode> CSS variable, and
+          Content applies it as its own{" "}
+          <InlineCode>margin-bottom</InlineCode>, so the last element always
+          scrolls exactly clear regardless of which variant is mounted. No
+          manual <InlineCode>pb-*</InlineCode> class is required.
         </DocProse>
       </DocSection>
 
