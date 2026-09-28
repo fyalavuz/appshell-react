@@ -1,5 +1,11 @@
 # appshell-react
 
+## 0.5.1
+
+### Patch Changes
+
+- [`cbe7264`](https://github.com/fyalavuz/appshell-react/commit/cbe726432d9d37ea3666d176c59267cc2b2f9f8f) Thanks [@fyalavuz](https://github.com/fyalavuz)! - Header: the mobile menu opened from a reveal overlay now shows inside the overlay instead of the scrolled-away header, and the menu toggle reports `aria-expanded` and `aria-controls`. `framer-motion` is declared as an optional peer dependency, and the npm README now documents the Tailwind `@source` setup.
+
 ## 0.5.0
 
 ### Minor Changes
