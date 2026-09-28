@@ -1,6 +1,6 @@
 {
   "name": "appshell-react",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "Mobile-first app shell components for React \u2014 scroll-aware Header, tab-bar Footer, Sidebar drawer, BottomSheet, SearchModal, safe areas and keyboard insets",
   "license": "MIT",
   "repository": {

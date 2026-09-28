@@ -1,5 +1,15 @@
 # appshell-react
 
+## 0.6.0
+
+### Minor Changes
+
+- [`12b2e32`](https://github.com/fyalavuz/appshell-react/commit/12b2e32ec33239c38302137b28147e95b7136718) Thanks [@fyalavuz](https://github.com/fyalavuz)! - Sidebar: `side` accepts `"start"` and `"end"`, which follow the writing direction set by `I18nProvider`, and now defaults to `"start"`. Under `dir="rtl"` the drawer opens from the right edge without extra configuration, and a docked sidebar keeps its border and safe-area padding on the correct side. `"left"` and `"right"` keep their physical meaning.
+
+### Patch Changes
+
+- [`12b2e32`](https://github.com/fyalavuz/appshell-react/commit/12b2e32ec33239c38302137b28147e95b7136718) Thanks [@fyalavuz](https://github.com/fyalavuz)! - Header: `--header-height` now reports the header chrome actually on screen. A static or reveal header publishes the part still visible as it scrolls away (0 once gone) and the floating overlay's height while it is shown, so rows docked under it (Tabs, the docked Sidebar, your own anchor bars) no longer hang below an empty gap. Tabs also never dock above the top safe area.
+
 ## 0.5.1
 
 ### Patch Changes
