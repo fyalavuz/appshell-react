@@ -1,5 +1,11 @@
 # appshell-react
 
+## 0.6.1
+
+### Patch Changes
+
+- [`a59d131`](https://github.com/fyalavuz/appshell-react/commit/a59d131c73b3d9b8347206ac17708cffbef7717c) Thanks [@fyalavuz](https://github.com/fyalavuz)! - Header: a mobile menu opened in the reveal overlay now closes when the overlay leaves, `--header-height` follows the overlay through an animated exit, and the variable is removed when the Header unmounts.
+
 ## 0.6.0
 
 ### Minor Changes
