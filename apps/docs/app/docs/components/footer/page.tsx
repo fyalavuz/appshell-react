@@ -230,7 +230,7 @@ export default async function FooterPage() {
         <DocProse>
           See the{" "}
           <Link
-            href="/examples/preview/mini-footer/"
+            href="/examples/mini-footer/"
             className="text-brand hover:underline"
           >
             mini footer example

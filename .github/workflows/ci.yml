@@ -18,5 +18,9 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm turbo build
-      - run: pnpm turbo lint
+        env:
+          NEXT_PUBLIC_BASE_PATH: ""
+      - run: pnpm turbo lint typecheck
       - run: pnpm turbo test
+      - run: pnpm --filter @appshell-react/e2e exec playwright install --with-deps chromium
+      - run: pnpm test:e2e

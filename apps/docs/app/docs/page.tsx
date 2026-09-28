@@ -91,8 +91,8 @@ export default async function DocsPage() {
           <InlineCode>--header-height</InlineCode>.
         </DocProse>
         <DocProse>
-          Animations run on plain CSS transitions by default — the core has
-          zero runtime dependencies. Wrap your app in{" "}
+          Animations run on plain CSS transitions by default — no animation
+          library required. Wrap your app in{" "}
           <InlineCode>MotionProvider</InlineCode> with the optional Framer
           Motion adapter when you want springs. See{" "}
           <Link href="/docs/motion" className="text-brand hover:underline">

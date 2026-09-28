@@ -1,7 +1,7 @@
 {
   "name": "appshell-react",
   "version": "0.5.0",
-  "description": "Mobile-first app shell components for React \u2014 Header, Footer, Sidebar, TabBar, SafeArea",
+  "description": "Mobile-first app shell components for React \u2014 scroll-aware Header, tab-bar Footer, Sidebar drawer, BottomSheet, SearchModal, safe areas and keyboard insets",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -10,6 +10,9 @@
   },
   "homepage": "https://fyalavuz.github.io/appshell-react",
   "keywords": [
+    "bottom-sheet",
+    "drawer",
+    "pwa",
     "react",
     "appshell",
     "mobile",
@@ -63,6 +66,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint src/",
     "clean": "rm -rf dist",
+    "prepack": "cp ../../README.md README.md",
     "size": "node scripts/size-report.mjs",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
@@ -70,7 +74,8 @@
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0",
-    "tailwindcss": ">=4.0.0"
+    "tailwindcss": ">=4.0.0",
+    "framer-motion": ">=11.0.0"
   },
   "peerDependenciesMeta": {
     "framer-motion": {

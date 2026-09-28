@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, act, within } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import { Header } from "../src/Header";
 import { HeaderNav, HeaderNavItem } from "../src/HeaderNav";
@@ -61,6 +61,38 @@ describe("Header", () => {
     const toggle = screen.getByLabelText("Open menu");
     fireEvent.click(toggle);
     expect(screen.getByText("Mobile Nav")).toBeInTheDocument();
+  });
+
+  it("exposes the mobile menu toggle as a disclosure", () => {
+    renderHeader({ mobileMenu: <nav>Mobile Nav</nav> });
+    const toggle = screen.getByLabelText("Open menu");
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
+    fireEvent.click(toggle);
+    expect(toggle).toHaveAttribute("aria-expanded", "true");
+    const panelId = toggle.getAttribute("aria-controls");
+    expect(panelId).toBeTruthy();
+    expect(document.getElementById(panelId!)).toHaveTextContent("Mobile Nav");
+  });
+
+  it("opens the mobile menu inside the reveal overlay once scrolled", async () => {
+    renderHeader({ behavior: "reveal-nav", mobileMenu: <nav>Mobile Nav</nav> });
+    const scrollTo = async (y: number) => {
+      await act(async () => {
+        Object.defineProperty(window, "scrollY", { value: y, configurable: true });
+        window.dispatchEvent(new Event("scroll"));
+        await new Promise((r) => requestAnimationFrame(() => r(null)));
+      });
+    };
+    await scrollTo(800);
+    await scrollTo(500);
+
+    const overlay = document.querySelector("[data-header-overlay]") as HTMLElement;
+    expect(overlay).toBeInTheDocument();
+    fireEvent.click(within(overlay).getByLabelText("Open menu"));
+    expect(within(overlay).getByText("Mobile Nav")).toBeInTheDocument();
+    expect(screen.getAllByText("Mobile Nav")).toHaveLength(1);
+
+    await scrollTo(0);
   });
 
   it("applies custom className", () => {

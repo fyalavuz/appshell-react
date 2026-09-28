@@ -7,7 +7,7 @@
     "dev:all": "npx turbo run dev",
     "lint": "npx turbo run lint",
     "test": "npx turbo run test",
-    "test:e2e": "npx turbo run test:e2e",
+    "test:e2e": "pnpm --filter @appshell-react/e2e test:e2e",
     "typecheck": "npx turbo run typecheck",
     "clean": "npx turbo run clean && rm -rf node_modules",
     "changeset": "changeset",

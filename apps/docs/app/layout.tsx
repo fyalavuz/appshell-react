@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
   description: "A composable layout system for building mobile-first React applications with scroll-aware headers, tab bars, sidebars, and safe area handling.",
   keywords: ["react", "mobile", "layout", "components", "tailwind", "typescript", "app shell"],
-  authors: [{ name: "Furkan Yalavuz" }],
+  authors: [{ name: "Fırat Yalavuz" }],
   openGraph: {
     title: "AppShell React",
     description: "Mobile-first layout components for React",

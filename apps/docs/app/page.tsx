@@ -14,7 +14,7 @@ import { SiteHeader } from "@/components/site-header";
 import { PhoneMockup } from "@/components/docs/phone-mockup";
 import { CodePanel } from "@/components/docs/code-panel";
 import { MiniScreen } from "@/components/examples/mini-screen";
-import { getExampleBySlug } from "@/lib/registry";
+import { getAllExamples, getExampleBySlug, type Example } from "@/lib/registry";
 import { highlight } from "@/lib/highlight";
 import { withBasePath } from "@/lib/base-path";
 
@@ -46,8 +46,8 @@ export default function App() {
 const stats = [
   { value: "10", label: "header behaviors" },
   { value: "3", label: "footer variants" },
-  { value: "22", label: "live demos" },
-  { value: "0", label: "required deps" },
+  { value: String(getAllExamples().length), label: "live demos" },
+  { value: "0", label: "scroll listeners to write" },
 ];
 
 const features = [
@@ -95,7 +95,7 @@ export default async function HomePage() {
   const highlighted = await highlight(codeExample);
   const featured = featuredSlugs
     .map((slug) => getExampleBySlug(slug))
-    .filter((e) => e !== undefined);
+    .filter((e): e is Example => e !== undefined);
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -241,7 +241,7 @@ export default async function HomePage() {
               <div>
                 <p className="eyebrow text-brand">Examples</p>
                 <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-                  20 small apps, every variant
+                  {getAllExamples().length} small apps, every variant
                 </h2>
               </div>
               <Link
@@ -329,7 +329,7 @@ export default async function HomePage() {
                 href="https://github.com/fyalavuz"
                 className="underline underline-offset-4 transition-colors hover:text-foreground"
               >
-                Furkan Yalavuz
+                Fırat Yalavuz
               </a>
               . Open source under MIT license.
             </p>

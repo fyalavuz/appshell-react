@@ -122,7 +122,7 @@ export default async function MotionPage() {
       <DocHeader
         eyebrow="Advanced"
         title="Motion"
-        description="Every animation in appshell-react runs on plain CSS transitions by default — zero dependencies. One provider at the root upgrades reveals, drawers, and footers to real springs, through a public adapter contract you can also implement yourself."
+        description="Every animation in appshell-react runs on plain CSS transitions by default — no animation library required. One provider at the root upgrades reveals, drawers, and footers to real springs, through a public adapter contract you can also implement yourself."
       />
 
       <DocSection title="CSS by default">

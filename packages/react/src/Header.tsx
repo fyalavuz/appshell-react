@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
   useCallback,
+  useId,
 } from "react";
 import { cn } from "./cn";
 import { useLabel } from "./I18nContext";
@@ -73,6 +74,7 @@ export const Header = memo(function Header({
   const scrollDirection = useScrollDirection();
   const t = themeStyles[theme];
   const [mobileOpen, setMobileOpen] = useState(false);
+  const mobilePanelId = useId();
   const duration = speedMap[speed];
 
   const ghostRef = useRef<HTMLElement>(null);
@@ -229,6 +231,8 @@ export const Header = memo(function Header({
                 className="p-1 rounded-md hover:bg-accent/50 md:hidden transition-colors"
                 onClick={toggleMobile}
                 aria-label={menuToggleLabel}
+                aria-expanded={mobileOpen}
+                aria-controls={mobileOpen ? mobilePanelId : undefined}
               >
                 {mobileOpen ? closeIcon : menuIcon}
               </button>
@@ -301,10 +305,15 @@ export const Header = memo(function Header({
       );
     });
 
+  // Rendered in exactly one place: the overlay while it stands in for the
+  // header, the header itself otherwise. The scrolled-away original is inert
+  // and off screen, so a panel opened there from the overlay's toggle was
+  // never seen.
   const renderMobileMenuPanel = () => (
     <AnimatePresence>
       {mobileMenu && mobileOpen && (
         <motion.div
+          id={mobilePanelId}
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: "auto", opacity: 1 }}
           exit={{ height: 0, opacity: 0 }}
@@ -324,7 +333,7 @@ export const Header = memo(function Header({
     <HeaderProvider value={{ theme }}>
       {renderNavRow(behavior !== "static" && behavior !== "fixed" && behavior !== "sticky")}
       {renderLowerRows()}
-      {renderMobileMenuPanel()}
+      {!isOverlayVisible && renderMobileMenuPanel()}
     </HeaderProvider>
   );
 
@@ -392,6 +401,7 @@ export const Header = memo(function Header({
               <HeaderProvider value={{ theme }}>
                 {shouldShowInOverlay("nav") && renderNavRow()}
                 {renderLowerRows(shouldShowInOverlay)}
+                {shouldShowInOverlay("nav") && renderMobileMenuPanel()}
               </HeaderProvider>
             </motion.div>
           )}

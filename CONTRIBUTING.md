@@ -32,19 +32,18 @@ pnpm build
 4. Start the development servers:
 
 ```bash
-pnpm dev
+pnpm dev:all
 ```
 
-This starts the library in watch mode and the examples app on `http://localhost:3001`.
+This starts the library in watch mode and the docs site (with every demo) on `http://localhost:3000`. `pnpm dev` starts only the docs site.
 
 ## Project Structure
 
 ```
 appshell/
   packages/react/    # appshell-react library
-  apps/examples/     # Next.js examples app
-  apps/docs/         # Fumadocs documentation site
-  e2e/               # Playwright E2E tests
+  apps/docs/         # Next.js docs site, demos, and playground
+  e2e/               # Playwright E2E tests against the docs build
 ```
 
 ## Running Tests
@@ -58,8 +57,11 @@ pnpm test
 **E2E tests** (Playwright):
 
 ```bash
-cd e2e && pnpm test
+pnpm --filter appshell-react build && pnpm --filter @appshell-react/docs build
+pnpm test:e2e
 ```
+
+The suite serves the static docs export and exercises every demo.
 
 **Type checking**:
 
