@@ -140,7 +140,7 @@ export default async function HomePage() {
                     Open the playground
                   </Link>
                 </div>
-                <div className="flex flex-wrap gap-x-8 gap-y-4 border-t pt-6">
+                <div className="grid grid-cols-2 gap-x-8 gap-y-4 border-t pt-6 sm:flex sm:flex-wrap">
                   {stats.map((stat) => (
                     <div key={stat.label}>
                       <p className="text-2xl font-bold tracking-tight">

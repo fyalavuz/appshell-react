@@ -92,6 +92,12 @@ describe("Header", () => {
     expect(within(overlay).getByText("Mobile Nav")).toBeInTheDocument();
     expect(screen.getAllByText("Mobile Nav")).toHaveLength(1);
 
+    // Scrolling down takes the overlay away; the menu must close with it
+    // rather than reopen inside the off-screen header.
+    await scrollTo(900);
+    expect(document.querySelector("[data-header-overlay]")).not.toBeInTheDocument();
+    expect(screen.queryByText("Mobile Nav")).not.toBeInTheDocument();
+
     await scrollTo(0);
   });
 

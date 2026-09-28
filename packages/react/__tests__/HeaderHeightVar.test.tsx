@@ -57,6 +57,14 @@ describe("--header-height tracks the header chrome actually on screen", () => {
     expect(headerHeightVar()).toBe("0px");
   });
 
+  it("clears the variable when the header unmounts", async () => {
+    const { unmount } = render(<AppShellProvider><Header behavior="fixed" /></AppShellProvider>);
+    await scrollTo(0);
+    expect(headerHeightVar()).toBe(`${HEADER}px`);
+    unmount();
+    expect(headerHeightVar()).toBe("");
+  });
+
   it("publishes the overlay's height while the overlay stands in for the header", async () => {
     render(<AppShellProvider><Header behavior="reveal-nav" /></AppShellProvider>);
     await scrollTo(900);

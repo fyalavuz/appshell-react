@@ -26,7 +26,7 @@ export default function ExamplesPage() {
             </h1>
             <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
               Every variant the shell supports, each one a small believable
-              app. Hover a card to preview the behavior; open it to scroll the
+              app. Each card sketches the behavior; open it to scroll the
               real thing.
             </p>
           </div>

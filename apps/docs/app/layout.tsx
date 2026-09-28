@@ -14,6 +14,9 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
 });
 
+const ogImage = `${siteUrl}/og-image.png`;
+const ogAlt = "AppShell React — the app shell your mobile web app deserves";
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteOrigin),
   title: {
@@ -30,9 +33,11 @@ export const metadata: Metadata = {
     type: "website",
     url: `${siteUrl}/`,
     siteName: "AppShell React",
+    images: [{ url: ogImage, width: 1200, height: 630, alt: ogAlt }],
   },
   twitter: {
     card: "summary_large_image",
+    images: [ogImage],
     title: "AppShell React",
     description:
       "Scroll-aware headers, tab bars, drawers, and safe areas for mobile web apps.",

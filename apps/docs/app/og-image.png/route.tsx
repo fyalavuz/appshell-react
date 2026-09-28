@@ -1,9 +1,11 @@
 import { ImageResponse } from "next/og";
 
+// A plain route rather than the opengraph-image file convention: the
+// convention resolves its URL against metadataBase's origin and drops the
+// GitHub Pages base path, which left og:image pointing at a 404.
 export const dynamic = "force-static";
-export const alt = "AppShell React — the app shell your mobile web app deserves";
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+
+const size = { width: 1200, height: 630 };
 
 const brand = "#C2410C";
 const ink = "#1c1917";
@@ -14,7 +16,7 @@ function Bar({ w, tone = "#e7e5e4" }: { w: number; tone?: string }) {
   return <div style={{ width: w, height: 12, borderRadius: 6, background: tone }} />;
 }
 
-export default function OpengraphImage() {
+export function GET() {
   return new ImageResponse(
     (
       <div

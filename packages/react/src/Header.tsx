@@ -151,6 +151,15 @@ export const Header = memo(function Header({
   const isOverlayVisible =
     hasRevealEffect && scrollDirection === "up" && isPastThreshold;
 
+  // A menu opened in the overlay closes when the overlay leaves: reopening
+  // it inside the off-screen header would hide it from sight but not from
+  // the keyboard once that header stops being inert.
+  const [overlayWasVisible, setOverlayWasVisible] = useState(isOverlayVisible);
+  if (overlayWasVisible !== isOverlayVisible) {
+    setOverlayWasVisible(isOverlayVisible);
+    if (!isOverlayVisible) setMobileOpen(false);
+  }
+
   // --header-height is what sticky siblings (Tabs, the docked Sidebar, your
   // own anchor rows) dock under, so it has to be the header chrome actually
   // covering the top of the viewport — not the header's own size. A pinned
@@ -169,10 +178,12 @@ export const Header = memo(function Header({
 
     const publish = () => {
       frame = 0;
+      // The overlay node outlives isOverlayVisible while an animation adapter
+      // plays its exit, and it still covers the top until it is gone.
       const overlay = overlayRef.current;
       const height = pinned
         ? el.offsetHeight
-        : isOverlayVisible && overlay
+        : overlay
           ? overlay.offsetHeight
           : Math.max(0, Math.round(el.getBoundingClientRect().bottom));
       if (height === last) return;
@@ -188,12 +199,24 @@ export const Header = memo(function Header({
     ro.observe(el);
     if (overlayRef.current) ro.observe(overlayRef.current);
     if (!pinned) window.addEventListener("scroll", schedule, { passive: true });
+    // Nothing else fires when an exiting overlay finally unmounts.
+    const exitDone =
+      !pinned && !isOverlayVisible ? window.setTimeout(schedule, duration * 1000 + 50) : 0;
     return () => {
+      window.clearTimeout(exitDone);
       ro.disconnect();
       window.removeEventListener("scroll", schedule);
       if (frame) cancelAnimationFrame(frame);
     };
-  }, [behavior, isOverlayVisible]);
+  }, [behavior, isOverlayVisible, duration]);
+
+  // Leave nothing behind for a route that renders no Header.
+  useEffect(
+    () => () => {
+      document.documentElement.style.removeProperty("--header-height");
+    },
+    []
+  );
 
   useEffect(() => {
     onVisibilityChange?.(behavior === "fixed" || behavior === "sticky" || !hasRevealEffect || isOverlayVisible);
